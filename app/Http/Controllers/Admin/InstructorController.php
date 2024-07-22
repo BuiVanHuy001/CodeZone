@@ -85,13 +85,19 @@
                     } elseif ($status == 'rejected' || $status == 'deleted') {
                         $instructor->deleteCV();
                         $user->deleteAvatar();
-                        if ($status == 'rejected') {
-                            $user->status = 'rejected';
+                        // delete instructor if no approved course
+                        if ($instructor->courses->where('status', 'approved')->count() > 0) {
+                            $instructor->delete();
+                            $user->delete();
+                        } else {
+                            $instructor->forceDelete();
+                            $user->forceDelete();
                         }
-                        $instructor->forceDelete();
-                        $user->forceDelete();
                     } elseif ($status == 'unblock') {
                         $user->status = 'active';
+                        $user->save();
+                    } elseif ($status == 'suspended') {
+                        $user->status = $status;
                         $user->save();
                     }
                     DB::commit();

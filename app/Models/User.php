@@ -105,6 +105,7 @@
                 if (file_exists(public_path($avatarPath))) {
                     unlink(public_path($avatarPath));
                     $this->avatar = null;
+                    $this->save();
                 }
             }
         }

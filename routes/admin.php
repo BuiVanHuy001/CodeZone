@@ -16,10 +16,11 @@
             '/course' => CourseController::class,
             '/blog' => BlogController::class
         ], ['as' => 'admin']);
-    });
-    Route::middleware('check.user.is.admin')->group(function(){
         Route::post('/update-course-status/{id}', [CourseController::class, 'updateStatus'])->name('admin.update-course-status');
         Route::post('/update-blog-status/{id}', [BlogController::class, 'updateStatus'])->name('admin.update-blog-status');
         Route::post('/update-instructor-status/{id}', [InstructorController::class, 'updateStatus'])->name('admin.update-instructor-status');
+        Route::post('/update-student-status/{id}', [StudentController::class, 'updateStatus'])->name('admin.update-student-status');
     });
+//    Route::middleware('check.user.is.admin')->group(function(){
+//    });
 

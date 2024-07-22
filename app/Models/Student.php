@@ -22,8 +22,7 @@ class Student extends Model
     private array $statusName = [
         'pending' => 'Chờ phê duyệt',
         'active' => 'Hoạt động',
-        'suspended' => 'Khóa',
-        'rejected' => 'Từ chối'
+        'suspended' => 'Khóa'
     ];
     public function getBadgeColor(): string
     {
