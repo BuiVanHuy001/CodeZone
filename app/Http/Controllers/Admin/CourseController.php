@@ -25,6 +25,7 @@
         public function index(Request $request): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
         {
             $status = $request->status ?? null;
+            
             if (!is_null($status)) {
                 $courses = Course::where('status', $status)->get();
             } else {
