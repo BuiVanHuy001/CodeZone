@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('progress_trackings');
+        Schema::dropIfExists('progress_tracking');
     }
 };

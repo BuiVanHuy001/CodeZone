@@ -39,80 +39,23 @@
                 <li class="with-megamenu has-menu-child-item position-static">
                     <a href="#">Categories</a>
                     <ul class="rbt-megamenu rbt-vertical-nav-list-wrapper vertical-nav-menu">
-                        <li class="vertical-nav-item with-megamenu has-menu-child-item position-static">
-                            <a href="#">Course School</a>
-                            <div class="vartical-nav-content-menu-wrapper">
-                                <div class="vartical-nav-content-menu">
-                                    <h3 class="rbt-short-title">Course Title</h3>
-                                    <ul class="rbt-vertical-nav-list-wrapper">
-                                        <li><a href="#">Web Design</a></li>
-                                        <li><a href="#">Art</a></li>
-                                        <li><a href="#">Figma</a></li>
-                                        <li><a href="#">Adobe</a></li>
-                                    </ul>
+                        <h6 class="rbt-short-title">Explore by Goal</h6>
+                        @foreach ($categories as $category)
+                            <li class="vertical-nav-item with-megamenu has-menu-child-item position-static">
+                                <a href="#">{{ $category->name }}</a>
+                                <div class="vartical-nav-content-menu-wrapper">
+                                    <div class="vartical-nav-content-menu">
+                                        <ul class="rbt-vertical-nav-list-wrapper">
+                                            @forelse($category->children as $child)
+                                                <li><a href="#">{{ $child->name }}</a></li>
+                                            @empty
+                                                <li><a href="#">No Subcategories</a></li>
+                                            @endforelse
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="vartical-nav-content-menu">
-                                    <h3 class="rbt-short-title">Course Title</h3>
-                                    <ul class="rbt-vertical-nav-list-wrapper">
-                                        <li><a href="#">Photo</a></li>
-                                        <li><a href="#">English</a></li>
-                                        <li><a href="#">Math</a></li>
-                                        <li><a href="#">Read</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="vertical-nav-item with-megamenu has-menu-child-item position-static">
-                            <a href="#">Online School</a>
-                            <div class="vartical-nav-content-menu-wrapper">
-                                <div class="vartical-nav-content-menu">
-                                    <h3 class="rbt-short-title">Course Title</h3>
-                                    <ul class="rbt-vertical-nav-list-wrapper">
-                                        <li><a href="#">Photo</a></li>
-                                        <li><a href="#">English</a></li>
-                                        <li><a href="#">Math</a></li>
-                                        <li><a href="#">Read</a></li>
-                                    </ul>
-                                </div>
-                                <div class="vartical-nav-content-menu">
-                                    <h3 class="rbt-short-title">Course Title</h3>
-                                    <ul class="rbt-vertical-nav-list-wrapper">
-                                        <li><a href="#">Web Design</a></li>
-                                        <li><a href="#">Art</a></li>
-                                        <li><a href="#">Figma</a></li>
-                                        <li><a href="#">Adobe</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="vertical-nav-item with-megamenu has-menu-child-item position-static">
-                            <a href="#">kindergarten</a>
-                            <div class="vartical-nav-content-menu-wrapper">
-                                <div class="vartical-nav-content-menu">
-                                    <h3 class="rbt-short-title">Course Title</h3>
-                                    <ul class="rbt-vertical-nav-list-wrapper">
-                                        <li><a href="#">Photo</a></li>
-                                        <li><a href="#">English</a></li>
-                                        <li><a href="#">Math</a></li>
-                                        <li><a href="#">Read</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="vertical-nav-item with-megamenu has-menu-child-item position-static">
-                            <a href="#">Classic LMS</a>
-                            <div class="vartical-nav-content-menu-wrapper">
-                                <div class="vartical-nav-content-menu">
-                                    <h3 class="rbt-short-title">Course Title</h3>
-                                    <ul class="rbt-vertical-nav-list-wrapper">
-                                        <li><a href="#">Web Design</a></li>
-                                        <li><a href="#">Art</a></li>
-                                        <li><a href="#">Figma</a></li>
-                                        <li><a href="#">Adobe</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        @endforeach
                     </ul>
                 </li>
 

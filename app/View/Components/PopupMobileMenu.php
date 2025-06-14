@@ -4,14 +4,15 @@ namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
-class popup-mobile-menu extends Component
+class PopupMobileMenu extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(public Collection $categories)
     {
         //
     }

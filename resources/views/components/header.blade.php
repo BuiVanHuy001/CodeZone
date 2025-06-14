@@ -6,13 +6,13 @@
             <div class="mainbar-row rbt-navigation-start align-items-center">
                 <div class="header-left d-flex align-items-center">
                     <div class="logo logo-dark">
-                        <a href="">
+                        <a href="{{ route('page.home') }}">
                             <img src="{{ asset('images/logo/logo-dark.png') }}" alt="Education Logo Images">
                         </a>
                     </div>
 
                     <div class="logo d-none logo-light">
-                        <a href="">
+                        <a href="{{ route('page.home') }}">
                             <img src="{{ asset('images/logo/logo-light.png') }}" alt="Education Logo Images">
                         </a>
                     </div>
@@ -32,233 +32,39 @@
                                 <div class="category-menu-item">
                                     <div class="rbt-vertical-nav">
                                         <ul class="rbt-vertical-nav-list-wrapper vertical-nav-menu">
-                                            <li class="vertical-nav-item active">
-                                                <a href="#tab1">Course School</a>
-                                            </li>
-                                            <li class="vertical-nav-item">
-                                                <a href="#tab2">Online School</a>
-                                            </li>
-                                            <li class="vertical-nav-item">
-                                                <a href="#tab3">kindergarten</a>
-                                            </li>
-                                            <li class="vertical-nav-item">
-                                                <a href="#tab4">Classic LMS</a>
-                                            </li>
+                                            <h3 class="rbt-short-title">Explore by Goal</h3>
+                                        @foreach($categories as $category)
+                                                <li class="vertical-nav-item active">
+                                                    <a href="#tab{{ $loop->iteration }}">{{ $category->name }}</a>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                     <div class="rbt-vertical-nav-content">
-                                        <!-- Start One Item  -->
-                                        <div class="rbt-vertical-inner tab-content" id="tab1" style="display: block">
-                                            <div class="rbt-vertical-single">
-                                                <div class="row">
-                                                    <div class="col-lg-6 col-sm-6 col-6">
-                                                        <div class="vartical-nav-content-menu">
-                                                            <h3 class="rbt-short-title">Course Title</h3>
-                                                            <ul class="rbt-vertical-nav-list-wrapper">
-                                                                <li><a href="#">Web Design</a></li>
-                                                                <li><a href="#">Art</a></li>
-                                                                <li><a href="#">Figma</a></li>
-                                                                <li><a href="#">Adobe</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 col-sm-6 col-6">
-                                                        <div class="vartical-nav-content-menu">
-                                                            <h3 class="rbt-short-title">Course Title</h3>
-                                                            <ul class="rbt-vertical-nav-list-wrapper">
-                                                                <li><a href="#">Photo</a></li>
-                                                                <li><a href="#">English</a></li>
-                                                                <li><a href="#">Math</a></li>
-                                                                <li><a href="#">Read</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End One Item  -->
-
-                                        <!-- Start One Item  -->
-                                        <div class="rbt-vertical-inner tab-content" id="tab2">
-                                            <div class="rbt-vertical-single">
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        <div class="vartical-nav-content-menu">
-                                                            <h3 class="rbt-short-title">Course Title</h3>
-                                                            <ul class="rbt-vertical-nav-list-wrapper">
-                                                                <li><a href="#">Photo</a></li>
-                                                                <li><a href="#">English</a></li>
-                                                                <li><a href="#">Math</a></li>
-                                                                <li><a href="#">Read</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <div class="vartical-nav-content-menu">
-                                                            <h3 class="rbt-short-title">Course Title</h3>
-                                                            <ul class="rbt-vertical-nav-list-wrapper">
-                                                                <li><a href="#">Web Design</a></li>
-                                                                <li><a href="#">Art</a></li>
-                                                                <li><a href="#">Figma</a></li>
-                                                                <li><a href="#">Adobe</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End One Item  -->
-
-                                        <!-- Start One Item  -->
-                                        <div class="rbt-vertical-inner tab-content" id="tab3">
-                                            <div class="rbt-vertical-single">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="vartical-nav-content-menu">
-                                                            <h3 class="rbt-short-title">Course Title</h3>
-                                                            <ul class="rbt-vertical-nav-list-wrapper">
-                                                                <li><a href="#">Photo</a></li>
-                                                                <li><a href="#">English</a></li>
-                                                                <li><a href="#">Math</a></li>
-                                                            </ul>
-                                                            <div class="read-more-btn">
-                                                                <a class="rbt-btn-link" href="#">Learn More<i
-                                                                        class="feather-arrow-right"></i></a>
+                                        @foreach($categories as $category)
+                                            <div class="rbt-vertical-inner tab-content" id="tab{{ $loop->iteration }}" @if($loop->iteration === 1)style="display:block" @endif>
+                                                <div class="rbt-vertical-single">
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-sm-6 col-6">
+                                                            <div class="vartical-nav-content-menu">
+                                                                <ul class="rbt-vertical-nav-list-wrapper">
+                                                                    @forelse($category->children as $categoryChildren)
+                                                                        <li><a href="#">{{ $categoryChildren->name }}</a></li>
+                                                                    @empty
+                                                                        <li><a href="#">No Subcategories</a></li>
+                                                                    @endforelse
+                                                                </ul>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- End One Item  -->
-
-                                        <!-- Start One Item  -->
-                                        <div class="rbt-vertical-inner tab-content" id="tab4">
-                                            <div class="rbt-vertical-single">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="vartical-nav-content-menu">
-                                                            <h3 class="rbt-short-title">Course Title</h3>
-                                                            <ul class="rbt-vertical-nav-list-wrapper">
-                                                                <li><a href="#">Photo</a></li>
-                                                                <li><a href="#">English</a></li>
-                                                                <li><a href="#">Math</a></li>
-                                                                <li><a href="#">Read</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End One Item  -->
-
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="rbt-offcanvas-side-menu rbt-category-sidemenu">
-                        <div class="inner-wrapper">
-                            <div class="inner-top">
-                                <div class="inner-title">
-                                    <h4 class="title">Course Category</h4>
-                                </div>
-                                <div class="rbt-btn-close">
-                                    <button class="rbt-close-offcanvas rbt-round-btn"><i class="feather-x"></i></button>
-                                </div>
-                            </div>
-                            <nav class="side-nav w-100">
-                                <ul class="rbt-vertical-nav-list-wrapper vertical-nav-menu">
-                                    <li class="vertical-nav-item">
-                                        <a href="#">Course School</a>
-                                        <div class="vartical-nav-content-menu-wrapper">
-                                            <div class="vartical-nav-content-menu">
-                                                <h3 class="rbt-short-title">Course Title</h3>
-                                                <ul class="rbt-vertical-nav-list-wrapper">
-                                                    <li><a href="#">Web Design</a></li>
-                                                    <li><a href="#">Art</a></li>
-                                                    <li><a href="#">Figma</a></li>
-                                                    <li><a href="#">Adobe</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="vartical-nav-content-menu">
-                                                <h3 class="rbt-short-title">Course Title</h3>
-                                                <ul class="rbt-vertical-nav-list-wrapper">
-                                                    <li><a href="#">Photo</a></li>
-                                                    <li><a href="#">English</a></li>
-                                                    <li><a href="#">Math</a></li>
-                                                    <li><a href="#">Read</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="vertical-nav-item">
-                                        <a href="#">Online School</a>
-                                        <div class="vartical-nav-content-menu-wrapper">
-                                            <div class="vartical-nav-content-menu">
-                                                <h3 class="rbt-short-title">Course Title</h3>
-                                                <ul class="rbt-vertical-nav-list-wrapper">
-                                                    <li><a href="#">Photo</a></li>
-                                                    <li><a href="#">English</a></li>
-                                                    <li><a href="#">Math</a></li>
-                                                    <li><a href="#">Read</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="vartical-nav-content-menu">
-                                                <h3 class="rbt-short-title">Course Title</h3>
-                                                <ul class="rbt-vertical-nav-list-wrapper">
-                                                    <li><a href="#">Web Design</a></li>
-                                                    <li><a href="#">Art</a></li>
-                                                    <li><a href="#">Figma</a></li>
-                                                    <li><a href="#">Adobe</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="vertical-nav-item">
-                                        <a href="#">kindergarten</a>
-                                        <div class="vartical-nav-content-menu-wrapper">
-                                            <div class="vartical-nav-content-menu">
-                                                <h3 class="rbt-short-title">Course Title</h3>
-                                                <ul class="rbt-vertical-nav-list-wrapper">
-                                                    <li><a href="#">Photo</a></li>
-                                                    <li><a href="#">English</a></li>
-                                                    <li><a href="#">Math</a></li>
-                                                    <li><a href="#">Read</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="vertical-nav-item">
-                                        <a href="#">Classic LMS</a>
-                                        <div class="vartical-nav-content-menu-wrapper">
-                                            <div class="vartical-nav-content-menu">
-                                                <h3 class="rbt-short-title">Course Title</h3>
-                                                <ul class="rbt-vertical-nav-list-wrapper">
-                                                    <li><a href="#">Web Design</a></li>
-                                                    <li><a href="#">Art</a></li>
-                                                    <li><a href="#">Figma</a></li>
-                                                    <li><a href="#">Adobe</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="read-more-btn">
-                                    <div class="rbt-btn-wrapper mt--20">
-                                        <a class="rbt-btn btn-border-gradient radius-round btn-sm hover-transform-none w-100 justify-content-center text-center" href="#">
-                                            <span>Learn More</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </nav>
-                            <div class="rbt-offcanvas-footer">
-
-                            </div>
-                        </div>
-                    </div>
-                    <a class="rbt-close_side_menu" href="javascript:void(0);"></a>
                 </div>
                 <div class="rbt-main-navigation d-none d-xl-block">
                     <nav class="mainmenu-nav">
@@ -293,6 +99,7 @@
                             </a>
                         </li>
 
+                        @auth
                         <li class="access-icon rbt-user-wrapper right-align-dropdown">
                             <a class="rbt-round-btn" href="#">
                                 <i class="feather-user"></i>
@@ -304,7 +111,7 @@
                                             <img src="{{ asset('images/team/avatar.jpg') }}" alt="User Images">
                                         </div>
                                         <div class="admin-info">
-                                            <span class="name">Taylor Otwell</span>
+                                            <span class="name">{{ auth()->user()->name }}</span>
                                         </div>
                                     </div>
                                     <ul class="user-list-wrapper">
@@ -333,7 +140,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="instructor-reviews.html">
+                                            <a href="">
                                                 <i class="feather-star"></i>
                                                 <span>My Reviews</span>
                                             </a>
@@ -351,16 +158,20 @@
                                     <hr class="mt--10 mb--10">
                                     <ul class="user-list-wrapper">
                                         <li>
-                                            <a href="instructor-settings.html">
+                                            <a href="">
                                                 <i class="feather-settings"></i>
                                                 <span>Settings</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="">
-                                                <i class="feather-log-out"></i>
-                                                <span>Logout</span>
-                                            </a>
+                                            <form action="{{ route('client.logout') }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="logout-button btn btn-danger">
+                                                    <i class="feather-log-out"></i>
+                                                    <span>Logout</span>
+                                                </button>
+                                            </form>
                                         </li>
                                     </ul>
                                 </div>
@@ -373,6 +184,14 @@
                                 <span class="rbt-cart-count">4</span>
                             </a>
                         </li>
+                        @endauth
+
+                        @guest
+                        <li class="access-icon rbt-user-wrapper right-align-dropdown gap-2">
+                            <a class="rbt-btn btn-sm btn-border" href="{{ route('client.login') }}">Login</a>
+                            <a class="rbt-btn btn-sm" href="{{ route('client.register') }}">Register</a>
+                        </li>
+                        @endguest
 
                         <li>
                             <div id="my_switcher" class="my_switcher">
@@ -560,3 +379,5 @@
     </div>
 
 </header>
+<x-popup-mobile-menu :$categories />
+<x-cart-side-menu/>

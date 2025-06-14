@@ -12,7 +12,7 @@ class Course extends Model
     /** @use HasFactory<CourseFactory> */
     use HasFactory, SoftDeletes;
 
-    publicw static array $STATUSES = ['draft', 'published', 'pending', 'rejected', 'deleted'];
+    public static array $STATUSES = ['draft', 'published', 'pending', 'rejected', 'deleted'];
 
-    publicw static array $LEVELS = ['beginner', 'intermediate', 'advanced'];
+    public static array $LEVELS = ['beginner', 'intermediate', 'advanced'];
 }

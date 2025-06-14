@@ -1,8 +1,4 @@
-@extends('layouts.client')
-@section('content')
-    <x-header />
-    <x-popup-mobile-menu />
-    <x-cart-side-menu />
+<x-base categories="$categories" page-title="Trang chủ">
     <div class="rbt-banner-area rbt-banner-1 variation-2 height-750">
         <div class="container">
             <div class="row justify-content-between align-items-center">
@@ -665,7 +661,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="load-more-btn text-start text-md-end">
-                        <a class="rbt-btn rbt-switch-btn bg-primary-opacity" href="./blog.html">
+                        <a class="rbt-btn rbt-switch-btn bg-primary-opacity" href="">
                             <span data-text="View all Blogs">View all Blogs</span>
                         </a>
                     </div>
@@ -756,7 +752,4 @@
             <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
         </svg>
     </div>
-
-
-    <x-footer />
-@endsection
+</x-base>

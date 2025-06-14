@@ -10,4 +10,14 @@ class Category extends Model
 {
     /** @use HasFactory<CategoriesFactory> */
     use HasFactory;
+
+    public function scopeGetParents($query)
+    {
+        return $query->whereNull('parent_id')->get();
+    }
+
+    public function scopeGetChildren($query, $parentId)
+    {
+        return $query->where('parent_id', $parentId)->get();
+    }
 }
