@@ -3,8 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\database\factories\UserFactory;
 use App\Traits\HasSlug;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,9 +12,9 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasSlug;
 
-    protected $fillable = ['name', 'email', 'password', 'slug'];
+    protected $fillable = ['name', 'email', 'password', 'slug', 'avatar_url'];
 
     protected $hidden = ['password', 'remember_token',];
 
@@ -25,5 +25,15 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return ['email_verified_at' => 'datetime', 'password' => 'hashed'];
+    }
+
+    public function getAvatarPath(): string
+    {
+        return $this->avatar_url ?? asset('images/team/temp-avatar.webp');
+    }
+
+    public function slugSourceField(): string
+    {
+        return $this->name;
     }
 }

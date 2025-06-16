@@ -1,12 +1,16 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\Socialite\SocialiteController;
+use App\Http\Controllers\Auth\Traditional\AuthenticationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('client.login');
-Route::post('login', [LoginController::class, 'login'])->name('login.post');
-Route::delete('logout', [LogoutController::class, 'logout'])->name('client.logout');
-Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('client.register');
-Route::post('register', [RegisterController::class, 'studentRegister'])->name('student.register.post');
+Route::get('login', [AuthenticationController::class, 'showLoginForm'])->name('client.login');
+Route::post('login', [AuthenticationController::class, 'login'])->name('login.post');
+Route::delete('logout', [AuthenticationController::class, 'logout'])->name('client.logout');
+Route::get('register', [AuthenticationController::class, 'showRegistrationForm'])->name('client.register');
+Route::post('register', [AuthenticationController::class, 'studentRegister'])->name('student.register.post');
+
+Route::get('auth/{provider}/redirect', [SocialiteController::class, 'redirect'])
+    ->name('socialite.redirect');
+Route::get('auth/{provider}/callback', [SocialiteController::class, 'callback'])
+    ->name('socialite.callback');

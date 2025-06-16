@@ -7,17 +7,21 @@ use Illuminate\Support\Str;
 
 trait HasSlug
 {
-    public function generateUniqueSlug(string $name, Model $model): string
+    public static function bootHasSlug(): void
     {
-        $slug = Str::slug($name);
-        $originalSlug = $slug;
-        $count = 1;
+        static::creating(function (Model $model) {
+            if (empty($model->slug)) {
+                $slug = Str::slug($model->slugSourceField());
+                $originalSlug = $slug;
+                $count = 1;
 
-        while ($model::where('slug', $slug)->exists()) {
-            $slug = "{$originalSlug}-{$count}";
-            $count++;
-        }
+                while ($model::where('slug', $slug)->exists()) {
+                    $slug = "{$originalSlug}-{$count}";
+                    $count++;
+                }
 
-        return $slug;
+                $model->slug = $slug;
+            }
+        });
     }
 }

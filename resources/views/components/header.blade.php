@@ -108,7 +108,8 @@
                                 <div class="inner">
                                     <div class="rbt-admin-profile">
                                         <div class="admin-thumbnail">
-                                            <img src="{{ asset('images/team/avatar.jpg') }}" alt="User Images">
+                                            <img src="{{ auth()->user()->getAvatarPath() }}" alt="User Images" crossorigin="anonymous"
+                                            >
                                         </div>
                                         <div class="admin-info">
                                             <span class="name">{{ auth()->user()->name }}</span>
