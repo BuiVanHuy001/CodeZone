@@ -45,7 +45,7 @@
                                             <div class="rbt-vertical-inner tab-content" id="tab{{ $loop->iteration }}" @if($loop->iteration === 1)style="display:block" @endif>
                                                 <div class="rbt-vertical-single">
                                                     <div class="row">
-                                                        <div class="col-lg-6 col-sm-6 col-6">
+                                                        <div class="col-12">
                                                             <div class="vartical-nav-content-menu">
                                                                 <ul class="rbt-vertical-nav-list-wrapper">
                                                                     @forelse($category->children as $categoryChildren)
@@ -108,8 +108,7 @@
                                 <div class="inner">
                                     <div class="rbt-admin-profile">
                                         <div class="admin-thumbnail">
-                                            <img src="{{ auth()->user()->getAvatarPath() }}" alt="User Images" crossorigin="anonymous"
-                                            >
+                                            <img src="{{ auth()->user()->getAvatarPath() }}" alt="User Images" crossorigin="anonymous">
                                         </div>
                                         <div class="admin-info">
                                             <span class="name">{{ auth()->user()->name }}</span>
@@ -117,9 +116,9 @@
                                     </div>
                                     <ul class="user-list-wrapper">
                                         <li>
-                                            <a href="">
+                                            <a href="{{ route('instructor.dashboard.index') }}">
                                                 <i class="feather-home"></i>
-                                                <span>My Dashboard</span>
+                                                <span>Dashboard</span>
                                             </a>
                                         </li>
                                         <li>
