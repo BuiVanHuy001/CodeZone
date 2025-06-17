@@ -8,15 +8,6 @@ use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public string $activeComponent = '';
-
-    protected array $listeners = ['componentSelected' => 'updateComponent'];
-
-    public function updateComponent($component): void
-    {
-        $this->activeComponent = $component;
-    }
-
 
     /**
      * Display the instructor's dashboard.

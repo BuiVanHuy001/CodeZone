@@ -4,6 +4,7 @@ namespace App\Services\TraditionalLogin;
 
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use SweetAlert2\Laravel\Swal;
 
 class AuthenticationService
 {

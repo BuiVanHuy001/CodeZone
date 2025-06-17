@@ -9,14 +9,12 @@
     <meta name="description" content="Nền tảng học trực tuyến hàng đầu với các khóa học chất lượng cao">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset("/images/favicon.ico") }}">
-    @yield('custom_css')
     @include('sweetalert2::index')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="rbt-header-sticky">
 @yield('content')
 </body>
-@yield('custom_js')
 <script src="{{ asset('js/vendor/isotop.js') }}"></script>
 <script src="{{ asset('js/vendor/imageloaded.js') }}"></script>
 <script src="{{ asset('js/vendor/wow.js') }}"></script>
