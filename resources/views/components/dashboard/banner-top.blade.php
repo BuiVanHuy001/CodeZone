@@ -21,7 +21,7 @@
         </div>
         <div class="rbt-tutor-information-right">
             <div class="tutor-btn">
-                <a class="rbt-btn btn-md hover-icon-reverse" href="">
+                <a class="rbt-btn btn-md hover-icon-reverse" wire:navigate="" href="{{ route('instructor.dashboard.create-course') }}">
                     <span class="icon-reverse-wrapper">
                         <span class="btn-text">Create a New Course</span>
                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>

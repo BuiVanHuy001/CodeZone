@@ -21,3 +21,6 @@ Route::get('instructor/dashboard/reviews', ReviewsDashboard::class)
 
 Route::get('instructor/dashboard/settings', SettingsDashboard::class)
     ->name('instructor.dashboard.settings');
+
+Route::get('instructor/create-course', \App\Livewire\Client\Instructor\CreateCourse::class)
+    ->name('instructor.dashboard.create-course');

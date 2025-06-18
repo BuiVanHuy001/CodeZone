@@ -331,7 +331,7 @@ SOFTWARE.
     // Check Cookie
     // eraseCookie('jss_selected');
     var activeStyle = Cookies.get("styleCookieName");
-    if (activeStyle == "dark") {
+    if (activeStyle === "dark") {
       $("#my_switcher").find(".setColor.dark").addClass("active");
       $("body").removeClass("active-light-mode").addClass("active-dark-mode");
     } else if (activeStyle == "light") {

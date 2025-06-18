@@ -15,9 +15,8 @@
 <body class="rbt-header-sticky">
 @yield('content')
 </body>
-<script src="{{ asset('js/vendor/isotop.js') }}"></script>
-<script src="{{ asset('js/vendor/imageloaded.js') }}"></script>
-<script src="{{ asset('js/vendor/wow.js') }}"></script>
-<script src="{{ asset('js/vendor/waypoint.min.js') }}"></script>
-<script src="{{ asset('js/vendor/easypie.js') }}"></script>
+{{--<script src="{{ asset('js/vendor/isotop.js') }}"></script>--}}
+{{--<script src="{{ asset('js/vendor/imageloaded.js') }}"></script>--}}
+{{--<script src="{{ asset('js/vendor/wow.js') }}"></script>--}}
+{{--<script src="{{ asset('js/vendor/waypoint.min.js') }}"></script>--}}
 </html>
