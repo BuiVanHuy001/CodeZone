@@ -21,9 +21,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Single Card  -->
 
-                <!-- Start Single Card  -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                     <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-secondary-opacity">
                         <div class="inner">
@@ -40,9 +38,7 @@
                     </div>
 
                 </div>
-                <!-- End Single Card  -->
 
-                <!-- Start Single Card  -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                     <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-violet-opacity">
                         <div class="inner">
@@ -58,9 +54,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Single Card  -->
 
-                <!-- Start Single Card  -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                     <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-pink-opacity">
                         <div class="inner">
@@ -76,9 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Single Card  -->
 
-                <!-- Start Single Card  -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                     <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-coral-opacity">
                         <div class="inner">
@@ -94,9 +86,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Single Card  -->
 
-                <!-- Start Single Card  -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                     <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-warning-opacity">
                         <div class="inner">
@@ -112,7 +102,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Single Card  -->
 
             </div>
         </div>
