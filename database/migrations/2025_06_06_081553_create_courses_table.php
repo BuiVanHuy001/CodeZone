@@ -32,6 +32,10 @@ return new class extends Migration
 
             $table->foreignIdFor(Category::class);
 
+	        $table->json('skills')->nullable();
+	        $table->json('requirements')->nullable();
+
+	        $table->softDeletes();
             $table->timestamps();
         });
     }

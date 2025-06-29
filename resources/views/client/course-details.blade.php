@@ -15,14 +15,15 @@
                             <li class="rbt-breadcrumb-item active">Web developer</li>
                         </ul>
                         <h1 class="title">Node.js, Express, MongoDB & More: The Complete Bootcamp</h1>
-                        <p class="description">Master Node by building a real-world RESTful API and web app (with authentication, Node.js security, payments & more)</p>
+                        <p class="description">Master Node by building a real-world RESTful API and web app (with
+                            authentication, Node.js security, payments & more)</p>
 
                         <div class="d-flex align-items-center mb--20 flex-wrap rbt-course-details-feature">
 
                             <div class="feature-sin best-seller-badge">
                                 <span class="rbt-badge-2">
                                     <span class="image">
-	                                    <img src="{{ asset('images/icons/card-icon-1.png') }}" alt="Best Seller Icon">
+                                        <img src="{{ asset('images/icons/card-icon-1.png') }}" alt="Best Seller Icon">
                                     </span> Bestseller
                                 </span>
                             </div>
@@ -110,13 +111,16 @@
                                 <div class="row g-5 mb--30">
                                     <div class="col-lg-6">
                                         <ul class="rbt-list-style-1">
-                                            <li><i class="feather-check"></i>Master the entire modern back-end stack: Node,
+                                            <li><i class="feather-check"></i>Master the entire modern back-end stack:
+                                                Node,
                                                 Express, MongoDB and Mongoose (MongoDB JS driver).
                                             </li>
-                                            <li><i class="feather-check"></i>Build a fast, scalable, feature-rich RESTful
+                                            <li><i class="feather-check"></i>Build a fast, scalable, feature-rich
+                                                RESTful
                                                 API (includes filters, sorts, pagination, and much more.
                                             </li>
-                                            <li><i class="feather-check"></i>CRUD operations with MongoDB and Mongoose.</li>
+                                            <li><i class="feather-check"></i>CRUD operations with MongoDB and Mongoose.
+                                            </li>
                                             <li><i class="feather-check"></i>Server-side website rendering with Pug
                                                 templates.
                                             </li>
@@ -128,11 +132,13 @@
                                             <li><i class="feather-check"></i>Build a complete, beautiful & real-world
                                                 application from start to finish (API and server-side rendered website).
                                             </li>
-                                            <li><i class="feather-check"></i>Learn how Node really works behind the scenes:
+                                            <li><i class="feather-check"></i>Learn how Node really works behind the
+                                                scenes:
                                                 event loop, blocking vs non-blocking code, streams, modules, etc.
                                             </li>
                                             <li><i class="feather-check"></i>Sending emails & uploading files.</li>
-                                            <li><i class="feather-check"></i>Downloadable videos, code and design assets for
+                                            <li><i class="feather-check"></i>Downloadable videos, code and design assets
+                                                for
                                                 projects.
                                             </li>
                                         </ul>
@@ -169,8 +175,8 @@
                                                                         class="text">Course Introduction</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
                                                         <li><a href="">
@@ -179,19 +185,20 @@
                                                                         class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
                                                         <li><a href="">
                                                                 <div class="course-content-left">
                                                                     <i class="feather-play-circle"></i> <span
-                                                                        class="text">Why You Shouldn't Pursue Education.</span>
+                                                                        class="text">Why You Shouldn't Pursue
+                                                                        Education.</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
@@ -201,19 +208,20 @@
                                                                         class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
                                                         <li><a href="">
                                                                 <div class="course-content-left">
                                                                     <i class="feather-play-circle"></i> <span
-                                                                        class="text">Ten Factors Affecting the Longevity of Education.</span>
+                                                                        class="text">Ten Factors Affecting the
+                                                                        Longevity of Education.</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
@@ -223,8 +231,8 @@
                                                                         class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
                                                     </ul>
@@ -237,7 +245,8 @@
                                                 <button class="accordion-button collapsed" type="button"
                                                         data-bs-toggle="collapse" data-bs-target="#collapseTwo3"
                                                         aria-expanded="false" aria-controls="collapseTwo3">
-                                                    Skill Development and Setup <span class="rbt-badge-5 ml--10">1 hour 50 minutes</span>
+                                                    Skill Development and Setup <span class="rbt-badge-5 ml--10">1 hour
+                                                        50 minutes</span>
                                                 </button>
                                             </h2>
                                             <div id="collapseTwo3" class="accordion-collapse collapse"
@@ -250,8 +259,8 @@
                                                                         class="text">Course Introduction</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-															<span class="course-lock">
-																<i class="feather-lock"></i></span>
+                                                                    <span class="course-lock">
+                                                                        <i class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
                                                         <li><a href="">
@@ -260,8 +269,8 @@
                                                                         class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-															<span class="course-lock">
-																<i class="feather-lock"></i></span>
+                                                                    <span class="course-lock">
+                                                                        <i class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
@@ -269,11 +278,12 @@
                                                             <a href="">
                                                                 <div class="course-content-left">
                                                                     <i class="feather-play-circle"></i>
-                                                                    <span class="text">Why You Shouldn't Pursue Education.</span>
+                                                                    <span class="text">Why You Shouldn't Pursue
+                                                                        Education.</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-															<span class="course-lock">
-																<i class="feather-lock"></i></span>
+                                                                    <span class="course-lock">
+                                                                        <i class="feather-lock"></i></span>
                                                                 </div>
                                                             </a>
                                                         </li>
@@ -285,19 +295,22 @@
                                                                     <span class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-															<span class="course-lock"><i class="feather-lock"></i>
-															</span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i>
+                                                                    </span>
                                                                 </div>
-                                                            </a></li>
+                                                            </a>
+                                                        </li>
 
                                                         <li><a href="">
                                                                 <div class="course-content-left">
                                                                     <i class="feather-play-circle"></i> <span
-                                                                        class="text">Ten Factors Affecting the Longevity of Education.</span>
+                                                                        class="text">Ten Factors Affecting the
+                                                                        Longevity of Education.</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
@@ -307,8 +320,8 @@
                                                                         class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
                                                     </ul>
@@ -321,7 +334,8 @@
                                                 <button class="accordion-button collapsed" type="button"
                                                         data-bs-toggle="collapse" data-bs-target="#collapseTwo4"
                                                         aria-expanded="false" aria-controls="collapseTwo4">
-                                                    15 Things to Know About Education? <span class="rbt-badge-5 ml--10">2 hours 60 minutes</span>
+                                                    15 Things to Know About Education? <span
+                                                        class="rbt-badge-5 ml--10">2 hours 60 minutes</span>
                                                 </button>
                                             </h2>
                                             <div id="collapseTwo4" class="accordion-collapse collapse"
@@ -334,24 +348,30 @@
                                                                     <span class="text">Course Introduction</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                                                                    <span class="course-lock"><i class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
                                                         <li><a href="">
                                                                 <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span class="text">Read Before Starting</span>
+                                                                    <i class="feather-file-text"></i> <span
+                                                                        class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                                                                    <span class="course-lock"><i class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
                                                         <li><a href="">
                                                                 <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i> <span class="text">Why You Shouldn't Pursue Education.</span>
+                                                                    <i class="feather-play-circle"></i> <span
+                                                                        class="text">Why You Shouldn't Pursue
+                                                                        Education.</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                                                                    <span class="course-lock"><i class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
@@ -361,26 +381,31 @@
                                                                         class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                                                                    <span class="course-lock"><i class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
                                                         <li><a href="">
                                                                 <div class="course-content-left">
                                                                     <i class="feather-play-circle"></i> <span
-                                                                        class="text">Ten Factors Affecting the Longevity of Education.</span>
+                                                                        class="text">Ten Factors Affecting the
+                                                                        Longevity of Education.</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                                                                    <span class="course-lock"><i class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
                                                         <li><a href="">
                                                                 <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span class="text">Read Before Starting</span>
+                                                                    <i class="feather-file-text"></i> <span
+                                                                        class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                                                                    <span class="course-lock"><i class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
                                                     </ul>
@@ -407,8 +432,8 @@
                                                                         class="text">Course Introduction</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
                                                         <li><a href="">
@@ -417,19 +442,20 @@
                                                                         class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
                                                         <li><a href="">
                                                                 <div class="course-content-left">
                                                                     <i class="feather-play-circle"></i> <span
-                                                                        class="text">Why You Shouldn't Pursue Education.</span>
+                                                                        class="text">Why You Shouldn't Pursue
+                                                                        Education.</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
@@ -439,19 +465,20 @@
                                                                         class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
                                                         <li><a href="">
                                                                 <div class="course-content-left">
                                                                     <i class="feather-play-circle"></i> <span
-                                                                        class="text">Ten Factors Affecting the Longevity of Education.</span>
+                                                                        class="text">Ten Factors Affecting the
+                                                                        Longevity of Education.</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
 
@@ -461,8 +488,8 @@
                                                                         class="text">Read Before Starting</span>
                                                                 </div>
                                                                 <div class="course-content-right">
-                            <span class="course-lock"><i
-                                    class="feather-lock"></i></span>
+                                                                    <span class="course-lock"><i
+                                                                            class="feather-lock"></i></span>
                                                                 </div>
                                                             </a></li>
                                                     </ul>
@@ -527,13 +554,15 @@
                                 <div class="media align-items-center">
                                     <div class="thumbnail">
                                         <a href="">
-                                            <img src="{{ asset('images/testimonial/testimonial-7.jpg') }}" alt="Author Images">
+                                            <img src="{{ asset('images/testimonial/testimonial-7.jpg') }}"
+                                                 alt="Author Images">
                                         </a>
                                     </div>
                                     <div class="media-body">
                                         <div class="author-info">
                                             <h5 class="title">
-                                                <a class="hover-flip-item-wrapper" href="./profile">B.M. Rafekul Islam</a>
+                                                <a class="hover-flip-item-wrapper" href="./profile">B.M. Rafekul
+                                                    Islam</a>
                                             </h5>
                                             <span class="b3 subtitle">Web Developer, Designer, and Teacher</span>
                                             <ul class="rbt-meta mb--20 mt--10">
@@ -545,18 +574,22 @@
                                         </div>
                                         <div class="content">
                                             <p class="description">Hi, I'm Rafekul Islam! I'm one of CodeZone's Top
-                                                Instructors, and all my premium courses have earned the best-selling status
+                                                Instructors, and all my premium courses have earned the best-selling
+                                                status
                                                 for outstanding performance and student satisfaction.</p>
 
                                             <p class="description">
                                                 I'm a full-stack web developer and designer with a passion for building
-                                                beautiful web interfaces from scratch. I've been building websites and apps
+                                                beautiful web interfaces from scratch. I've been building websites and
+                                                apps
                                                 since 2010 and also have a Master's degree in Engineering.
                                             </p>
                                             <p class="description">
                                                 I discovered my passion for teaching and helping others by sharing
-                                                everything I knew during college. This passion led me to CodeZone in 2015,
-                                                where I now have the privilege of training 2,000,000+ learners in the field
+                                                everything I knew during college. This passion led me to CodeZone in
+                                                2015,
+                                                where I now have the privilege of training 2,000,000+ learners in the
+                                                field
                                                 of web development.
                                             </p>
 
@@ -629,175 +662,205 @@
                                         <div class="review-wrapper">
                                             <div class="single-progress-bar">
                                                 <div class="rating-text">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" style="width: 63%"
-                                                         aria-valuenow="63" aria-valuemin="0" aria-valuemax="100"></div>
+                                                         aria-valuenow="63" aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
                                                 </div>
                                                 <span class="value-text">63%</span>
                                             </div>
 
                                             <div class="single-progress-bar">
                                                 <div class="rating-text">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                                                     </svg>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" style="width: 29%"
-                                                         aria-valuenow="29" aria-valuemin="0" aria-valuemax="100"></div>
+                                                         aria-valuenow="29" aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
                                                 </div>
                                                 <span class="value-text">29%</span>
                                             </div>
 
                                             <div class="single-progress-bar">
                                                 <div class="rating-text">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                                                     </svg>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" style="width: 6%"
-                                                         aria-valuenow="6" aria-valuemin="0" aria-valuemax="100"></div>
+                                                         aria-valuenow="6" aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
                                                 </div>
                                                 <span class="value-text">6%</span>
                                             </div>
 
                                             <div class="single-progress-bar">
                                                 <div class="rating-text">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                                                     </svg>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" style="width: 1%"
-                                                         aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+                                                         aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
                                                 </div>
                                                 <span class="value-text">1%</span>
                                             </div>
 
                                             <div class="single-progress-bar">
                                                 <div class="rating-text">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star-fill"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                                                     </svg>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                         fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor" class="bi bi-star"
+                                                         viewBox="0 0 16 16">
                                                         <path
                                                             d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                                                     </svg>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" style="width: 1%"
-                                                         aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+                                                         aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
                                                 </div>
                                                 <span class="value-text">1%</span>
                                             </div>
@@ -986,7 +1049,8 @@
                                         <div class="media-body">
                                             <div class="author-info">
                                                 <h5 class="title">
-                                                    <a class="hover-flip-item-wrapper" href="#">Sakib Al Hasan</a>
+                                                    <a class="hover-flip-item-wrapper" href="#">Sakib Al
+                                                        Hasan</a>
                                                 </h5>
                                                 <div class="rating">
                                                     <a href="#"><i class="fa fa-star"></i></a>
@@ -1041,7 +1105,8 @@
                                 <div class="rbt-card variation-01 rbt-hover">
                                     <div class="rbt-card-img">
                                         <a href="course-details.html">
-                                            <img src="{{ asset('images/course/course-online-01.jpg') }}" alt="Card image">
+                                            <img src="{{ asset('images/course/course-online-01.jpg') }}"
+                                                 alt="Card image">
                                             <div class="rbt-badge-3 bg-white">
                                                 <span>-40%</span>
                                                 <span>Giảm</span>
@@ -1081,11 +1146,13 @@
                                         <div class="rbt-author-meta mb--10">
                                             <div class="rbt-avater">
                                                 <a href="#">
-                                                    <img src="{{ asset('images/client/avatar-02.png') }}" alt="Sophia Jaymes">
+                                                    <img src="{{ asset('images/client/avatar-02.png') }}"
+                                                         alt="Sophia Jaymes">
                                                 </a>
                                             </div>
                                             <div class="rbt-author-info">
-                                                Bởi <a href="profile.html">Angela</a> Trong <a href="#">Phát triển</a>
+                                                Bởi <a href="profile.html">Angela</a> Trong <a href="#">Phát
+                                                    triển</a>
                                             </div>
                                         </div>
                                         <div class="rbt-card-bottom">
@@ -1107,7 +1174,8 @@
                                 <div class="rbt-card variation-01 rbt-hover">
                                     <div class="rbt-card-img">
                                         <a href="course-details.html">
-                                            <img src="{{ asset('images/course/course-online-02.jpg') }}" alt="Card image">
+                                            <img src="{{ asset('images/course/course-online-02.jpg') }}"
+                                                 alt="Card image">
                                         </a>
                                     </div>
                                     <div class="rbt-card-body">
@@ -1135,16 +1203,19 @@
                                             <li><i class="feather-users"></i>50 Học viên</li>
                                         </ul>
 
-                                        <p class="rbt-card-text">Đây là một sự thật đã được thiết lập từ lâu rằng người đọc
+                                        <p class="rbt-card-text">Đây là một sự thật đã được thiết lập từ lâu rằng người
+                                            đọc
                                             sẽ bị phân tâm.</p>
                                         <div class="rbt-author-meta mb--10">
                                             <div class="rbt-avater">
                                                 <a href="#">
-                                                    <img src="{{ asset('images/client/avatar-02.png') }}" alt="Sophia Jaymes">
+                                                    <img src="{{ asset('images/client/avatar-02.png') }}"
+                                                         alt="Sophia Jaymes">
                                                 </a>
                                             </div>
                                             <div class="rbt-author-info">
-                                                Bởi <a href="profile.html">Angela</a> in <a href="#">Development</a>
+                                                Bởi <a href="profile.html">Angela</a> in <a
+                                                    href="#">Development</a>
                                             </div>
                                         </div>
                                         <div class="rbt-card-bottom">
@@ -1176,7 +1247,8 @@
                                             <span class="play-icon"></span>
                                         </span>
                                     </div>
-                                    <span class="play-view-text d-block color-white"><i class="feather-eye"></i> Preview this course</span>
+                                    <span class="play-view-text d-block color-white"><i class="feather-eye"></i>
+                                        Preview this course</span>
                                 </div>
                             </a>
 
@@ -1194,7 +1266,8 @@
                                 </div>
 
                                 <div class="add-to-card-button mt--15">
-                                    <a class="rbt-btn btn-gradient icon-hover w-100 d-block text-center" href="#">
+                                    <a class="rbt-btn btn-gradient icon-hover w-100 d-block text-center"
+                                       href="#">
                                         <span class="btn-text">Add to cart</span>
                                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                     </a>
@@ -1209,10 +1282,12 @@
                                 <div class="rbt-widget-details has-show-more">
                                     <ul class="has-show-more-inner-content rbt-course-details-list-wrapper">
                                         <li>
-                                            <span>Duration: </span><span class="rbt-feature-value rbt-badge-5">5 hours 20 minutes</span>
+                                            <span>Duration: </span><span class="rbt-feature-value rbt-badge-5">5 hours
+                                                20 minutes</span>
                                         </li>
                                         <li>
-                                            <span>Enrolled: </span><span class="rbt-feature-value rbt-badge-5">100</span>
+                                            <span>Enrolled: </span><span
+                                                class="rbt-feature-value rbt-badge-5">100</span>
                                         </li>
                                         <li>
                                             <span>Lesson</span><span class="rbt-feature-value rbt-badge-5">50</span>
@@ -1221,13 +1296,15 @@
                                             <span>Level</span><span class="rbt-feature-value rbt-badge-5">Basic</span>
                                         </li>
                                         <li>
-                                            <span>Language: </span><span class="rbt-feature-value rbt-badge-5">English</span>
+                                            <span>Language: </span><span
+                                                class="rbt-feature-value rbt-badge-5">English</span>
                                         </li>
                                         <li>
                                             <span>Quiz</span><span class="rbt-feature-value rbt-badge-5">10</span>
                                         </li>
                                         <li>
-                                            <span>Certification</span><span class="rbt-feature-value rbt-badge-5">Yes</span>
+                                            <span>Certification</span><span
+                                                class="rbt-feature-value rbt-badge-5">Yes</span>
                                         </li>
                                     </ul>
                                     <div class="rbt-show-more-btn">Show more</div>

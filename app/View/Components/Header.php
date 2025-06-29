@@ -13,7 +13,7 @@ class Header extends Component
      public Collection $categories;
 
     /**
-     * Create a new component instance.
+     * Create a new components instance.
      */
     public function __construct()
     {
@@ -30,7 +30,7 @@ class Header extends Component
     }
 
     /**
-     * Get the view / contents that represent the component.
+     * Get the view / contents that represent the components.
      */
     public function render(): View|Closure|string
     {

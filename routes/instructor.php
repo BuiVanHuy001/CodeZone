@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Client\Instructor\CoursesDashboard;
+use App\Livewire\Client\Instructor\CreateCourse;
 use App\Livewire\Client\Instructor\IndexDashboard;
 use App\Livewire\Client\Instructor\ProfileDashboard;
 use App\Livewire\Client\Instructor\ReviewsDashboard;
@@ -22,5 +23,4 @@ Route::get('instructor/dashboard/reviews', ReviewsDashboard::class)
 Route::get('instructor/dashboard/settings', SettingsDashboard::class)
     ->name('instructor.dashboard.settings');
 
-Route::get('instructor/create-course', \App\Livewire\Client\Instructor\CreateCourse::class)
-    ->name('instructor.dashboard.create-course');
+Route::get('instructor/dashboard/create-course', CreateCourse::class)->name('instructor.courses.create');

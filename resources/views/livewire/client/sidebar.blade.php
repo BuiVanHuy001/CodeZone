@@ -8,16 +8,19 @@
                 <nav class="mainmenu-nav">
                     <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                         <li>
-                            <a wire:navigate href="{{ route('instructor.dashboard.index') }}" @class(['active' => request()->is('instructor/dashboard')])><i class="feather-home"></i><span>Dashboard</span></a>
+                            <a wire:navigate href="{{ route('instructor.dashboard.index') }}"
+                                @class(['active' => request()->is('instructor/dashboard')])><i class="feather-home"></i><span>Dashboard</span></a>
                         </li>
                         <li>
-                            <a wire:navigate href="{{ route('instructor.dashboard.profile') }}" @class(['active' => request()->is('instructor/dashboard/profile')]) ><i class="feather-user"></i><span>My Profile</span></a>
+                            <a wire:navigate href="{{ route('instructor.dashboard.profile') }}" wire:current="active"><i class="feather-user"></i><span>My Profile</span></a>
                         </li>
                         <li>
-                            <a wire:navigate href="{{ route('instructor.dashboard.courses') }}" @class(['active' => request()->is('instructor/dashboard/courses')])><i class="feather-book-open"></i><span>My Courses</span></a>
+                            <a wire:navigate href="{{ route('instructor.dashboard.courses') }}"
+                                @class(['active' => request()->is('instructor/dashboard/courses')])><i class="feather-book-open"></i><span>My Courses</span></a>
                         </li>
                         <li>
-                            <a wire:navigate href="{{ route('instructor.dashboard.reviews') }}" @class(['active' => request()->is('instructor/dashboard/reviews')])><i class="feather-star"></i><span>Reviews</span></a>
+                            <a wire:navigate href="{{ route('instructor.dashboard.reviews') }}"
+                                @class(['active' => request()->is('instructor/dashboard/reviews')])><i class="feather-star"></i><span>Reviews</span></a>
                         </li>
                     </ul>
                 </nav>
@@ -28,13 +31,14 @@
 
                 <nav class="mainmenu-nav">
                     <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                        <li><a wire:navigate href="{{ route('instructor.dashboard.settings')}}" @class(['active' => request()->is('instructor/dashboard/settings')])><i class="feather-settings"></i><span>Settings</span></a></li>
+                        <li><a wire:navigate href="{{ route('instructor.dashboard.settings') }}"
+                                @class(['active' => request()->is('instructor/dashboard/settings')])><i class="feather-settings"></i><span>Settings</span></a>
+                        </li>
                         <li x-data>
                             <form action="{{ route('client.logout') }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <a href="#"
-                                   @click.prevent="$el.closest('form').submit()">
+                                <a href="#" @click.prevent="$el.closest('form').submit()">
                                     <i class="feather-log-out"></i><span>Logout</span>
                                 </a>
                             </form>

@@ -7,6 +7,7 @@ use App\Services\SocialLogin\Contracts\SocialLoginStrategyInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use SweetAlert2\Laravel\Swal;
 
 abstract class SocialLoginService implements SocialLoginStrategyInterface
 {
@@ -33,6 +34,9 @@ abstract class SocialLoginService implements SocialLoginStrategyInterface
             return redirect()->intended()->with('sweetalert2', 'Logged in with ' . $this->provider);
 
         } catch (\Exception $e) {
+            if (!auth()->check()) {
+                Swal::error(['title' => 'Login Failed with ' . $this->provider, 'text' => 'Please try again.',]);
+            }
             return redirect()->route('page.home')->withErrors(['error' => 'Failed to login with ' . $this->provider]);
         }
     }

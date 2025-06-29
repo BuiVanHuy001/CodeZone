@@ -8,17 +8,20 @@
         <div class="advance-tab-button mb--30">
             <ul class="nav nav-tabs tab-button-style-2 justify-content-start" id="myTab-4" role="tablist">
                 <li role="presentation">
-                    <a href="#" class="tab-button active" id="home-tab-4" data-bs-toggle="tab" data-bs-target="#home-4" role="tab" aria-controls="home-4" aria-selected="true">
+                    <a href="#" class="tab-button active" id="home-tab-4" data-bs-toggle="tab"
+                       data-bs-target="#home-4" role="tab" aria-controls="home-4" aria-selected="true">
                         <span class="title">Enrolled Courses</span>
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="#" class="tab-button" id="profile-tab-4" data-bs-toggle="tab" data-bs-target="#profile-4" role="tab" aria-controls="profile-4" aria-selected="false">
+                    <a href="#" class="tab-button" id="profile-tab-4" data-bs-toggle="tab"
+                       data-bs-target="#profile-4" role="tab" aria-controls="profile-4" aria-selected="false">
                         <span class="title">Active Courses</span>
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="#" class="tab-button" id="contact-tab-4" data-bs-toggle="tab" data-bs-target="#contact-4" role="tab" aria-controls="contact-4" aria-selected="false">
+                    <a href="#" class="tab-button" id="contact-tab-4" data-bs-toggle="tab"
+                       data-bs-target="#contact-4" role="tab" aria-controls="contact-4" aria-selected="false">
                         <span class="title">Completed Courses</span>
                     </a>
                 </li>
@@ -49,7 +52,8 @@
                                         <span class="rating-count"> (15 Reviews)</span>
                                     </div>
                                     <div class="rbt-bookmark-btn">
-                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i class="feather-bookmark"></i></a>
+                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i
+                                                class="feather-bookmark"></i></a>
                                     </div>
                                 </div>
                                 <h4 class="rbt-card-title"><a href="course-details.html">React Front To Back</a>
@@ -63,14 +67,18 @@
                                     <div class="single-progress">
                                         <h6 class="rbt-title-style-2 mb--10">Complete</h6>
                                         <div class="progress">
-                                            <div class="progress-bar wow fadeInLeft bar-color-success" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar wow fadeInLeft bar-color-success"
+                                                 data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar"
+                                                 style="width: 90%" aria-valuenow="90" aria-valuemin="0"
+                                                 aria-valuemax="100">
                                             </div>
                                             <span class="rbt-title-style-2 progress-number">90%</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="rbt-card-bottom">
-                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center" href="#">Download Certificate</a>
+                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                       href="#">Download Certificate</a>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +106,8 @@
                                         <span class="rating-count"> (15 Reviews)</span>
                                     </div>
                                     <div class="rbt-bookmark-btn">
-                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i class="feather-bookmark"></i></a>
+                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i
+                                                class="feather-bookmark"></i></a>
                                     </div>
                                 </div>
                                 <h4 class="rbt-card-title"><a href="">PHP Beginner + Advanced</a>
@@ -112,14 +121,18 @@
                                     <div class="single-progress">
                                         <h6 class="rbt-title-style-2 mb--10">Complete</h6>
                                         <div class="progress">
-                                            <div class="progress-bar wow fadeInLeft bar-color-success" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar wow fadeInLeft bar-color-success"
+                                                 data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar"
+                                                 style="width: 40%" aria-valuenow="40" aria-valuemin="0"
+                                                 aria-valuemax="100">
                                             </div>
                                             <span class="rbt-title-style-2 progress-number">40%</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="rbt-card-bottom">
-                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center" href="#">Download Certificate</a>
+                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                       href="#">Download Certificate</a>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +160,8 @@
                                         <span class="rating-count"> (4 Reviews)</span>
                                     </div>
                                     <div class="rbt-bookmark-btn">
-                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i class="feather-bookmark"></i></a>
+                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i
+                                                class="feather-bookmark"></i></a>
                                     </div>
                                 </div>
                                 <h4 class="rbt-card-title"><a href="course-details.html">Angular Zero to
@@ -162,14 +176,18 @@
                                     <div class="single-progress">
                                         <h6 class="rbt-title-style-2 mb--10">Complete</h6>
                                         <div class="progress">
-                                            <div class="progress-bar wow fadeInLeft bar-color-success" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar wow fadeInLeft bar-color-success"
+                                                 data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar"
+                                                 style="width: 65%" aria-valuenow="65" aria-valuemin="0"
+                                                 aria-valuemax="100">
                                             </div>
                                             <span class="rbt-title-style-2 progress-number">65%</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="rbt-card-bottom">
-                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center" href="#">Download Certificate</a>
+                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                       href="#">Download Certificate</a>
                                 </div>
 
                             </div>
@@ -343,7 +361,8 @@
                                         <span class="rating-count"> (15 Reviews)</span>
                                     </div>
                                     <div class="rbt-bookmark-btn">
-                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i class="feather-bookmark"></i></a>
+                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i
+                                                class="feather-bookmark"></i></a>
                                     </div>
                                 </div>
                                 <h4 class="rbt-card-title"><a href="course-details.html">React Front To Back</a>
@@ -357,14 +376,18 @@
                                     <div class="single-progress">
                                         <h6 class="rbt-title-style-2 mb--10">Complete</h6>
                                         <div class="progress">
-                                            <div class="progress-bar wow fadeInLeft bar-color-success" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar wow fadeInLeft bar-color-success"
+                                                 data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar"
+                                                 style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+                                                 aria-valuemax="100">
                                             </div>
                                             <span class="rbt-title-style-2 progress-number">100%</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="rbt-card-bottom">
-                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center" href="#">Download Certificate</a>
+                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                       href="#">Download Certificate</a>
                                 </div>
                             </div>
                         </div>
@@ -392,7 +415,8 @@
                                         <span class="rating-count"> (15 Reviews)</span>
                                     </div>
                                     <div class="rbt-bookmark-btn">
-                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i class="feather-bookmark"></i></a>
+                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i
+                                                class="feather-bookmark"></i></a>
                                     </div>
                                 </div>
                                 <h4 class="rbt-card-title"><a href="course-details.html">PHP
@@ -407,14 +431,18 @@
                                     <div class="single-progress">
                                         <h6 class="rbt-title-style-2 mb--10">Complete</h6>
                                         <div class="progress">
-                                            <div class="progress-bar wow fadeInLeft bar-color-success" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar wow fadeInLeft bar-color-success"
+                                                 data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar"
+                                                 style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+                                                 aria-valuemax="100">
                                             </div>
                                             <span class="rbt-title-style-2 progress-number">100%</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="rbt-card-bottom">
-                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center" href="#">Download Certificate</a>
+                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                       href="#">Download Certificate</a>
                                 </div>
                             </div>
                         </div>
@@ -442,7 +470,8 @@
                                         <span class="rating-count"> (4 Reviews)</span>
                                     </div>
                                     <div class="rbt-bookmark-btn">
-                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i class="feather-bookmark"></i></a>
+                                        <a class="rbt-round-btn" title="Bookmark" href="#"><i
+                                                class="feather-bookmark"></i></a>
                                     </div>
                                 </div>
                                 <h4 class="rbt-card-title"><a href="course-details.html">Angular Zero to
@@ -457,14 +486,18 @@
                                     <div class="single-progress">
                                         <h6 class="rbt-title-style-2 mb--10">Complete</h6>
                                         <div class="progress">
-                                            <div class="progress-bar wow fadeInLeft bar-color-success" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar wow fadeInLeft bar-color-success"
+                                                 data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar"
+                                                 style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+                                                 aria-valuemax="100">
                                             </div>
                                             <span class="rbt-title-style-2 progress-number">100%</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="rbt-card-bottom">
-                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center" href="#">Download Certificate</a>
+                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                       href="#">Download Certificate</a>
                                 </div>
                             </div>
                         </div>

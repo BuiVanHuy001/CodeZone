@@ -8,34 +8,16 @@
                 <div class="rbt-profile-content b2">Registration Date</div>
             </div>
             <div class="col-lg-8 col-md-8">
-                <div class="rbt-profile-content b2">February 25, 2025 6:01 am</div>
+                <div class="rbt-profile-content b2">{{ auth()->user()->created_at->diffForHumans()  }}</div>
             </div>
         </div>
 
         <div class="rbt-profile-row row row--15 mt--15">
             <div class="col-lg-4 col-md-4">
-                <div class="rbt-profile-content b2">First Name</div>
+                <div class="rbt-profile-content b2">Full name</div>
             </div>
             <div class="col-lg-8 col-md-8">
-                <div class="rbt-profile-content b2">John</div>
-            </div>
-        </div>
-
-        <div class="rbt-profile-row row row--15 mt--15">
-            <div class="col-lg-4 col-md-4">
-                <div class="rbt-profile-content b2">Last Name</div>
-            </div>
-            <div class="col-lg-8 col-md-8">
-                <div class="rbt-profile-content b2">Doe</div>
-            </div>
-        </div>
-
-        <div class="rbt-profile-row row row--15 mt--15">
-            <div class="col-lg-4 col-md-4">
-                <div class="rbt-profile-content b2">Username</div>
-            </div>
-            <div class="col-lg-8 col-md-8">
-                <div class="rbt-profile-content b2">instructor</div>
+                <div class="rbt-profile-content b2">{{ auth()->user()->name }}</div>
             </div>
         </div>
 
@@ -44,16 +26,16 @@
                 <div class="rbt-profile-content b2">Email</div>
             </div>
             <div class="col-lg-8 col-md-8">
-                <div class="rbt-profile-content b2">example@gmail.com</div>
+                <div class="rbt-profile-content b2">{{ auth()->user()->email }}</div>
             </div>
         </div>
 
         <div class="rbt-profile-row row row--15 mt--15">
             <div class="col-lg-4 col-md-4">
-                <div class="rbt-profile-content b2">Phone Number</div>
+                <div class="rbt-profile-content b2">Course amount</div>
             </div>
             <div class="col-lg-8 col-md-8">
-                <div class="rbt-profile-content b2">+1-202-555-0174</div>
+                <div class="rbt-profile-content b2">Updated later</div>
             </div>
         </div>
 
@@ -71,7 +53,9 @@
                 <div class="rbt-profile-content b2">Biography</div>
             </div>
             <div class="col-lg-8 col-md-8">
-                <div class="rbt-profile-content b2">I'm the Front-End Developer for #Rainbow IT in Bangladesh, OR. I have serious passion for UI effects, animations and creating intuitive, dynamic user experiences.</div>
+                <div class="rbt-profile-content b2">I'm the Front-End Developer for #Rainbow IT in Bangladesh, OR. I
+                    have serious passion for UI effects, animations and creating intuitive, dynamic user experiences.
+                </div>
             </div>
         </div>
     </div>
