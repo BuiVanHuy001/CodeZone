@@ -41,7 +41,7 @@ class CreateCourse extends Component
     public array $modules = [['title' => 'Module 1', 'position' => 1, 'lessons' => [['title' => 'Lesson 1', 'position' => 1, 'description' => '', 'video_url' => '', 'content' => '', 'preview' => false,],]]];
 
     #[On('titleUpdated')]
-    public function updatedTitle()
+    public function updatedTitle(): void
     {
         $this->slug = Str::slug($this->title);
     }
@@ -78,6 +78,7 @@ class CreateCourse extends Component
         $this->updateJsonFromMultilineInput('skills');
         $this->updateJsonFromMultilineInput('requirements');
 
+        dd($this->modules);
         //        $this->validate();
         dd(['title' => $this->title, 'slug' => $this->slug, 'heading' => $this->heading, 'description' => $this->description, 'image' => $this->image, 'price' => $this->price, 'category' => $this->category, 'level' => $this->level, 'requirements' => $this->requirementsJson, 'skills' => $this->skillsJson, 'modules' => $this->modules,]);
     }

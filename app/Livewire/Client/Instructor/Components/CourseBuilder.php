@@ -21,6 +21,7 @@ class CourseBuilder extends Component
     public function addQuiz(int $moduleIndex, int $lessonIndex): void
     {
         if (!isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'])) {
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'assessment';
             $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = ['title' => '', 'description' => '', 'assessments_questions' => [['content' => '', 'type' => '', 'question_options' => [['content' => '', 'is_correct' => false, 'explanation' => '', 'position' => 1,],],],],];
             $this->showQuiz = true;
         }
@@ -72,6 +73,7 @@ class CourseBuilder extends Component
     #[On('quiz-removed')]
     public function removeQuiz(int $moduleIndex, int $lessonIndex): void
     {
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = '';
         $this->showQuiz = false;
         if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'])) {
             unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']);

@@ -20,25 +20,22 @@
     </div>
     <div id="question-{{ $lessonIndex }}-2" class="question" x-show="activeQuestion === 2">
         <div class="course-field mb--20">
-            @foreach($quiz['assessments_questions'] as $question)
-                <div class="rbt-course-wrape mb-4">
+            @foreach($quiz['assessments_questions'] as $key => $question)
+                <div x-data="{ open: true }" class="rbt-course-wrape mb-4">
                     <div class="d-flex justify-content-between" style="cursor: auto;">
                         <div class="inner d-flex align-items-center gap-2">
-                            <h6 class="rbt-title mb-0"><strong>Question No.0{{ $loop->iteration }}
-                                    :</strong> {{ $question['content'] }}</h6>
+                            <h6 class="rbt-title mb-0"><strong>Question No.0{{ $key + 1 }}
+                                    : </strong> {{ $question['content'] }}</h6>
                         </div>
                         <div class="inner">
                             <ul class="rbt-list-style-1 rbt-course-list d-flex gap-3 align-items-center">
-                                <li>
-                                    <span>Single Choice</span>
-                                </li>
                                 <li>
                                     <button type="button" class="btn quiz-modal__edit-btn dropdown-toggle me-2" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="feather-edit"></i>
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class="dropdown-item" href="#" type="button">
+                                            <a @click.prevent="open = true" class="dropdown-item" href="#" type="button">
                                                 <i class="feather-edit-2"></i>
                                                 Edit
                                             </a>
@@ -54,17 +51,19 @@
                             </ul>
                         </div>
                     </div>
-                    <div>
+
+                    <div x-show="open">
                         <div class="course-field mb--20 mt-3">
-                            <label for="modal-field-3">Write your question here</label>
-                            <input id="modal-field-3" type="text" placeholder="Type question here">
+                            <label for="">Write your question here</label>
+                            <input id="" wire:model="quiz.assessments_questions.{{ $key }}.content" type="text" placeholder="Type question here">
                         </div>
                         <div class="course-field mb--20">
                             <h6>Select your question type</h6>
                             <div class="rbt-modern-select bg-transparent height-45 w-100 mb--10">
-                                <select id="questionType" class="w-100">
-                                    @foreach(\App\Models\Assessment::$QUIZ_TYPES as $key => $label)
-                                        <option value="{{ $key }}">{{ $label }}</option>
+                                <select id="questionType" wire:model="quiz.assessments_questions.{{ $key }}.type" class="w-100">
+                                    <option value="" disabled selected>Select Question Type</option>
+                                    @foreach(\App\Models\Assessment::$QUIZ_TYPES as $value => $label)
+                                        <option value="{{ $value }}">{{ $label }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -72,35 +71,43 @@
                         <div class="course-field mb--20">
                             <h6>Options </h6>
                             <div class="course-field rbt-lesson-rightsidebar d-block mt--20">
-                                @foreach($question['question_options'] as $key => $option)
+                                @foreach($question['question_options'] as $optionIndex => $option)
                                     <div class="row mb-5 rbt-course-wrape">
                                         <div class="d-flex justify-content-between mb-2">
-                                            <label for="modal-field-3">Option {{ $key + 1 }}</label>
-                                            <a href="#" wire:click.prevent="removeOption({{ $loop->parent->index }}, {{ $key }})"><i class="feather-trash me-auto"></i></a>
+                                            <label for="">Option {{ $optionIndex + 1 }}</label>
+                                            <a href="#" wire:click.prevent="removeOption({{ $loop->parent->index }}, {{ $optionIndex }})"><i class="feather-trash me-auto"></i></a>
                                         </div>
                                         <div class="col-lg-9">
-                                            <input id="modal-field-3" type="text" placeholder="Type answer option here">
+                                            <input id="" type="text" wire:model="quiz.assessments_questions.{{ $key }}.question_options.{{$optionIndex}}.content" placeholder="Type answer option here">
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="rbt-form-check">
-                                                <input class="form-check-input" type="checkbox" name="rbt-radio" id="rbt-single-2">
-                                                <label class="form-check-label" for="rbt-single-2">Mark as correct
-                                                    answer</label>
+                                                <input class="form-check-input" wire:model="quiz.assessments_questions.{{ $key }}.question_options.{{$optionIndex}}.is_correct" type="checkbox" name="rbt-radio" id="question-{{ $key }}-option-{{ $optionIndex }}">
+                                                <label class="form-check-label" for="question-{{ $key }}-option-{{ $optionIndex }}">Mark
+                                                    as correct answer</label>
                                             </div>
                                         </div>
                                         <div class="course-field">
                                             <h6 class="mb-3">Add answer explanation</h6>
-                                            <textarea id=""></textarea>
+                                            <textarea wire:model="quiz.assessments_questions.{{ $key }}.question_options.{{$optionIndex}}.explanation" id=""></textarea>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
                             <button wire:click="addOption({{ $loop->index }})" type="button" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
-                                    <span class="icon-reverse-wrapper">
-                                        <span class="btn-text">Option</span>
-                                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                                    </span>
+                                <span class="icon-reverse-wrapper">
+                                    <span class="btn-text">Option</span>
+                                    <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                    <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                </span>
+                            </button>
+
+                            <button @click="open = false" type="button" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
+                                <span class="icon-reverse-wrapper">
+                                    <span class="btn-text">Save Question</span>
+                                    <span class="btn-icon"><i class="feather-save"></i></span>
+                                    <span class="btn-icon"><i class="feather-save"></i></span>
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -108,7 +115,7 @@
             @endforeach
         </div>
         <div class="course-field">
-            <button class="rbt-btn btn-active hover-icon-reverse rbt-sm-btn-2 btn-1" type="button" id="next-btn-2">
+            <button wire:click="addQuestion" class="rbt-btn btn-active hover-icon-reverse rbt-sm-btn-2 btn-1" type="button" id="next-btn-2">
                 <span class="icon-reverse-wrapper">
                     <span class="btn-text">Add Question</span>
                     <span class="btn-icon"><i class="feather-plus-square"></i></span>

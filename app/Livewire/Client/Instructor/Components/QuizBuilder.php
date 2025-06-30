@@ -7,7 +7,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Attributes\Modelable;
 use Livewire\Component;
-use SweetAlert2\Laravel\Swal;
 
 class QuizBuilder extends Component
 {
@@ -17,7 +16,7 @@ class QuizBuilder extends Component
     #[Modelable]
     public array $quiz;
 
-    public function removeQuiz()
+    public function removeQuiz(): void
     {
         $this->dispatch('quiz-removed', moduleIndex: (int)$this->moduleIndex, lessonIndex: (int)$this->lessonIndex);
     }
@@ -28,7 +27,9 @@ class QuizBuilder extends Component
         if ($optionCount >= 4) {
             return;
         }
-        $this->quiz['assessments_questions'][$index]['question_options'][] = ['content' => '', 'is_correct' => false, 'explanation' => '', 'position' => count($this->quiz['assessments_questions'][$index]['question_options']) + 1,];
+        $this->quiz['assessments_questions'][$index]['question_options'][] = ['content' => '', 'is_correct' => false, 'position' => count($this->quiz['assessments_questions'][$index]['question_options']) + 1, 'explanation' => '',
+
+        ];
     }
 
     public function removeOption(int $index, int $optionIndex): void
@@ -38,6 +39,11 @@ class QuizBuilder extends Component
         }
         unset($this->quiz['assessments_questions'][$index]['question_options'][$optionIndex]);
         $this->quiz['assessments_questions'][$index]['question_options'] = array_values($this->quiz['assessments_questions'][$index]['question_options']);
+    }
+
+    public function addQuestion(): void
+    {
+        $this->quiz['assessments_questions'][] = ['content' => '', 'type' => '', 'question_options' => [['content' => '', 'is_correct' => false, 'explanation' => '', 'position' => 1,],],];
     }
 
     public function render(): View|Application|Factory
