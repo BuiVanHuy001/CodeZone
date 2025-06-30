@@ -57,7 +57,7 @@ class CreateCourse extends Component
     }
 
 
-    public function updatedImage()
+	public function updatedImage(): void
     {
         if ($this->image) {
             $this->imagePath = $this->image->store('tmp', 'public');

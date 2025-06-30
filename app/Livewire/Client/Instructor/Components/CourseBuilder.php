@@ -27,9 +27,23 @@ class CourseBuilder extends Component
         }
     }
 
+	#[On('quiz-removed')]
+	public function removeQuiz(int $moduleIndex, int $lessonIndex): void
+	{
+		$this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = '';
+		$this->showQuiz = false;
+		if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'])) {
+			unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']);
+		}
+	}
+
     public function addAssignment(): void
     {
-        $this->showAssignment = true;
+	    if (!isset($this->modules[0]['lessons'][0]['assessments'])) {
+		    $this->modules[0]['lessons'][0]['type'] = 'assessment';
+		    $this->modules[0]['lessons'][0]['assessments'] = ['title' => '', 'description' => '', 'assignment_questions' => [['content' => '', 'type' => 'file_upload', 'position' => '1',],],];
+		    $this->showAssignment = true;
+	    }
     }
 
     public function addContent(): void
@@ -67,16 +81,6 @@ class CourseBuilder extends Component
         if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex])) {
             unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]);
             $this->modules[$moduleIndex]['lessons'] = array_values($this->modules[$moduleIndex]['lessons']);
-        }
-    }
-
-    #[On('quiz-removed')]
-    public function removeQuiz(int $moduleIndex, int $lessonIndex): void
-    {
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = '';
-        $this->showQuiz = false;
-        if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'])) {
-            unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']);
         }
     }
 

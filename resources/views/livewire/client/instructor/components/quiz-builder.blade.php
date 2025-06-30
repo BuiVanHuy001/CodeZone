@@ -41,7 +41,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item delete-item" href="#">
+                                            <a wire:click.prevent="removeQuestion({{$key}})" class="dropdown-item delete-item" href="#">
                                                 <i class="feather-trash"></i>
                                                 Delete
                                             </a>
@@ -114,7 +114,7 @@
                 </div>
             @endforeach
         </div>
-        <div class="course-field">
+        <div class="course-field" x-data>
             <button wire:click="addQuestion" class="rbt-btn btn-active hover-icon-reverse rbt-sm-btn-2 btn-1" type="button" id="next-btn-2">
                 <span class="icon-reverse-wrapper">
                     <span class="btn-text">Add Question</span>
@@ -122,6 +122,25 @@
                     <span class="btn-icon"><i class="feather-plus-square"></i></span>
                 </span>
             </button>
+
+            <input wire:model="excelFile" type="file" accept=".xlsx,.csv,.xls,.json" style="display: none;" x-ref="fileInput">
+
+            <button type="button" @click="$refs.fileInput.click()" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
+                <span class="icon-reverse-wrapper">
+                    <span class="btn-text">Import form File</span>
+                    <span class="btn-icon"><i class="feather-download"></i></span>
+                    <span class="btn-icon"><i class="feather-download"></i></span>
+                </span>
+            </button>
+
+            <a href="{{ asset('excel_file/Sample.xlsx') }}" download class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
+                <span class="icon-reverse-wrapper">
+                    <span class="btn-text">Download Sample File</span>
+                    <span class="btn-icon"><i class="feather-download"></i></span>
+                    <span class="btn-icon"><i class="feather-download"></i></span>
+                </span>
+            </a>
+
         </div>
     </div>
 
@@ -132,14 +151,6 @@
                     class="rbt-btn btn-border btn-md radius-round-10"
                     @click="activeTab = null">
                 Cancel
-            </button>
-
-            <button type="button"
-                    class="rbt-btn btn-border btn-md radius-round-10">
-                <span class="icon-reverse-wrapper">
-                    <span class="btn-text">Import Quiz</span>
-                    <span class="btn-icon"><i class="feather-download"></i></span>
-                </span>
             </button>
         </div>
         <div class="content">
