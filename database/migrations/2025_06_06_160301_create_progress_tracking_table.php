@@ -14,7 +14,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('progress_tracking', function (Blueprint $table) {
-            $table->foreignIdFor(User::class)->primary();
+            $table->id();
+            $table->boolean('is_completed')->default(false);
+            $table->foreignIdFor(User::class);
             $table->foreignIdFor(Course::class);
             $table->timestamps();
         });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Course;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -29,5 +30,10 @@ class PageController extends Controller
 	public function maintenancePage(): Factory|Application|View
 	{
 		return view('client.maintenance');
+	}
+
+	public function courseDetail(Course $course): View|Application|Factory
+	{
+		return view('client.course-details', ['course' => $course,]);
 	}
 }

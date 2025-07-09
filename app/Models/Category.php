@@ -2,13 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\database\factories\CategoriesFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    /** @use HasFactory<CategoriesFactory> */
     use HasFactory;
 
     public function scopeGetParents($query)
@@ -20,4 +18,14 @@ class Category extends Model
     {
         return $query->where('parent_id', $parentId)->get();
     }
+
+	public function scopeParents()
+	{
+		return $this->where('parent_id', null)->get();
+	}
+
+	public function children()
+	{
+		return $this->hasMany(Category::class, 'parent_id');
+	}
 }

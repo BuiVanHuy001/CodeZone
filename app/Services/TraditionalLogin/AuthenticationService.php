@@ -24,25 +24,22 @@ class AuthenticationService
         return redirect()->route('page.home')->with('sweetalert2', 'Logout successful!');
     }
 
-public function login(): RedirectResponse
-{
-    $request = request();
-    $data = $request->all();
+	public function login(): RedirectResponse
+	{
+		$request = request();
+		$data = $request->all();
 
-    if (isset($data['email']) && !str_contains($data['email'], '@')) {
-        $data['email'] .= '@codezone.com';
-        $request->merge(['email' => $data['email']]);
-    }
+		if (isset($data['email']) && !str_contains($data['email'], '@')) {
+			$data['email'] .= '@codezone.com';
+			$request->merge(['email' => $data['email']]);
+		}
 
-    $credentials = $request->validate([
-        'email' => ['required', 'email'],
-        'password' => 'required|min:8',
-    ]);
+		$credentials = $request->validate(['email' => ['required', 'email'], 'password' => 'required|min:8',]);
 
-    if (auth()->attempt($credentials)) {
-        return redirect()->intended()->with('sweetalert2', 'Login successful!');
-    }
+		if (auth()->attempt($credentials)) {
+			return redirect()->intended()->with('sweetalert2', 'Login successful!');
+		}
 
-    return back()->withErrors(['email' => 'The provided credentials do not match our records.'])->withInput();
-}
+		return back()->withErrors(['email' => 'The provided credentials do not match our records.'])->withInput();
+	}
 }
