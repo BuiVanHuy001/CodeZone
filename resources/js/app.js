@@ -20,4 +20,35 @@ import '../assets/js/vendor/countdown.js';
 import '../assets/js/vendor/plyr.js';
 import '../assets/js/vendor/jodit.min.js';
 import '../assets/js/vendor/Sortable.min.js';
+import 'quill/dist/quill.snow.css';
+import Quill from 'quill';
 import '../assets/js/main.js';
+
+const toolbarOptions = [
+    [{'header': [1, 2, 3, 4, 5, 6, false]}],
+    [{'font': []}],
+    ['bold', 'italic', 'underline', 'strike'],
+    ['blockquote', 'code-block'],
+    ['link'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, {'list': 'check'}],
+    [{'indent': '-1'}, {'indent': '+1'}],
+    [{'align': []}],
+];
+
+function initQuill() {
+    const el = document.querySelector('#description');
+    if (el && !el.classList.contains('ql-container')) {
+        let quill = new Quill(el, {
+            theme: 'snow',
+            modules: {toolbar: toolbarOptions}
+        });
+
+        quill.on('text-change', function () {
+            const input = document.querySelector('#description_input');
+            input.value = quill.getText();
+            input.dispatchEvent(new Event('input'));
+        });
+    }
+}
+
+initQuill();

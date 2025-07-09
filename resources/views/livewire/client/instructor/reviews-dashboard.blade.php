@@ -7,12 +7,14 @@
         <div class="advance-tab-button mb--30">
             <ul class="nav nav-tabs tab-button-style-2 justify-content-start" id="reviewTab-4" role="tablist">
                 <li role="presentation">
-                    <a href="#" class="tab-button active" id="received-tab" data-bs-toggle="tab" data-bs-target="#received" role="tab" aria-controls="received" aria-selected="true">
+                    <a href="#" class="tab-button active" id="received-tab" data-bs-toggle="tab"
+                       data-bs-target="#received" role="tab" aria-controls="received" aria-selected="true">
                         <span class="title">Received</span>
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="#" class="tab-button" id="given-tab" data-bs-toggle="tab" data-bs-target="#given" role="tab" aria-controls="given" aria-selected="false">
+                    <a href="#" class="tab-button" id="given-tab" data-bs-toggle="tab" data-bs-target="#given"
+                       role="tab" aria-controls="given" aria-selected="false">
                         <span class="title">Given</span>
                     </a>
                 </li>
@@ -36,8 +38,8 @@
                             <th>John Due</th>
                             <td>January 30, 2021</td>
                             <td>
-                                                                <span class="b3">Course: <a href="#">Speaking Korean for
-                                                                        Beginners</a></span>
+                                    <span class="b3">Course: <a href="#">Speaking Korean for
+                                            Beginners</a></span>
                                 <div class="rbt-review">
                                     <div class="rating">
                                         <i class="fas fa-star"></i>
@@ -55,8 +57,8 @@
                             <th>John Due</th>
                             <td>June 30, 2024</td>
                             <td>
-                                                                <span class="b3">Course: <a href="#">PHP for
-                                                                        Beginners</a></span>
+                                    <span class="b3">Course: <a href="#">PHP for
+                                            Beginners</a></span>
                                 <div class="rbt-review">
                                     <div class="rating">
                                         <i class="fas fa-star"></i>
@@ -74,8 +76,8 @@
                             <th>John Due</th>
                             <td>April 30, 2024</td>
                             <td>
-                                                                <span class="b3">Course: <a href="#">WordPress for
-                                                                        Beginners</a></span>
+                                    <span class="b3">Course: <a href="#">WordPress for
+                                            Beginners</a></span>
                                 <div class="rbt-review">
                                     <div class="rating">
                                         <i class="fas fa-star"></i>
@@ -93,8 +95,8 @@
                             <th>John Due</th>
                             <td>March 30, 2024</td>
                             <td>
-                                                                <span class="b3">Course: <a href="#">Design for
-                                                                        Beginners</a></span>
+                                    <span class="b3">Course: <a href="#">Design for
+                                            Beginners</a></span>
                                 <div class="rbt-review">
                                     <div class="rating">
                                         <i class="fas fa-star"></i>
@@ -142,8 +144,8 @@
                             </td>
                             <td>
                                 <div class="rbt-button-group">
-                                    <a class="rbt-btn-link left-icon" href="#"><i
-                                            class="feather-edit"></i> Edit</a>
+                                    <a class="rbt-btn-link left-icon" href="#"><i class="feather-edit"></i>
+                                        Edit</a>
                                     <a class="rbt-btn-link left-icon" href="#"><i
                                             class="feather-trash-2"></i> Delete</a>
                                 </div>
@@ -166,8 +168,8 @@
                             </td>
                             <td>
                                 <div class="rbt-button-group">
-                                    <a class="rbt-btn-link left-icon" href="#"><i
-                                            class="feather-edit"></i> Edit</a>
+                                    <a class="rbt-btn-link left-icon" href="#"><i class="feather-edit"></i>
+                                        Edit</a>
                                     <a class="rbt-btn-link left-icon" href="#"><i
                                             class="feather-trash-2"></i> Delete</a>
                                 </div>
@@ -189,8 +191,8 @@
                             </td>
                             <td>
                                 <div class="rbt-button-group">
-                                    <a class="rbt-btn-link left-icon" href="#"><i
-                                            class="feather-edit"></i> Edit</a>
+                                    <a class="rbt-btn-link left-icon" href="#"><i class="feather-edit"></i>
+                                        Edit</a>
                                     <a class="rbt-btn-link left-icon" href="#"><i
                                             class="feather-trash-2"></i> Delete</a>
                                 </div>

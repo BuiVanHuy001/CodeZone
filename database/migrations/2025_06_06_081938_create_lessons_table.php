@@ -22,8 +22,11 @@ return new class extends Migration
             $table->string('video_url')->nullable();
             $table->unsignedTinyInteger('position');
             $table->unsignedSmallInteger('duration');
+	        $table->boolean('preview')->default(false);
             $table->enum('type', Lesson::$TYPES);
             $table->json('resources')->nullable();
+
+	        $table->foreignUuid('module_id')->constrained('modules');
 
             $table->timestamps();
         });

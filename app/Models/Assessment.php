@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assessment extends Model
 {
-    public static array $TYPES = ['text', 'file_upload', 'multiple_choice', 'true_false'];
+	protected $guarded = [];
+
+	public static array $TYPES = ['Assignment' => 'file_upload', 'Quiz' => 'quiz',];
 }

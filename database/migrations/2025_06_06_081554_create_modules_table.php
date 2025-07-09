@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('position');
             $table->unsignedSmallInteger('duration');
 
-            $table->foreignIdFor(Course::class);
+	        $table->foreignUuid('course_id')->constrained('courses');
 
             $table->timestamps();
         });
