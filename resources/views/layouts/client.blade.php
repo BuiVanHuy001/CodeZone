@@ -18,9 +18,5 @@
 @yield('content')
 @yield('custom-js')
 </body>
-{{-- <script src="{{ asset('js/vendor/isotop.js') }}"></script>--}}
-{{-- <script src="{{ asset('js/vendor/imageloaded.js') }}"></script>--}}
 <script src="{{ asset('js/vendor/wow.js') }}"></script>
-{{-- <script src="{{ asset('js/vendor/waypoint.min.js') }}"></script>--}}
-
 </html>

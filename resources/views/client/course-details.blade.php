@@ -14,9 +14,8 @@
                             </li>
                             <li class="rbt-breadcrumb-item active">Web developer</li>
                         </ul>
-                        <h1 class="title">Node.js, Express, MongoDB & More: The Complete Bootcamp</h1>
-                        <p class="description">Master Node by building a real-world RESTful API and web app (with
-                            authentication, Node.js security, payments & more)</p>
+                        <h1 class="title">{{ $course->title }}</h1>
+                        <p class="description">{{ $course->heading }}</p>
 
                         <div class="d-flex align-items-center mb--20 flex-wrap rbt-course-details-feature">
 
@@ -29,7 +28,7 @@
                             </div>
 
                             <div class="feature-sin rating">
-                                <a href="#">4.8</a>
+                                <a href="#">{{ $course->rating }}</a>
                                 <a href="#"><i class="fa fa-star"></i></a>
                                 <a href="#"><i class="fa fa-star"></i></a>
                                 <a href="#"><i class="fa fa-star"></i></a>
@@ -38,11 +37,11 @@
                             </div>
 
                             <div class="feature-sin total-rating">
-                                <a class="rbt-badge-4" href="#">215,475 rating</a>
+                                <a class="rbt-badge-4" href="#">{{ $course->review_count }} rating</a>
                             </div>
 
                             <div class="feature-sin total-student">
-                                <span>616,029 students</span>
+                                <span>{{ $course->student_count }} students</span>
                             </div>
 
                         </div>
@@ -54,12 +53,13 @@
                                 </a>
                             </div>
                             <div class="rbt-author-info">
-                                By <a href="">Angela</a> in <a href="#">Developer</a>
+                                By <a href="">Bùi Văn Huy</a> in <a href="#">Developer</a>
                             </div>
                         </div>
 
                         <ul class="rbt-meta">
-                            <li><i class="feather-calendar"></i>Last updates 12/2024</li>
+                            <li><i class="feather-calendar"></i>Last updates {{ $course->updated_at->diffForHumans() }}
+                            </li>
                             <li><i class="feather-globe"></i>English</li>
                             <li><i class="feather-award"></i>Certification</li>
                         </ul>
@@ -77,7 +77,7 @@
                 <div class="col-lg-8">
                     <div class="course-details-content">
                         <div class="rbt-course-feature-box rbt-shadow-box thuumbnail">
-                            <img class="w-100" src="{{ asset('images/course/course-01.jpg') }}" alt="Card image">
+                            <img class="w-100" src="{{ $course->getThumbnailPath() }}" alt="Card image">
                         </div>
 
                         <div class="rbt-inner-onepage-navigation sticky-top mt--30">
@@ -102,51 +102,44 @@
                             </nav>
                         </div>
 
-                        <div class="rbt-course-feature-box overview-wrapper rbt-shadow-box mt--30 has-show-more"
-                             id="overview">
-                            <div class="rbt-course-feature-inner has-show-more-inner-content">
-                                <div class="section-title">
-                                    <h4 class="rbt-title-style-3">What you'll learn</h4>
-                                </div>
-                                <div class="row g-5 mb--30">
-                                    <div class="col-lg-6">
-                                        <ul class="rbt-list-style-1">
-                                            <li><i class="feather-check"></i>Master the entire modern back-end stack:
-                                                Node,
-                                                Express, MongoDB and Mongoose (MongoDB JS driver).
-                                            </li>
-                                            <li><i class="feather-check"></i>Build a fast, scalable, feature-rich
-                                                RESTful
-                                                API (includes filters, sorts, pagination, and much more.
-                                            </li>
-                                            <li><i class="feather-check"></i>CRUD operations with MongoDB and Mongoose.
-                                            </li>
-                                            <li><i class="feather-check"></i>Server-side website rendering with Pug
-                                                templates.
-                                            </li>
-                                        </ul>
+                        @if($course->skills)
+                            <div class="rbt-course-feature-box overview-wrapper rbt-shadow-box mt--30 has-show-more"
+                                 id="overview">
+                                <div class="rbt-course-feature-inner has-show-more-inner-content">
+                                    <div class="section-title">
+                                        <h4 class="rbt-title-style-3">What you'll learn</h4>
                                     </div>
+                                    <div class="row g-5 mb--30">
+                                        @php
+                                            $skills = json_decode($course->skills);
+                                            $skillsArray = is_array($skills) ? $skills : [];
+                                            $middleIndex = ceil(count($skillsArray) / 2);
+                                            $firstPart = array_slice($skillsArray, 0, $middleIndex);
+                                            $secondPart = array_slice($skillsArray, $middleIndex);
+                                        @endphp
+                                        <div class="col-lg-6">
+                                            <ul class="rbt-list-style-1">
+                                                @foreach($firstPart as $skill)
+                                                    <li><i class="feather-check"></i>{{ $skill->name ?? $skill }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
 
-                                    <div class="col-lg-6">
-                                        <ul class="rbt-list-style-1">
-                                            <li><i class="feather-check"></i>Build a complete, beautiful & real-world
-                                                application from start to finish (API and server-side rendered website).
-                                            </li>
-                                            <li><i class="feather-check"></i>Learn how Node really works behind the
-                                                scenes:
-                                                event loop, blocking vs non-blocking code, streams, modules, etc.
-                                            </li>
-                                            <li><i class="feather-check"></i>Sending emails & uploading files.</li>
-                                            <li><i class="feather-check"></i>Downloadable videos, code and design assets
-                                                for
-                                                projects.
-                                            </li>
-                                        </ul>
+                                        <div class="col-lg-6">
+                                            <ul class="rbt-list-style-1">
+                                                @foreach($secondPart as $skill)
+                                                    <li><i class="feather-check"></i>{{ $skill->name ?? $skill }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+
                                     </div>
                                 </div>
+                                @if(count($firstPart) > 4)
+                                    <div class="rbt-show-more-btn">Show more</div>
+                                @endif
                             </div>
-                            <div class="rbt-show-more-btn">Xem thêm</div>
-                        </div>
+                        @endif
 
                         <div class="course-content rbt-shadow-box coursecontent-wrapper mt--30" id="coursecontent">
                             <div class="rbt-course-feature-inner">
@@ -155,395 +148,90 @@
                                 </div>
                                 <div class="rbt-accordion-style rbt-accordion-02 accordion">
                                     <div class="accordion" id="accordionExampleb2">
-
-                                        <div class="accordion-item card">
-                                            <h2 class="accordion-header card-header" id="headingTwo2">
-                                                <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#collapseTwo2"
-                                                        aria-expanded="false" aria-controls="collapseTwo2">
-                                                    Basic Knowledge
-                                                    <span class="rbt-badge-5 ml--10">2 hours 30 minutes</span>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseTwo2" class="accordion-collapse collapse"
-                                                 aria-labelledby="headingTwo2" data-bs-parent="#accordionExampleb2">
-                                                <div class="accordion-body card-body pr--0">
-                                                    <ul class="rbt-course-main-content liststyle">
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i> <span
-                                                                        class="text">Course Introduction</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span
-                                                                        class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i> <span
-                                                                        class="text">Why You Shouldn't Pursue
-                                                                        Education.</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span
-                                                                        class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i> <span
-                                                                        class="text">Ten Factors Affecting the
-                                                                        Longevity of Education.</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span
-                                                                        class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-                                                    </ul>
+                                        @foreach($course->modules->sortBy('position') as $key => $module)
+                                            <div class="accordion-item card">
+                                                <h2 class="accordion-header card-header" id="module-{{ $key + 1 }}">
+                                                    <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse" data-bs-target="#collapseModule-{{ $key + 1 }}"
+                                                            aria-expanded="false" aria-controls="collapseModule-{{ $key + 1 }}">
+                                                        {{ $module->title }}
+                                                        <span class="rbt-badge-5 ml--10">{{ $module->convertDurationToString() }}</span>
+                                                    </button>
+                                                </h2>
+                                                <div id="collapseModule-{{ $key + 1 }}" class="accordion-collapse collapse"
+                                                     aria-labelledby="module-{{ $key + 1 }}" data-bs-parent="#accordionExampleb2">
+                                                    <div class="accordion-body card-body pr--0">
+                                                        <ul class="rbt-course-main-content liststyle">
+                                                            @foreach(@$module->lessons as $lesson)
+                                                                @php
+                                                                    $introductionCourse = '';
+                                                                    if ($lesson->preview && empty($introductionCourse) && $lesson->video_url) {
+                                                                        $introductionCourse = $lesson->video_url;
+                                                                    }
+                                                                    $icon = '';
+//                                                                    if ($lesson->type === 'video') {
+//                                                                        $icon = 'feather-video';
+//                                                                    } elseif ($lesson->type === 'assessment') {
+//                                                                        if ($lesson->assessment-> )
+//                                                                        $icon = 'file-text';
+//                                                                    }
+                                                                @endphp
+                                                                <li>
+                                                                    <a href="">
+                                                                        <div class="course-content-left">
+                                                                            <i class="feather-{{ $icon }}"></i> <span
+                                                                                class="text">{{ $lesson->title }}</span>
+                                                                        </div>
+                                                                        <div class="course-content-right">
+                                                                            @if($lesson->preview)
+                                                                                <span class="course-eye">
+                                                                                    <i class="feather-eye"></i>
+                                                                                </span>
+                                                                            @endif
+                                                                            <span>
+                                                                                {{ $lesson->convertDurationToTime() }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="accordion-item card">
-                                            <h2 class="accordion-header card-header" id="headingTwo3">
-                                                <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#collapseTwo3"
-                                                        aria-expanded="false" aria-controls="collapseTwo3">
-                                                    Skill Development and Setup <span class="rbt-badge-5 ml--10">1 hour
-                                                        50 minutes</span>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseTwo3" class="accordion-collapse collapse"
-                                                 aria-labelledby="headingTwo3" data-bs-parent="#accordionExampleb2">
-                                                <div class="accordion-body card-body pr--0">
-                                                    <ul class="rbt-course-main-content liststyle">
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i> <span
-                                                                        class="text">Course Introduction</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock">
-                                                                        <i class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span
-                                                                        class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock">
-                                                                        <i class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li>
-                                                            <a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i>
-                                                                    <span class="text">Why You Shouldn't Pursue
-                                                                        Education.</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock">
-                                                                        <i class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-
-                                                        <li>
-                                                            <a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i>
-                                                                    <span class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i>
-                                                                    </span>
-                                                                </div>
-                                                            </a>
-                                                        </li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i> <span
-                                                                        class="text">Ten Factors Affecting the
-                                                                        Longevity of Education.</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span
-                                                                        class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="accordion-item card">
-                                            <h2 class="accordion-header card-header" id="headingTwo4">
-                                                <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#collapseTwo4"
-                                                        aria-expanded="false" aria-controls="collapseTwo4">
-                                                    15 Things to Know About Education? <span
-                                                        class="rbt-badge-5 ml--10">2 hours 60 minutes</span>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseTwo4" class="accordion-collapse collapse"
-                                                 aria-labelledby="headingTwo4" data-bs-parent="#accordionExampleb2">
-                                                <div class="accordion-body card-body pr--0">
-                                                    <ul class="rbt-course-main-content liststyle">
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i>
-                                                                    <span class="text">Course Introduction</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span
-                                                                        class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i> <span
-                                                                        class="text">Why You Shouldn't Pursue
-                                                                        Education.</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span
-                                                                        class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i> <span
-                                                                        class="text">Ten Factors Affecting the
-                                                                        Longevity of Education.</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span
-                                                                        class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="accordion-item card">
-                                            <h2 class="accordion-header card-header" id="headingTwo5">
-                                                <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse" data-bs-target="#collapseTwo5"
-                                                        aria-expanded="false" aria-controls="collapseTwo5">
-                                                    Course Description
-                                                    <span class="rbt-badge-5 ml--10">2 hours 20 minutes</span>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseTwo5" class="accordion-collapse collapse"
-                                                 aria-labelledby="headingTwo5" data-bs-parent="#accordionExampleb2">
-                                                <div class="accordion-body card-body pr--0">
-                                                    <ul class="rbt-course-main-content liststyle">
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i> <span
-                                                                        class="text">Course Introduction</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span
-                                                                        class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i> <span
-                                                                        class="text">Why You Shouldn't Pursue
-                                                                        Education.</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span
-                                                                        class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-play-circle"></i> <span
-                                                                        class="text">Ten Factors Affecting the
-                                                                        Longevity of Education.</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-
-                                                        <li><a href="">
-                                                                <div class="course-content-left">
-                                                                    <i class="feather-file-text"></i> <span
-                                                                        class="text">Read Before Starting</span>
-                                                                </div>
-                                                                <div class="course-content-right">
-                                                                    <span class="course-lock"><i
-                                                                            class="feather-lock"></i></span>
-                                                                </div>
-                                                            </a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="rbt-course-feature-box rbt-shadow-box details-wrapper mt--30" id="details">
-                            <div class="row g-5">
-                                <div class="col-lg-6">
+                        <div class="rbt-course-feature-box rbt-shadow-box details-wrapper mt--30 has-show-more" id="details">
+                            <div class="row g-5 has-show-more-inner-content">
+                                <div class="col-12">
                                     <div class="section-title">
-                                        <h4 class="rbt-title-style-3 mb--20">Yêu cầu</h4>
+                                        <h4 class="rbt-title-style-3">Desciption</h4>
                                     </div>
-                                    <ul class="rbt-list-style-1">
-                                        <li><i class="feather-check"></i>Trở thành một lập trình viên JavaScript nâng
-                                            cao, tự tin và hiện đại
-                                            từ con số không.
-                                        </li>
-                                        <li><i class="feather-check"></i>Có kỹ năng lập trình Python ở mức trung cấp.
-                                        </li>
-                                        <li><i class="feather-check"></i>Có một danh mục các dự án phân tích dữ liệu
-                                            đa dạng.
-                                        </li>
-                                        <li><i class="feather-check"></i>Sử dụng thư viện numpy để tạo và thao tác
-                                            mảng.
-                                        </li>
-                                    </ul>
-                                </div>
+                                    <div class="ql-snow">
+                                        <div class="ql-editor">
+                                            {!! $course->description !!}
+                                        </div>
+                                    </div>
 
-                                <div class="col-lg-6">
-                                    <div class="section-title">
-                                        <h4 class="rbt-title-style-3 mb--20">Mô tả</h4>
-                                    </div>
-                                    <ul class="rbt-list-style-1">
-                                        <li><i class="feather-check"></i>Sử dụng môi trường Jupyter Notebook.
-                                            Lập trình viên JavaScript từ con số không.
-                                        </li>
-                                        <li><i class="feather-check"></i>Sử dụng module pandas với Python để tạo và
-                                            cấu trúc dữ liệu.
-                                        </li>
-                                        <li><i class="feather-check"></i>Có một danh mục các dự án phân tích dữ liệu
-                                            đa dạng.
-                                        </li>
-                                        <li><i class="feather-check"></i>Tạo trực quan hóa dữ liệu bằng matplotlib và
-                                            seaborn.
-                                        </li>
-                                    </ul>
                                 </div>
+                                @if($course->requirements)
+                                    <div class="col-12">
+                                        <div class="section-title">
+                                            <h4 class="rbt-title-style-3 mb--20">Requirements</h4>
+                                        </div>
+                                        <ul class="rbt-list-style-1">
+                                            @foreach(json_decode($course->requirements) as $requirement)
+                                                <li><i class="feather-check"></i>{{ $requirement->name }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             </div>
+                            <div class="rbt-show-more-btn">Show all reviews</div>
                         </div>
 
                         <div class="rbt-instructor rbt-shadow-box intructor-wrapper mt--30" id="intructor">
@@ -869,7 +557,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End Edu Review List  -->
 
                         <div class="about-author-list rbt-shadow-box featured-wrapper mt--30 has-show-more">
                             <div class="section-title">
@@ -1104,7 +791,7 @@
                                  data-sal-duration="800">
                                 <div class="rbt-card variation-01 rbt-hover">
                                     <div class="rbt-card-img">
-                                        <a href="course-details.html">
+                                        <a href="">
                                             <img src="{{ asset('images/course/course-online-01.jpg') }}"
                                                  alt="Card image">
                                             <div class="rbt-badge-3 bg-white">
@@ -1151,7 +838,7 @@
                                                 </a>
                                             </div>
                                             <div class="rbt-author-info">
-                                                Bởi <a href="profile.html">Angela</a> Trong <a href="#">Phát
+                                                Bởi <a href="">Angela</a> Trong <a href="#">Phát
                                                     triển</a>
                                             </div>
                                         </div>
@@ -1160,20 +847,18 @@
                                                 <span class="current-price">1.500.000₫</span>
                                                 <span class="off-price">3.000.000₫</span>
                                             </div>
-                                            <a class="rbt-btn-link" href="course-details.html">Tìm hiểu
+                                            <a class="rbt-btn-link" href="">Tìm hiểu
                                                 thêm<i class="feather-arrow-right"></i></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- End Single Card  -->
 
-                            <!-- Start Single Card  -->
                             <div class="col-lg-6 col-md-6 col-sm-6 col-12" data-sal-delay="150" data-sal="slide-up"
                                  data-sal-duration="800">
                                 <div class="rbt-card variation-01 rbt-hover">
                                     <div class="rbt-card-img">
-                                        <a href="course-details.html">
+                                        <a href="">
                                             <img src="{{ asset('images/course/course-online-02.jpg') }}"
                                                  alt="Card image">
                                         </a>
@@ -1195,7 +880,7 @@
                                                         class="feather-bookmark"></i></a>
                                             </div>
                                         </div>
-                                        <h4 class="rbt-card-title"><a href="course-details.html">PHP Từ Cơ bản đến
+                                        <h4 class="rbt-card-title"><a href="">PHP Từ Cơ bản đến
                                                 Nâng cao</a>
                                         </h4>
                                         <ul class="rbt-meta">
@@ -1214,7 +899,7 @@
                                                 </a>
                                             </div>
                                             <div class="rbt-author-info">
-                                                Bởi <a href="profile.html">Angela</a> in <a
+                                                Bởi <a href="">Angela</a> in <a
                                                     href="#">Development</a>
                                             </div>
                                         </div>
@@ -1223,7 +908,7 @@
                                                 <span class="current-price">1.500.000₫</span>
                                                 <span class="off-price">3.000.000₫</span>
                                             </div>
-                                            <a class="rbt-btn-link left-icon" href="course-details.html"><i
+                                            <a class="rbt-btn-link left-icon" href=""><i
                                                     class="feather-shopping-cart"></i>Add to cart</a>
                                         </div>
                                     </div>
@@ -1236,11 +921,10 @@
                 <div class="col-lg-4">
                     <div class="course-sidebar sticky-top rbt-shadow-box course-sidebar-top rbt-gradient-border">
                         <div class="inner">
-
                             <a class="video-popup-with-text video-popup-wrapper text-center popup-video sidebar-video-hidden mb--15"
-                               href="https://www.youtube.com/watch?v=nA1Aqp0sPQo">
+                               href="http://127.0.0.1:8000/storage/course/videos/vL608nkg44tZ3EtdSkPaCyIL8JgjggMaQcpBdU7a.mp4">
                                 <div class="video-content">
-                                    <img class="w-100 rbt-radius" src="images/others/video-01.jpg"
+                                    <img class="w-100 rbt-radius" src="{{ asset('images/others/video-01.jpg') }}"
                                          alt="Video Images">
                                     <div class="position-to-top">
                                         <span class="rbt-btn rounded-player-2 with-animation">
@@ -1256,8 +940,7 @@
                                 <div
                                     class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
                                     <div class="rbt-price">
-                                        <span class="current-price">1.524.750₫</span>
-                                        <span class="off-price">2.124.750₫</span>
+                                        <span class="current-price">{{ $course->price }}₫</span>
                                     </div>
                                     <div class="discount-time">
                                         <span class="rbt-badge color-danger bg-color-danger-opacity"><i
@@ -1282,18 +965,17 @@
                                 <div class="rbt-widget-details has-show-more">
                                     <ul class="has-show-more-inner-content rbt-course-details-list-wrapper">
                                         <li>
-                                            <span>Duration: </span><span class="rbt-feature-value rbt-badge-5">5 hours
-                                                20 minutes</span>
+                                            <span>Duration: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->convertDurationToString()  }}</span>
                                         </li>
                                         <li>
                                             <span>Enrolled: </span><span
                                                 class="rbt-feature-value rbt-badge-5">100</span>
                                         </li>
                                         <li>
-                                            <span>Lesson</span><span class="rbt-feature-value rbt-badge-5">50</span>
+                                            <span>Lesson</span><span class="rbt-feature-value rbt-badge-5">{{ $course->lesson_count }}</span>
                                         </li>
                                         <li>
-                                            <span>Level</span><span class="rbt-feature-value rbt-badge-5">Basic</span>
+                                            <span>Level</span><span class="rbt-feature-value rbt-badge-5">{{ ucfirst($course->level) }}</span>
                                         </li>
                                         <li>
                                             <span>Language: </span><span

@@ -1,7 +1,6 @@
 <?php
 
-use App\Models\Course;
-use App\Models\Lesson;
+use App\Models\Assessment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,11 +16,11 @@ return new class extends Migration
             $table->id();
 
             $table->string('title');
-            $table->string('slug')->unique();
             $table->text('description')->nullable();
+	        $table->enum('type', array_values(Assessment::$TYPES))->default('quiz');
             $table->unsignedTinyInteger('questions_count')->default(1);
 
-            $table->foreignUlid('lesson_id')->constrained()->cascadeOnDelete();;
+	        $table->foreignUuid('lesson_id')->constrained('lessons');
 
             $table->timestamps();
         });

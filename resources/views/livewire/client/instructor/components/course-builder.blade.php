@@ -43,22 +43,25 @@
             </div>
 
             @foreach ($modules as $module)
+                @php
+                    $moduleIndex = $loop->index;
+                @endphp
                 <div class="accordion-item card mb--20 rbt-default-form">
                     <h6 class="card-header">
-                        {{ empty($module['title']) || $module['title'] === "Example Module" ? 'Module ' . $loop->iteration : $module['title'] }}
+                        {{ empty($module['title']) || $module['title'] === "Example Module" ? 'Module ' . $moduleIndex + 1 : $module['title'] }}
                         <span class="rbt-course-icon rbt-course-edit"></span>
                         <span class="rbt-course-icon rbt-course-del"></span>
                     </h6>
                     <div>
                         <div class="course-field card-body">
-                            <label for="modules.{{ $loop->index }}">Module title</label>
+                            <label for="modules.{{ $moduleIndex }}">Module title</label>
                             <div class="d-flex justify-content-between rbt-course-wrape mb-4">
                                 <div class="col-10 inner d-flex align-items-center gap-2">
-                                    <input wire:model.live.debounce.450ms="modules.{{ $loop->index }}.title" id="modules.{{ $loop->index }}" class="rbt-title mb-0" value="" placeholder="Enter {{('module ' . $loop->iteration)}} title"/>
+                                    <input wire:model.live.debounce.250ms="modules.{{ $moduleIndex }}.title" id="modules.{{ $moduleIndex }}" class="rbt-title mb-0" placeholder="Enter {{('module ' . $loop->iteration)}} title"/>
                                 </div>
                                 <div class="col-2 inner">
                                     <ul class="rbt-list-style-1 rbt-course-list d-flex gap-2">
-                                        <li><i wire:click="removeModule({{ $loop->index }})" class="feather-trash"></i>
+                                        <li><i wire:click="removeModule({{ $moduleIndex }})" class="feather-trash"></i>
                                         </li>
                                         <li><i class="feather-edit"></i></li>
                                     </ul>
@@ -66,19 +69,22 @@
                             </div>
                             <label>Module lessons</label>
                             @foreach ($module['lessons'] as $lesson)
+                                @php
+                                    $lessonIndex = $loop->index;
+                                @endphp
                                 <div class="d-flex justify-content-between flex-wrap rbt-course-wrape mb-4 ms-5">
                                     <div class="col-10 inner d-flex align-items-center gap-2">
-                                        <input class="rbt-title mb-0" wire:model="modules.{{ $loop->parent->index }}.lessons.{{ $loop->index }}.title" id="modules.{{ $loop->parent->index }}.lessons{{ $loop->index }}.title" name="modules.{{ $loop->parent->index }}.lessons{{ $loop->index }}.title" placeholder="{{ $lesson['title'] }}"/>
+                                        <input class="rbt-title mb-0" wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.title" id="modules.{{ $moduleIndex }}.lessons{{ $lessonIndex }}.title" name="modules.{{ $moduleIndex }}.lessons{{ $lessonIndex }}.title" placeholder="{{ $lesson['title'] }}"/>
                                     </div>
                                     <div class="col-2 inner">
                                         <ul class="rbt-list-style-1 rbt-course-list d-flex gap-2">
                                             <li>
-                                                <i wire:click="removeLesson({{ $loop->parent->index }}, {{ $loop->index }})" class="feather-trash"></i>
+                                                <i wire:click="removeLesson({{ $moduleIndex }}, {{ $lessonIndex }})" class="feather-trash"></i>
                                             </li>
                                             <li>
                                                 <div class="rbt-checkbox">
-                                                    <input type="checkbox" id="modules.{{ $loop->parent->index }}.lessons.{{ $loop->index }}.preview" name="modules.{{ $loop->parent->index }}.lessons.{{ $loop->index }}.preview" wire:model="modules.{{ $loop->parent->index }}.lessons.{{ $loop->index }}.preview">
-                                                    <label for="modules.{{ $loop->parent->index }}.lessons.{{ $loop->index }}.preview">Preview</label>
+                                                    <input type="checkbox" id="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.preview" name="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.preview" wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.preview">
+                                                    <label for="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.preview">Preview</label>
                                                 </div>
                                             </li>
                                         </ul>
@@ -86,141 +92,99 @@
 
                                     <div class="col-12 my-3 d-flex flex-wrap justify-content-between align-items-center" x-data="{ activeTab: null }">
                                         <div class="gap-3 d-flex flex-wrap">
-                                            <button wire:click="addQuiz({{ $loop->parent->index . ',' . $loop->index }})" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
-                                                    type="button"
-                                                    @click="activeTab = 'quiz'">
+                                            <button wire:click="addQuiz({{ $moduleIndex . ',' . $lessonIndex }})"
+                                                    class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
+                                                    type="button">
                                                 <span class="icon-reverse-wrapper">
                                                     <span class="btn-text">Quiz</span>
+                                                    @if(isset($modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']) && $modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] === 'quiz')
+                                                        <span class="btn-icon"><i class="feather-eye"></i></span>
+                                                        <span class="btn-icon"><i class="feather-help-circle"></i></span>
+                                                    @else
+                                                        <span class="btn-icon"><i class="feather-help-circle"></i></span>
                                                     <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                                                    <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                                    @endif
                                                 </span>
                                             </button>
 
-                                            <button wire:click="addAssignment" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
-                                                    type="button"
-                                                    @click="activeTab = 'assignment'">
-                                                    <span class="icon-reverse-wrapper">
-                                                        <span class="btn-text">Assignments</span>
+                                            <button wire:click="addAssignment({{ $moduleIndex . ',' . $lessonIndex }})"
+                                                    class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
+                                                    type="button">
+                                                <span class="icon-reverse-wrapper">
+                                                    <span class="btn-text">Assignments</span>
+                                                    @if(isset($modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']) && $modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] === 'assignment')
+                                                        <span class="btn-icon"><i class="feather-eye"></i></span>
+                                                        <span class="btn-icon"><i class="feather-book"></i></span>
+                                                    @else
+                                                        <span class="btn-icon"><i class="feather-book"></i></span>
                                                         <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                                                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                                                    </span>
+                                                    @endif
+                                                </span>
                                             </button>
 
-                                            <button wire:click="addContent" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
+                                            <button wire:click="addContent({{ $moduleIndex . ',' . $lessonIndex }})"
+                                                    class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
                                                     type="button"
                                                     @click="activeTab = 'content'">
-                                                            <span class="icon-reverse-wrapper">
-                                                                <span class="btn-text">Content</span>
-                                                                <span class="btn-icon"><i class="feather-book-open"></i></span>
-                                                                <span class="btn-icon"><i class="feather-book-open"></i></span>
-                                                            </span>
+                                                <span class="icon-reverse-wrapper">
+                                                    <span class="btn-text">Content</span>
+                                                    @if(!empty($modules[$moduleIndex]['lessons'][$lessonIndex]['content']))
+                                                        <span class="btn-icon"><i class="feather-eye"></i></span>
+                                                        <span class="btn-icon"><i class="feather-book-open"></i></span>
+                                                    @else
+                                                        <span class="btn-icon"><i class="feather-book-open"></i></span>
+                                                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                                    @endif
+                                                </span>
                                             </button>
 
-                                            <button wire:click="addVideo" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2" type="button" @click="activeTab = 'upload-video'">
+                                            <button wire:click="addVideo({{ $moduleIndex . ',' . $lessonIndex }})"
+                                                    class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
+                                                    type="button"
+                                                    @click="activeTab = 'upload-video'">
                                                 <span class="icon-reverse-wrapper">
                                                     <span class="btn-text">Upload video</span>
-                                                    <span class="btn-icon"><i class="feather-video"></i></span>
-                                                    <span class="btn-icon"><i class="feather-video"></i></span>
+                                                    @if(!empty($modules[$moduleIndex]['lessons'][$lessonIndex]['video_url']))
+                                                        <span class="btn-icon"><i class="feather-eye"></i></span>
+                                                        <span class="btn-icon"><i class="feather-video"></i></span>
+                                                    @else
+                                                        <span class="btn-icon"><i class="feather-video"></i></span>
+                                                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                                    @endif
                                                 </span>
                                             </button>
                                         </div>
 
-                                        @if($showQuiz && isset($lesson['assessments']))
+                                        @if(($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'quiz')
                                             <livewire:client.instructor.components.quiz-builder
-                                                :moduleIndex="$loop->parent->index"
-                                                :lessonIndex="$loop->index"
-                                                wire:model="modules.{{ $loop->parent->index }}.lessons.{{ $loop->index }}.assessments"
-                                                :key="'quiz-' . $loop->parent->index . '-' . $loop->index"/>
+                                                :$moduleIndex
+                                                :$lessonIndex
+                                                wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.assessments"
+                                            />
                                         @endif
 
-                                        @if($showAssignment)
-                                            <div class="w-100 row assignment-section mt-4 inner rbt-default-form ms-5 rbt-default-form rbt-course-wrape" x-show="activeTab === 'assignment'" x-transition>
-                                                <h5 class="modal-title mb--20" id="LessonLabel">Assignment</h5>
-                                                <div class="course-field mb--20">
-                                                    <label for="">Title</label><input id="" type="text" placeholder="Assignments">
-                                                </div>
-                                                <div class="course-field mb--30">
-                                                    <label for="modal-field-3">Description</label>
-                                                    <textarea id="editor3"></textarea>
-                                                </div>
-                                                <div class="course-field mb--20">
-                                                    <label for="">Assignment Question</label>
-                                                    <input id="" type="text" placeholder="Assignments Question">
-                                                </div>
-                                                <div class="d-flex pt--30 justify-content-between">
-                                                    <button type="button" class="rbt-btn btn-border btn-md radius-round-10" @click="activeTab = null">
-                                                        Cancel
-                                                    </button>
-
-                                                    <button type="button" class="rbt-btn btn-md radius-round-10">Save
-                                                    </button>
-                                                </div>
-                                            </div>
+                                        @if(($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'assignment')
+                                            <livewire:client.instructor.components.assignment-builder
+                                                :$moduleIndex
+                                                :$lessonIndex
+                                                wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.assessments"
+                                            />
                                         @endif
 
-                                        @if($showContent)
-                                            <div class="w-100 row assignment-section mt-4 inner rbt-default-form ms-5 rbt-default-form rbt-course-wrape" x-show="activeTab === 'content'" x-transition>
-                                                <h5 class="modal-title mb--20" id="LessonLabel">Lesson content</h5>
-                                                <div class="course-field mb--30"><label for="modal-field-3">Summary
-                                                        about lesson</label>
-                                                    <textarea id="" rows="15"></textarea>
-                                                </div>
-
-                                                <div class="d-flex pt--30 justify-content-between">
-                                                    <button type="button" class="rbt-btn btn-border btn-md radius-round-10" @click="activeTab = null">
-                                                        Cancel
-                                                    </button>
-                                                    <button type="button" class="rbt-btn btn-md radius-round-10">Save
-                                                    </button>
-                                                </div>
-                                            </div>
+                                        @if(($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'content')
+                                            <livewire:client.instructor.components.course-content-builder
+                                                :$moduleIndex
+                                                :$lessonIndex
+                                                wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.description"
+                                            />
                                         @endif
 
-                                        @if($showVideo)
-                                            <div class="w-100 row assignment-section mt-4 inner rbt-default-form ms-5 rbt-default-form rbt-course-wrape" x-show="activeTab === 'upload-video'" x-transition>
-                                                <h5 class="modal-title mb--20" id="LessonLabel">Lesson video</h5>
-                                                <div class="rbt-create-course-thumbnail p-4 rounded border text-center">
-                                                    <div x-data
-                                                         x-on:click="$refs.videoInput.click()"
-                                                         class="d-flex flex-column align-items-center justify-content-center"
-                                                         style="min-height: 220px; cursor: pointer;">
-
-                                                        <div class="upload-area__icon mb-3">
-                                                            <i class="feather-video" style="font-size: 3rem; color: #0d6efd;"></i>
-                                                        </div>
-
-                                                        <div class="upload-area__text">
-                                                            <h6 class="mb-4 fw-bold">Drag & Drop your video here</h6>
-                                                            <input type="file"
-                                                                   id="video-upload"
-                                                                   accept="video/mp4,video/mov"
-                                                                   style="display: none;"
-                                                                   x-ref="videoInput">
-
-                                                            <button class="rbt-btn btn-md btn-gradient hover-icon-reverse"
-                                                                    type="button">
-                                                            <span class="icon-reverse-wrapper">
-                                                                <span class="btn-text">Browse Files</span>
-                                                                <span class="btn-icon"><i class="feather-folder-plus"></i></span>
-                                                                <span class="btn-icon"><i class="feather-folder-plus"></i></span>
-                                                            </span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                                <small class="d-block mt-2 text-muted">
-                                                    <i class="feather-info"></i>
-                                                    <b>File Support:</b> MP4, MOV
-                                                </small>
-                                                <div class="d-flex pt--30 justify-content-between">
-                                                    <button type="button" class="rbt-btn btn-border btn-md radius-round-10" @click="activeTab = null">
-                                                        Cancel
-                                                    </button>
-                                                    <button type="button" class="rbt-btn btn-md radius-round-10">Save
-                                                    </button>
-                                                </div>
-                                            </div>
+                                        @if(($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'upload-video')
+                                            <livewire:client.instructor.components.course-video-builder
+                                                :$moduleIndex
+                                                :$lessonIndex
+                                                wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.video_url"
+                                            />
                                         @endif
                                     </div>
                                 </div>

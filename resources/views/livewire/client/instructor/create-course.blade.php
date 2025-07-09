@@ -139,8 +139,8 @@
                                 <div class="rbt-create-course-thumbnail upload-area">
                                     <div class="upload-area">
                                         <div class="brows-file-wrapper" data-black-overlay="9">
-                                            @if ($image)
-                                                <img src="{{ $image->temporaryUrl() }}" alt="preview">
+                                            @if ($imageUrl)
+                                                <img src="{{ $imageUrl }}" alt="preview">
                                                 <button style="z-index: 999" type="button" wire:click="deleteImage">
                                                     Cancel Button
                                                 </button>

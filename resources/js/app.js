@@ -29,7 +29,7 @@ const toolbarOptions = [
     [{'font': []}],
     ['bold', 'italic', 'underline', 'strike'],
     ['blockquote', 'code-block'],
-    ['link', 'image'],
+    ['link'],
     [{'list': 'ordered'}, {'list': 'bullet'}, {'list': 'check'}],
     [{'indent': '-1'}, {'indent': '+1'}],
     [{'align': []}],
@@ -38,15 +38,14 @@ const toolbarOptions = [
 function initQuill() {
     const el = document.querySelector('#description');
     if (el && !el.classList.contains('ql-container')) {
-        let quill;
-        quill = new Quill(el, {
+        let quill = new Quill(el, {
             theme: 'snow',
             modules: {toolbar: toolbarOptions}
         });
 
         quill.on('text-change', function () {
             const input = document.querySelector('#description_input');
-            input.value = quill.root.innerHTML;
+            input.value = quill.getText();
             input.dispatchEvent(new Event('input'));
         });
     }

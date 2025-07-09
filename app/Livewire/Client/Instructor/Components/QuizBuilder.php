@@ -14,8 +14,9 @@ use Maatwebsite\Excel\Facades\Excel;
 class QuizBuilder extends Component
 {
     use WithFileUploads;
-    public string $moduleIndex = '';
-    public string $lessonIndex = '';
+
+	public int $moduleIndex;
+	public int $lessonIndex;
     public $excelFile;
 
     #[Modelable]
@@ -23,7 +24,7 @@ class QuizBuilder extends Component
 
     public function removeQuiz(): void
     {
-        $this->dispatch('quiz-removed', moduleIndex: (int)$this->moduleIndex, lessonIndex: (int)$this->lessonIndex);
+	    $this->dispatch('quiz-removed', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
     }
 
     public function addOption(int $index): void
@@ -66,7 +67,11 @@ class QuizBuilder extends Component
         Excel::import($import, $this->excelFile);
 
         $this->quiz['assessments_questions'] = array_merge($this->quiz['assessments_questions'] ?? [], $import->getParsed());
+    }
 
+	public function saveQuiz(): void
+	{
+		$this->dispatch('quiz-saved', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
     }
 
 

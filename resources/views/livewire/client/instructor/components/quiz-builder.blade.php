@@ -1,4 +1,4 @@
-<div x-data="{ activeQuestion: 1 }" class="ms-5 mt-4 w-100 quiz-section rbt-default-form rbt-course-wrape" x-show="activeTab === 'quiz'" x-transition>
+<div x-data="{ activeQuestion: 1 }" class="ms-5 mt-4 w-100 quiz-section rbt-default-form rbt-course-wrape">
     <h5 class="modal-title mb--20 d-flex justify-content-between align-items-center">
         <div>Quiz</div>
         <div><i class="feather-trash me-auto"></i></div>
@@ -62,7 +62,7 @@
                             <div class="rbt-modern-select bg-transparent height-45 w-100 mb--10">
                                 <select id="questionType" wire:model="quiz.assessments_questions.{{ $key }}.type" class="w-100">
                                     <option value="" disabled selected>Select Question Type</option>
-                                    @foreach(\App\Models\Assessment::$QUIZ_TYPES as $value => $label)
+                                    @foreach(\App\Models\AssessmentQuestion::$QUIZ_TYPES as $label => $value)
                                         <option value="{{ $value }}">{{ $label }}</option>
                                     @endforeach
                                 </select>
@@ -161,8 +161,16 @@
             </button>
             <button type="button"
                     class="rbt-btn btn-md radius-round-10 d-inline-block"
-                    @click="if (activeQuestion < 2) activeQuestion++">Save & Next
+                    @click="
+            if (activeQuestion < 2) {
+                activeQuestion++;
+            } else {
+                $wire.saveQuiz();
+            }
+        ">
+                <span x-text="activeQuestion <= 1 ? 'Save & Next' : 'Save'"></span>
             </button>
+
         </div>
     </div>
 </div>
