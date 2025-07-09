@@ -1,29 +1,24 @@
 # 🌐 CodeZone - An Online Learning Platform
 
-A modern online learning platform built with **Laravel 12**, featuring traditional email authentication, Google/Facebook
-login via **Laravel Socialite**, and dynamic user interface powered by **Livewire** and **Alpine.js** in a SPA-style
-experience.
+A modern online learning platform built with **Laravel 12**, featuring traditional email authentication, Google/Facebook login via **Laravel Socialite**, and dynamic user interface powered by **Livewire** and **Alpine.js** in a SPA-style experience.
 
 ---
 
 ## 🎨 UI Templates Used
 
 - **Client**: [HiStudy - Online Courses & Education Template](https://rainbowit.net/html/histudy/)
-- **Admin
-  **: [Vuexy - Admin Dashboard Template](https://demos.pixinvent.com/vuexy-html-admin-template/html/vertical-menu-template/)
+- **Admin**: [Vuexy - Admin Dashboard Template](https://demos.pixinvent.com/vuexy-html-admin-template/html/vertical-menu-template/)
 
 ---
 
 ## 🚀 Key Features
 
 ### 👤 User Authentication
-
 - Register / Login / Logout using email
 - Social authentication: Google, Facebook
 - Role-based access: `Student` and `Instructor`
 
 ### 📚 Course Management
-
 - Instructors:
     - Create, edit, and delete courses
     - Manage course content
@@ -32,10 +27,8 @@ experience.
     - Learn through the interactive course interface
 
 ### ⚙️ Dynamic SPA-style UI
-
 - Built with **Livewire 3** for seamless real-time updates
 - Enhanced interactivity using **Alpine.js**
-
 ---
 
 ## 🧭 Project Structure Overview
@@ -64,16 +57,16 @@ routes/
 
 ## 🛠️ Technologies Used
 
-| Technology        | Purpose                            |
-|-------------------|------------------------------------|
-| Laravel 12        | Backend framework                  |
-| Livewire 3        | SPA-style dynamic frontend         |
-| Alpine.js         | Lightweight frontend interactivity |
-| Laravel Socialite | Social login (Google, Facebook)    |
-| SweetAlert2       | Beautiful alert popups             |
-| MySQL             | Database system                    |
-| Vite              | Fast asset bundler                 |
-| Tailwind CSS      | Utility-first CSS framework        |
+| Technology        | Purpose                                  |
+|-------------------|-------------------------------------------|
+| Laravel 12        | Backend framework                         |
+| Livewire 3        | SPA-style dynamic frontend                |
+| Alpine.js         | Lightweight frontend interactivity        |
+| Laravel Socialite | Social login (Google, Facebook)           |
+| SweetAlert2       | Beautiful alert popups                    |
+| MySQL             | Database system                           |
+| Vite              | Fast asset bundler                        |
+| Tailwind CSS      | Utility-first CSS framework               |
 
 ---
 
@@ -105,10 +98,10 @@ php artisan serve
 
 ## 🔐 Default Login Accounts (if seeded)
 
-| Role       | Email               | Password |
-|------------|---------------------|----------|
-| Student    | student@test.com    | password |
-| Instructor | instructor@test.com | password |
+| Role       | Email               | Password  |
+|------------|---------------------|-----------|
+| Student    | student@test.com    | password  |
+| Instructor | instructor@test.com | password  |
 
 ---
 
@@ -142,6 +135,5 @@ For feedback, contributions, or bug reports:
 ## 🧑‍💻 Author
 
 **Bui Van Huy** – [GitHub](https://github.com/buivanhuy001)
-**Nha "
 
 ---
