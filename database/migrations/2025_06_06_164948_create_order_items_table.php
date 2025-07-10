@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            $table->decimal('current_price', 10, 3);
+	        $table->decimal('current_price', 15, 3);
 
-            $table->foreignIdFor(Course::class);
-            $table->foreignIdFor(Order::class);
+	        $table->foreignIdFor(Course::class)->constrained();
+	        $table->foreignIdFor(Order::class)->constrained();
 
             $table->timestamps();
         });

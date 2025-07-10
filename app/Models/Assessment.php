@@ -8,5 +8,5 @@ class Assessment extends Model
 {
 	protected $guarded = [];
 
-	public static array $TYPES = ['Assignment' => 'file_upload', 'Quiz' => 'quiz',];
+	public static array $TYPES = ['quiz' => 'Quiz', 'assignment' => 'Assignment',];
 }

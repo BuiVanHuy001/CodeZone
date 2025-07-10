@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('explanation')->nullable();
             $table->unsignedTinyInteger('position')->default(0);
 
-	        $table->foreignIdFor(AssessmentQuestion::class);
+	        $table->foreignIdFor(AssessmentQuestion::class)->constrained();
             $table->timestamps();
         });
     }

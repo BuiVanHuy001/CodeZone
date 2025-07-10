@@ -17,9 +17,9 @@ return new class extends Migration
 
             $table->string('title');
             $table->string('slug')->unique();
-            $table->unsignedTinyInteger('lesson_count')->default(0);
+	        $table->unsignedTinyInteger('lesson_count');
             $table->unsignedTinyInteger('position');
-            $table->unsignedSmallInteger('duration');
+	        $table->unsignedSmallInteger('duration')->comment('Duration in seconds and max 65535 seconds (18 hours)');
 
 	        $table->foreignUuid('course_id')->constrained('courses');
 

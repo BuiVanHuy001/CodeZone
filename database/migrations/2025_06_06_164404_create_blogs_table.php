@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('content');
             $table->enum('status', Blog::$STATUSES)->default('pending');
 
-            $table->foreignIdFor(User::class);
+	        $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();
         });
     }
