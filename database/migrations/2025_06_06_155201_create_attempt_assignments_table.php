@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('assignment_url');
             $table->text('feedback')->nullable();
 
-            $table->foreignIdFor(AssessmentAttempt::class, 'attempt_id')->constrained()->onDelete('cascade');
-            $table->foreignIdFor(AssessmentQuestion::class)->constrained()->onDelete('cascade');
+	        $table->foreignIdFor(AssessmentAttempt::class, 'attempt_id')->constrained()->cascadeOnDelete();
+	        $table->foreignIdFor(AssessmentQuestion::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

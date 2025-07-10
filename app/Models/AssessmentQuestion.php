@@ -9,9 +9,7 @@ class AssessmentQuestion extends Model
 {
 	protected $guarded = [];
 
-	public static array $TYPES = ["Multiple Choice" => 'multiple_choice', "True/False" => 'true_false', "File Upload" => 'file_upload'];
-
-	public static array $QUIZ_TYPES = ["Multiple Choice" => 'multiple_choice', "True/False" => 'true_false',];
+	public static array $TYPES = ['multiple_choice' => 'Multiple Choice', 'true_false' => 'True/False',];
 
 	public function options(): hasMany
 	{

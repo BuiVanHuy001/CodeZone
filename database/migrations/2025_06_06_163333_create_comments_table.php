@@ -16,10 +16,10 @@ return new class extends Migration
             $table->id();
             $table->morphs('commentable');
             $table->text('content');
-            $table->foreignId('parent_id')->nullable()->constrained('comments')->onDelete('cascade');
-            $table->timestamps();
+	        $table->foreignId('parent_id')->nullable()->constrained('comments')->cascadeOnDelete();
 
-            $table->foreignIdFor(User::class);
+	        $table->foreignIdFor(User::class)->constrained();
+            $table->timestamps();
         });
     }
 

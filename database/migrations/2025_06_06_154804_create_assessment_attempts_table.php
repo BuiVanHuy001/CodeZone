@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->decimal('total_score', 2, 1)->default(0);
 
-            $table->foreignIdFor(Assessment::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(User::class);
+	        $table->foreignIdFor(Assessment::class)->constrained()->cascadeOnDelete();
+	        $table->foreignIdFor(User::class)->constrained();
 
             $table->timestamps();
         });

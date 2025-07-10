@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('progress_tracking', function (Blueprint $table) {
             $table->id();
             $table->boolean('is_completed')->default(false);
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Course::class);
+	        $table->foreignIdFor(User::class)->constrained();
+	        $table->foreignIdFor(Course::class)->constrained();
             $table->timestamps();
         });
     }

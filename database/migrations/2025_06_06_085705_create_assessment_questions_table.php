@@ -19,7 +19,7 @@ return new class extends Migration
 	        $table->enum('type', array_values(AssessmentQuestion::$TYPES));
             $table->unsignedTinyInteger('position')->default(0);
 
-	        $table->foreignIdFor(Assessment::class);
+	        $table->foreignIdFor(Assessment::class)->constrained();
             $table->timestamps();
         });
     }
