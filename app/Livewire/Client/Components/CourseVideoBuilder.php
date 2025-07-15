@@ -17,43 +17,41 @@ class CourseVideoBuilder extends Component
 
 	public int $moduleIndex;
 	public int $lessonIndex;
-	public string $tmpVideoPath;
 	#[Modelable]
-	public $videoURL;
+    public $lesson;
 
-	public int $videoDuration = 0;
 
-	public function updatedVideoURL(): void
+    public function updatedLesson(): void
 	{
-		$path = $this->videoURL->storePublicly('course/videos', 'public');
+        $path = $this->lesson['video_url']->storePublicly('course/videos', 'public');
 		$publicUrl = Storage::url($path);
-		$this->getVideoDuration($path);
-		$this->videoURL = $publicUrl;
+        $this->lesson['duration'] = $this->getVideoDuration($path);
+        $this->lesson['video_url'] = $publicUrl;
 	}
 
-	public function getVideoDuration(string $path): void
+    public function getVideoDuration(string $path): int
 	{
 		$absolutePath = storage_path('app/public/' . $path);
 		$getID3 = new \getID3;
 		$video_file = $getID3->analyze($absolutePath);
-		$this->videoDuration = $video_file['playtime_seconds'];
+        return $video_file['playtime_seconds'];
 	}
 
 	public function saveVideo(): void
 	{
-		$this->dispatch('video-saved', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex, videoDuration: $this->videoDuration);
+        $this->dispatch('video-saved', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
 	}
 
 	public function deleteVideo(): void
 	{
-		if ($this->videoURL) {
-			$relativePath = str_replace('/storage', '', $this->videoURL);
-			if (Storage::disk('public')->exists($this->videoURL)) {
+        if ($this->lesson['video_url']) {
+            $relativePath = str_replace('/storage', '', $this->lesson['video_url']);
+            if (Storage::disk('public')->exists($this->lesson['video_url'])) {
 				$relativePath = str_replace('course/videos/', 'course/videos/', $relativePath);
 			}
 			Storage::disk('public')->delete($relativePath);
 			File::cleanDirectory(\storage_path('app/private/livewire-tmp'));
-			$this->videoURL = null;
+            $this->lesson['video_url'] = null;
 		}
 		$this->dispatch('video-deleted', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
 	}

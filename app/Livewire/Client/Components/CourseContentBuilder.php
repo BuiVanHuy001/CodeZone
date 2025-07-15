@@ -13,17 +13,17 @@ class CourseContentBuilder extends Component
 	public int $moduleIndex;
 	public int $lessonIndex;
 	#[Modelable]
-	public string $description = '';
+    public string $content = '';
 
 	public function saveContent(): void
 	{
-		$this->dispatch('content-saved', $this->moduleIndex, $this->lessonIndex);
+        $this->dispatch('builder-hided', $this->moduleIndex, $this->lessonIndex);
 	}
 
 	public function removeContent(): void
 	{
-		$this->reset('description');
-		$this->dispatch('content-removed', $this->moduleIndex, $this->lessonIndex);
+        $this->reset('content');
+        $this->dispatch('builder-hided', $this->moduleIndex, $this->lessonIndex);
 	}
 
     public function render(): View|Application|Factory

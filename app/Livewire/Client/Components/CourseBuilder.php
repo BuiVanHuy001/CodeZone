@@ -19,33 +19,31 @@ class CourseBuilder extends Component
     {
         if ($this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] !== 'assessment' || $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] !== 'quiz') {
             $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'assessment';
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = ['title' => '', 'description' => '', 'type' => 'quiz', 'assessments_questions' => [['content' => '', 'type' => '', 'question_options' => [['content' => '', 'is_correct' => false, 'explanation' => '', 'position' => 1,]],],],];
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = ['title' => '', 'description' => '', 'type' => 'quiz', 'assessments_questions' => [['content' => '', 'type' => '', 'question_options' => [['content' => '', 'is_correct' => false, 'explanation' => '', 'position' => 1,]]]]];
         }
         $this->activeTabs["$moduleIndex-$lessonIndex"] = 'quiz';
     }
 
-	#[On('quiz-removed')]
-	public function removeQuiz(int $moduleIndex, int $lessonIndex): void
+    #[On('builder-hided')]
+    public function hideAssessmentBuilder(int $moduleIndex, int $lessonIndex): void
 	{
-		if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'])) {
-			unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']);
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'video';
-        }
         $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
     }
 
-    #[On('quiz-saved')]
-    public function saveQuiz(int $moduleIndex, int $lessonIndex): void
+    #[On('assessment-builder-removed')]
+    public function removeAssessmentBuilder(int $moduleIndex, int $lessonIndex): void
     {
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = '';
+        unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']);
         $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
     }
 
     public function addAssignment(int $moduleIndex, int $lessonIndex): void
     {
         if ($this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] !== 'assessment' || $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] !== 'assignment') {
+
             $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'assessment';
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = ['title' => '', 'description' => ''];
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] = 'assignment';
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = ['title' => '', 'description' => '', 'type' => 'assignment',];
         }
         $this->activeTabs["$moduleIndex-$lessonIndex"] = 'assignment';
     }
@@ -54,20 +52,15 @@ class CourseBuilder extends Component
     public function removeAssignment(int $moduleIndex, int $lessonIndex): void
     {
         if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'])) {
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = '';
             unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']);
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'video';
         }
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
-    }
-
-    #[On('assignment-saved')]
-    public function saveAssignment(int $moduleIndex, int $lessonIndex): void
-    {
         $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
     }
 
     public function addContent(int $moduleIndex, int $lessonIndex): void
     {
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'document';
         $this->activeTabs["$moduleIndex-$lessonIndex"] = 'content';
     }
 
@@ -77,27 +70,18 @@ class CourseBuilder extends Component
         $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
     }
 
-    #[On('content-removed')]
-    public function removeContent(int $moduleIndex, int $lessonIndex): void
-    {
-        if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['content'])) {
-            unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['content']);
-        }
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
-    }
-
     public function addVideo(int $moduleIndex, int $lessonIndex): void
     {
+        if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'])) {
+            unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']);
+        }
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'video';
         $this->activeTabs["$moduleIndex-$lessonIndex"] = 'upload-video';
     }
 
     #[On('video-saved')]
-    public function saveVideo(int $moduleIndex, int $lessonIndex, int $videoDuration): void
+    public function saveVideo(int $moduleIndex, int $lessonIndex): void
     {
-        if ($this->modules[$moduleIndex]['lessons'][$lessonIndex]['duration'] === 0 && $this->modules[$moduleIndex]['lessons'][$lessonIndex]['duration'] !== $videoDuration) {
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['duration'] = $videoDuration;
-        }
-
         $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
     }
 
@@ -115,7 +99,7 @@ class CourseBuilder extends Component
 
     public function addModule(): void
     {
-        $this->modules[] = ['title' => '', 'lesson_count' => 1, 'lessons' => [['title' => '', 'description' => '', 'video_url' => '', 'content' => '', 'preview' => false, 'type' => '', 'duration' => 0,],],];
+        $this->modules[] = ['title' => '', 'lesson_count' => 1, 'lessons' => [['title' => '', 'video_url' => '', 'content' => '', 'preview' => false, 'type' => '', 'duration' => 0]]];
     }
 
     public function removeModule(int $index): void

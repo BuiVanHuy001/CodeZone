@@ -38,7 +38,8 @@
                                                wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.title"
                                                id="modules.{{ $moduleIndex }}.lessons{{ $lessonIndex }}.title"
                                                name="modules.{{ $moduleIndex }}.lessons{{ $lessonIndex }}.title"
-                                               placeholder="Enter lesson {{ $lessonIndex + 1 }} title"/>
+                                               placeholder="Enter lesson {{ $lessonIndex + 1 }} title"
+                                        />
                                     </div>
                                     <div class="col-2 inner">
                                         <ul class="rbt-list-style-1 rbt-course-list d-flex gap-2">
@@ -139,7 +140,7 @@
                                             <livewire:client.components.course-content-builder
                                                 :$moduleIndex
                                                 :$lessonIndex
-                                                wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.description"
+                                                wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.content"
                                             />
                                         @endif
 
@@ -147,7 +148,7 @@
                                             <livewire:client.components.course-video-builder
                                                 :$moduleIndex
                                                 :$lessonIndex
-                                                wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.video_url"
+                                                wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}"
                                             />
                                         @endif
                                     </div>

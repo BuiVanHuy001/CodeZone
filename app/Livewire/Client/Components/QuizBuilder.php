@@ -15,16 +15,16 @@ class QuizBuilder extends Component
 {
     use WithFileUploads;
 
-	public int $moduleIndex;
-	public int $lessonIndex;
+    public int $moduleIndex;
+    public int $lessonIndex;
     public $excelFile;
 
     #[Modelable]
-    public array $quiz;
+    public $quiz;
 
     public function removeQuiz(): void
     {
-	    $this->dispatch('quiz-removed', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
+        $this->dispatch('assessment-builder-removed', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
     }
 
     public function addOption(int $index): void
@@ -47,7 +47,7 @@ class QuizBuilder extends Component
 
     public function addQuestion(): void
     {
-        $this->quiz['assessments_questions'][] = ['content' => '', 'type' => '', 'question_options' => [['content' => '', 'is_correct' => false, 'explanation' => '', 'position' => 1,],],];
+        $this->quiz['assessments_questions'][] = ['content' => '', 'type' => '', 'question_options' => [['content' => '', 'is_correct' => false, 'explanation' => '', 'position' => 1]]];
     }
 
     public function removeQuestion(int $index): void
@@ -61,18 +61,39 @@ class QuizBuilder extends Component
 
     public function updatedExcelFile(): void
     {
-        $this->validate(['excelFile' => 'required|file|mimes:xlsx,csv,xls',]);
-
+        $this->validate(['excelFile' => 'required|file|mimes:xlsx,csv,xls']);
         $import = new QuizzesImport();
         Excel::import($import, $this->excelFile);
-        $this->quiz['assessments_questions'] = [];
-        $this->quiz['assessments_questions'] = array_merge($this->quiz['assessments_questions'] ?? [], $import->getParsed());
+
+        $this->importQuestions($import->getParsed());
+
         $this->saveQuiz();
     }
 
-	public function saveQuiz(): void
-	{
-		$this->dispatch('quiz-saved', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
+    private function importQuestions($importedQuestions): void
+    {
+        if ($this->checkExistingQuestions()) {
+            $this->quiz['assessments_questions'] = array_merge($this->quiz['assessments_questions'], $importedQuestions);
+        } else {
+            $this->quiz['assessments_questions'] = $importedQuestions;
+        }
+    }
+
+    private function checkExistingQuestions(): bool
+    {
+        if (isset($this->quiz['assessments_questions']) && is_array($this->quiz['assessments_questions'])) {
+            foreach ($this->quiz['assessments_questions'] as $question) {
+                if (isset($question['content']) && !empty(trim($question['content']))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public function saveQuiz(): void
+    {
+        $this->dispatch('builder-hided', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
     }
 
 

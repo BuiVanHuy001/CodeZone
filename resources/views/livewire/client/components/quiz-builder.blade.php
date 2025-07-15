@@ -22,11 +22,11 @@
     </div>
     <div id="question-{{ $lessonIndex }}-2" class="question" x-show="activeQuestion === 2">
         <div class="course-field mb--20">
-            @foreach($quiz['assessments_questions'] as $key => $question)
+            @foreach($quiz['assessments_questions'] as $questionKey => $question)
                 <div x-data="{ open: true }" class="rbt-course-wrape mb-4">
                     <div class="d-flex justify-content-between" style="cursor: auto;">
                         <div class="inner d-flex align-items-center gap-2">
-                            <h6 class="rbt-title mb-0"><strong>Question No.0{{ $key + 1 }}
+                            <h6 class="rbt-title mb-0"><strong>Question No.{{ $questionKey + 1 }}
                                     : </strong> {{ $question['content'] }}</h6>
                         </div>
                         <div class="inner">
@@ -43,7 +43,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a wire:click.prevent="removeQuestion({{$key}})" class="dropdown-item delete-item" href="#">
+                                            <a wire:click.prevent="removeQuestion({{$questionKey}})" class="dropdown-item delete-item" href="#">
                                                 <i class="feather-trash"></i>
                                                 Delete
                                             </a>
@@ -57,12 +57,12 @@
                     <div x-show="open">
                         <div class="course-field mb--20 mt-3">
                             <label for="">Write your question here</label>
-                            <input id="" wire:model="quiz.assessments_questions.{{ $key }}.content" type="text" placeholder="Type question here">
+                            <input id="" wire:model="quiz.assessments_questions.{{ $questionKey }}.content" type="text" placeholder="Type question here">
                         </div>
                         <div class="course-field mb--20">
                             <h6>Select your question type</h6>
                             <div class="rbt-modern-select bg-transparent height-45 w-100 mb--10">
-                                <select id="questionType" wire:model="quiz.assessments_questions.{{ $key }}.type" class="w-100">
+                                <select id="questionType" wire:model="quiz.assessments_questions.{{ $questionKey }}.type" class="w-100">
                                     <option value="" disabled selected>Select Question Type</option>
                                     @foreach(\App\Models\AssessmentQuestion::$TYPES as $value => $label)
                                         <option value="{{ $value }}">{{ $label }}</option>
@@ -80,18 +80,18 @@
                                             <a href="#" wire:click.prevent="removeOption({{ $loop->parent->index }}, {{ $optionIndex }})"><i class="feather-trash me-auto"></i></a>
                                         </div>
                                         <div class="col-lg-9">
-                                            <input id="" type="text" wire:model="quiz.assessments_questions.{{ $key }}.question_options.{{$optionIndex}}.content" placeholder="Type answer option here">
+                                            <input type="text" wire:model="quiz.assessments_questions.{{ $questionKey }}.question_options.{{ $optionIndex }}.content" placeholder="Type answer option here">
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="rbt-form-check">
-                                                <input class="form-check-input" wire:model="quiz.assessments_questions.{{ $key }}.question_options.{{$optionIndex}}.is_correct" type="checkbox" name="rbt-radio" id="question-{{ $key }}-option-{{ $optionIndex }}">
-                                                <label class="form-check-label" for="question-{{ $key }}-option-{{ $optionIndex }}">Mark
+                                                <input class="form-check-input" wire:model="quiz.assessments_questions.{{ $questionKey }}.question_options.{{ $optionIndex }}.is_correct" type="checkbox" name="rbt-radio" id="question-{{ $questionKey }}-option-{{ $optionIndex }}">
+                                                <label class="form-check-label" for="question-{{ $questionKey }}-option-{{ $optionIndex }}">Mark
                                                     as correct answer</label>
                                             </div>
                                         </div>
                                         <div class="course-field">
                                             <h6 class="mb-3">Add answer explanation</h6>
-                                            <textarea wire:model="quiz.assessments_questions.{{ $key }}.question_options.{{$optionIndex}}.explanation" id=""></textarea>
+                                            <textarea wire:model="quiz.assessments_questions.{{ $questionKey }}.question_options.{{ $optionIndex }}.explanation"></textarea>
                                         </div>
                                     </div>
                                 @endforeach

@@ -100,30 +100,32 @@ class CreateCourse extends Component
     {
         $this->updateJsonFromMultilineInput('skills');
         $this->updateJsonFromMultilineInput('requirements');
-        dd($this->modules);
         DB::beginTransaction();
         try {
             $courseDuration = 0;
-            $course = Course::create(['title' => $this->title, 'heading' => $this->heading, 'description' => $this->description, 'thumbnail_url' => $this->imageUrl, 'price' => $this->price ?? 0, 'review_count' => 0, 'lesson_count' => 0, // Will be updated later
-                'level' => $this->level, 'duration' => 0, // Will be updated later
+            $lessonCount = 0;
+            $course = Course::create(['title' => $this->title, 'heading' => $this->heading, 'description' => $this->description, 'thumbnail_url' => $this->imageUrl, 'price' => $this->price ?? 0, 'review_count' => 0, 'lesson_count' => $lessonCount, // Will be updated later
+                'level' => $this->level, 'duration' => $courseDuration, // Will be updated later
                 'status' => 'pending', 'category_id' => $this->category, 'requirements' => $this->requirementsJson, 'skills' => $this->skillsJson, 'user_id' => auth()->id(),]);
-            foreach ($this->modules as $moduleData) {
+            foreach ($this->modules as $moduleIndex => $moduleData) {
                 $moduleDuration = 0;
-                $module = Module::create(['title' => $moduleData['title'], 'lesson_count' => count($moduleData['lessons']), 'position' => $moduleData['position'], 'duration' => 0, // Will be updated later
+                $moduleLessonCount = count($moduleData['lessons']);
+                $lessonCount += $moduleLessonCount;
+                $module = Module::create(['title' => $moduleData['title'], 'lesson_count' => $moduleLessonCount, 'position' => $moduleIndex, 'duration' => 0, // Will be updated later
                     'course_id' => $course->id,]);
-                foreach ($moduleData['lessons'] as $lessonData) {
-                    $moduleDuration += $lessonData['duration'];
-                    $lesson = Lesson::create(['title' => $lessonData['title'], 'type' => $lessonData['type'], 'duration' => $lessonData['duration'], 'video_url' => $lessonData['video_url'], 'content' => $lessonData['content'], 'preview' => $lessonData['preview'] ?? false, 'position' => $lessonData['position'], 'module_id' => $module->id,]);
+                foreach ($moduleData['lessons'] as $lessonKey => $lessonData) {
+                    $moduleDuration += $lessonData['duration'] ?? 0;
+                    $lesson = Lesson::create(['title' => $lessonData['title'], 'type' => $lessonData['type'], 'duration' => $lessonData['duration'] ?? 0, 'video_url' => $lessonData['video_url'], 'content' => $lessonData['content'], 'preview' => $lessonData['preview'] ?? false, 'position' => $lessonKey, 'module_id' => $module->id]);
 
                     if (isset($lessonData['assessments'])) {
                         $assessmentData = $lessonData['assessments'];
-                        $assessment = Assessment::create(['title' => $assessmentData['title'], 'description' => $assessmentData['description'], 'type' => $assessmentData['type'], 'lesson_id' => $lesson->id,]);
+                        $assessment = Assessment::create(['title' => $assessmentData['title'], 'description' => $assessmentData['description'], 'type' => $assessmentData['type'], 'lesson_id' => $lesson->id]);
                         if ($assessmentData['type'] === 'quiz') {
                             $assessment->question_count = count($assessmentData['assessments_questions']);
-                            foreach ($assessmentData['assessments_questions'] as $key => $question) {
-                                $assessmentQuestion = AssessmentQuestion::create(['content' => $question['content'], 'type' => $question['type'], 'position' => $key + 1, 'assessment_id' => $assessment->id,]);
-                                foreach ($question['question_options'] as $option) {
-                                    $assessmentQuestion->options()->create(['content' => $option['content'], 'is_correct' => $option['is_correct'] ?? false, 'explanation' => $option['explanation'] ?? '', 'position' => $option['position'] ?? 0,]);
+                            foreach ($assessmentData['assessments_questions'] as $questionKey => $question) {
+                                $assessmentQuestion = AssessmentQuestion::create(['content' => $question['content'], 'type' => $question['type'], 'position' => $questionKey + 1, 'assessment_id' => $assessment->id]);
+                                foreach ($question['question_options'] as $optionKey => $option) {
+                                    $assessmentQuestion->options()->create(['content' => $option['content'], 'is_correct' => $option['is_correct'] ?? false, 'explanation' => $option['explanation'] ?? '', 'position' => $optionKey]);
                                 }
                             }
                         }
@@ -134,10 +136,10 @@ class CreateCourse extends Component
                 $courseDuration += $moduleDuration;
             }
             $course->duration = $courseDuration;
-            $course->lesson_count = Lesson::where('module_id', $module->id)->count();
+            $course->lesson_count = $lessonCount;
             $course->save();
             if (auth()->user()->isBusiness()) {
-                Batches::create(['start_at' => $this->startDate, 'end_at' => $this->endDate,]);
+                Batches::create(['start_at' => $this->startDate, 'end_at' => $this->endDate, 'course_id' => $course->id]);
             }
 
             DB::commit();

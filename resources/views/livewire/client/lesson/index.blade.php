@@ -28,8 +28,8 @@
                         <source src="{{ $currentVideo }}" type="video/mp4">
                     </video>
                 @elseif(!empty($lesson->content))
-                    <div class="embed-responsive embed-responsive-16by9">
-                        {!! $course->content !!}
+                    <div class="embed-responsive embed-responsive-16by9" style="margin: 60px">
+                        @markdown($lesson->content)
                     </div>
                 @elseif($lesson->type === 'assessment')
                     <livewire:client.lesson.components.assessment :assessment="$lesson->assessment"/>

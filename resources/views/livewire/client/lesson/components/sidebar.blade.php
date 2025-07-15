@@ -33,7 +33,7 @@
                                                     <span class="text">{{ $lesson->title }}</span>
                                                 </div>
                                                 <div class="course-content-right">
-                                                    <span class="min-lable">{{ $lesson->convertDurationToString() }}</span>
+                                                    <span class="min-lable">{{ $lesson->getIcon() === 'video' ? $lesson->convertDurationToString() : '' }}</span>
                                                     <span class="rbt-check"><i class="feather-check"></i></span>
                                                 </div>
                                             </a>

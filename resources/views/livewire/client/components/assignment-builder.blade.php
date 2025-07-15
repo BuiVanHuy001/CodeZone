@@ -4,10 +4,6 @@
         <label for="assignment_title_{{ $moduleIndex }}_{{ $lessonIndex }}">Assignment Title</label>
         <input id="assignment_title_{{ $moduleIndex }}_{{ $lessonIndex }}" type="text" placeholder="Type your assignments title" wire:model="assignment.title">
     </div>
-    <div class="course-field mb--20">
-        <label for="assignment_question_{{ $moduleIndex }}_{{ $lessonIndex }}">Assignment Question</label>
-        <input id="assignment_question_{{ $moduleIndex }}_{{ $lessonIndex }}" type="text" placeholder="Type your assignments question" wire:model="assignment.assessments_questions.0.content">
-    </div>
     <div class="course-field mb--30">
         <label for="assignment_description_{{ $moduleIndex }}_{{ $lessonIndex }}">Assignment Description</label>
         <textarea id="assignment_description_{{ $moduleIndex }}_{{ $lessonIndex }}" wire:model="assignment.description"></textarea>

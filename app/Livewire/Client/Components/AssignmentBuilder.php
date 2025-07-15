@@ -12,17 +12,21 @@ class AssignmentBuilder extends Component
 {
 	public int $moduleIndex;
 	public int $lessonIndex;
+
 	#[Modelable]
 	public $assignment;
 
 	public function removeAssignment(): void
 	{
-		$this->dispatch('assignment-removed', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
+        $this->dispatch('assessment-builder-removed', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
 	}
 
     public function saveAssignment(): void
     {
-		$this->dispatch('assignment-saved', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
+        if (empty($this->assignment['title']) || empty($this->assignment['description'])) {
+            $this->removeAssignment();
+        }
+        $this->dispatch('builder-hided', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
 	}
 
 	public function render(): View|Application|Factory
