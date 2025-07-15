@@ -35,7 +35,12 @@ class Course extends Model
 
     public function author(): belongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function batches(): hasMany
+    {
+        return $this->hasMany(Batches::class);
     }
 
     public function slugSourceField(): string
@@ -49,6 +54,35 @@ class Course extends Model
             return asset($this->thumbnail_url);
         }
         return asset('images/course/default-thumbnail.webp');
+    }
+
+    public function getIntroductionVideo(): string
+    {
+        $introductionVideoUrl = '';
+        foreach ($this->modules as $module) {
+            foreach ($module->lessons as $lesson) {
+                if ($lesson->preview) {
+                    $introductionVideoUrl = $lesson->video_url;
+                    break 2;
+                }
+            }
+        }
+        return $introductionVideoUrl;
+    }
+
+    public function getQuizCount()
+    {
+        $quiz_count = 0;
+        foreach ($this->modules as $module) {
+            foreach ($module->lessons as $lesson) {
+                if (isset($lesson->assessments)) {
+                    if ($lesson->assessments->type === 'quiz') {
+                        $quiz_count++;
+                    }
+                }
+            }
+        }
+        return $quiz_count;
     }
 
 }

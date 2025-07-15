@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Livewire\Client\Instructor;
+namespace App\Livewire\Client;
 
 use App\Models\Assessment;
 use App\Models\AssessmentQuestion;
+use App\Models\Batches;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Module;
@@ -29,21 +30,36 @@ class CreateCourse extends Component
         return ['title' => 'required|min:3|max:255', 'slug' => 'required|min:3|max:255|unique:courses,slug', 'heading' => 'required|min:3|max:255', 'description' => 'nullable|max:1000', 'image' => 'nullable|image|max:2048', 'price' => 'required|numeric|min:0', 'category' => 'required|exists:categories,id', 'level' => 'required|in:beginner,intermediate,advanced'];
     }
 
+    public array $openTabs = [];
+
+    public function setTab(string $tab): void
+    {
+        $key = array_search($tab, $this->openTabs);
+        if ($key !== false) {
+            unset($this->openTabs[$key]);
+            $this->openTabs = array_values($this->openTabs);
+        } else {
+            $this->openTabs[] = $tab;
+        }
+    }
+
     public string $title = '';
     public string $slug = '';
     public string $heading = '';
     public string $description = '';
     public $image;
     public $imageUrl;
-    public string $price = '';
+    public string $price = '0';
     public string $category = '';
     public string $level = '';
     public string $requirements = '';
     public $requirementsJson = null;
     public string $skills = '';
     private $skillsJson = null;
-
-    public array $modules = [['title' => 'Module 1', 'position' => 1, 'lessons' => [['title' => 'Lesson 1', 'position' => 1, 'type' => 'video', 'description' => '', 'video_url' => '', 'content' => '', 'preview' => false, 'duration' => 0,],]]];
+    public array $employeesAssigned = [];
+    public $startDate = '';
+    public $endDate = '';
+    public array $modules = [['title' => '', 'lesson_count' => 1, 'lessons' => [['title' => '', 'type' => '', 'description' => '', 'video_url' => '', 'content' => '', 'preview' => false,]]]];
 
     #[On('titleUpdated')]
     public function updatedTitle(): void
@@ -62,7 +78,7 @@ class CreateCourse extends Component
     }
 
 
-	public function updatedImage(): void
+    public function updatedImage(): void
     {
         if ($this->image) {
             $path = $this->image->storePublicly('tmp', 'public');
@@ -84,10 +100,11 @@ class CreateCourse extends Component
     {
         $this->updateJsonFromMultilineInput('skills');
         $this->updateJsonFromMultilineInput('requirements');
+        dd($this->modules);
         DB::beginTransaction();
         try {
             $courseDuration = 0;
-            $course = Course::create(['title' => $this->title, 'heading' => $this->heading, 'description' => $this->description, 'thumbnail_url' => $this->imageUrl, 'price' => $this->price, 'review_count' => 0, 'lesson_count' => 0, // Will be updated later
+            $course = Course::create(['title' => $this->title, 'heading' => $this->heading, 'description' => $this->description, 'thumbnail_url' => $this->imageUrl, 'price' => $this->price ?? 0, 'review_count' => 0, 'lesson_count' => 0, // Will be updated later
                 'level' => $this->level, 'duration' => 0, // Will be updated later
                 'status' => 'pending', 'category_id' => $this->category, 'requirements' => $this->requirementsJson, 'skills' => $this->skillsJson, 'user_id' => auth()->id(),]);
             foreach ($this->modules as $moduleData) {
@@ -100,10 +117,9 @@ class CreateCourse extends Component
 
                     if (isset($lessonData['assessments'])) {
                         $assessmentData = $lessonData['assessments'];
-                        $assessment = Assessment::create(['title' => $assessmentData['title'], 'description' => $assessmentData['description'], 'type' => $assessmentData['type'], 'questions_count' => count($assessmentData['assessments_questions']), 'lesson_id' => $lesson->id,]);
-                        if ($assessmentData['type'] === 'file_upload') {
-                            AssessmentQuestion::create(['content' => $assessmentData['description'], 'type' => $assessmentData['type'], 'assessment_id' => $assessment->id,]);
-                        } else {
+                        $assessment = Assessment::create(['title' => $assessmentData['title'], 'description' => $assessmentData['description'], 'type' => $assessmentData['type'], 'lesson_id' => $lesson->id,]);
+                        if ($assessmentData['type'] === 'quiz') {
+                            $assessment->question_count = count($assessmentData['assessments_questions']);
                             foreach ($assessmentData['assessments_questions'] as $key => $question) {
                                 $assessmentQuestion = AssessmentQuestion::create(['content' => $question['content'], 'type' => $question['type'], 'position' => $key + 1, 'assessment_id' => $assessment->id,]);
                                 foreach ($question['question_options'] as $option) {
@@ -120,20 +136,24 @@ class CreateCourse extends Component
             $course->duration = $courseDuration;
             $course->lesson_count = Lesson::where('module_id', $module->id)->count();
             $course->save();
-
+            if (auth()->user()->isBusiness()) {
+                Batches::create(['start_at' => $this->startDate, 'end_at' => $this->endDate,]);
+            }
 
             DB::commit();
             return redirect()->route('instructor.dashboard.index')->with('sweetalert2', 'Course created successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e->getMessage());
+            dd('Error creating course: ' . $e->getMessage());
             return redirect()->back()->with('sweetalert2', 'Something went wrong while creating the course');
         }
     }
 
-
     public function render(): Factory|Application|View
     {
-        return view('livewire.client.instructor.create-course');
+        if (auth()->user()->isBusiness()) {
+            return view('livewire.client.create-course')->layout('components.layouts.business-dashboard');
+        }
+        return view('livewire.client.create-course')->layout('components.layouts.instructor-dashboard');
     }
 }

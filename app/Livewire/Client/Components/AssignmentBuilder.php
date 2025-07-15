@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Instructor\Components;
+namespace App\Livewire\Client\Components;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -20,13 +20,13 @@ class AssignmentBuilder extends Component
 		$this->dispatch('assignment-removed', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
 	}
 
-	public function saveAssignment()
-	{
+    public function saveAssignment(): void
+    {
 		$this->dispatch('assignment-saved', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
 	}
 
 	public function render(): View|Application|Factory
 	{
-		return view('livewire.client.instructor.components.assignment-builder');
+        return view('livewire.client.components.assignment-builder');
 	}
 }

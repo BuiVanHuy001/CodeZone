@@ -2,6 +2,10 @@
 
 namespace App\Livewire\Client\Instructor;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -10,12 +14,13 @@ class CoursesDashboard extends Component
 {
     public $courses;
 
-    public function mount()
+    public function mount(): void
     {
         $this->courses = auth()->user()->courses()->with('category')->get();
     }
 
-    public function render()
+    #[Layout('components.layouts.instructor-dashboard')]
+    public function render(): View|Application|Factory
     {
         return view('livewire.client.instructor.courses-dashboard');
     }

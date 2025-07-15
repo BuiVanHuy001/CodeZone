@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Instructor\Components;
+namespace App\Livewire\Client\Components;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -15,13 +15,11 @@ class CourseBuilder extends Component
     public array $modules;
     public array $activeTabs = [];
 
-
     public function addQuiz(int $moduleIndex, int $lessonIndex): void
     {
         if ($this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] !== 'assessment' || $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] !== 'quiz') {
             $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'assessment';
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = ['title' => '', 'description' => '', 'assessments_questions' => [['content' => '', 'type' => '', 'question_options' => [['content' => '', 'is_correct' => false, 'explanation' => '', 'position' => 1,],],],],];
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] = 'quiz';
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = ['title' => '', 'description' => '', 'type' => 'quiz', 'assessments_questions' => [['content' => '', 'type' => '', 'question_options' => [['content' => '', 'is_correct' => false, 'explanation' => '', 'position' => 1,]],],],];
         }
         $this->activeTabs["$moduleIndex-$lessonIndex"] = 'quiz';
     }
@@ -46,8 +44,8 @@ class CourseBuilder extends Component
     {
         if ($this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] !== 'assessment' || $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] !== 'assignment') {
             $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'assessment';
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = ['title' => '', 'description' => '', 'assessments_questions' => [['content' => '', 'type' => 'file_upload', 'position' => 1,],],];
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] = 'file_upload';
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = ['title' => '', 'description' => ''];
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] = 'assignment';
         }
         $this->activeTabs["$moduleIndex-$lessonIndex"] = 'assignment';
     }
@@ -117,7 +115,7 @@ class CourseBuilder extends Component
 
     public function addModule(): void
     {
-        $this->modules[] = ['title' => 'Module ' . (count($this->modules) + 1), 'position' => count($this->modules) + 1, 'lessons' => [['title' => 'Lesson 1', 'position' => 1, 'description' => '', 'video_url' => '', 'content' => '', 'preview' => false, 'type' => 'video', 'duration' => 0,],],];
+        $this->modules[] = ['title' => '', 'lesson_count' => 1, 'lessons' => [['title' => '', 'description' => '', 'video_url' => '', 'content' => '', 'preview' => false, 'type' => '', 'duration' => 0,],],];
     }
 
     public function removeModule(int $index): void
@@ -130,7 +128,8 @@ class CourseBuilder extends Component
 
     public function addLesson(int $moduleIndex): void
     {
-        $this->modules[$moduleIndex]['lessons'][] = ['title' => 'Lesson ' . (count($this->modules[$moduleIndex]['lessons']) + 1), 'position' => count($this->modules[$moduleIndex]['lessons']) + 1, 'description' => '', 'video_url' => '', 'content' => '', 'preview' => false, 'duration' => 0, 'type' => 'video',];
+        $this->modules[$moduleIndex]['lesson_count']++;
+        $this->modules[$moduleIndex]['lessons'][] = ['title' => '', 'description' => '', 'video_url' => '', 'content' => '', 'preview' => false, 'duration' => 0, 'type' => ''];
     }
 
     public function removeLesson(int $moduleIndex, int $lessonIndex): void
@@ -143,6 +142,6 @@ class CourseBuilder extends Component
 
     public function render(): Factory|Application|View
     {
-        return view('livewire.client.instructor.components.course-builder');
+        return view('livewire.client.components.course-builder');
     }
 }

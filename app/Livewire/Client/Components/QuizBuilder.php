@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Instructor\Components;
+namespace App\Livewire\Client\Components;
 
 use App\Imports\QuizzesImport;
 use Illuminate\Contracts\View\Factory;
@@ -65,8 +65,9 @@ class QuizBuilder extends Component
 
         $import = new QuizzesImport();
         Excel::import($import, $this->excelFile);
-
+        $this->quiz['assessments_questions'] = [];
         $this->quiz['assessments_questions'] = array_merge($this->quiz['assessments_questions'] ?? [], $import->getParsed());
+        $this->saveQuiz();
     }
 
 	public function saveQuiz(): void
@@ -77,6 +78,6 @@ class QuizBuilder extends Component
 
     public function render(): View|Application|Factory
     {
-        return view('livewire.client.instructor.components.quiz-builder');
+        return view('livewire.client.components.quiz-builder');
     }
 }

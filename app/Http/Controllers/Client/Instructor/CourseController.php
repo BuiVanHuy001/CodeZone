@@ -3,10 +3,6 @@
 namespace App\Http\Controllers\Client\Instructor;
 
 use App\Http\Controllers\Controller;
-use App\Livewire\Client\Instructor\CreateCourse;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller

@@ -13,10 +13,13 @@ class QuizzesImport implements ToCollection
     {
         $this->parsed = $collection->slice(1)->map(function ($row) {
 	        $type = $row[1] ?? '';
-	        if (array_key_exists($type, AssessmentQuestion::$QUIZ_TYPES)) {
-		        $type = AssessmentQuestion::$QUIZ_TYPES[$type];
-	        }
-	        $question = ['content' => $row[0] ?? '', 'type' => $type ?? '', 'question_options' => [],];
+
+            $key = array_search($type, AssessmentQuestion::$TYPES, true);
+            if ($key !== false) {
+                $type = $key;
+            }
+
+            $question = ['content' => $row[0] ?? '', 'type' => $type ?? '', 'question_options' => [],];
 
             $correctOptionsRaw = trim($row[10] ?? '');
 	        $correctIndexes = collect(explode(',', $correctOptionsRaw))->map(fn($val) => (int)trim($val))->filter(fn($val) => $val >= 1 && $val <= 4)->values()->toArray();

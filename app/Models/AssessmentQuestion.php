@@ -9,11 +9,21 @@ class AssessmentQuestion extends Model
 {
 	protected $guarded = [];
 
-	public static array $TYPES = ['multiple_choice' => 'Multiple Choice', 'true_false' => 'True/False',];
+    public static array $TYPES = ['multiple_choice' => 'Multiple Choice', 'true_false' => 'True/False'];
+
+    public function isMultipleAnswers(): bool
+    {
+        $answerCount = 0;
+        foreach ($this->options as $option) {
+            if ($option->is_correct) {
+                $answerCount++;
+            }
+        }
+        return $answerCount > 1;
+    }
 
 	public function options(): hasMany
 	{
 		return $this->hasMany(AssessmentQuestionOptions::class, 'assessment_question_id');
 	}
-
 }

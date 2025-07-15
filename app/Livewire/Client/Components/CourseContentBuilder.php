@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Livewire\Client\Instructor\Components;
+namespace App\Livewire\Client\Components;
 
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Livewire\Attributes\Modelable;
 use Livewire\Component;
 
@@ -23,8 +26,8 @@ class CourseContentBuilder extends Component
 		$this->dispatch('content-removed', $this->moduleIndex, $this->lessonIndex);
 	}
 
-	public function render()
-	{
-		return view('livewire.client.instructor.components.course-content-builder');
+    public function render(): View|Application|Factory
+    {
+        return view('livewire.client.components.course-content-builder');
 	}
 }

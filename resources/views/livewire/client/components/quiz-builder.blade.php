@@ -1,7 +1,9 @@
 <div x-data="{ activeQuestion: 1 }" class="ms-5 mt-4 w-100 quiz-section rbt-default-form rbt-course-wrape">
     <h5 class="modal-title mb--20 d-flex justify-content-between align-items-center">
         <div>Quiz</div>
-        <div><i class="feather-trash me-auto"></i></div>
+        <div>
+            <i wire:click="removeQuiz" @click="activeTab = null" class="feather-trash me-auto"></i>
+        </div>
     </h5>
     <div id="question-{{ $lessonIndex }}-1" class="question" x-show="activeQuestion === 1">
         <div class="course-field mb--10">
@@ -62,7 +64,7 @@
                             <div class="rbt-modern-select bg-transparent height-45 w-100 mb--10">
                                 <select id="questionType" wire:model="quiz.assessments_questions.{{ $key }}.type" class="w-100">
                                     <option value="" disabled selected>Select Question Type</option>
-                                    @foreach(\App\Models\AssessmentQuestion::$QUIZ_TYPES as $label => $value)
+                                    @foreach(\App\Models\AssessmentQuestion::$TYPES as $value => $label)
                                         <option value="{{ $value }}">{{ $label }}</option>
                                     @endforeach
                                 </select>

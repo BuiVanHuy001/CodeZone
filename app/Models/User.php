@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
+use App\View\Components\banner;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -40,5 +41,25 @@ class User extends Authenticatable
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class);
+    }
+
+    public function isInstructor(): bool
+    {
+        return $this->role === 'instructor';
+    }
+
+    public function isBusiness(): bool
+    {
+        return $this->role === 'organization';
+    }
+
+    public function idEmployee(User $organization): bool
+    {
+        return OrganizationUsers::where('organization_id', $organization->id)->where('user_id', $this->id)->exists();
+    }
+
+    public function isEmployeeOfThisBusiness(User $user)
+    {
+        return OrganizationUsers::where('organization_id', $this->id)->where('user_id', $user->id)->exists();
     }
 }

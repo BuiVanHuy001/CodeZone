@@ -37,11 +37,11 @@
                             </div>
 
                             <div class="feature-sin total-rating">
-                                <a class="rbt-badge-4" href="#">{{ $course->review_count }} rating</a>
+                                <a class="rbt-badge-4" href="#">{{  $course->review_count }} rating</a>
                             </div>
 
                             <div class="feature-sin total-student">
-                                <span>{{ $course->student_count }} students</span>
+                                <span>{{ \Illuminate\Support\Str::Plural('students', $course->enrollment_count)  }}</span>
                             </div>
 
                         </div>
@@ -53,7 +53,8 @@
                                 </a>
                             </div>
                             <div class="rbt-author-info">
-                                By <a href="">Bùi Văn Huy</a> in <a href="#">Developer</a>
+                                By <a href="">{{ $course->author->name }}</a> in
+                                <a href="#">{{ $course->category->name }}</a>
                             </div>
                         </div>
 
@@ -164,17 +165,14 @@
                                                         <ul class="rbt-course-main-content liststyle">
                                                             @foreach(@$module->lessons as $lesson)
                                                                 @php
-                                                                    $introductionCourse = '';
-                                                                    if ($lesson->preview && empty($introductionCourse) && $lesson->video_url) {
-                                                                        $introductionCourse = $lesson->video_url;
-                                                                    }
                                                                     $icon = '';
-//                                                                    if ($lesson->type === 'video') {
-//                                                                        $icon = 'feather-video';
-//                                                                    } elseif ($lesson->type === 'assessment') {
-//                                                                        if ($lesson->assessment-> )
-//                                                                        $icon = 'file-text';
-//                                                                    }
+                                                                    if ($lesson->type === 'video') {
+                                                                        $icon = 'video';
+                                                                    } elseif ($lesson->content !== '') {
+                                                                        $icon = 'file-text';
+                                                                    } elseif ($lesson->type === 'assessment') {
+                                                                        $icon = 'file-text';
+                                                                    }
                                                                 @endphp
                                                                 <li>
                                                                     <a href="">
@@ -922,7 +920,7 @@
                     <div class="course-sidebar sticky-top rbt-shadow-box course-sidebar-top rbt-gradient-border">
                         <div class="inner">
                             <a class="video-popup-with-text video-popup-wrapper text-center popup-video sidebar-video-hidden mb--15"
-                               href="http://127.0.0.1:8000/storage/course/videos/vL608nkg44tZ3EtdSkPaCyIL8JgjggMaQcpBdU7a.mp4">
+                               href="{{ asset($course->getIntroductionVideo()) }}">
                                 <div class="video-content">
                                     <img class="w-100 rbt-radius" src="{{ asset('images/others/video-01.jpg') }}"
                                          alt="Video Images">
@@ -940,7 +938,7 @@
                                 <div
                                     class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
                                     <div class="rbt-price">
-                                        <span class="current-price">{{ $course->price }}₫</span>
+                                        <span class="current-price">{{ number_format($course->price) }}₫</span>
                                     </div>
                                     <div class="discount-time">
                                         <span class="rbt-badge color-danger bg-color-danger-opacity"><i
@@ -957,8 +955,8 @@
                                 </div>
 
                                 <div class="buy-now-btn mt--15">
-                                    <a class="rbt-btn btn-border icon-hover w-100 d-block text-center" href="#">
-                                        <span class="btn-text">Buy now</span>
+                                    <a class="rbt-btn btn-border icon-hover w-100 d-block text-center" href="{{ route('course.learn', $course->slug) }}">
+                                        <span class="btn-text">Go to course</span>
                                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                     </a>
                                 </div>
@@ -969,7 +967,7 @@
                                         </li>
                                         <li>
                                             <span>Enrolled: </span><span
-                                                class="rbt-feature-value rbt-badge-5">100</span>
+                                                class="rbt-feature-value rbt-badge-5">{{ $course->enrollment_count }}</span>
                                         </li>
                                         <li>
                                             <span>Lesson</span><span class="rbt-feature-value rbt-badge-5">{{ $course->lesson_count }}</span>
@@ -978,11 +976,7 @@
                                             <span>Level</span><span class="rbt-feature-value rbt-badge-5">{{ ucfirst($course->level) }}</span>
                                         </li>
                                         <li>
-                                            <span>Language: </span><span
-                                                class="rbt-feature-value rbt-badge-5">English</span>
-                                        </li>
-                                        <li>
-                                            <span>Quiz</span><span class="rbt-feature-value rbt-badge-5">10</span>
+                                            <span>Quiz</span><span class="rbt-feature-value rbt-badge-5">{{ $course->getQuizCount() }}</span>
                                         </li>
                                         <li>
                                             <span>Certification</span><span

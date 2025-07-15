@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Instructor\Components;
+namespace App\Livewire\Client\Components;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -60,6 +60,6 @@ class CourseVideoBuilder extends Component
 
 	public function render(): View|Application|Factory
 	{
-		return view('livewire.client.instructor.components.course-video-builder');
+        return view('livewire.client.components.course-video-builder');
 	}
 }
