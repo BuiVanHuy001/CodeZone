@@ -9,7 +9,11 @@ class OrganizationUsers extends Model
 {
 	protected $guarded = [];
 
-	public static array $STATUSES = ['active' => 'Active', 'inactive' => 'Inactive', 'pending' => 'Pending',];
+	public static array $STATUSES = [
+		'active' => 'Active',
+		'inactive' => 'Inactive',
+		'pending' => 'Pending'
+	];
 
     public function organization(): BelongsTo
     {

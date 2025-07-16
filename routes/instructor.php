@@ -2,10 +2,11 @@
 
 use App\Http\Middleware\EnsureUserIsBusiness;
 use App\Http\Middleware\EnsureUserIsInstructor;
-use App\Livewire\Client\Business\Employees;
+use App\Livewire\Client\Business\EmployeesDashboard;
 use App\Livewire\Client\Business\IndexDashboard as BusinessIndexDashboard;
 use App\Livewire\Client\CreateCourse;
 use App\Livewire\Client\Instructor\CoursesDashboard;
+use App\Livewire\Client\Business\CoursesDashboard as BusinessCoursesDashboard;
 use App\Livewire\Client\Instructor\IndexDashboard;
 use App\Livewire\Client\Instructor\ProfileDashboard;
 use App\Livewire\Client\Instructor\ReviewsDashboard;
@@ -29,5 +30,6 @@ Route::middleware(EnsureUserIsInstructor::class)->group(function () {
 Route::middleware(EnsureUserIsBusiness::class)->prefix('business/dashboard')->group(function () {
     Route::get('/create-course', CreateCourse::class)->name('business.courses.create');
     Route::get('/index', BusinessIndexDashboard::class)->name('business.dashboard.index');
-    Route::get('/employees', Employees::class)->name('business.dashboard.employees');
+	Route::get('/employees', EmployeesDashboard::class)->name('business.dashboard.employees');
+	Route::get('/courses', BusinessCoursesDashboard::class)->name('business.dashboard.courses');
 });

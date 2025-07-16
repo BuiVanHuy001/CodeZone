@@ -47,16 +47,14 @@
             eduJs.moveAnimation();
             eduJs.contactForm();
             eduJs.player();
-            eduJs.quizAns();
             eduJs.lessonAccor();
             eduJs.searchValue();
             eduJs.lessonToggle();
             eduJs.categoryMenuHover2();
-            eduJs.countDown(); // new added
-            eduJs.dnd(); // new added
+            eduJs.countDown();
+            eduJs.dnd();
         },
         dnd: function () {
-            // Select the sortable containers
             const dnd1 = document.getElementById("dnd1");
             const dnd2 = document.getElementById("dnd2");
             // const dnd3 = document.getElementById("dnd3");

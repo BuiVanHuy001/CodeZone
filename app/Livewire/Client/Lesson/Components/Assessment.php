@@ -64,7 +64,11 @@ class Assessment extends Component {
         //                })->toArray()
         //            );
 
-        $this->results = ['correctAnswers' => $correctAnswers, 'score' => $score, 'result' => $score >= 5 ? 'pass' : 'fail',];
+	    $this->results = [
+		    'correctAnswers' => $correctAnswers,
+		    'score' => $score,
+		    'result' => $score >= 5 ? 'pass' : 'fail'
+	    ];
     }
 
     private function checkAnswers(): int

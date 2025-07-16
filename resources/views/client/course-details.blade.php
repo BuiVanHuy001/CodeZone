@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="feature-sin total-student">
-                                <span>{{ \Illuminate\Support\Str::Plural('students', $course->enrollment_count)  }}</span>
+                                <span>{{ $course->enrollment_count }} {{ \Illuminate\Support\Str::plural('student', $course->enrollment_count) }}</span>
                             </div>
 
                         </div>
@@ -74,14 +74,9 @@
     <div class="rbt-course-details-area ptb--60">
         <div class="container">
             <div class="row g-5">
-
                 <div class="col-lg-8">
                     <div class="course-details-content">
-                        <div class="rbt-course-feature-box rbt-shadow-box thuumbnail">
-                            <img class="w-100" src="{{ $course->getThumbnailPath() }}" alt="Card image">
-                        </div>
-
-                        <div class="rbt-inner-onepage-navigation sticky-top mt--30">
+                        <div class="rbt-inner-onepage-navigation sticky-top">
                             <nav class="mainmenu-nav onepagenav">
                                 <ul class="mainmenu">
                                     <li class="current">
@@ -240,15 +235,14 @@
                                 <div class="media align-items-center">
                                     <div class="thumbnail">
                                         <a href="">
-                                            <img src="{{ asset('images/testimonial/testimonial-7.jpg') }}"
-                                                 alt="Author Images">
+                                            <img src="{{ $course->author->getAvatarPath() }}"
+                                                 alt="Instructor Avatar">
                                         </a>
                                     </div>
                                     <div class="media-body">
                                         <div class="author-info">
                                             <h5 class="title">
-                                                <a class="hover-flip-item-wrapper" href="./profile">B.M. Rafekul
-                                                    Islam</a>
+                                                <a class="hover-flip-item-wrapper" href="./profile">{{ $course->author->name }}</a>
                                             </h5>
                                             <span class="b3 subtitle">Web Developer, Designer, and Teacher</span>
                                             <ul class="rbt-meta mb--20 mt--10">
@@ -922,37 +916,40 @@
                             <a class="video-popup-with-text video-popup-wrapper text-center popup-video sidebar-video-hidden mb--15"
                                href="{{ asset($course->getIntroductionVideo()) }}">
                                 <div class="video-content">
-                                    <img class="w-100 rbt-radius" src="{{ asset('images/others/video-01.jpg') }}"
+                                    <img class="w-100 rbt-radius" src="{{ $course->getThumbnailPath() }}"
                                          alt="Video Images">
                                     <div class="position-to-top">
                                         <span class="rbt-btn rounded-player-2 with-animation">
                                             <span class="play-icon"></span>
                                         </span>
                                     </div>
-                                    <span class="play-view-text d-block color-white"><i class="feather-eye"></i>
-                                        Preview this course</span>
+                                    <span class="play-view-text d-block color-white"><i class="feather-eye"></i>Preview this course</span>
                                 </div>
                             </a>
 
                             <div class="content-item-content">
-                                <div
-                                    class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
-                                    <div class="rbt-price">
-                                        <span class="current-price">{{ number_format($course->price) }}₫</span>
-                                    </div>
-                                    <div class="discount-time">
+                                @if(!$course->author->isBusiness())
+                                    <div
+                                        class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
+                                        <div class="rbt-price">
+                                            <span class="current-price">{{ number_format($course->price) }}₫</span>
+                                        </div>
+                                        <div class="discount-time">
                                         <span class="rbt-badge color-danger bg-color-danger-opacity"><i
                                                 class="feather-clock"></i> 3 days left!</span>
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="add-to-card-button mt--15">
+                                        <a class="rbt-btn btn-gradient icon-hover w-100 d-block text-center"
+                                           href="#">
+                                            <span class="btn-text">Add to cart</span>
+                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                        </a>
+                                    </div>
+                                @else
+                                    <h5 class="text-center text-primary">This is Business Course</h5>
+                                @endif
 
-                                <div class="add-to-card-button mt--15">
-                                    <a class="rbt-btn btn-gradient icon-hover w-100 d-block text-center"
-                                       href="#">
-                                        <span class="btn-text">Add to cart</span>
-                                        <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    </a>
-                                </div>
 
                                 <div class="buy-now-btn mt--15">
                                     <a class="rbt-btn btn-border icon-hover w-100 d-block text-center" href="{{ route('course.learn', $course->slug) }}">

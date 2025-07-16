@@ -70,13 +70,13 @@ class Course extends Model
         return $introductionVideoUrl;
     }
 
-    public function getQuizCount()
+    public function getQuizCount(): int
     {
         $quiz_count = 0;
         foreach ($this->modules as $module) {
             foreach ($module->lessons as $lesson) {
-                if (isset($lesson->assessments)) {
-                    if ($lesson->assessments->type === 'quiz') {
+                if ($lesson->type === 'assessment') {
+                    if ($lesson->assessment->type === 'quiz') {
                         $quiz_count++;
                     }
                 }

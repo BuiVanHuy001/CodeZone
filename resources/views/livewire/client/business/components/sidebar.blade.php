@@ -8,10 +8,22 @@
                 <nav class="mainmenu-nav">
                     <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                         <li>
-                            <a wire:navigate href="{{ route('business.dashboard.index') }}" wire:current="active"><i class="feather-home"></i><span>Overview</span></a>
+                            <a wire:navigate href="{{ route('business.dashboard.index') }}"
+                               wire:current="active">
+                                <i class="feather-home"></i><span>Overview</span>
+                            </a>
                         </li>
                         <li>
-                            <a wire:navigate href="{{ route('business.dashboard.employees') }}" wire:current="active"><i class="feather-users"></i><span>Employees</span></a>
+                            <a wire:navigate href="{{ route('business.dashboard.employees') }}"
+                               wire:current="active">
+                                <i class="feather-users"></i><span>Employees</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a wire:navigate href="{{ route('business.dashboard.courses') }}"
+                               wire:current="active">
+                                <i class="feather-users"></i><span>Course</span>
+                            </a>
                         </li>
                     </ul>
                 </nav>

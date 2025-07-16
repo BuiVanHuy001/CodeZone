@@ -4,6 +4,7 @@ namespace App\Livewire\Client;
 
 use App\Models\Assessment;
 use App\Models\AssessmentQuestion;
+use App\Models\BatchEnrollments;
 use App\Models\Batches;
 use App\Models\Course;
 use App\Models\Lesson;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -27,10 +30,33 @@ class CreateCourse extends Component
 
     public function rules(): array
     {
-        return ['title' => 'required|min:3|max:255', 'slug' => 'required|min:3|max:255|unique:courses,slug', 'heading' => 'required|min:3|max:255', 'description' => 'nullable|max:1000', 'image' => 'nullable|image|max:2048', 'price' => 'required|numeric|min:0', 'category' => 'required|exists:categories,id', 'level' => 'required|in:beginner,intermediate,advanced'];
+        return [
+            'title' => 'required|min:3|max:255',
+            'slug' => 'required|min:3|max:255|unique:courses,slug',
+            'heading' => 'required|min:3|max:255',
+            'description' => 'nullable|max:1000',
+            'price' => 'required|numeric|min:0',
+            'category' => 'required|exists:categories,id',
+            'level' => 'required|in:beginner,intermediate,advanced',
+            'startDate' => 'required|date|after_or_equal:today',
+            'endDate' => 'required|date|after_or_equal:startDate',
+            'modules' => 'required|array|min:1',
+            'modules.*.title' => 'required|min:3|max:255',
+            'modules.*.lessons' => 'required|array|min:1',
+            'modules.*.lessons.*.title' => 'required|min:3|max:255',
+            'modules.*.lessons.*.type' => ['required', Rule::in(Lesson::$TYPES)],
+        ];
     }
 
-    public array $openTabs = [];
+    /**
+     * @throws ValidationException
+     */
+    public function updated($propertyName): void
+    {
+        $this->validateOnly($propertyName);
+    }
+
+    public array $openTabs = ['info'];
 
     public function setTab(string $tab): void
     {
@@ -59,7 +85,23 @@ class CreateCourse extends Component
     public array $employeesAssigned = [];
     public $startDate = '';
     public $endDate = '';
-    public array $modules = [['title' => '', 'lesson_count' => 1, 'lessons' => [['title' => '', 'type' => '', 'description' => '', 'video_url' => '', 'content' => '', 'preview' => false,]]]];
+    public array $modules = [
+        [
+            'title' => '',
+            'lesson_count' => 1,
+            'lessons' => [
+                [
+                    'title' => '',
+                    'type' => '',
+                    'description' => '',
+                    'video_url' => '',
+                    'content' => '',
+                    'preview' => false,
+                ]
+            ]
+        ]
+    ];
+
 
     #[On('titleUpdated')]
     public function updatedTitle(): void
@@ -69,7 +111,9 @@ class CreateCourse extends Component
 
     private function updateJsonFromMultilineInput(string $field): void
     {
-        $lines = array_filter(array_map('trim', explode("\n", $this->$field)));
+        $lines = array_filter(
+            array_map('trim',
+                explode("\n", $this->$field)));
         if (empty($lines)) {
             $this->{$field . 'Json'} = null;
         } else {
@@ -80,6 +124,9 @@ class CreateCourse extends Component
 
     public function updatedImage(): void
     {
+        $this->validate([
+            'image' => 'nullable|image|max:2048',
+        ]);
         if ($this->image) {
             $path = $this->image->storePublicly('tmp', 'public');
             $this->imageUrl = Storage::url($path);
@@ -98,34 +145,78 @@ class CreateCourse extends Component
 
     public function save()
     {
+        $this->validate();
         $this->updateJsonFromMultilineInput('skills');
         $this->updateJsonFromMultilineInput('requirements');
         DB::beginTransaction();
         try {
             $courseDuration = 0;
             $lessonCount = 0;
-            $course = Course::create(['title' => $this->title, 'heading' => $this->heading, 'description' => $this->description, 'thumbnail_url' => $this->imageUrl, 'price' => $this->price ?? 0, 'review_count' => 0, 'lesson_count' => $lessonCount, // Will be updated later
-                'level' => $this->level, 'duration' => $courseDuration, // Will be updated later
-                'status' => 'pending', 'category_id' => $this->category, 'requirements' => $this->requirementsJson, 'skills' => $this->skillsJson, 'user_id' => auth()->id(),]);
+            $course = Course::create([
+                'title' => $this->title,
+                'heading' => $this->heading,
+                'description' => $this->description,
+                'thumbnail_url' => $this->imageUrl,
+                'price' => $this->price ?? 0,
+                'review_count' => 0,
+                'lesson_count' => $lessonCount, // Will be updated later
+                'level' => $this->level,
+                'duration' => $courseDuration, // Will be updated later
+                'status' => 'pending',
+                'category_id' => $this->category,
+                'requirements' => $this->requirementsJson,
+                'skills' => $this->skillsJson,
+                'user_id' => auth()->id(),
+            ]);
             foreach ($this->modules as $moduleIndex => $moduleData) {
                 $moduleDuration = 0;
                 $moduleLessonCount = count($moduleData['lessons']);
                 $lessonCount += $moduleLessonCount;
-                $module = Module::create(['title' => $moduleData['title'], 'lesson_count' => $moduleLessonCount, 'position' => $moduleIndex, 'duration' => 0, // Will be updated later
-                    'course_id' => $course->id,]);
+                $module = Module::create([
+                    'title' => $moduleData['title'],
+                    'lesson_count' => $moduleLessonCount,
+                    'position' => $moduleIndex,
+                    'duration' => 0, // Will be updated later
+                    'course_id' => $course->id,
+                ]);
                 foreach ($moduleData['lessons'] as $lessonKey => $lessonData) {
                     $moduleDuration += $lessonData['duration'] ?? 0;
-                    $lesson = Lesson::create(['title' => $lessonData['title'], 'type' => $lessonData['type'], 'duration' => $lessonData['duration'] ?? 0, 'video_url' => $lessonData['video_url'], 'content' => $lessonData['content'], 'preview' => $lessonData['preview'] ?? false, 'position' => $lessonKey, 'module_id' => $module->id]);
+                    $lesson = Lesson::create([
+                        'title' => $lessonData['title'],
+                        'type' => $lessonData['type'],
+                        'duration' => $lessonData['duration'] ?? 0,
+                        'video_url' => $lessonData['video_url'],
+                        'content' => $lessonData['content'],
+                        'preview' => $lessonData['preview'] ?? false,
+                        'position' => $lessonKey,
+                        'module_id' => $module->id
+                    ]);
 
                     if (isset($lessonData['assessments'])) {
                         $assessmentData = $lessonData['assessments'];
-                        $assessment = Assessment::create(['title' => $assessmentData['title'], 'description' => $assessmentData['description'], 'type' => $assessmentData['type'], 'lesson_id' => $lesson->id]);
+                        $assessment = Assessment::create([
+                            'title' => $assessmentData['title'],
+                            'description' => $assessmentData['description'],
+                            'type' => $assessmentData['type'],
+                            'lesson_id' => $lesson->id
+                        ]);
                         if ($assessmentData['type'] === 'quiz') {
-                            $assessment->question_count = count($assessmentData['assessments_questions']);
+                            $assessment->questions_count = count($assessmentData['assessments_questions']);
+                            $assessment->save();
                             foreach ($assessmentData['assessments_questions'] as $questionKey => $question) {
-                                $assessmentQuestion = AssessmentQuestion::create(['content' => $question['content'], 'type' => $question['type'], 'position' => $questionKey + 1, 'assessment_id' => $assessment->id]);
+                                $assessmentQuestion = AssessmentQuestion::create([
+                                    'content' => $question['content'],
+                                    'type' => $question['type'],
+                                    'position' => $questionKey + 1,
+                                    'assessment_id' => $assessment->id
+                                ]);
                                 foreach ($question['question_options'] as $optionKey => $option) {
-                                    $assessmentQuestion->options()->create(['content' => $option['content'], 'is_correct' => $option['is_correct'] ?? false, 'explanation' => $option['explanation'] ?? '', 'position' => $optionKey]);
+                                    $assessmentQuestion->options()->create([
+                                        'content' => $option['content'],
+                                        'is_correct' => $option['is_correct'] ?? false,
+                                        'explanation' => $option['explanation'] ?? '',
+                                        'position' => $optionKey
+                                    ]);
                                 }
                             }
                         }
@@ -137,13 +228,31 @@ class CreateCourse extends Component
             }
             $course->duration = $courseDuration;
             $course->lesson_count = $lessonCount;
-            $course->save();
             if (auth()->user()->isBusiness()) {
-                Batches::create(['start_at' => $this->startDate, 'end_at' => $this->endDate, 'course_id' => $course->id]);
+                $batch = Batches::create([
+                    'start_at' => $this->startDate,
+                    'end_at' => $this->endDate,
+                    'course_id' => $course->id
+                ]);
+                $course->enrollment_count = count($this->employeesAssigned);
+                foreach ($this->employeesAssigned as $employeeId) {
+                    BatchEnrollments::create([
+                        'batches_id' => $batch->id,
+                        'user_id' => $employeeId,
+                        'status' => 'not_started'
+                    ]);
+                }
             }
-
+            $course->save();
             DB::commit();
-            return redirect()->route('instructor.dashboard.index')->with('sweetalert2', 'Course created successfully!');
+            if (auth()->user()->isBusiness()) {
+                return redirect()
+                    ->route('business.dashboard.index')
+                    ->with('sweetalert2', 'Course created successfully!');
+            }
+            return redirect()
+                ->route('instructor.dashboard.index')
+                ->with('sweetalert2', 'Course created successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
             dd('Error creating course: ' . $e->getMessage());

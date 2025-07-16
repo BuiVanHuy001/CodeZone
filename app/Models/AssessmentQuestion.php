@@ -9,7 +9,10 @@ class AssessmentQuestion extends Model
 {
 	protected $guarded = [];
 
-    public static array $TYPES = ['multiple_choice' => 'Multiple Choice', 'true_false' => 'True/False'];
+	public static array $TYPES = [
+		'multiple_choice' => 'Multiple Choice',
+		'true_false' => 'True/False'
+	];
 
     public function isMultipleAnswers(): bool
     {

@@ -8,7 +8,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-class Employees extends Component {
+class EmployeesDashboard extends Component {
     public string $activeTab = 'list';
 
     #[Validate('string|max:255|required')]
@@ -25,7 +25,9 @@ class Employees extends Component {
     {
         $this->validate();
         if (!empty($this->search)) {
-            $this->userResults = User::where('name', 'like', '%' . $this->search . '%')->orWhere('email', 'like', '%' . $this->search . '%')->get();
+	        $this->userResults = User::where('name', 'like', '%' . $this->search . '%')
+	                                 ->orWhere('email', 'like', '%' . $this->search . '%')
+	                                 ->get();
             $this->activeTab = 'add';
         }
     }
@@ -39,7 +41,8 @@ class Employees extends Component {
 
     public function deleteEmployee(User $user): void
     {
-        OrganizationUsers::where('organization_id', auth()->user()->id)->where('user_id', $user->id)->delete();
+	    OrganizationUsers::where('organization_id', auth()->user()->id)
+	                     ->where('user_id', $user->id)->delete();
     }
 
     #[Layout('components.layouts.business-dashboard')]

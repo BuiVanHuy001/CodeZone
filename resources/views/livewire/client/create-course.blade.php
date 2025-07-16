@@ -3,39 +3,51 @@
         <div class="accordion" id="courseInfo">
             <div class="accordion-item card">
                 <h2 class="accordion-header card-header" id="accOne">
-                    <button wire:click="setTab('info')" class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#accCollapseOne" aria-expanded="true" aria-controls="accCollapseOne">
-                        Course Info
+                    <button wire:click="setTab('info')"
+                            class="accordion-button"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#accCollapseOne"
+                            aria-expanded="true"
+                            aria-controls="accCollapseOne"
+                    >Course Info
                     </button>
                 </h2>
-                <div id="accCollapseOne" @class([
-                    'accordion-collapse collapse',
-                    'show' => in_array('info', $openTabs),
-                ]) aria-labelledby="accOne"
+                <div id="accCollapseOne"
+                     @class(['accordion-collapse collapse', 'show' => in_array('info', $openTabs)])
+                     aria-labelledby="accOne"
                      data-bs-parent="#courseInfo">
                     <div class="accordion-body card-body">
                         <div class="rbt-course-field-wrapper rbt-default-form">
                             <livewire:client.components.text-input label="Course title"
                                                                    wire:model.live.debounce.250ms="title" name="title"
                                                                    placeholder="Enter your course title"/>
+                            <div>
+                                <small class="d-block mb-3" style="margin-top: -25px">
+                                    <i class="feather-info"></i> Permalink: https://codezone.com/course/{{ $slug }}
+                                </small>
+                            </div>
                             @error('title')
-                            <small class="d-block mb-3 text-danger" style="margin-top: -30px"><i
-                                    class="feather-alert-triangle"></i> {{ $message }}
-                            </small>
+                            <div>
+                                <small class="d-block mb-3 text-danger" style="margin-top: -10px"><i
+                                        class="feather-alert-triangle"></i> {{ $message }}
+                                </small>
+                            </div>
                             @enderror
-                            <small class="d-block mt_dec--5 mb-3">
-                                <i class="feather-info"></i> Permalink: https://codezone.com/course/{{ $slug }}
-                            </small>
 
                             <livewire:client.components.text-input label="Course heading" wire:model="heading"
                                                                    name="heading" placeholder="Enter your course heading"/>
+                            <div>
+                                <small class="d-block mb-3" style="margin-top: -25px">
+                                    <i class="feather-info"></i> A catchy, clear headline to attract learners.
+                                </small>
+                            </div>
+
                             @error('heading')
-                            <small class="d-block mb-3 text-danger" style="margin-top: -30px"><i
+                            <small class="d-block mb-5 text-danger" style="margin-top: -10px"><i
                                     class="feather-alert-triangle"></i> {{ $message }}
                             </small>
                             @enderror
-                            <small class="d-block mt_dec--5 mb-3"><i class="feather-info"></i> A catchy, clear headline
-                                to attract learners.</small>
 
                             <div class="course-field mb--15" wire:ignore>
                                 <label for="description">About Course</label>
@@ -152,17 +164,25 @@
                                                     <div class="tab-pane fade advance-tab-content-1" id="batch"
                                                          role="tabpanel" aria-labelledby="batch-tab">
                                                         <div class="course-field mb--15">
-                                                            <livewire:client.components.text-input label="Start time" type="date" wire:model="startDate"
-                                                                                                   name="start_time"/>
-
-                                                            <small class="d-block mt_dec--5 mb-5">
+                                                            <livewire:client.components.text-input label="Start time" type="date" wire:model="startDate" name="start_time"/>
+                                                            <small class="d-block mb-5" style="margin-top: -25px">
                                                                 <i class="feather-info"></i>Start at 00:00
                                                             </small>
+                                                            @error('startDate')
+                                                            <small class="d-block mb-3 text-danger" style="margin-top: -30px">
+                                                                <i class="feather-alert-triangle"></i> {{ $message }}
+                                                            </small>
+                                                            @enderror
 
                                                             <livewire:client.components.text-input label="End time" type="date" wire:model="endDate" name="end_time"/>
-                                                            <small class="d-block mt_dec--5">
+                                                            <small class="d-block" style="margin-top: -25px">
                                                                 <i class="feather-info"></i>End at 23:59
                                                             </small>
+                                                            @error('endDate')
+                                                            <small class="d-block mb-3 text-danger">
+                                                                <i class="feather-alert-triangle"></i> {{ $message }}
+                                                            </small>
+                                                            @enderror
                                                         </div>
                                                     </div>
                                                 @endif
@@ -193,12 +213,11 @@
                                                     Cancel Button
                                                 </button>
                                             @else
-                                                <img src="{{ asset('images/others/thumbnail-placeholder.svg') }}"
-                                                     alt="placeholder">
+                                                <img src="{{ asset('images/others/thumbnail-placeholder.svg') }}" alt="placeholder">
                                             @endif
 
                                             <input wire:model="image" id="createinputfile" name="thumbnail_url"
-                                                   type="file" class="inputfile"/>
+                                                   type="file" class="inputfile" accept="image/png,image/jpeg,image/webp,image/jpg"/>
                                             <label class="d-flex" for="createinputfile" title="No File Chosen">
                                                 <i class="feather-upload"></i>
                                                 <span class="text-center">Choose your course thumbnail</span>
@@ -206,9 +225,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <small><i class="feather-info"></i> <b>Size:</b> 700x430 pixels,
-                                    <b>File Support:</b> JPG, JPEG, PNG, GIF, WEBP</small>
+                                <small><i class="feather-info"></i> <b>Size:</b> 700x430 pixels, <b>File Support:</b>
+                                    JPG, JPEG, PNG, WEBP</small>
+                                @error('image')
                             </div>
+                            <small class="d-block mb-3 text-danger" style="margin-top: -20px">
+                                <i class="feather-alert-triangle"></i> {{ $message }}
+                            </small>
+                            @enderror
                         </div>
                     </div>
                 </div>

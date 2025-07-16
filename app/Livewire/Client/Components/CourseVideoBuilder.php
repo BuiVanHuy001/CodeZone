@@ -23,10 +23,12 @@ class CourseVideoBuilder extends Component
 
     public function updatedLesson(): void
 	{
-        $path = $this->lesson['video_url']->storePublicly('course/videos', 'public');
-		$publicUrl = Storage::url($path);
-        $this->lesson['duration'] = $this->getVideoDuration($path);
-        $this->lesson['video_url'] = $publicUrl;
+        if ($this->lesson['video_url'] && method_exists($this->lesson['video_url'], 'storePublicly')) {
+            $path = $this->lesson['video_url']->storePublicly('course/videos', 'public');
+            $publicUrl = Storage::url($path);
+            $this->lesson['duration'] = $this->getVideoDuration($path);
+            $this->lesson['video_url'] = $publicUrl;
+        }
 	}
 
     public function getVideoDuration(string $path): int

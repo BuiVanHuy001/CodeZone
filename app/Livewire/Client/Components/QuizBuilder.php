@@ -33,7 +33,12 @@ class QuizBuilder extends Component
         if ($optionCount >= 4) {
             return;
         }
-        $this->quiz['assessments_questions'][$index]['question_options'][] = ['content' => '', 'is_correct' => false, 'position' => count($this->quiz['assessments_questions'][$index]['question_options']) + 1, 'explanation' => '',];
+	    $this->quiz['assessments_questions'][$index]['question_options'][] = [
+		    'content' => '',
+		    'is_correct' => false,
+		    'position' => count($this->quiz['assessments_questions'][$index]['question_options']) + 1,
+		    'explanation' => ''
+	    ];
     }
 
     public function removeOption(int $index, int $optionIndex): void
@@ -47,7 +52,18 @@ class QuizBuilder extends Component
 
     public function addQuestion(): void
     {
-        $this->quiz['assessments_questions'][] = ['content' => '', 'type' => '', 'question_options' => [['content' => '', 'is_correct' => false, 'explanation' => '', 'position' => 1]]];
+	    $this->quiz['assessments_questions'][] = [
+		    'content' => '',
+		    'type' => '',
+		    'question_options' => [
+			    [
+				    'content' => '',
+				    'is_correct' => false,
+				    'explanation' => '',
+				    'position' => 1
+			    ]
+		    ]
+	    ];
     }
 
     public function removeQuestion(int $index): void
