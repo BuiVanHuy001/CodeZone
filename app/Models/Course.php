@@ -40,7 +40,7 @@ class Course extends Model
 
     public function batches(): hasMany
     {
-        return $this->hasMany(Batches::class);
+	    return $this->hasMany(Batch::class);
     }
 
     public function slugSourceField(): string

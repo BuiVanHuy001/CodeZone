@@ -5,7 +5,7 @@ namespace App\Livewire\Client;
 use App\Models\Assessment;
 use App\Models\AssessmentQuestion;
 use App\Models\BatchEnrollments;
-use App\Models\Batches;
+use App\Models\Batch;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Module;
@@ -229,7 +229,7 @@ class CreateCourse extends Component
             $course->duration = $courseDuration;
             $course->lesson_count = $lessonCount;
             if (auth()->user()->isBusiness()) {
-                $batch = Batches::create([
+	            $batch = Batch::create([
                     'start_at' => $this->startDate,
                     'end_at' => $this->endDate,
                     'course_id' => $course->id

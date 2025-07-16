@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\BatchEnrollments;
-use App\Models\Batches;
+use App\Models\Batch;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,7 +15,7 @@ return new class extends Migration {
 	{
 		Schema::create('batch_enrollments', function (Blueprint $table) {
 			$table->id();
-			$table->foreignIdFor(Batches::class)->constrained();
+            $table->foreignIdFor(Batch::class)->constrained();
 			$table->foreignIdFor(User::class)->constrained();
 			$table->enum('status', array_keys(BatchEnrollments::$STATUSES))->default('not_started');
 			$table->timestamps();

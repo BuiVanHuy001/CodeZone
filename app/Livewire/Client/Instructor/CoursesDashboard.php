@@ -16,7 +16,7 @@ class CoursesDashboard extends Component
 
     public function mount(): void
     {
-        $this->courses = auth()->user()->courses()->with('category')->get();
+        $this->courses = auth()->user()->courses;
     }
 
     #[Layout('components.layouts.instructor-dashboard')]

@@ -1,3 +1,3 @@
 <div>
-    {{-- The Master doesn't talk, he acts. --}}
+    <h1>Student Dashboard</h1>
 </div>
