@@ -1,5 +1,9 @@
 <div class="rbt-dashboard-content-wrapper">
-    <div class="tutor-bg-photo bg_image bg_image--22 height-350"></div>
+    <div @class([
+    'tutor-bg-photo bg_image height-350',
+    'bg_image--14' => auth()->user()->isInstructor(),
+    'bg_image--11' => auth()->user()->isBusiness(),
+    ])></div>
     <div class="rbt-tutor-information">
         <div class="rbt-tutor-information-left">
             <div wire:ignore class="thumbnail rbt-avatars size-lg">
@@ -21,7 +25,7 @@
         </div>
         <div class="rbt-tutor-information-right">
             <div class="tutor-btn">
-                <a class="rbt-btn btn-md hover-icon-reverse" href="{{ route('instructor.courses.create') }}">
+                <a class="rbt-btn btn-md hover-icon-reverse" href="{{ auth()->user()->isInstructor() ? route('instructor.courses.create') : route('business.courses.create') }}">
                     <span class="icon-reverse-wrapper">
                         <span class="btn-text">Create a New Course</span>
                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>

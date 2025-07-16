@@ -13,20 +13,11 @@ class Header extends Component
      public Collection $categories;
 
     /**
-     * Create a new components instance.
+     * Create a new component instance.
      */
     public function __construct()
     {
-        $this->categories = $this->fetchCategoriesWithChildren();
-    }
-
-    public function fetchCategoriesWithChildren(): Collection
-    {
-        $categories = Category::getParents();
-        foreach ($categories as $category) {
-            $category->children = Category::getChildren($category->id);
-        }
-        return $categories;
+        $this->categories = Category::fetchCategoriesWithChildren();
     }
 
     /**

@@ -116,7 +116,7 @@
                                     </div>
                                     <ul class="user-list-wrapper">
                                         <li>
-                                            <a href="{{ route('instructor.dashboard.index') }}">
+                                            <a href="{{ auth()->user()->isInstructor() ? route('instructor.dashboard.index') : route('business.dashboard.index') }}">
                                                 <i class="feather-home"></i>
                                                 <span>Dashboard</span>
                                             </a>

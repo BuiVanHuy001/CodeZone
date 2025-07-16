@@ -47,16 +47,14 @@
             eduJs.moveAnimation();
             eduJs.contactForm();
             eduJs.player();
-            eduJs.quizAns();
             eduJs.lessonAccor();
             eduJs.searchValue();
             eduJs.lessonToggle();
             eduJs.categoryMenuHover2();
-            eduJs.countDown(); // new added
-            eduJs.dnd(); // new added
+            eduJs.countDown();
+            eduJs.dnd();
         },
         dnd: function () {
-            // Select the sortable containers
             const dnd1 = document.getElementById("dnd1");
             const dnd2 = document.getElementById("dnd2");
             // const dnd3 = document.getElementById("dnd3");
@@ -1056,52 +1054,6 @@
                 ],
             });
         },
-
-        quizAns: function () {
-            var currentQuestion = 1;
-            showQuestion(currentQuestion);
-
-            $("#next-btn").click(function () {
-                if (currentQuestion < $(".question").length) {
-                    currentQuestion++;
-                    showQuestion(currentQuestion);
-                }
-            });
-
-            $("#prev-btn").click(function () {
-                if (currentQuestion > 1) {
-                    currentQuestion--;
-                    showQuestion(currentQuestion);
-                }
-            });
-
-            function showQuestion(questionNumber) {
-                $(".question").hide();
-                $("#question-" + questionNumber).show();
-
-                if (questionNumber == 1) {
-                    $("#prev-btn").prop("disabled", true);
-                } else {
-                    $("#prev-btn").prop("disabled", false);
-                }
-
-                if (questionNumber == $(".question").length) {
-                    $("#next-btn").hide();
-                    $("#submit-btn").show();
-                } else {
-                    $("#next-btn").show();
-                    $("#submit-btn").hide();
-                }
-            }
-
-            $("#quiz-form").submit(function (event) {
-                event.preventDefault();
-
-                // Here, you can add your logic to grade the quiz and show the results to the user
-                //   alert("Quiz submitted!");
-            });
-        },
-
         lessonAccor: function () {
             // Get saved data from sessionStorage
             let selectedCollapse = sessionStorage.getItem("selectedCollapse");

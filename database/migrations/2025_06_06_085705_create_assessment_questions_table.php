@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('assessment_questions', function (Blueprint $table) {
             $table->id();
             $table->text('content')->nullable();
-	        $table->enum('type', array_values(AssessmentQuestion::$TYPES));
+            $table->enum('type', array_keys(AssessmentQuestion::$TYPES));
             $table->unsignedTinyInteger('position')->default(0);
 
 	        $table->foreignIdFor(Assessment::class)->constrained();
