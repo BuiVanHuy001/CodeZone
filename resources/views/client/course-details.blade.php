@@ -49,7 +49,7 @@
                         <div class="rbt-author-meta mb--20">
                             <div class="rbt-avater">
                                 <a href="#">
-                                    <img src="{{ asset('images/client/avatar-02.png') }}" alt="Sophia Jaymes">
+                                    <img src="{{ $course->author->getAvatarPath() }}" alt="Instructor avatar">
                                 </a>
                             </div>
                             <div class="rbt-author-info">
@@ -89,7 +89,7 @@
                                         <a href="#details">Description</a>
                                     </li>
                                     <li>
-                                        <a href="#intructor">Instructor</a>
+                                        <a href="#instructor">Instructor</a>
                                     </li>
                                     <li>
                                         <a href="#review">Reviews</a>
@@ -202,7 +202,7 @@
                             <div class="row g-5 has-show-more-inner-content">
                                 <div class="col-12">
                                     <div class="section-title">
-                                        <h4 class="rbt-title-style-3">Desciption</h4>
+                                        <h4 class="rbt-title-style-3">Description</h4>
                                     </div>
                                     <div class="ql-snow">
                                         <div class="ql-editor">
@@ -224,10 +224,10 @@
                                     </div>
                                 @endif
                             </div>
-                            <div class="rbt-show-more-btn">Show all reviews</div>
+                            <div class="rbt-show-more-btn">Show all</div>
                         </div>
 
-                        <div class="rbt-instructor rbt-shadow-box intructor-wrapper mt--30" id="intructor">
+                        <div class="rbt-instructor rbt-shadow-box intructor-wrapper mt--30" id="instructor">
                             <div class="about-author border-0 pb--0 pt--0">
                                 <div class="section-title mb--30">
                                     <h4 class="rbt-title-style-3">Instructor</h4>
@@ -291,9 +291,7 @@
                                                     </a>
                                                 </li>
                                             </ul>
-
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -760,6 +758,29 @@
                                 </div>
                             </div>
                             <div class="rbt-show-more-btn">Show all reviews</div>
+                            @if($isReviewable)
+                                <div class="comment-respond">
+                                    <h4 class="title">Share Your Experience</h4>
+                                    <form action="#">
+                                        <p class="comment-notes">Your feedback helps others make informed decisions</p>
+                                        <div class="row row--10">
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <label for="message">Write your review</label>
+                                                    <textarea id="message" name="message"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <a class="rbt-btn btn-gradient icon-hover radius-round btn-md" href="#">
+                                                    <span class="btn-text">Submit Review</span>
+                                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
+                        </div>
                         </div>
                     </div>
                     <div class="related-course mt--60">

@@ -1,6 +1,5 @@
 <header class="rbt-header rbt-header-4">
     <div class="rbt-sticky-placeholder"></div>
-
     <div class="rbt-header-wrapper header-space-betwween bg-color-white header-sticky">
         <div class="container-fluid">
             <div class="mainbar-row rbt-navigation-start align-items-center">
@@ -114,63 +113,22 @@
                                             <span class="name">{{ auth()->user()->name }}</span>
                                         </div>
                                     </div>
-                                    <ul class="user-list-wrapper">
-                                        <li>
-                                            <a href="{{ auth()->user()->isInstructor() ? route('instructor.dashboard.index') : route('business.dashboard.index') }}">
-                                                <i class="feather-home"></i>
-                                                <span>Dashboard</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="feather-bookmark"></i>
-                                                <span>My Courses</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="feather-shopping-bag"></i>
-                                                <span>My Purchases</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="feather-heart"></i>
-                                                <span>My Wishlist</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                <i class="feather-star"></i>
-                                                <span>My Reviews</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <hr class="mt--10 mb--10">
-                                    <ul class="user-list-wrapper">
-                                        <li>
-                                            <a href="#">
-                                                <i class="feather-book-open"></i>
-                                                <span>My Learning</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <x-header.user-menu/>
                                     <hr class="mt--10 mb--10">
                                     <ul class="user-list-wrapper">
                                         <li>
                                             <a href="">
                                                 <i class="feather-settings"></i>
-                                                <span>Settings</span>
+                                                <span>Account Settings</span>
                                             </a>
                                         </li>
-                                        <li>
+                                        <li x-data>
                                             <form action="{{ route('client.logout') }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="logout-button btn btn-danger">
-                                                    <i class="feather-log-out"></i>
-                                                    <span>Logout</span>
-                                                </button>
+                                                <a href="#" @click.prevent="$el.closest('form').submit()">
+                                                    <i class="feather-log-out"></i><span>Logout</span>
+                                                </a>
                                             </form>
                                         </li>
                                     </ul>
