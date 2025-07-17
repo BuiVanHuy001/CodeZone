@@ -114,4 +114,8 @@ class User extends Authenticatable
     {
         return $this->role;
     }
+    public function reviews(): hasMany
+    {
+        return $this->hasMany(Review::class, with("user_id"));
+    }
 }

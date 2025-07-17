@@ -249,14 +249,11 @@ INSERT INTO codezone.lessons (id, title, slug, content, video_url, position, dur
 2025-07-16 08:19:51
 ', '2025-07-16 08:19:51
 ');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at) VALUES (1, 'Time to Practice: Images & Containers', 'Học tập hiệu quả không chỉ đến từ tài liệu và bài giảng, mà còn từ việc trao đổi, chia sẻ và hỗ trợ lẫn nhau trong cộng đồng. Trong bài tập này, bạn sẽ tham gia vào cộng đồng học tập của khóa học để:
-
-', 'assignment', 1, '4e93e6bc-b744-4b25-bd18-b27e8f6961ff', '
+INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at) VALUES (1, 'Time to Practice: Images & Containers', 'Học tập hiệu quả không chỉ đến từ tài liệu và bài giảng, mà còn từ việc trao đổi, chia sẻ và hỗ trợ lẫn nhau trong cộng đồng. Trong bài tập này, bạn sẽ tham gia vào cộng đồng học tập của khóa học để:', 'assignment', 1, '4e93e6bc-b744-4b25-bd18-b27e8f6961ff', '
 2025-07-16 08:19:51
 ', '2025-07-16 08:19:51
 ');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at) VALUES (2, 'Docker Setup - Overview', 'Trong bài tập này, bạn sẽ tìm hiểu và thực hành quy trình cài đặt Docker trên hệ điều hành của bạn (Windows, macOS hoặc Linux). Mục tiêu là giúp bạn nắm rõ các bước cài đặt, cấu hình và kiểm tra Docker hoạt động đúng, từ đó chuẩn bị môi trường để làm việc với container hóa ứng dụng.', 'quiz', 5, '
-60579451-c9b1-4275-a591-f5200cc0c3ae', '
+INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at) VALUES (2, 'Docker Setup - Overview', 'Trong bài tập này, bạn sẽ tìm hiểu và thực hành quy trình cài đặt Docker trên hệ điều hành của bạn (Windows, macOS hoặc Linux). Mục tiêu là giúp bạn nắm rõ các bước cài đặt, cấu hình và kiểm tra Docker hoạt động đúng, từ đó chuẩn bị môi trường để làm việc với container hóa ứng dụng.', 'quiz', 5, '60579451-c9b1-4275-a591-f5200cc0c3ae', '
 2025-07-16 08:19:51
 ', '2025-07-16 08:19:51
 ');

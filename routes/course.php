@@ -8,6 +8,6 @@ Route::get('/course/{course:slug}', [PageController::class, 'courseDetail'])->na
 Route::get('/course/{course:slug}/learn/{module:id?}/{lesson:id?}', \App\Livewire\Client\Lesson\Index::class)->name('course.learn');
 
 
-Route::post('review/{course:slug}', [ReviewController::class, 'store'])
+Route::post('review/{reviewable_type}/{reviewable_id}', [ReviewController::class, 'store'])
      ->name('course.review.store')
      ->middleware('auth');

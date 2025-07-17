@@ -12,6 +12,8 @@ class ReviewsDashboard extends Component {
     #[Layout('components.layouts.student-dashboard')]
     public function render(): View|Application|Factory
     {
-        return view('livewire.client.student.reviews-dashboard');
+       return view('livewire.client.student.reviews-dashboard', [
+            'reviews' => $reviews
+        ]);
     }
 }

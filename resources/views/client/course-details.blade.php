@@ -37,7 +37,7 @@
                             </div>
 
                             <div class="feature-sin total-rating">
-                                <a class="rbt-badge-4" href="#">{{  $course->review_count }} rating</a>
+                                <a class="rbt-badge-4" href="#">{{ $course->review_count }} rating</a>
                             </div>
 
                             <div class="feature-sin total-student">
@@ -99,42 +99,42 @@
                         </div>
 
                         @if($course->skills)
-                            <div class="rbt-course-feature-box overview-wrapper rbt-shadow-box mt--30 has-show-more"
-                                 id="overview">
-                                <div class="rbt-course-feature-inner has-show-more-inner-content">
-                                    <div class="section-title">
-                                        <h4 class="rbt-title-style-3">What you'll learn</h4>
-                                    </div>
-                                    <div class="row g-5 mb--30">
-                                        @php
-                                            $skills = json_decode($course->skills);
-                                            $skillsArray = is_array($skills) ? $skills : [];
-                                            $middleIndex = ceil(count($skillsArray) / 2);
-                                            $firstPart = array_slice($skillsArray, 0, $middleIndex);
-                                            $secondPart = array_slice($skillsArray, $middleIndex);
-                                        @endphp
-                                        <div class="col-lg-6">
-                                            <ul class="rbt-list-style-1">
-                                                @foreach($firstPart as $skill)
-                                                    <li><i class="feather-check"></i>{{ $skill->name ?? $skill }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-
-                                        <div class="col-lg-6">
-                                            <ul class="rbt-list-style-1">
-                                                @foreach($secondPart as $skill)
-                                                    <li><i class="feather-check"></i>{{ $skill->name ?? $skill }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-
-                                    </div>
+                        <div class="rbt-course-feature-box overview-wrapper rbt-shadow-box mt--30 has-show-more"
+                            id="overview">
+                            <div class="rbt-course-feature-inner has-show-more-inner-content">
+                                <div class="section-title">
+                                    <h4 class="rbt-title-style-3">What you'll learn</h4>
                                 </div>
-                                @if(count($firstPart) > 4)
-                                    <div class="rbt-show-more-btn">Show more</div>
-                                @endif
+                                <div class="row g-5 mb--30">
+                                    @php
+                                    $skills = json_decode($course->skills);
+                                    $skillsArray = is_array($skills) ? $skills : [];
+                                    $middleIndex = ceil(count($skillsArray) / 2);
+                                    $firstPart = array_slice($skillsArray, 0, $middleIndex);
+                                    $secondPart = array_slice($skillsArray, $middleIndex);
+                                    @endphp
+                                    <div class="col-lg-6">
+                                        <ul class="rbt-list-style-1">
+                                            @foreach($firstPart as $skill)
+                                            <li><i class="feather-check"></i>{{ $skill->name ?? $skill }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <ul class="rbt-list-style-1">
+                                            @foreach($secondPart as $skill)
+                                            <li><i class="feather-check"></i>{{ $skill->name ?? $skill }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+
+                                </div>
                             </div>
+                            @if(count($firstPart) > 4)
+                            <div class="rbt-show-more-btn">Show more</div>
+                            @endif
+                        </div>
                         @endif
 
                         <div class="course-content rbt-shadow-box coursecontent-wrapper mt--30" id="coursecontent">
@@ -145,53 +145,53 @@
                                 <div class="rbt-accordion-style rbt-accordion-02 accordion">
                                     <div class="accordion" id="accordionExampleb2">
                                         @foreach($course->modules->sortBy('position') as $key => $module)
-                                            <div class="accordion-item card">
-                                                <h2 class="accordion-header card-header" id="module-{{ $key + 1 }}">
-                                                    <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseModule-{{ $key + 1 }}"
-                                                            aria-expanded="false" aria-controls="collapseModule-{{ $key + 1 }}">
-                                                        {{ $module->title }}
-                                                        <span class="rbt-badge-5 ml--10">{{ $module->convertDurationToString() }}</span>
-                                                    </button>
-                                                </h2>
-                                                <div id="collapseModule-{{ $key + 1 }}" class="accordion-collapse collapse"
-                                                     aria-labelledby="module-{{ $key + 1 }}" data-bs-parent="#accordionExampleb2">
-                                                    <div class="accordion-body card-body pr--0">
-                                                        <ul class="rbt-course-main-content liststyle">
-                                                            @foreach(@$module->lessons as $lesson)
-                                                                @php
-                                                                    $icon = '';
-                                                                    if ($lesson->type === 'video') {
-                                                                        $icon = 'video';
-                                                                    } elseif ($lesson->content !== '') {
-                                                                        $icon = 'file-text';
-                                                                    } elseif ($lesson->type === 'assessment') {
-                                                                        $icon = 'file-text';
-                                                                    }
-                                                                @endphp
-                                                                <li>
-                                                                    <a href="">
-                                                                        <div class="course-content-left">
-                                                                            <i class="feather-{{ $icon }}"></i> <span
-                                                                                class="text">{{ $lesson->title }}</span>
-                                                                        </div>
-                                                                        <div class="course-content-right">
-                                                                            @if($lesson->preview)
-                                                                                <span class="course-eye">
-                                                                                    <i class="feather-eye"></i>
-                                                                                </span>
-                                                                            @endif
-                                                                            <span>
-                                                                                {{ $lesson->convertDurationToTime() }}
-                                                                            </span>
-                                                                        </div>
-                                                                    </a>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
+                                        <div class="accordion-item card">
+                                            <h2 class="accordion-header card-header" id="module-{{ $key + 1 }}">
+                                                <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapseModule-{{ $key + 1 }}"
+                                                    aria-expanded="false" aria-controls="collapseModule-{{ $key + 1 }}">
+                                                    {{ $module->title }}
+                                                    <span class="rbt-badge-5 ml--10">{{ $module->convertDurationToString() }}</span>
+                                                </button>
+                                            </h2>
+                                            <div id="collapseModule-{{ $key + 1 }}" class="accordion-collapse collapse"
+                                                aria-labelledby="module-{{ $key + 1 }}" data-bs-parent="#accordionExampleb2">
+                                                <div class="accordion-body card-body pr--0">
+                                                    <ul class="rbt-course-main-content liststyle">
+                                                        @foreach(@$module->lessons as $lesson)
+                                                        @php
+                                                        $icon = '';
+                                                        if ($lesson->type === 'video') {
+                                                        $icon = 'video';
+                                                        } elseif ($lesson->content !== '') {
+                                                        $icon = 'file-text';
+                                                        } elseif ($lesson->type === 'assessment') {
+                                                        $icon = 'file-text';
+                                                        }
+                                                        @endphp
+                                                        <li>
+                                                            <a href="">
+                                                                <div class="course-content-left">
+                                                                    <i class="feather-{{ $icon }}"></i> <span
+                                                                        class="text">{{ $lesson->title }}</span>
+                                                                </div>
+                                                                <div class="course-content-right">
+                                                                    @if($lesson->preview)
+                                                                    <span class="course-eye">
+                                                                        <i class="feather-eye"></i>
+                                                                    </span>
+                                                                    @endif
+                                                                    <span>
+                                                                        {{ $lesson->convertDurationToTime() }}
+                                                                    </span>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                        @endforeach
+                                                    </ul>
                                                 </div>
                                             </div>
+                                        </div>
                                         @endforeach
                                     </div>
                                 </div>
@@ -212,16 +212,16 @@
 
                                 </div>
                                 @if($course->requirements)
-                                    <div class="col-12">
-                                        <div class="section-title">
-                                            <h4 class="rbt-title-style-3 mb--20">Requirements</h4>
-                                        </div>
-                                        <ul class="rbt-list-style-1">
-                                            @foreach(json_decode($course->requirements) as $requirement)
-                                                <li><i class="feather-check"></i>{{ $requirement->name }}</li>
-                                            @endforeach
-                                        </ul>
+                                <div class="col-12">
+                                    <div class="section-title">
+                                        <h4 class="rbt-title-style-3 mb--20">Requirements</h4>
                                     </div>
+                                    <ul class="rbt-list-style-1">
+                                        @foreach(json_decode($course->requirements) as $requirement)
+                                        <li><i class="feather-check"></i>{{ $requirement->name }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                                 @endif
                             </div>
                             <div class="rbt-show-more-btn">Show all</div>
@@ -236,7 +236,7 @@
                                     <div class="thumbnail">
                                         <a href="">
                                             <img src="{{ $course->author->getAvatarPath() }}"
-                                                 alt="Instructor Avatar">
+                                                alt="Instructor Avatar">
                                         </a>
                                     </div>
                                     <div class="media-body">
@@ -308,29 +308,29 @@
                                             <div class="rating-number">5.0</div>
                                             <div class="rating">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                     fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
                                                     <path
-                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                 </svg>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                     fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
                                                     <path
-                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                 </svg>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                     fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
                                                     <path
-                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                 </svg>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                     fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
                                                     <path
-                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                 </svg>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                     fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                                    fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
                                                     <path
-                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                 </svg>
                                             </div>
                                             <span class="sub-title">Course reviews</span>
@@ -341,39 +341,39 @@
                                             <div class="single-progress-bar">
                                                 <div class="rating-text">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" style="width: 63%"
-                                                         aria-valuenow="63" aria-valuemin="0" aria-valuemax="100">
+                                                        aria-valuenow="63" aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 </div>
                                                 <span class="value-text">63%</span>
@@ -382,39 +382,39 @@
                                             <div class="single-progress-bar">
                                                 <div class="rating-text">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                                     </svg>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" style="width: 29%"
-                                                         aria-valuenow="29" aria-valuemin="0" aria-valuemax="100">
+                                                        aria-valuenow="29" aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 </div>
                                                 <span class="value-text">29%</span>
@@ -423,39 +423,39 @@
                                             <div class="single-progress-bar">
                                                 <div class="rating-text">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                                     </svg>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" style="width: 6%"
-                                                         aria-valuenow="6" aria-valuemin="0" aria-valuemax="100">
+                                                        aria-valuenow="6" aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 </div>
                                                 <span class="value-text">6%</span>
@@ -464,39 +464,39 @@
                                             <div class="single-progress-bar">
                                                 <div class="rating-text">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                                     </svg>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" style="width: 1%"
-                                                         aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">
+                                                        aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 </div>
                                                 <span class="value-text">1%</span>
@@ -505,39 +505,39 @@
                                             <div class="single-progress-bar">
                                                 <div class="rating-text">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star-fill"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star-fill"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                                     </svg>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                         height="16" fill="currentColor" class="bi bi-star"
-                                                         viewBox="0 0 16 16">
+                                                        height="16" fill="currentColor" class="bi bi-star"
+                                                        viewBox="0 0 16 16">
                                                         <path
-                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
                                                     </svg>
                                                 </div>
                                                 <div class="progress">
                                                     <div class="progress-bar" role="progressbar" style="width: 1%"
-                                                         aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">
+                                                        aria-valuenow="1" aria-valuemin="0" aria-valuemax="100">
                                                     </div>
                                                 </div>
                                                 <span class="value-text">1%</span>
@@ -553,234 +553,108 @@
                                 <h4 class="rbt-title-style-3">Featured review</h4>
                             </div>
                             <div class="has-show-more-inner-content rbt-featured-review-list-wrapper">
+                                @forelse($reviews as $review)
                                 <div class="rbt-course-review about-author">
                                     <div class="media">
                                         <div class="thumbnail">
                                             <a href="#">
-                                                <img src="{{ asset('images/testimonial/testimonial-3.jpg') }}"
-                                                     alt="Author Images">
+                                                <img src="{{ $review->user->avatar_url ?? asset('images/default-avatar.png') }}"
+                                                    alt="Author Image" style="width: 60px; height: 60px; border-radius: 50%;">
                                             </a>
                                         </div>
                                         <div class="media-body">
                                             <div class="author-info">
                                                 <h5 class="title">
                                                     <a class="hover-flip-item-wrapper" href="#">
-                                                        Farjana Bawnia
+                                                        {{ $review->user->name }}
                                                     </a>
                                                 </h5>
                                                 <div class="rating">
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        <i class="fa fa-star {{ $i <= $review->rating ? 'text-warning' : 'text-muted' }}"></i>
+                                                        @endfor
                                                 </div>
                                             </div>
                                             <div class="content">
-                                                <p class="description">At 29 years old, my favorite compliment is being
-                                                    told that I look like my mom. Seeing myself in her image, like this
-                                                    daughter up top.</p>
-                                                <ul
-                                                    class="social-icon social-default transparent-with-border justify-content-start">
-                                                    <li><a href="#">
-                                                            <i class="feather-thumbs-up"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li><a href="#">
-                                                            <i class="feather-thumbs-down"></i>
-                                                        </a>
-                                                    </li>
+                                                <p class="description">{{ $review->content }}</p>
+                                                <ul class="social-icon social-default transparent-with-border justify-content-start">
+                                                    <li><a href="#"><i class="feather-thumbs-up"></i></a></li>
+                                                    <li><a href="#"><i class="feather-thumbs-down"></i></a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="rbt-course-review about-author">
-                                    <div class="media">
-                                        <div class="thumbnail">
-                                            <a href="#">
-                                                <img src="{{ asset('images/testimonial/testimonial-4.jpg') }}"
-                                                     alt="Author Images">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="author-info">
-                                                <h5 class="title">
-                                                    <a class="hover-flip-item-wrapper" href="#">Razwan Islam</a>
-                                                </h5>
-                                                <div class="rating">
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="content">
-                                                <p class="description">My favorite compliment is being
-                                                    told that I look like my mom. Seeing myself in her image, like this
-                                                    daughter up top.</p>
-                                                <ul
-                                                    class="social-icon social-default transparent-with-border justify-content-start">
-                                                    <li><a href="#">
-                                                            <i class="feather-thumbs-up"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li><a href="#">
-                                                            <i class="feather-thumbs-down"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="rbt-course-review about-author">
-                                    <div class="media">
-                                        <div class="thumbnail">
-                                            <a href="#">
-                                                <img src="{{ asset('images/testimonial/testimonial-1.jpg') }}"
-                                                     alt="Author Images">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="author-info">
-                                                <h5 class="title">
-                                                    <a class="hover-flip-item-wrapper" href="#">Babor Azom</a>
-                                                </h5>
-                                                <div class="rating">
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="content">
-                                                <p class="description">My favorite compliment is being
-                                                    told that I look like my mom. Seeing myself in her image, like this
-                                                    daughter up top.</p>
-                                                <ul
-                                                    class="social-icon social-default transparent-with-border justify-content-start">
-                                                    <li><a href="#">
-                                                            <i class="feather-thumbs-up"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li><a href="#">
-                                                            <i class="feather-thumbs-down"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="rbt-course-review about-author">
-                                    <div class="media">
-                                        <div class="thumbnail">
-                                            <a href="#">
-                                                <img src="{{ asset('images/testimonial/testimonial-6.jpg') }}"
-                                                     alt="Author Images">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="author-info">
-                                                <h5 class="title">
-                                                    <a class="hover-flip-item-wrapper" href="#">Mohammad Ali</a>
-                                                </h5>
-                                                <div class="rating">
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="content">
-                                                <p class="description">My favorite compliment is being
-                                                    told that I look like my mom. Seeing myself in her image, like this
-                                                    daughter up top.</p>
-                                                <ul
-                                                    class="social-icon social-default transparent-with-border justify-content-start">
-                                                    <li><a href="#">
-                                                            <i class="feather-thumbs-up"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li><a href="#">
-                                                            <i class="feather-thumbs-down"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="rbt-course-review about-author">
-                                    <div class="media">
-                                        <div class="thumbnail">
-                                            <a href="#">
-                                                <img src="{{ asset('images/testimonial/testimonial-8.jpg') }}"
-                                                     alt="Author Images">
-                                            </a>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="author-info">
-                                                <h5 class="title">
-                                                    <a class="hover-flip-item-wrapper" href="#">Sakib Al
-                                                        Hasan</a>
-                                                </h5>
-                                                <div class="rating">
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                    <a href="#"><i class="fa fa-star"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="content">
-                                                <p class="description">My favorite compliment is being
-                                                    told that I look like my mom. Seeing myself in her image, like this
-                                                    daughter up top.</p>
-                                                <ul
-                                                    class="social-icon social-default transparent-with-border justify-content-start">
-                                                    <li><a href="#">
-                                                            <i class="feather-thumbs-up"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li><a href="#">
-                                                            <i class="feather-thumbs-down"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @empty
+                                <p class="text-muted">No reviews yet. Be the first to review this course!</p>
+                                @endforelse
                             </div>
                             <div class="rbt-show-more-btn">Show all reviews</div>
-                            @if($isReviewable)
-                                <div class="comment-respond">
-                                    <h4 class="title">Share Your Experience</h4>
-                                    <form action="#">
-                                        <p class="comment-notes">Your feedback helps others make informed decisions</p>
-                                        <div class="row row--10">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label for="message">Write your review</label>
-                                                    <textarea id="message" name="message"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12">
-                                                <a class="rbt-btn btn-gradient icon-hover radius-round btn-md" href="#">
-                                                    <span class="btn-text">Submit Review</span>
-                                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                                </a>
+                            <style>
+                                .rating-stars {
+                                    display: flex;
+                                    flex-direction: row-reverse;
+                                    justify-content: start;
+                                    gap: 0.3rem;
+                                }
+
+                                .rating-stars input[type="radio"] {
+                                    display: none;
+                                }
+
+                                .rating-stars label {
+                                    font-size: 2rem;
+                                    color: #ccc;
+                                    cursor: pointer;
+                                    transition: color 0.2s;
+                                }
+
+                                /* Khi được chọn, đổi màu các sao bên trái */
+                                .rating-stars input[type="radio"]:checked~label {
+                                    color: gold;
+                                }
+
+                                /* Khi hover thì các sao cũng sáng dần */
+                                .rating-stars label:hover,
+                                .rating-stars label:hover~label {
+                                    color: gold;
+                                }
+                            </style>
+                            @if($isReviewable == true)
+                            <div class="comment-respond">
+                                <h4 class="title">Share Your Experience</h4>
+                                <form action="{{ route('course.review.store', ['reviewable_type' => 'course', 'reviewable_id' => 2]) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="id_course" value="{{ $course->id }}">
+                                    <p class="comment-notes">Your feedback helps others make informed decisions</p>
+                                    <div class="row row--10">
+                                        <div class="col-12">
+                                            <div class="form-group">
+
+                                                <textarea id="content" name="content" rows="4" placeholder="Write your review"></textarea>
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <div class="rating-stars">
+                                                    @for ($i = 5; $i >= 1; $i--)
+                                                    <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}">
+                                                    <label for="star{{ $i }}" title="{{ $i }} stars">&#9733;</label>
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <button type="submit" class="rbt-btn btn-gradient icon-hover radius-round btn-md">
+                                                <span class="btn-text">Submit Review</span>
+                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                             @endif
-                        </div>
                         </div>
                     </div>
                     <div class="related-course mt--60">
@@ -801,12 +675,12 @@
                         </div>
                         <div class="row g-5">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-12" data-sal-delay="150" data-sal="slide-up"
-                                 data-sal-duration="800">
+                                data-sal-duration="800">
                                 <div class="rbt-card variation-01 rbt-hover">
                                     <div class="rbt-card-img">
                                         <a href="">
                                             <img src="{{ asset('images/course/course-online-01.jpg') }}"
-                                                 alt="Card image">
+                                                alt="Card image">
                                             <div class="rbt-badge-3 bg-white">
                                                 <span>-40%</span>
                                                 <span>Giảm</span>
@@ -847,7 +721,7 @@
                                             <div class="rbt-avater">
                                                 <a href="#">
                                                     <img src="{{ asset('images/client/avatar-02.png') }}"
-                                                         alt="Sophia Jaymes">
+                                                        alt="Sophia Jaymes">
                                                 </a>
                                             </div>
                                             <div class="rbt-author-info">
@@ -868,12 +742,12 @@
                             </div>
 
                             <div class="col-lg-6 col-md-6 col-sm-6 col-12" data-sal-delay="150" data-sal="slide-up"
-                                 data-sal-duration="800">
+                                data-sal-duration="800">
                                 <div class="rbt-card variation-01 rbt-hover">
                                     <div class="rbt-card-img">
                                         <a href="">
                                             <img src="{{ asset('images/course/course-online-02.jpg') }}"
-                                                 alt="Card image">
+                                                alt="Card image">
                                         </a>
                                     </div>
                                     <div class="rbt-card-body">
@@ -908,7 +782,7 @@
                                             <div class="rbt-avater">
                                                 <a href="#">
                                                     <img src="{{ asset('images/client/avatar-02.png') }}"
-                                                         alt="Sophia Jaymes">
+                                                        alt="Sophia Jaymes">
                                                 </a>
                                             </div>
                                             <div class="rbt-author-info">
@@ -935,10 +809,10 @@
                     <div class="course-sidebar sticky-top rbt-shadow-box course-sidebar-top rbt-gradient-border">
                         <div class="inner">
                             <a class="video-popup-with-text video-popup-wrapper text-center popup-video sidebar-video-hidden mb--15"
-                               href="{{ asset($course->getIntroductionVideo()) }}">
+                                href="{{ asset($course->getIntroductionVideo()) }}">
                                 <div class="video-content">
                                     <img class="w-100 rbt-radius" src="{{ $course->getThumbnailPath() }}"
-                                         alt="Video Images">
+                                        alt="Video Images">
                                     <div class="position-to-top">
                                         <span class="rbt-btn rounded-player-2 with-animation">
                                             <span class="play-icon"></span>
@@ -950,25 +824,25 @@
 
                             <div class="content-item-content">
                                 @if(!$course->author->isBusiness())
-                                    <div
-                                        class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
-                                        <div class="rbt-price">
-                                            <span class="current-price">{{ number_format($course->price) }}₫</span>
-                                        </div>
-                                        <div class="discount-time">
+                                <div
+                                    class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
+                                    <div class="rbt-price">
+                                        <span class="current-price">{{ number_format($course->price) }}₫</span>
+                                    </div>
+                                    <div class="discount-time">
                                         <span class="rbt-badge color-danger bg-color-danger-opacity"><i
                                                 class="feather-clock"></i> 3 days left!</span>
-                                        </div>
                                     </div>
-                                    <div class="add-to-card-button mt--15">
-                                        <a class="rbt-btn btn-gradient icon-hover w-100 d-block text-center"
-                                           href="#">
-                                            <span class="btn-text">Add to cart</span>
-                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                        </a>
-                                    </div>
+                                </div>
+                                <div class="add-to-card-button mt--15">
+                                    <a class="rbt-btn btn-gradient icon-hover w-100 d-block text-center"
+                                        href="#">
+                                        <span class="btn-text">Add to cart</span>
+                                        <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                    </a>
+                                </div>
                                 @else
-                                    <h5 class="text-center text-primary">This is Business Course</h5>
+                                <h5 class="text-center text-primary">This is Business Course</h5>
                                 @endif
 
 
