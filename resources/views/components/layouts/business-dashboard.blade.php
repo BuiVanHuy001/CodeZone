@@ -28,7 +28,7 @@
                 @endpersist
                 <div class="row g-5">
                     <div class="col-lg-3">
-                        <livewire:client.business.components.sidebar/>
+                        <livewire:client.components.sidebar/>
                     </div>
 
                     <div class="col-lg-9">
