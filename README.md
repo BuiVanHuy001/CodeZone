@@ -1,4 +1,3 @@
-
 # 🌐 CodeZone - An Online Learning Platform
 
 A modern online learning platform built with **Laravel 12**, featuring traditional email authentication, Google/Facebook login via **Laravel Socialite**, and dynamic user interface powered by **Livewire** and **Alpine.js** in a SPA-style experience.
@@ -136,6 +135,5 @@ For feedback, contributions, or bug reports:
 ## 🧑‍💻 Author
 
 **Bui Van Huy** – [GitHub](https://github.com/buivanhuy001)
-**Nha "
 
 ---

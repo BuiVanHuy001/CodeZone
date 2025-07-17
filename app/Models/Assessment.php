@@ -3,8 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Assessment extends Model
 {
-    public static array $TYPES = ['text', 'file_upload', 'multiple_choice', 'true_false'];
+	protected $guarded = [];
+
+	public static array $TYPES = [
+		'quiz' => 'Quiz',
+		'assignment' => 'Assignment'
+	];
+
+    public function questions(): HasMany
+    {
+        return $this->hasMany(AssessmentQuestion::class);
+    }
+
+	public function lesson(): BelongsTo
+	{
+		return $this->belongsTo(Lesson::class);
+	}
 }

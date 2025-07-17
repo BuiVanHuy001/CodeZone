@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Assessment;
-use App\Models\Course;
+use App\Models\AssessmentQuestion;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('assessment_questions', function (Blueprint $table) {
             $table->id();
             $table->text('content')->nullable();
-            $table->enum('type', Assessment::$TYPES);
+            $table->enum('type', array_keys(AssessmentQuestion::$TYPES));
             $table->unsignedTinyInteger('position')->default(0);
 
-            $table->foreignIdFor(Assessment::class)->constrained()->cascadeOnDelete();
+	        $table->foreignIdFor(Assessment::class)->constrained();
             $table->timestamps();
         });
     }

@@ -17,20 +17,11 @@ class Header extends Component
      */
     public function __construct()
     {
-        $this->categories = $this->fetchCategoriesWithChildren();
-    }
-
-    public function fetchCategoriesWithChildren(): Collection
-    {
-        $categories = Category::getParents();
-        foreach ($categories as $category) {
-            $category->children = Category::getChildren($category->id);
-        }
-        return $categories;
+        $this->categories = Category::fetchCategoriesWithChildren();
     }
 
     /**
-     * Get the view / contents that represent the component.
+     * Get the view / contents that represent the components.
      */
     public function render(): View|Closure|string
     {

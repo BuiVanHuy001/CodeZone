@@ -8,17 +8,20 @@
         <div class="advance-tab-button mb--30">
             <ul class="nav nav-tabs tab-button-style-2 justify-content-start" id="settinsTab-4" role="tablist">
                 <li role="presentation">
-                    <a href="#" class="tab-button active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" role="tab" aria-controls="profile" aria-selected="true">
+                    <a href="#" class="tab-button active" id="profile-tab" data-bs-toggle="tab"
+                       data-bs-target="#profile" role="tab" aria-controls="profile" aria-selected="true">
                         <span class="title">Profile</span>
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="#" class="tab-button" id="password-tab" data-bs-toggle="tab" data-bs-target="#password" role="tab" aria-controls="password" aria-selected="false">
+                    <a href="#" class="tab-button" id="password-tab" data-bs-toggle="tab"
+                       data-bs-target="#password" role="tab" aria-controls="password" aria-selected="false">
                         <span class="title">Password</span>
                     </a>
                 </li>
                 <li role="presentation">
-                    <a href="#" class="tab-button" id="social-tab" data-bs-toggle="tab" data-bs-target="#social" role="tab" aria-controls="social" aria-selected="false">
+                    <a href="#" class="tab-button" id="social-tab" data-bs-toggle="tab" data-bs-target="#social"
+                       role="tab" aria-controls="social" aria-selected="false">
                         <span class="title">Social Share</span>
                     </a>
                 </li>
@@ -43,7 +46,8 @@
                         </div>
                         <div class="rbt-tutor-information-right">
                             <div class="tutor-btn">
-                                <a class="rbt-btn btn-sm btn-border color-white radius-round-10" href="#">Edit Cover Photo</a>
+                                <a class="rbt-btn btn-sm btn-border color-white radius-round-10" href="#">Edit
+                                    Cover Photo</a>
                             </div>
                         </div>
                     </div>

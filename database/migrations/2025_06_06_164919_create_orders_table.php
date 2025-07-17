@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status', Order::$STATUSES)->default('processing');
             $table->enum('payment_method', Order::$PAYMENT_METHODS)->nullable();
 
-            $table->foreignIdFor(User::class );
+	        $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();
         });
     }

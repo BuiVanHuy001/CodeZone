@@ -13,21 +13,11 @@ class SocialiteController extends Controller
 
     public function redirect(string $provider): RedirectResponse
     {
-        return $this->makeContext($provider)->redirectToProvider();
+        return (new SocialLoginContext($provider))->redirectToProvider();
     }
 
     public function callback(string $provider): RedirectResponse
     {
-        return $this->makeContext($provider)->handleCallback();
-    }
-
-    public function makeContext(string $provider): SocialLoginContext
-    {
-        $strategy = match ($provider) {
-            'google' => new GoogleLoginStrategy(),
-            'facebook' => new FacebookLoginStrategy(),
-        };
-
-        return new SocialLoginContext($strategy);
+        return (new SocialLoginContext($provider))->handleCallback();
     }
 }

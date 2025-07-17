@@ -2,6 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,17 +22,23 @@ return new class extends Migration
             $table->string('heading')->unique();
             $table->text('description')->nullable();
             $table->string('thumbnail_url')->nullable();
-            $table->decimal('price', 8, 3)->default(0);
-            $table->unsignedSmallInteger('review_count');
-            $table->unsignedTinyInteger('lesson_count');
+	        $table->decimal('price', 13, 3)->default(0)->comment('Price in VND (Vietnamese Dong)');
+
+	        $table->unsignedSmallInteger('enrollment_count')->default(0);
+	        $table->unsignedSmallInteger('review_count')->default(0);
+	        $table->unsignedSmallInteger('lesson_count');
             $table->decimal('rating', 2, 1)->default(0);
-            $table->unsignedSmallInteger('duration');
+	        $table->unsignedInteger('duration')->comment('Duration in seconds and max 4294967295 seconds (136 years)');
 
             $table->enum('level', Course::$LEVELS);
             $table->enum('status', Course::$STATUSES);
 
             $table->foreignIdFor(Category::class);
 
+	        $table->json('skills')->nullable();
+	        $table->json('requirements')->nullable();
+
+	        $table->foreignIdFor(User::class)->constrained('users');
             $table->timestamps();
         });
     }
