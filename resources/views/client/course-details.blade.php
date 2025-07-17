@@ -781,7 +781,6 @@
                                 </div>
                             @endif
                         </div>
-                        </div>
                     </div>
                     <div class="related-course mt--60">
                         <div class="row g-5 align-items-end mb--40">
