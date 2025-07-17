@@ -12,7 +12,7 @@ use Livewire\Component;
 #[Title('My Reviews')]
 class ReviewsDashboard extends Component
 {
-    #[Layout('components.layouts.instructor-dashboard')]
+    #[Layout('components.layouts.client-dashboard')]
     public function render(): View|Application|Factory
     {
         return view('livewire.client.instructor.reviews-dashboard');

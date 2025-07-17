@@ -18,7 +18,7 @@ class CoursesDashboard extends Component {
         }
     }
 
-    #[Layout('components.layouts.student-dashboard')]
+    #[Layout('components.layouts.client-dashboard')]
     public function render(): View|Application|Factory
     {
         return view('livewire.client.student.courses-dashboard');
