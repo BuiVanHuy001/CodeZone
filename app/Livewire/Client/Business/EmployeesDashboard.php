@@ -45,7 +45,7 @@ class EmployeesDashboard extends Component {
 	                     ->where('user_id', $user->id)->delete();
     }
 
-    #[Layout('components.layouts.business-dashboard')]
+    #[Layout('components.layouts.client-dashboard')]
     public function render()
     {
         $employees = OrganizationUsers::where('organization_id', auth()->user()->id)->with('user')->get();
