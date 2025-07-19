@@ -86,7 +86,7 @@ class Course extends Model
     }
    public function reviews(): hasMany
     {
-        return $this->hasMany(Review::class, with("id_course"));
+        return $this->hasMany(Review::class, with("reviewable_id"));
     }
 
 }

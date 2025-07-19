@@ -1,3 +1,20 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<style>
+    .rbt-header .rbt-header-wrapper.rbt-sticky {
+        position: absolute;
+    }
+
+    .star_count i.fa-star {
+        color: #ccc;
+        font-size: 30px;
+    }
+
+    .star_count i.fa-star.checked {
+        color: orange;
+    }
+</style>
 <x-base categories="$categories" page-title="Home">
     <div class="rbt-breadcrumb-default rbt-breadcrumb-style-3">
         <div class="breadcrumb-inner breadcrumb-dark">
@@ -577,9 +594,16 @@
                                             </div>
                                             <div class="content">
                                                 <p class="description">{{ $review->content }}</p>
-                                                <ul class="social-icon social-default transparent-with-border justify-content-start">
-                                                    <li><a href="#"><i class="feather-thumbs-up"></i></a></li>
-                                                    <li><a href="#"><i class="feather-thumbs-down"></i></a></li>
+                                                 <ul
+                                                    class="social-icon social-default transparent-with-border justify-content-start">
+                                                    <li><a href="#">
+                                                            <i class="feather-thumbs-up"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li><a href="#">
+                                                            <i class="feather-thumbs-down"></i>
+                                                        </a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -623,27 +647,30 @@
                             @if($isReviewable == true)
                             <div class="comment-respond">
                                 <h4 class="title">Share Your Experience</h4>
-                                <form action="{{ route('course.review.store', ['reviewable_type' => 'course', 'reviewable_id' => 2]) }}" method="POST">
+                                <form action="{{ route('course.review.store', ['reviewable_type' => 'course', 'reviewable_id' => $course->id]) }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="id_course" value="{{ $course->id }}">
+                                    <input type="hidden" name="reviewable_type" value="course">
+                                    <input type="hidden" name="reviewable_id" value="{{ $course->id }}">
                                     <p class="comment-notes">Your feedback helps others make informed decisions</p>
                                     <div class="row row--10">
                                         <div class="col-12">
                                             <div class="form-group">
-
                                                 <textarea id="content" name="content" rows="4" placeholder="Write your review"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <div class="form-group">
-                                                <div class="rating-stars">
-                                                    @for ($i = 5; $i >= 1; $i--)
-                                                    <input type="radio" id="star{{ $i }}" name="rating" value="{{ $i }}">
-                                                    <label for="star{{ $i }}" title="{{ $i }} stars">&#9733;</label>
+                                            <div class="star_count">
+                                                @for($i = 1; $i <= 5; $i++)
+                                                    <i class="fa fa-star" data-rating="{{ $i }}"></i>
                                                     @endfor
-                                                </div>
+                                                    <input type="hidden" value="" name="rating" id="rating">
+                                                    @error('rating')
+                                                    <p style="font-size: 12px" class="text-danger">{{ $message }}</p>
+                                                    @enderror
                                             </div>
                                         </div>
+                                        <br>
+                                        <br>
 
                                         <div class="col-lg-12">
                                             <button type="submit" class="rbt-btn btn-gradient icon-hover radius-round btn-md">
@@ -654,6 +681,16 @@
                                     </div>
                                 </form>
                             </div>
+                            @endif
+                            @if(session('success'))
+                            <script>
+                                toastr.options = {
+                                    "closeButton": true,
+                                    "progressBar": true,
+                                    "positionClass": "toast-top-right"
+                                };
+                                toastr.success("{{ session('success') }}");
+                            </script>
                             @endif
                         </div>
                     </div>
@@ -926,3 +963,18 @@
         </div>
     </div>
 </x-base>
+<script>
+    $('.fa-star').on('click', function() {
+        var rating = $(this).data('rating');
+        $('#rating').val(rating);
+
+        $('.fa-star').each(function() {
+            if ($(this).data('rating') <= rating) {
+                $(this).addClass('checked');
+            } else {
+                $(this).removeClass('checked');
+            }
+        });
+        $('input[name="rating"]').val(rating);
+    });
+</script>

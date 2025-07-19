@@ -44,7 +44,7 @@ class PageController extends Controller
         if (auth()->check()) {
             $isReviewable = auth()->user()->batchEnrollments
                 ->where('batch.course_id', $course->id)
-                ->isNotEmpty() && !auth()->user()->reviews()->where('reviewable_type', 'course')->where('id_course', $course->id)->exists();
+                ->isNotEmpty() && !auth()->user()->reviews()->where('reviewable_type', 'course')->where('reviewable_id', $course->id)->exists();
         }
 
         $reviews = $course->reviews()->with('user')->latest()->get();

@@ -12,7 +12,6 @@ class Review extends Model
         'reviewable_id',
         'rating',
         'content',
-        'id_course'
     ];
 
     public function reviewable()
@@ -27,6 +26,6 @@ class Review extends Model
 
     public function course()
     {
-        return $this->belongsTo(Course::class, 'id_course');
+        return $this->belongsTo(Course::class, 'reviewable_id');
     }
 }

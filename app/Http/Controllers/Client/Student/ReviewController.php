@@ -7,49 +7,53 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class ReviewController extends Controller
 {
-    public function store(Request $request, string $type, string $id)
+    public function store(Request $request, string $reviewable_type, string $reviewable_id)
     {
-        $request->validate([
-            'rating'  => 'required|integer|min:1|max:5',
-            'content' => 'nullable|string|max:1000',
-            'id_course' => 'required|exists:courses,id',
-        ]);
+        $allowedTypes = [
+            'course' => Course::class,
+            'lesson' => \App\Models\Lesson::class,
+        ];
 
-        Review::create([
-            'user_id'         => auth()->id(),
-            'reviewable_type' => $type,
-            'reviewable_id'   => $id,
-            'rating'          => $request->rating,
-            'content'         => $request->content,
-            'id_course'       => $request->id_course,
-        ]);
+        try {
+            $request->validate([
+                'rating'        => 'required|integer|min:1|max:5',
+                'content'       => 'nullable|string|max:1000',
+                'reviewable_id' => 'required|exists:courses,id',
+                'reviewable_type' => ['required', Rule::in(array_keys($allowedTypes))],
+            ]);
 
-        return back()->with('success', 'Review submitted successfully!');
-    }
+            if (!isset($allowedTypes[$reviewable_type])) {
+                return back()->with('error', 'Invalid reviewable type.');
+            }
 
+            $model = $allowedTypes[$reviewable_type];
+            if (!$model::where('id', $reviewable_id)->exists()) {
+                return back()->with('error', 'Invalid reviewable ID.');
+            }
 
+            Review::create([
+                'user_id'         => auth()->id(),
+                'rating'          => $request->rating,
+                'content'         => $request->content,
+                'reviewable_id'   => $reviewable_id,
+                'reviewable_type' => $reviewable_type,
+            ]);
 
-    public function index()
-    {
-        $user = Auth::user();
+            return back()->with('success', 'Review submitted successfully!');
+        } catch (\Throwable $e) {
+            Log::error('Review Store Error', [
+                'error_message' => $e->getMessage(),
+                'trace'         => $e->getTraceAsString(),
+                'user_id'       => auth()->id(),
+                'request_data'  => $request->all()
+            ]);
 
-        // Review đã viết
-        $reviewsGiven = Review::with('reviewable')
-            ->where('user_id', $user->id)
-            ->latest()
-            ->get();
-
-        // Review nhận được (ví dụ user là người sở hữu khóa học)
-        $reviewsReceived = Review::with(['reviewable', 'user'])
-            ->whereHasMorph('reviewable', ['App\Models\Course'], function ($query) use ($user) {
-                $query->where('owner_id', $user->id); // bạn có thể đổi thành creator_id nếu cần
-            })
-            ->latest()
-            ->get();
-
-        return view('client.student.reviews.index', compact('reviewsGiven', 'reviewsReceived'));
+            return back()->with('error', 'Something went wrong while submitting your review.');
+        }
     }
 }
