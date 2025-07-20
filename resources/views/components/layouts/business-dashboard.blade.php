@@ -7,7 +7,7 @@
     <meta name="description" content="CodeZone is a platform for developers to learn, share, and grow their coding skills.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset("/images/favicon.ico") }}">
-
+    @yield('cus_css')
     @include('sweetalert2::index')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>{{ $title ?? 'CodeZone' }}</title>
@@ -53,6 +53,7 @@
     </svg>
 </div>
 @endpersist
+@yield('cus_js')
 <script src="{{ asset('js/vendor/isotop.js') }}"></script>
 <script src="{{ asset('js/vendor/imageloaded.js') }}"></script>
 <script src="{{ asset('js/vendor/wow.js') }}"></script>

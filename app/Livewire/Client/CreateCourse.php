@@ -145,7 +145,7 @@ class CreateCourse extends Component
 
     public function save()
     {
-        $this->validate();
+        dd($this->modules);
         $this->updateJsonFromMultilineInput('skills');
         $this->updateJsonFromMultilineInput('requirements');
         DB::beginTransaction();

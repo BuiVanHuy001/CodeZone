@@ -55,8 +55,8 @@
                                 <div id="toolbar-container"></div>
                                 <div id="description"></div>
                                 <small class="d-block mt-3">
-                                    <i class="feather-info"></i> HTML or plain text allowed, no emoji This field is used
-                                    for search, so please be descriptive!
+                                    <i class="feather-info"></i>Markdown is supported. Use it to describe your course in
+                                    detail.
                                 </small>
                             </div>
 

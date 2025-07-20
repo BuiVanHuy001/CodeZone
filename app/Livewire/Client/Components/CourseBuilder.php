@@ -157,6 +157,33 @@ class CourseBuilder extends Component
         $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
     }
 
+    public function addProgramming(int $moduleIndex, int $lessonIndex): void
+    {
+        if (
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] !== 'assessment' ||
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] !== 'programming'
+        ) {
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'assessment';
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = [
+                'title' => '',
+                'type' => 'programming',
+                'description' => '',
+                'programming_questions' => [
+                    [
+                        'test_cases' => [
+                            [
+                                'input' => '',
+                                'output' => ''
+                            ]
+                        ],
+                        'allowed_languages' => [],
+                    ]
+                ]
+            ];
+        }
+        $this->activeTabs["$moduleIndex-$lessonIndex"] = 'programming';
+    }
+
     public function addModule(): void
     {
         $this->modules[] = [

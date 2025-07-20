@@ -209,7 +209,7 @@ mark {
     color: #ffffff;
 }
 
-code,
+code:not(#course-description-content code),
 kbd,
 pre,
 samp {
@@ -568,37 +568,37 @@ h6,
     color: var(--color-heading);
 }
 
-h1,
+h1:not(#course-description-content h1),
 .h1 {
     font-size: var(--h1);
     line-height: 1.19;
 }
 
-h2,
+h2:not(#course-description-content h2),
 .h2 {
     font-size: var(--h2);
     line-height: 1.23;
 }
 
-h3,
+h3:not(#course-description-content h3),
 .h3 {
     font-size: var(--h3);
     line-height: 1.14;
 }
 
-h4,
+h4:not(#course-description-content h4),
 .h4 {
     font-size: var(--h4);
     line-height: 1.25;
 }
 
-h5,
+h5:not(#course-description-content h5),
 .h5 {
     font-size: var(--h5);
     line-height: 1.24;
 }
 
-h6,
+h6:not(#course-description-content h6),
 .h6 {
     font-size: var(--h6);
     line-height: 1.25;
@@ -694,7 +694,7 @@ h6,
     font-weight: var(--f-medium);
 }
 
-p {
+p:not(#course-description-content p) {
     font-size: 18px;
     line-height: 1.45;
     margin-bottom: 30px;
@@ -935,7 +935,7 @@ ul.liststyle.bullet li + li {
     margin-top: 8px;
 }
 
-ul li {
+ul li:not(#course-description-content ul li) {
     margin-top: 10px;
     margin-bottom: 10px;
     color: var(--color-body);

@@ -20,34 +20,92 @@ import '../assets/js/vendor/countdown.js';
 import '../assets/js/vendor/plyr.js';
 import '../assets/js/vendor/jodit.min.js';
 import '../assets/js/vendor/Sortable.min.js';
-import 'quill/dist/quill.snow.css';
-import Quill from 'quill';
 import '../assets/js/main.js';
 
-const toolbarOptions = [
-    [{'header': [1, 2, 3, 4, 5, 6, false]}],
-    [{'font': []}],
-    ['bold', 'italic', 'underline', 'strike'],
-    ['blockquote', 'code-block'],
-    ['link'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, {'list': 'check'}],
-    [{'indent': '-1'}, {'indent': '+1'}],
-    [{'align': []}],
-];
+import {
+    EditorView,
+    highlightActiveLine,
+    highlightActiveLineGutter,
+    highlightSpecialChars,
+    keymap,
+    lineNumbers,
+} from "@codemirror/view"
+import {defaultKeymap, history, historyKeymap} from "@codemirror/commands"
+import {python} from "@codemirror/lang-python";
+import {oneDark} from "@codemirror/theme-one-dark";
+import {foldGutter} from "@codemirror/language";
+import {autocompletion} from "@codemirror/autocomplete";
+import {markdown} from "@codemirror/lang-markdown";
 
-function initQuill() {
-    const el = document.querySelector('#description');
-    if (el && !el.classList.contains('ql-container')) {
-        let quill = new Quill(el, {
-            theme: 'snow',
-            modules: {toolbar: toolbarOptions}
-        });
+let codeEditor = new EditorView({
+    extensions: [
+        lineNumbers(),
+        foldGutter(),
+        autocompletion(),
+        history(),
+        python(),
+        highlightActiveLine(),
+        highlightActiveLineGutter(),
+        keymap.of([...defaultKeymap, ...historyKeymap]),
+        EditorView.lineWrapping,
+        EditorView.theme({
+            "&": {
+                height: "300px",
+                width: "100%",
+                border: "1px solid #ddd",
+                borderRadius: "4px",
+                padding: "10px",
+                fontSize: "13px",
+            },
+            ".cm-content": {
+                caretColor: "#fff",
+            },
+        }),
 
-        quill.on('text-change', function () {
-            const input = document.querySelector('#description_input');
-            input.value = quill.getText();
-            input.dispatchEvent(new Event('input'));
-        });
+        oneDark,
+    ],
+    doc: `# Viết code của bạn vào đây
+def sum_array(numbers):
+    # TODO: Viết logic của bạn ở đây
+    return 0
+
+# Dữ liệu đầu vào đ�� kiểm thử
+input_data = [1, 2, 3, 4, 5]
+
+# Gọi hàm của bạn và in kết quả
+print(sum_array(input_data))`,
+    parent: document.getElementById('code-editor')
+});
+
+const courseDescriptionInput = document.querySelector('#description_input');
+
+let descriptionEditor = new EditorView(
+    {
+        extensions: [
+            lineNumbers(),
+            markdown(),
+            highlightSpecialChars(),
+            EditorView.lineWrapping,
+            EditorView.updateListener.of(update => {
+                if (update.docChanged) {
+                    courseDescriptionInput.value = update.state.doc.toString();
+                    courseDescriptionInput.dispatchEvent(new Event('input'));
+                }
+            }),
+            EditorView.theme({
+                "&": {
+                    height: "200px",
+                    width: "100%",
+                    border: "1px solid #ddd",
+                    borderRadius: "4px",
+                    padding: "10px",
+                    fontSize: "13px",
+                },
+                ".cm-content": {
+                    caretColor: "#000",
+                },
+            }),
+        ],
+        parent: document.getElementById('description'),
     }
-}
-initQuill();
+);
