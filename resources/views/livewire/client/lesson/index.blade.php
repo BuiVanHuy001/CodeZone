@@ -20,8 +20,10 @@
             <div class="inner">
                 @if(!empty($lesson->video_url))
                     <div x-data="{ videoSrc: @entangle('currentVideo') }" class="video-wrapper">
-                        <template x-if="videoSrc">
+                        <template x-if="videoSrc" x-data
+                                  x-init="document.getElementById('lessonVideo').addEventListener('ended', () => {$wire.markLessonAsCompleted({{ $lesson->id }});})">
                             <video
+                                id="lessonVideo"
                                 x-bind:key="videoSrc"
                                 x-bind:src="videoSrc"
                                 class="w-100 rounded-xl shadow-lg"
@@ -44,15 +46,15 @@
 
             <div class="bg-color-extra2 ptb--15 overflow-hidden">
                 <div class="rbt-button-group">
-                    <a class="rbt-btn icon-hover icon-hover-left btn-md bg-primary-opacity" href="#" wire:click="">
+                    <button @class(['rbt-btn icon-hover icon-hover-left btn-md bg-primary-opacity', 'disabled cursor-not-allowed' => $isDisabledPrevious]) wire:click="previousLesson">
                         <span class="btn-icon"><i class="feather-arrow-left"></i></span>
                         <span class="btn-text">Previous</span>
-                    </a>
+                    </button>
 
-                    <a class="rbt-btn icon-hover btn-md" href="#" wire:click="nextLesson">
+                    <button class="rbt-btn icon-hover btn-md" wire:click="nextLesson">
                         <span class="btn-text">Next</span>
                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                    </a>
+                    </button>
                 </div>
             </div>
 

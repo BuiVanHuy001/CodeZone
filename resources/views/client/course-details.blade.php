@@ -1021,7 +1021,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6">
                     <div class="section-title text-center text-md-start">
-                        <h5 class="title mb--0">Node.js, Express, MongoDB & More: The Complete Bootcamp</h5>
+                        <h5 class="title mb--0">{{ $course->title }}</h5>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 mt_sm--15">

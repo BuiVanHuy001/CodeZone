@@ -1,24 +1,20 @@
 <?php
 
 use App\Models\Assessment;
-use App\Models\AssessmentAttempt;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('attempt_assignments', function (Blueprint $table) {
-            $table->foreignIdFor(AssessmentAttempt::class, 'attempt_id')->primary();
-
-            $table->string('assignment_url');
-            $table->text('feedback')->nullable();
-
+        Schema::create('programming_questions', function (Blueprint $table) {
+            $table->foreignIdFor(Assessment::class)->primary();
+            $table->json('test_cases');
+            $table->json('allowest_languages');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attempt_assignments');
+        Schema::dropIfExists('programming_questions');
     }
 };

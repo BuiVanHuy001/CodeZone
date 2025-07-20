@@ -14,7 +14,7 @@
         <hr class="mt--10">
 
         <div class="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
-            <div class="accordion" id="accordionExampleb2">
+            <div class="accordion">
                 @foreach($modules->sortBy('position') as $key => $module)
                     <div class="accordion-item card">
                         <h2 class="accordion-header card-header" id="headingTwo{{ $key }}">
@@ -26,17 +26,23 @@
                             <div class="accordion-body card-body">
                                 <ul class="rbt-course-main-content liststyle">
                                     @foreach($module->lessons->sortBy('position') as $lesson)
-                                        <li>
-                                            <a href="{{ route('course.learn', [$courseSlug, $module->id, $lesson->id]) }}" wire:navigate wire:current="active">
-                                                <div class="course-content-left">
+                                        <li class="d-flex justify-content-between align-items-center">
+                                            <div class="course-content-left">
+                                                <a href="{{ route('course.learn', [$courseSlug, $module->id, $lesson->id]) }}" wire:navigate wire:current="active">
                                                     <i class="feather-{{ $lesson->getIcon() }}"></i>
                                                     <span class="text">{{ $lesson->title }}</span>
-                                                </div>
-                                                <div class="course-content-right">
-                                                    <span class="min-lable">{{ $lesson->getIcon() === 'video' ? $lesson->convertDurationToString() : '' }}</span>
-                                                    <span class="rbt-check"><i class="feather-check"></i></span>
-                                                </div>
-                                            </a>
+                                                </a>
+                                            </div>
+                                            <div class="course-content-right">
+                                                <span class="min-lable">{{ $lesson->getIcon() === 'video' ? $lesson->convertDurationToString() : '' }}</span>
+                                                <input
+                                                    wire:click="checkLessonCompletion({{ $lesson }})"
+                                                    type="checkbox"
+                                                    class="position-relative"
+                                                    @checked($lesson->trackingProgresses()->where('user_id', auth()->user()->id)->first()?->is_completed ?? false)
+                                                    style="opacity: 1; width: 13px; height: 13px"
+                                                >
+                                            </div>
                                         </li>
                                     @endforeach
                                 </ul>

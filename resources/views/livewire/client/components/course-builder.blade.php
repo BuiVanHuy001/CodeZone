@@ -3,7 +3,6 @@
         <button type="button" class="accordion-button">Course Builder</button>
     </h2>
     <div>
-
         <div class="card-body">
             @foreach ($modules as $moduleIndex => $module)
                 <div class="accordion-item card mb--20 rbt-default-form">

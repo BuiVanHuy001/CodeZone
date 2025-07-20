@@ -37152,5 +37152,8 @@ Course Sidebar
     background-color: #273041;
 }
 
+.cursor-not-allowed {
+    cursor: not-allowed !important;
+}
 /*# sourceMappingURL=../maps/styles.css.map */
 

@@ -7,6 +7,7 @@ use App\Traits\HasSlug;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Lesson extends Model
@@ -28,6 +29,11 @@ class Lesson extends Model
     public function assessment(): HasOne
     {
         return $this->hasOne(Assessment::class);
+    }
+
+    public function trackingProgresses(): HasMany
+    {
+        return $this->hasMany(TrackingProgress::class);
     }
 
     public function slugSourceField(): string
