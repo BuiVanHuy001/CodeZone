@@ -204,10 +204,8 @@
                                     <div class="section-title">
                                         <h4 class="rbt-title-style-3">Description</h4>
                                     </div>
-                                    <div class="ql-snow">
-                                        <div class="ql-editor">
-                                            {!! $course->description !!}
-                                        </div>
+                                    <div id="course-description-content">
+                                        @markdown($course->description)
                                     </div>
 
                                 </div>

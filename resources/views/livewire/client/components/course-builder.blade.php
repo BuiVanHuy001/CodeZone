@@ -152,6 +152,21 @@
                                                     @endif
                                                 </span>
                                             </button>
+
+                                            <button wire:click="addProgramming({{ $moduleIndex . ',' . $lessonIndex }})"
+                                                    class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
+                                                    type="button" @click="activeTab = 'programming'">
+                                                <span class="icon-reverse-wrapper">
+                                                    <span class="btn-text">Programming</span>
+                                                    @if (!empty($module['lessons'][$lessonIndex]['video_url']))
+                                                        <span class="btn-icon"><i class="feather-eye"></i></span>
+                                                        <span class="btn-icon"><i class="feather-code"></i></span>
+                                                    @else
+                                                        <span class="btn-icon"><i class="feather-code"></i></span>
+                                                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                                    @endif
+                                                </span>
+                                            </button>
                                         </div>
 
                                         @if (($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'quiz')
@@ -165,14 +180,18 @@
                                         @endif
 
                                         @if (($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'content')
-                                            <livewire:client.components.course-content-builder :$moduleIndex
-                                                :$lessonIndex
+                                            <livewire:client.components.course-content-builder :$moduleIndex :$lessonIndex
                                                                                                wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.content"/>
                                         @endif
 
                                         @if (($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'upload-video')
                                             <livewire:client.components.course-video-builder :$moduleIndex :$lessonIndex
                                                                                              wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}"/>
+                                        @endif
+
+                                        @if(($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'programming')
+                                            <livewire:client.components.course-programming-assignment-builder :$moduleIndex :$lessonIndex
+                                                                                                              wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}"/>
                                         @endif
                                     </div>
                                 </div>

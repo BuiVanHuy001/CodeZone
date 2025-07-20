@@ -1111,3 +1111,7 @@
     };
     eduJs.i();
 })(window, document, jQuery);
+
+document.addEventListener('swal', function (e) {
+    Swal.fire(e.detail[0]);
+});

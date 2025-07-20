@@ -112,8 +112,11 @@ class CreateCourse extends Component
     private function updateJsonFromMultilineInput(string $field): void
     {
         $lines = array_filter(
-            array_map('trim',
-                explode("\n", $this->$field)));
+	        array_map(
+		        'trim',
+		        explode("\n", $this->$field)
+	        )
+        );
         if (empty($lines)) {
             $this->{$field . 'Json'} = null;
         } else {
@@ -143,9 +146,22 @@ class CreateCourse extends Component
         }
     }
 
+	public function showAlert(): void
+	{
+		$this->dispatch('swal', [
+			'title' => 'Post Updated',
+			'text' => 'Post successfully updated.',
+			'icon' => 'success',
+			'timer' => 3000,
+			'showConfirmButton' => false,
+		]);
+		//        session()->flash('swal', 'Post successfully updated.');
+	}
+
     public function save()
     {
-        $this->validate();
+
+	    dd($this->modules);
         $this->updateJsonFromMultilineInput('skills');
         $this->updateJsonFromMultilineInput('requirements');
         DB::beginTransaction();
@@ -166,7 +182,7 @@ class CreateCourse extends Component
                 'category_id' => $this->category,
                 'requirements' => $this->requirementsJson,
                 'skills' => $this->skillsJson,
-                'user_id' => auth()->id(),
+	            'user_id' => auth()->user()->id,
             ]);
             foreach ($this->modules as $moduleIndex => $moduleData) {
                 $moduleDuration = 0;
