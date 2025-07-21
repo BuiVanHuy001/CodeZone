@@ -262,9 +262,6 @@ class CreateCourse extends Component
 
     public function render(): Factory|Application|View
     {
-        if (auth()->user()->isBusiness()) {
-            return view('livewire.client.create-course')->layout('components.layouts.business-dashboard');
-        }
-        return view('livewire.client.create-course')->layout('components.layouts.instructor-dashboard');
+        return view('livewire.client.create-course')->layout('components.layouts.client-dashboard');
     }
 }
