@@ -19,7 +19,7 @@ class CoursesDashboard extends Component
         $this->courses = auth()->user()->courses;
     }
 
-    #[Layout('components.layouts.client-dashboard')]
+    #[Layout('components.layouts.instructor-dashboard')]
     public function render(): View|Application|Factory
     {
         return view('livewire.client.instructor.courses-dashboard');
