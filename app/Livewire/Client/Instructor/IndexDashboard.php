@@ -12,7 +12,7 @@ use Livewire\Component;
 #[Title('My Dashboard')]
 class IndexDashboard extends Component
 {
-    #[Layout('components.layouts.client-dashboard')]
+    #[Layout('components.layouts.instructor-dashboard')]
     public function render(): View|Application|Factory
     {
         return view('livewire.client.instructor.index-dashboard');
