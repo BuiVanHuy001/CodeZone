@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('progress_tracking', function (Blueprint $table) {
+        Schema::create('tracking_progresses', function (Blueprint $table) {
             $table->id();
             $table->boolean('is_completed')->default(false);
 	        $table->foreignIdFor(User::class)->constrained();
-	        $table->foreignIdFor(Course::class)->constrained();
+            $table->foreignIdFor(Lesson::class)->constrained();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('progress_tracking');
+        Schema::dropIfExists('tracking_progresses');
     }
 };

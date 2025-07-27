@@ -20,34 +20,45 @@ import '../assets/js/vendor/countdown.js';
 import '../assets/js/vendor/plyr.js';
 import '../assets/js/vendor/jodit.min.js';
 import '../assets/js/vendor/Sortable.min.js';
-import 'quill/dist/quill.snow.css';
-import Quill from 'quill';
+import Swal from 'sweetalert2';
+import {
+    EditorView,
+    highlightActiveLine,
+    highlightActiveLineGutter,
+    highlightSpecialChars,
+    keymap,
+    lineNumbers,
+} from "@codemirror/view"
+import {defaultKeymap, history, historyKeymap} from "@codemirror/commands"
+import {python} from "@codemirror/lang-python";
+import {javascript} from "@codemirror/lang-javascript";
+import {java} from "@codemirror/lang-java";
+import {cpp} from "@codemirror/lang-cpp";
+import {php} from "@codemirror/lang-php";
+import {oneDark} from "@codemirror/theme-one-dark";
+import {foldGutter} from "@codemirror/language";
+import {autocompletion} from "@codemirror/autocomplete";
+import {markdown} from "@codemirror/lang-markdown";
+
+window.Swal = Swal;
+
+window.EditorView = EditorView;
+window.highlightActiveLine = highlightActiveLine;
+window.highlightActiveLineGutter = highlightActiveLineGutter;
+window.highlightSpecialChars = highlightSpecialChars;
+window.keymap = keymap;
+window.lineNumbers = lineNumbers;
+window.defaultKeymap = defaultKeymap;
+window.CodeMirrorHistory = history;
+window.historyKeymap = historyKeymap;
+window.python = python;
+window.javascript = javascript;
+window.java = java;
+window.cpp = cpp;
+window.php = php;
+window.oneDark = oneDark;
+window.foldGutter = foldGutter;
+window.autocompletion = autocompletion;
+window.markdown = markdown;
+
 import '../assets/js/main.js';
-
-const toolbarOptions = [
-    [{'header': [1, 2, 3, 4, 5, 6, false]}],
-    [{'font': []}],
-    ['bold', 'italic', 'underline', 'strike'],
-    ['blockquote', 'code-block'],
-    ['link'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, {'list': 'check'}],
-    [{'indent': '-1'}, {'indent': '+1'}],
-    [{'align': []}],
-];
-
-function initQuill() {
-    const el = document.querySelector('#description');
-    if (el && !el.classList.contains('ql-container')) {
-        let quill = new Quill(el, {
-            theme: 'snow',
-            modules: {toolbar: toolbarOptions}
-        });
-
-        quill.on('text-change', function () {
-            const input = document.querySelector('#description_input');
-            input.value = quill.getText();
-            input.dispatchEvent(new Event('input'));
-        });
-    }
-}
-initQuill();

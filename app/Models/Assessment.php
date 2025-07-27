@@ -12,7 +12,8 @@ class Assessment extends Model
 
 	public static array $TYPES = [
 		'quiz' => 'Quiz',
-		'assignment' => 'Assignment'
+        'assignment' => 'Assignment',
+        'programming' => 'Programming Assignment',
 	];
 
     public function questions(): HasMany

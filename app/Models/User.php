@@ -35,7 +35,31 @@ class User extends Authenticatable
 
     public function batchEnrollments(): hasMany
     {
-        return $this->hasMany(BatchEnrollments::class, 'user_id');
+        return $this->hasMany(BatchEnrollments::class);
+    }
+
+    public function progressTracking(): HasMany
+    {
+        return $this->hasMany(TrackingProgress::class);
+    }
+
+    public function calculateCourseProgress(Course $course): float|int
+    {
+        $totalLessons = $course->lesson_count;
+
+        if ($totalLessons === 0) {
+            return 0;
+        }
+
+        $completedLessons = $this
+            ->progressTracking()
+            ->whereHas('lesson', function ($query) use ($course) {
+                $query->whereIn('module_id', $course->modules->pluck('id'));
+            })
+            ->where('is_completed', true)
+            ->count();
+
+        return round(($completedLessons / $totalLessons) * 100, 2);
     }
 
     /**
@@ -113,5 +137,9 @@ class User extends Authenticatable
     public function getRole(): string
     {
         return $this->role;
+    }
+    public function reviews(): hasMany
+    {
+        return $this->hasMany(Review::class, with("user_id"));
     }
 }

@@ -160,9 +160,36 @@ Docker & Kubernetes are amongst the most in-demand technologies and topics you c
 Why?
 Because they significantly simplify the development and deployment process of both simple and complex software projects. Especially in web development (though not limited to that), Docker can really take you to the next level!
 With Docker, you create and manage so-called "Containers" - basically packages of code and tools required to run that code. These containers allow you to run your programs in a predictable, environment-independent way - no matter where you need to run it.
-', null, 0.000, 6, 0, 10, 0.0, 6210, 'beginner', 'pending', 23,
-        '[{"name": "Learn what Docker and Kubernetes are and why you might want to use them"}, {"name": "Learn how to install and use Docker on any system (macOS, Windows, Linux)"}, {"name": "Learn how to create and use Images & Containers with Docker"}, {"name": "Understand complex topics like managing and persisting data with Volumes"}, {"name": "Learn about Container Networking with Docker Networks and DNS Service Discovery"}, {"name": "Learn how to deploy Docker applications - manually, with managed services or with Kubernetes"}]',
-        '[{"name": "NO prior Docker or Kubernetes experience is required!"}, {"name": "Basic (web) development knowledge is required - you don\'t need to know a specific language though"}, {"name": "AWS (used in a couple of deployment examples, ~4 hours of the course) requires a credit card - you can also follow along passively though"}]', 10, '2025-07-16 08:19:51', '2025-07-16 08:19:51');
+', null, 0.000, 6, 0, 10, 0.0, 6210, 'beginner', 'pending', 23, '[
+        {
+            "name": "Learn what Docker and Kubernetes are and why you might want to use them"
+        },
+        {
+            "name": "Learn how to install and use Docker on any system (macOS, Windows, Linux)"
+        },
+        {
+            "name": "Learn how to create and use Images & Containers with Docker"
+        },
+        {
+            "name": "Understand complex topics like managing and persisting data with Volumes"
+        },
+        {
+            "name": "Learn about Container Networking with Docker Networks and DNS Service Discovery"
+        },
+        {
+            "name": "Learn how to deploy Docker applications - manually, with managed services or with Kubernetes"
+        }
+    ]', '[
+        {
+            "name": "NO prior Docker or Kubernetes experience is required!"
+        },
+        {
+            "name": "Basic (web) development knowledge is required - you do not need to know a specific language though"
+        },
+        {
+            "name": "AWS (used in a couple of deployment examples, ~4 hours of the course) requires a credit card - you can also follow along passively though"
+        }
+    ]', 10, '2025-07-16 08:19:51', '2025-07-16 08:19:51');
 INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at) VALUES ('6659dbfa-bc5f-4cb2-9baf-36ac5b3b57a7', 'Getting Started', 'getting-started', 5, 0, 3837, '7f830560-72ad-45b4-8e69-4dbe2859228e', '2025-07-16 08:19:51', '2025-07-16 08:19:51');
 INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at) VALUES ('c54c8481-4b4c-496d-9ed1-574fd8b843e6', 'Docker Images & Containers: The Core Building Blocks', 'docker-images-containers-the-core-building-blocks', 5, 1, 2373, '7f830560-72ad-45b4-8e69-4dbe2859228e', '2025-07-16 08:19:51', '2025-07-16 08:19:51');
 INSERT INTO codezone.lessons (id, title, slug, content, video_url, position, duration, preview, type, resources, module_id, created_at, updated_at) VALUES ('31eecaa4-c4b9-463f-b7be-ca51ba02c0b4', 'Why Docker & Containers?', 'why-docker-containers', '', '/storage/course/videos/2WnteDh9ZFY4FnuqdwEcenzN5L8OH6QsYsNoqq6i.mp4', 2, 1107, false, 'video', null, '6659dbfa-bc5f-4cb2-9baf-36ac5b3b57a7', '2025-07-16 08:19:51', '2025-07-16 08:19:51');
@@ -199,9 +226,8 @@ Click the button below and **take the next step in your learning journey!**
 ', '2025-07-16 08:19:51
 ');
 INSERT INTO codezone.lessons (id, title, slug, content, video_url, position, duration, preview, type, resources, module_id, created_at, updated_at) VALUES ('7c5add36-1f2f-469e-8eda-81ce77ee7535', 'What Is Docker?', 'what-is-docker', '', '/storage/course/videos/hHJHlsaKXFESo8ofvweJNgf2uXovXqmix2AYNHTP.mp4', 1, 1190, false, 'video', null, '6659dbfa-bc5f-4cb2-9baf-36ac5b3b57a7', '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
+2025-07-16 08:19:51', '2025-07-16 08:19:51');
+
 INSERT INTO codezone.lessons (id, title, slug, content, video_url, position, duration, preview, type, resources, module_id, created_at, updated_at) VALUES ('7ec8ab1d-47d2-4740-921d-f2fadc7fd1ee', 'EXPOSE & A Little Utility Functionality', 'expose-a-little-utility-functionality', '# Docker Setup - Overview
 
 ##
@@ -231,81 +257,76 @@ Docker là một nền tảng mã nguồn mở giúp bạn xây dựng, triển 
 1. Truy cập: https://www.docker.com/products/docker-desktop/
 2. Tải Docker Desktop phù hợp với hệ điều hành.
 3. Cài đặt theo hướng dẫn.
-4. Khởi động Docker Desktop và kiểm tra bằng lệnh:
-
-', '', 2, 0, false, 'document', null, 'c54c8481-4b4c-496d-9ed1-574fd8b843e6', '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.lessons (id, title, slug, content, video_url, position, duration, preview, type, resources, module_id, created_at, updated_at) VALUES ('d93d8321-76ec-4561-83b4-802744ebdaf7', 'Welcome to the Course', 'welcome-to-the-course', '', '/storage/course/videos/dpoeTRLh3Y1NIYwvAXbt4iEVkkrgsBJMsiXFGzdB.mp4', 0, 433, true, 'video', null, '6659dbfa-bc5f-4cb2-9baf-36ac5b3b57a7', '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.lessons (id, title, slug, content, video_url, position, duration, preview, type, resources, module_id, created_at, updated_at) VALUES ('e3c82a0c-7387-4ca3-a01e-60dd133369da', 'Virtual Machines vs Docker Containers', 'virtual-machines-vs-docker-containers', '', '/storage/course/videos/b9AHp8VNeA2MGIKXfvHUCgigDwIGcRKq9picRzH4.mp4', 4, 1107, false, 'video', null, '6659dbfa-bc5f-4cb2-9baf-36ac5b3b57a7', '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.lessons (id, title, slug, content, video_url, position, duration, preview, type, resources, module_id, created_at, updated_at) VALUES ('f17e136f-85d1-4a5f-8342-765adbb2a5c2', 'Images & Containers: What and Why?', 'images-containers-what-and-why', '', '/storage/course/videos/mUDNjNc4heHW4i7LVc99CxcEPzieCCqpKEZNeMHY.mp4', 1, 1183, false, 'video', null, 'c54c8481-4b4c-496d-9ed1-574fd8b843e6', '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at) VALUES (1, 'Time to Practice: Images & Containers', 'Học tập hiệu quả không chỉ đến từ tài liệu và bài giảng, mà còn từ việc trao đổi, chia sẻ và hỗ trợ lẫn nhau trong cộng đồng. Trong bài tập này, bạn sẽ tham gia vào cộng đồng học tập của khóa học để:
-
-', 'assignment', 1, '4e93e6bc-b744-4b25-bd18-b27e8f6961ff', '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at) VALUES (2, 'Docker Setup - Overview', 'Trong bài tập này, bạn sẽ tìm hiểu và thực hành quy trình cài đặt Docker trên hệ điều hành của bạn (Windows, macOS hoặc Linux). Mục tiêu là giúp bạn nắm rõ các bước cài đặt, cấu hình và kiểm tra Docker hoạt động đúng, từ đó chuẩn bị môi trường để làm việc với container hóa ứng dụng.', 'quiz', 5, '
-60579451-c9b1-4275-a591-f5200cc0c3ae', '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at) VALUES (1, 'Which file does Laravel use to define web routes?', 'multiple_choice', 2, 2, '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at) VALUES (2, 'What is the purpose of Middleware in Laravel?', 'multiple_choice', 3, 2, '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at) VALUES (3, 'Which Artisan command creates a new migration?', 'multiple_choice', 4, 2, '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at) VALUES (4, 'Laravel stores broadcasting channel definitions in which file?', 'multiple_choice', 5, 2, '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at) VALUES (5, 'What does the php artisan make:controller command do?', 'multiple_choice', 6, 2, '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position, assessment_question_id, created_at, updated_at) VALUES (1, 'routes/api.php', false, 'Used for API routes, not web.', 0, 1, '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position, assessment_question_id, created_at, updated_at) VALUES (2, 'routes/web.php', true, 'Correct file for web routes.', 1, 1, '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position, assessment_question_id, created_at, updated_at) VALUES (3, 'routes/console.php', false, 'Used for Artisan commands.', 2, 1, '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position, assessment_question_id, created_at, updated_at) VALUES (4, 'routes/channels.php', false, 'Defines broadcasting channels.', 3, 1, '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position, assessment_question_id, created_at, updated_at) VALUES (5, 'Preprocess request before controller', true, 'Core purpose of middleware.', 0, 2, '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position, assessment_question_id, created_at, updated_at) VALUES (6, 'Communicate with database', false, 'Not the role of middleware.', 1, 2, '
-2025-07-16 08:19:51
-', '2025-07-16 08:19:51
-');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position, assessment_question_id, created_at, updated_at) VALUES (7, 'Return view', false, 'Middleware doesn
-\'t return views.', 2, 2, '2025-07-16 08:19:51', '2025-07-16 08:19:51');
+4. Khởi động Docker Desktop và kiểm tra bằng lệnh:', '', 2, 0, false, 'document', null,
+                                                                                                                                                            'c54c8481-4b4c-496d-9ed1-574fd8b843e6',
+                                                                                                                                                            '2025-07-16 08:19:51',
+                                                                                                                                                            '2025-07-16 08:19:51');
+INSERT INTO codezone.lessons (id, title, slug, content, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('d93d8321-76ec-4561-83b4-802744ebdaf7', 'Welcome to the Course', 'welcome-to-the-course', '',
+        '/storage/course/videos/dpoeTRLh3Y1NIYwvAXbt4iEVkkrgsBJMsiXFGzdB.mp4', 0, 433, true, 'video', null,
+        '6659dbfa-bc5f-4cb2-9baf-36ac5b3b57a7', '2025-07-16 08:19:51', '2025-07-16 08:19:51');
+INSERT INTO codezone.lessons (id, title, slug, content, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('e3c82a0c-7387-4ca3-a01e-60dd133369da', 'Virtual Machines vs Docker Containers',
+        'virtual-machines-vs-docker-containers', '',
+        '/storage/course/videos/b9AHp8VNeA2MGIKXfvHUCgigDwIGcRKq9picRzH4.mp4', 4, 1107, false, 'video', null,
+        '6659dbfa-bc5f-4cb2-9baf-36ac5b3b57a7', '2025-07-16 08:19:51', '2025-07-16 08:19:51');
+INSERT INTO codezone.lessons (id, title, slug, content, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('f17e136f-85d1-4a5f-8342-765adbb2a5c2', 'Images & Containers: What and Why?', 'images-containers-what-and-why',
+        '', '/storage/course/videos/mUDNjNc4heHW4i7LVc99CxcEPzieCCqpKEZNeMHY.mp4', 1, 1183, false, 'video', null,
+        'c54c8481-4b4c-496d-9ed1-574fd8b843e6', '2025-07-16 08:19:51', '2025-07-16 08:19:51');
+INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
+VALUES (1, 'Time to Practice: Images & Containers',
+        'Học tập hiệu quả không chỉ đến từ tài liệu và bài giảng, mà còn từ việc trao đổi, chia sẻ và hỗ trợ lẫn nhau trong cộng đồng. Trong bài tập này, bạn sẽ tham gia vào cộng đồng học tập của khóa học để:',
+        'assignment', 1, '4e93e6bc-b744-4b25-bd18-b27e8f6961ff', '2025-07-16 08:19:51', '2025-07-16 08:19:51');
+INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
+VALUES (2, 'Docker Setup - Overview',
+        'Trong bài tập này, bạn sẽ tìm hiểu và thực hành quy trình cài đặt Docker trên hệ điều hành của bạn (Windows, macOS hoặc Linux). Mục tiêu là giúp bạn nắm rõ các bước cài đặt, cấu hình và kiểm tra Docker hoạt động đúng, từ đó chuẩn bị môi trường để làm việc với container hóa ứng dụng.',
+        'quiz', 5, '60579451-c9b1-4275-a591-f5200cc0c3ae', '2025-07-16 08:19:51', '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
+VALUES (1, 'Which file does Laravel use to define web routes?', 'multiple_choice', 2, 2, '2025-07-16 08:19:51',
+        '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
+VALUES (2, 'What is the purpose of Middleware in Laravel?', 'multiple_choice', 3, 2, '2025-07-16 08:19:51',
+        '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
+VALUES (3, 'Which Artisan command creates a new migration?', 'multiple_choice', 4, 2, '2025-07-16 08:19:51',
+        '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
+VALUES (4, 'Laravel stores broadcasting channel definitions in which file?', 'multiple_choice', 5, 2,
+        '2025-07-16 08:19:51', '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
+VALUES (5, 'What does the php artisan make:controller command do?', 'multiple_choice', 6, 2, '2025-07-16 08:19:51',
+        '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
+                                                  assessment_question_id, created_at, updated_at)
+VALUES (1, 'routes/api.php', false, 'Used for API routes, not web.', 0, 1, '2025-07-16 08:19:51',
+        '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
+                                                  assessment_question_id, created_at, updated_at)
+VALUES (2, 'routes/web.php', true, 'Correct file for web routes.', 1, 1, '2025-07-16 08:19:51', '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
+                                                  assessment_question_id, created_at, updated_at)
+VALUES (3, 'routes/console.php', false, 'Used for Artisan commands.', 2, 1, '2025-07-16 08:19:51',
+        '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
+                                                  assessment_question_id, created_at, updated_at)
+VALUES (4, 'routes/channels.php', false, 'Defines broadcasting channels.', 3, 1, '2025-07-16 08:19:51',
+        '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
+                                                  assessment_question_id, created_at, updated_at)
+VALUES (5, 'Preprocess request before controller', true, 'Core purpose of middleware.', 0, 2, '2025-07-16 08:19:51',
+        '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
+                                                  assessment_question_id, created_at, updated_at)
+VALUES (6, 'Communicate with database', false, 'Not the role of middleware.', 1, 2, '2025-07-16 08:19:51',
+        '2025-07-16 08:19:51');
+INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
+                                                  assessment_question_id, created_at, updated_at)
+VALUES (7, 'Return view', false, 'Middleware does not return views.', 2, 2, '2025-07-16 08:19:51',
+        '2025-07-16 08:19:51');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
 VALUES (8, 'Middleware is used for this too.', true,

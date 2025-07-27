@@ -45,9 +45,25 @@
                                     </h4>
                                     <ul class="rbt-meta">
                                         <li><i class="feather-book"></i>{{ $course->lesson_count }} Lessons</li>
-                                        <li><i class="feather-clock"></i>{{ $course->convertDurationToString() }} mins
-                                        </li>
+                                        <li><i class="feather-clock"></i>{{ $course->convertDurationToString() }}</li>
                                     </ul>
+                                </div>
+                                <div class="rbt-progress-style-1 mb--20 mt--10">
+                                    <div class="single-progress">
+                                        <h6 class="rbt-title-style-2 mb--10">Complete</h6>
+                                        <div class="progress">
+                                            <div class="progress-bar wow fadeInLeft bar-color-success"
+                                                 data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar"
+                                                 style="width: {{ auth()->user()->calculateCourseProgress($course) }}%" aria-valuenow="100" aria-valuemin="0"
+                                                 aria-valuemax="100">
+                                            </div>
+                                            <span class="rbt-title-style-2 progress-number">{{ auth()->user()->calculateCourseProgress($course) }}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rbt-card-bottom">
+                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center" href="{{ route('course.learn', [$course->slug, ]) }}">Go
+                                        to course</a>
                                 </div>
                             </div>
                         </div>
