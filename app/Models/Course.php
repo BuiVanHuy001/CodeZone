@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Course extends Model
 {
-	use HasFactory, HasSlug, HasUUID, HasDuration;
+    use HasFactory, HasSlug, HasUUID, HasDuration;
 
     protected $guarded = [];
 
@@ -40,7 +40,7 @@ class Course extends Model
 
     public function batches(): hasMany
     {
-	    return $this->hasMany(Batch::class);
+        return $this->hasMany(Batch::class);
     }
 
     public function slugSourceField(): string
@@ -83,6 +83,10 @@ class Course extends Model
             }
         }
         return $quiz_count;
+    }
+   public function reviews(): hasMany
+    {
+        return $this->hasMany(Review::class, with("reviewable_id"));
     }
 
 }
