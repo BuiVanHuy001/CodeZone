@@ -20,7 +20,7 @@
             <div class="inner">
                 @if(!empty($lesson->video_url))
                     <div x-data="{ videoSrc: @entangle('currentVideo') }" class="video-wrapper">
-                        <template x-if="videoSrc" x-data
+                        <template x-if="videoSrc"
                                   x-init="document.getElementById('lessonVideo').addEventListener('ended', () => {$wire.markLessonAsCompleted({{ $lesson->id }});})">
                             <video
                                 id="lessonVideo"
