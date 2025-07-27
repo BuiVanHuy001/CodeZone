@@ -160,7 +160,6 @@ class CreateCourse extends Component
 
     public function save()
     {
-
 	    dd($this->modules);
         $this->updateJsonFromMultilineInput('skills');
         $this->updateJsonFromMultilineInput('requirements');
