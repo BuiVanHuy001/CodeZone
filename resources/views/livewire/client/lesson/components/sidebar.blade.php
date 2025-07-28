@@ -28,7 +28,7 @@
                                     @foreach($module->lessons->sortBy('position') as $lesson)
                                         <li class="d-flex justify-content-between align-items-center">
                                             <div class="course-content-left">
-                                                <a href="{{ route('course.learn', [$courseSlug, $module->id, $lesson->id]) }}" wire:navigate wire:current="active">
+                                                <a wire:current="active" href="{{ route('course.learn', [$courseSlug, $module->id, $lesson->id]) }}" wire:navigate>
                                                     <i class="feather-{{ $lesson->getIcon() }}"></i>
                                                     <span class="text">{{ $lesson->title }}</span>
                                                 </a>

@@ -270,8 +270,7 @@
                                         <div class="content">
                                             <p class="description">Hi, I'm Rafekul Islam! I'm one of CodeZone's Top
                                                 Instructors, and all my premium courses have earned the best-selling
-                                                status
-                                                for outstanding performance and student satisfaction.</p>
+                                                status for outstanding performance and student satisfaction.</p>
 
                                             <p class="description">
                                                 I'm a full-stack web developer and designer with a passion for building

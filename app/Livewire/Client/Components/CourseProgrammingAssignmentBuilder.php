@@ -253,7 +253,15 @@ class CourseProgrammingAssignmentBuilder extends Component {
         if (isset($this->problemDetails['params'][$index])) {
             unset($this->problemDetails['params'][$index]);
             $this->problemDetails['params'] = array_values($this->problemDetails['params']);
-            $this->dispatch('swal', ['icon' => 'success', 'title' => 'Parameter Removed', 'text' => 'The parameter has been successfully removed.', 'toast' => true, 'position' => 'top-end', 'showConfirmButton' => false, 'timer' => 1000,]);
+            $this->dispatch('swal', [
+                'icon' => 'success',
+                'title' => 'Parameter Removed',
+                'text' => 'The parameter has been successfully removed.',
+                'toast' => true,
+                'position' => 'top-end',
+                'showConfirmButton' => false,
+                'timer' => 1000
+            ]);
         }
     }
 
@@ -352,9 +360,27 @@ class CourseProgrammingAssignmentBuilder extends Component {
         return true;
     }
 
+    public function removeTestCase(int $index): void
+    {
+        if (isset($this->problemDetails['testCases'][$index])) {
+            unset($this->problemDetails['testCases'][$index]);
+            $this->problemDetails['testCases'] = array_values($this->problemDetails['testCases']);
+            $this->dispatch('swal', [
+                'icon' => 'success',
+                'title' => 'Test Case Removed',
+                'text' => 'The test case has been successfully removed.',
+                'toast' => true,
+                'position' => 'top-end',
+                'showConfirmButton' => false,
+                'timer' => 1000
+            ]);
+        }
+    }
+
     public function saveProblemDetails(): void
     {
-        $this->lesson['assessments']['problem_details'] = $this->problemDetails;
+        $this->lesson['assessments']['problem_details'] = json_encode($this->problemDetails);
+        $this->dispatch('builder-hided', $this->moduleIndex, $this->lessonIndex);
     }
 
     public function render(): Factory|Application|View

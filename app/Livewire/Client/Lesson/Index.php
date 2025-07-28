@@ -16,7 +16,6 @@ class Index extends Component {
     public Course $course;
     public ?Module $module = null;
     public ?Lesson $lesson = null;
-    public string $currentVideo = '';
     public bool $isDisabledNext = false;
     public bool $isDisabledPrevious = false;
 
@@ -36,7 +35,6 @@ class Index extends Component {
                 'lesson_id' => $this->lesson->id,
             ]);
         }
-        $this->currentVideo = $this->lesson->video_url;
     }
 
     public function previousLesson(): void
@@ -57,12 +55,13 @@ class Index extends Component {
             if ($previousModule) {
                 $this->module = $previousModule;
                 $this->lesson = $this->module->lessons->sortByDesc('position')->first();
-            } else {
-                $this->isDisabledPrevious = true;
             }
         }
 
-        $this->currentVideo = $this->lesson?->video_url ?? '';
+        $this->isDisabledPrevious = $this->isFirstLesson();
+        $this->isDisabledNext = false;
+
+        $this->dispatch('lessonChanged', route('course.learn', [$this->course->slug, $this->module->id, $this->lesson->id]));
     }
 
     public function nextLesson(): void
@@ -86,8 +85,28 @@ class Index extends Component {
             }
         }
 
-        $this->currentVideo = $this->lesson?->video_url ?? '';
+        $this->isDisabledNext = $this->isLastLesson();
+        $this->isDisabledPrevious = false;
+
+        $this->dispatch('lessonChanged', route('course.learn', [$this->course->slug, $this->module->id, $this->lesson->id]));
     }
+
+    private function isFirstLesson(): bool
+    {
+        $firstModule = $this->course->modules->sortBy('position')->first();
+        $firstLesson = $firstModule?->lessons->sortBy('position')->first();
+
+        return $this->module->id === $firstModule?->id && $this->lesson->id === $firstLesson?->id;
+    }
+
+    private function isLastLesson(): bool
+    {
+        $lastModule = $this->course->modules->sortByDesc('position')->first();
+        $lastLesson = $lastModule?->lessons->sortByDesc('position')->first();
+
+        return $this->module->id === $lastModule?->id && $this->lesson->id === $lastLesson?->id;
+    }
+
 
     public function render(): View|Application|Factory
     {
