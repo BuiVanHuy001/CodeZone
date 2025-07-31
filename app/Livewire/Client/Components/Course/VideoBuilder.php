@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Components;
+namespace App\Livewire\Client\Components\Course;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -11,23 +11,23 @@ use Livewire\Attributes\Modelable;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class CourseVideoBuilder extends Component
+class VideoBuilder extends Component
 {
 	use WithFileUploads;
 
 	public int $moduleIndex;
 	public int $lessonIndex;
-	#[Modelable]
-    public $lesson;
+	public $videoURL;
+	public int $duration = 0;
 
 
-    public function updatedLesson(): void
+	public function updated(): void
 	{
-        if ($this->lesson['video_url'] && method_exists($this->lesson['video_url'], 'storePublicly')) {
-            $path = $this->lesson['video_url']->storePublicly('course/videos', 'public');
+		if ($this->videoURL && method_exists($this->videoURL, 'storePublicly')) {
+			$path = $this->videoURL->storePublicly('course/videos', 'public');
             $publicUrl = Storage::url($path);
-            $this->lesson['duration'] = $this->getVideoDuration($path);
-            $this->lesson['video_url'] = $publicUrl;
+			$this->duration = $this->getVideoDuration($path);
+			$this->videoURL = $publicUrl;
         }
 	}
 
@@ -41,25 +41,31 @@ class CourseVideoBuilder extends Component
 
 	public function saveVideo(): void
 	{
-        $this->dispatch('video-saved', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
+		$this->dispatch('video-saved',
+			moduleIndex: $this->moduleIndex,
+			lessonIndex: $this->lessonIndex,
+			videoURL: $this->videoURL,
+			duration: $this->duration
+		);
 	}
+
 
 	public function deleteVideo(): void
 	{
-        if ($this->lesson['video_url']) {
-            $relativePath = str_replace('/storage', '', $this->lesson['video_url']);
-            if (Storage::disk('public')->exists($this->lesson['video_url'])) {
+		if ($this->video) {
+			$relativePath = str_replace('/storage', '', $this->video);
+			if (Storage::disk('public')->exists($this->video)) {
 				$relativePath = str_replace('course/videos/', 'course/videos/', $relativePath);
 			}
 			Storage::disk('public')->delete($relativePath);
 			File::cleanDirectory(\storage_path('app/private/livewire-tmp'));
-            $this->lesson['video_url'] = null;
+			$this->videoURL = null;
 		}
-		$this->dispatch('video-deleted', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
+		$this->dispatch('video-deleted', $this->moduleIndex, $this->lessonIndex);
 	}
 
 	public function render(): View|Application|Factory
 	{
-        return view('livewire.client.components.course-video-builder');
+		return view('livewire.client.components.course.video-builder');
 	}
 }

@@ -14,6 +14,7 @@
 </head>
 <body class="rbt-header-sticky">
 {{ $slot  }}
+@stack('scripts')
 <script src="{{ asset('js/vendor/isotop.js') }}"></script>
 <script src="{{ asset('js/vendor/imageloaded.js') }}"></script>
 <script src="{{ asset('js/vendor/wow.js') }}"></script>

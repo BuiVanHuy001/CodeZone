@@ -104,90 +104,27 @@
                 </tbody>
             </table>
         </div>
-    @elseif($assessment->type === 'quiz')
-        <form wire:submit.prevent="quizSubmit" x-data="{currentQuestion: 1 }" class="quiz-form-wrapper">
-            @foreach($assessment->questions as $questionKey => $question)
-                <div id="question-{{ $questionKey + 1 }}" x-show="currentQuestion === {{ $questionKey + 1 }}">
-                    <div class="quize-top-meta">
-                        <div class="quize-top-left">
-                            <span>Questions No: <strong>{{ $questionKey + 1 . '/' . $assessment->questions_count }}</strong></span>
-                            <span>Attempts Allowed: <strong>1</strong></span>
-                        </div>
-                        <div class="quize-top-right">
-                            <span>Time remaining: <strong>No Limit</strong></span>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="rbt-single-quiz">
-                        <h4>{{ $question->content }}</h4>
-                        <div class="row g-3 mt--10">
-                            @if($question->type === 'multiple_choice')
-                                @php
-                                    $isMultipleChoice = $question->isMultipleAnswers();
-                                @endphp
-                                @foreach($question->options as $option)
-                                    <div class="col-lg-6">
-                                        <div class="{{ $isMultipleChoice ? 'rbt-checkbox-wrapper mb--5' : 'rbt-form-check' }}">
-                                            <input
-                                                id="{{ $isMultipleChoice ? "rbt-checkbox-$option->id" : "rbt-radio-{$question->id}-$option->id" }}"
-                                                name="{{ $isMultipleChoice ? "answers[{$question->id}][]" : "answers[{$question->id}]" }}"
-                                                wire:click='addAnswers({{ "$question->id ,  $option->id" }})'
-                                                type="{{ $isMultipleChoice ? 'checkbox' : 'radio' }}"
-                                                class="{{ $isMultipleChoice ? '' : 'form-check-input' }}"
-                                            >
-                                            <label
-                                                class="{{ $isMultipleChoice ? '' : 'form-check-label' }}"
-                                                for="{{ $isMultipleChoice ? "rbt-checkbox-$option->id" : "rbt-radio-{$question->id}-$option->id" }}"
-                                            >
-                                                {{ $option->content }}
-                                            </label>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @else
-                                <div class="col-lg-6">
-                                    <div class="rbt-form-check">
-                                        <input class="form-check-input" type="radio" name="rbt-single-select" id="rbt-single-select-10"><label class="form-check-label" for="rbt-single-select-10">True</label>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="rbt-form-check">
-                                        <input class="form-check-input" type="radio" name="rbt-single-select" id="rbt-single-select-20"><label class="form-check-label" for="rbt-single-select-20">False</label>
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
+    @elseif($assessment->type === 'programming')
+        <div class="section-title">
+            <h4>Programming Assignment</h4>
+            <div class="row">
+                <div class="col-6">
+                    <h5 class="rbt-title-style-3">{{ $assessment->title }}</h5>
+                    @markdown($assessment->description)
                 </div>
-            @endforeach
-
-            <div class="rbt-quiz-btn-wrapper mt--30">
-                <button
-                    class="rbt-btn bg-primary-opacity btn-sm"
-                    id="prev-btn"
-                    type="button"
-                    x-on:click="currentQuestion = Math.max(currentQuestion - 1, 1)"
-                    x-bind:disabled="currentQuestion === 1"
-                >Previous
-                </button>
-                <button
-                    class="rbt-btn bg-primary-opacity btn-sm"
-                    id="next-btn"
-                    type="button"
-                    x-on:click="currentQuestion = Math.min(currentQuestion + 1, {{ $assessment->questions_count }})"
-                    x-bind:disabled="currentQuestion === {{ $assessment->questions_count }}"
-                >Next
-                </button>
-                <button
-                    type="submit"
-                    class="rbt-btn btn-gradient btn-sm"
-                    id="submit-btn"
-                    x-show="currentQuestion === {{ $assessment->questions_count }}"
-                    style="display: none;"
-                >Submit
-                </button>
+                <div class="col-6">
+                    <h5>Select programming language</h5>
+                    <div class="rbt-modern-select bg-transparent height-45">
+                        <select class="w-100">
+                            @foreach($allowedProgrammingLanguages as $language)
+                                <option value="{{ $language }}">{{ \App\Models\ProgrammingAssignmentDetails::$SUPPORTED_LANGUAGES[$language] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="code-editor"></div>
+                </div>
             </div>
-        </form>
+        </div>
     @else
         <div class="section-title">
             <h4>{{ $assessment->title  }}</h4>
@@ -216,3 +153,45 @@
         </div>
     @endif
 </div>
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Livewire.on('assignment-programming-ready', () => {
+                new EditorView(
+                    {
+                        extensions: [
+                            lineNumbers(),
+                            javascript(),
+                            highlightSpecialChars(),
+                            EditorView.lineWrapping,
+                            EditorView.updateListener.of(update => {
+                                if (update.docChanged) {
+                                    // Assuming 'courseDescriptionInput' is defined elsewhere or needs to be selected
+                                    // For example:
+                                    // const courseDescriptionInput = document.getElementById('some-input-id');
+                                    // courseDescriptionInput.value = update.state.doc.toString();
+                                    // courseDescriptionInput.dispatchEvent(new Event('input'));
+                                }
+                            }),
+                            EditorView.theme({
+                                "&": {
+                                    height: "200px",
+                                    width: "100%",
+                                    border: "1px solid #ddd",
+                                    borderRadius: "4px",
+                                    padding: "10px",
+                                    fontSize: "13px",
+                                },
+                                ".cm-content": {
+                                    caretColor: "#000",
+                                },
+                            }),
+                        ],
+                        doc: @json($assessment->description),
+                        parent: document.querySelector('.code-editor'),
+                    }
+                );
+            });
+        });
+    </script>
+@endpush

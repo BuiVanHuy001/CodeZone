@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AttemptAnswer extends Model {
+class AttemptQuiz extends Model
+{
     public $guarded = [];
 
     public function assessmentAttempt(): BelongsTo

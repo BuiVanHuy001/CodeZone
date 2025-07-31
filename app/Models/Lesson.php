@@ -50,6 +50,8 @@ class Lesson extends Model
                 return 'help-circle';
             } elseif ($this->assessment->type === 'assignment') {
                 return 'book-open';
+            } else {
+                return 'code';
             }
         } else {
             return 'file-text';

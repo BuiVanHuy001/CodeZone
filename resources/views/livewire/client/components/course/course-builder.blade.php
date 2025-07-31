@@ -5,7 +5,7 @@
     <div>
         <div class="card-body">
             @foreach ($modules as $moduleIndex => $module)
-                <div class="accordion-item card mb--20 rbt-default-form">
+                <div class="accordion-item card mb--20 rbt-default-form" wire:key="module-{{ $moduleIndex }}">
                     <h6 class="card-header">
                         {{ empty($module['title']) || $module['title'] === 'Example Module' ? 'Module ' . $moduleIndex + 1 : $module['title'] }}
                         <span class="rbt-course-icon rbt-course-edit"></span>
@@ -39,7 +39,7 @@
 
                             <label>Module lessons</label>
                             @foreach ($module['lessons'] as $lessonIndex => $lesson)
-                                <div class="d-flex justify-content-between flex-wrap rbt-course-wrape mb-4 ms-5">
+                                <div class="d-flex justify-content-between flex-wrap rbt-course-wrape mb-4 ms-5" wire:key="lesson-{{ $moduleIndex }}-{{ $lessonIndex }}">
                                     <div class="col-10 inner d-flex align-items-center gap-2">
                                         <input class="rbt-title mb-0"
                                                wire:model.blur="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.title"
@@ -73,17 +73,8 @@
                                         </small>
                                     </div>
                                     @enderror
-                                    @error("parent.modules.$moduleIndex.lessons.$lessonIndex.type")
-                                    <div class="col-12">
-                                        <small class="text-danger">
-                                            <i class="feather-info"></i>
-                                            {{ $message }}
-                                        </small>
-                                    </div>
-                                    @enderror
 
-                                    <div class="col-12 my-3 d-flex flex-wrap justify-content-between align-items-center"
-                                         x-data="{ activeTab: null }">
+                                    <div class="col-12 my-3 d-flex flex-wrap justify-content-between align-items-center">
                                         <div class="gap-3 d-flex flex-wrap">
                                             <button wire:click="addQuiz({{ $moduleIndex . ',' . $lessonIndex }})"
                                                     class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
@@ -121,11 +112,11 @@
                                                 </span>
                                             </button>
 
-                                            <button wire:click="addContent({{ $moduleIndex . ',' . $lessonIndex }})"
+                                            <button wire:click="addDocument({{ $moduleIndex . ',' . $lessonIndex }})"
                                                     class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
-                                                    type="button" @click="activeTab = 'content'">
+                                                    type="button">
                                                 <span class="icon-reverse-wrapper">
-                                                    <span class="btn-text">Content</span>
+                                                    <span class="btn-text">Document</span>
                                                     @if (!empty($module['lessons'][$lessonIndex]['content']))
                                                         <span class="btn-icon"><i class="feather-eye"></i></span>
                                                         <span class="btn-icon"><i class="feather-book-open"></i></span>
@@ -139,7 +130,7 @@
 
                                             <button wire:click="addVideo({{ $moduleIndex . ',' . $lessonIndex }})"
                                                     class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
-                                                    type="button" @click="activeTab = 'upload-video'">
+                                                    type="button">
                                                 <span class="icon-reverse-wrapper">
                                                     <span class="btn-text">Upload video</span>
                                                     @if (!empty($module['lessons'][$lessonIndex]['video_url']))
@@ -153,9 +144,9 @@
                                                 </span>
                                             </button>
 
-                                            <button wire:click="addProgramming({{ $moduleIndex . ',' . $lessonIndex }})"
+                                            <button wire:click="addProgrammingPractice({{ $moduleIndex . ',' . $lessonIndex }})"
                                                     class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
-                                                    type="button" @click="activeTab = 'programming'">
+                                                    type="button">
                                                 <span class="icon-reverse-wrapper">
                                                     <span class="btn-text">Programming</span>
                                                     @if (!empty($module['lessons'][$lessonIndex]['video_url']))
@@ -170,28 +161,46 @@
                                         </div>
 
                                         @if (($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'quiz')
-                                            <livewire:client.components.quiz-builder :$moduleIndex :$lessonIndex
-                                                                                     wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.assessments"/>
+                                            <livewire:client.components.course.quiz-builder
+                                                :$moduleIndex
+                                                :$lessonIndex
+                                                :quiz="$modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']"
+                                                wire:key="quiz-{{ $moduleIndex }}-{{ $lessonIndex }}"
+                                            />
                                         @endif
 
                                         @if (($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'assignment')
-                                            <livewire:client.components.assignment-builder :$moduleIndex :$lessonIndex
-                                                                                           wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.assessments"/>
+                                            <livewire:client.components.course.assignment-builder
+                                                :$moduleIndex
+                                                :$lessonIndex
+                                                :assignment="$modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']"
+                                                wire:key="assignment-{{ $moduleIndex }}-{{ $lessonIndex }}"/>
                                         @endif
 
-                                        @if (($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'content')
-                                            <livewire:client.components.course-content-builder :$moduleIndex :$lessonIndex
-                                                                                               wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}.content"/>
+                                        @if (($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'document')
+                                            <livewire:client.components.course.document-builder
+                                                :$moduleIndex
+                                                :$lessonIndex
+                                                :document="$modules[$moduleIndex]['lessons'][$lessonIndex]['content']"
+                                                wire:key="document-{{ $moduleIndex }}-{{ $lessonIndex }}"
+                                            />
                                         @endif
 
                                         @if (($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'upload-video')
-                                            <livewire:client.components.course-video-builder :$moduleIndex :$lessonIndex
-                                                                                             wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}"/>
+                                            <livewire:client.components.course.video-builder
+                                                :$moduleIndex
+                                                :$lessonIndex
+                                                :videoURL="$modules[$moduleIndex]['lessons'][$lessonIndex]['video_url']"
+                                                wire:key="video-{{ $moduleIndex }}-{{ $lessonIndex }}"/>
                                         @endif
 
-                                        @if(($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'programming')
-                                            <livewire:client.components.course-programming-assignment-builder :$moduleIndex :$lessonIndex
-                                                                                                              wire:model="modules.{{ $moduleIndex }}.lessons.{{ $lessonIndex }}"/>
+                                        @if(($activeTabs["$moduleIndex-$lessonIndex"] ?? '') === 'programming-practice')
+                                            <livewire:client.components.course.programming-practice-builder
+                                                :$moduleIndex
+                                                :$lessonIndex
+                                                :programmingPractice="$modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']"
+                                                wire:key="programming-practice-{{ $moduleIndex }}-{{ $lessonIndex }}"
+                                            />
                                         @endif
                                     </div>
                                 </div>

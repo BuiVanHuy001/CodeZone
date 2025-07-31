@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Components;
+namespace App\Livewire\Client\Components\Course;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -12,9 +12,7 @@ class AssignmentBuilder extends Component
 {
 	public int $moduleIndex;
 	public int $lessonIndex;
-
-	#[Modelable]
-	public $assignment;
+	public array $assignment;
 
 	public function removeAssignment(): void
 	{
@@ -25,12 +23,17 @@ class AssignmentBuilder extends Component
     {
         if (empty($this->assignment['title']) || empty($this->assignment['description'])) {
             $this->removeAssignment();
+        } else {
+	        $this->dispatch('assignment-saved',
+		        moduleIndex: $this->moduleIndex,
+		        lessonIndex: $this->lessonIndex,
+		        assignment: $this->assignment
+	        );
         }
-        $this->dispatch('builder-hided', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
 	}
 
 	public function render(): View|Application|Factory
 	{
-        return view('livewire.client.components.assignment-builder');
+		return view('livewire.client.components.course.assignment-builder');
 	}
 }

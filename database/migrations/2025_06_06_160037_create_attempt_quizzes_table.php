@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attempt_answers', function (Blueprint $table) {
-            $table->id();
-            $table->boolean('is_correct');
+        Schema::create('attempt_quizzes', function (Blueprint $table) {
+            $table->foreignIdFor(AssessmentAttempt::class)->primary();
+            $table->smallInteger('correct_answers_count')->default(0);
+            $table->smallInteger('total_questions_count')->default(0);
+            $table->json('user_answers');
 
-            $table->foreignIdFor(AssessmentAttempt::class, 'attempt_id')->constrained()->onDelete('cascade');
-            $table->foreignIdFor(AssessmentQuestion::class, 'question_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attempt_answers');
+        Schema::dropIfExists('attempt_quizzes');
     }
 };

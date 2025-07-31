@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Components;
+namespace App\Livewire\Client\Components\Course;
 
 use App\Imports\QuizzesImport;
 use Illuminate\Contracts\View\Factory;
@@ -19,18 +19,27 @@ class QuizBuilder extends Component
     public int $lessonIndex;
     public $excelFile;
 
-    #[Modelable]
     public $quiz;
 
     public function removeQuiz(): void
     {
-        $this->dispatch('assessment-builder-removed', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
+        $this->dispatch('assessment-builder-removed',
+            moduleIndex: $this->moduleIndex,
+            lessonIndex: $this->lessonIndex
+        );
     }
 
     public function addOption(int $index): void
     {
         $optionCount = count($this->quiz['assessments_questions'][$index]['question_options']);
         if ($optionCount >= 4) {
+            $this->dispatch('swal', [
+                'title' => 'Maximum Options Reached',
+                'text' => 'You can only have a maximum of 4 options per question.',
+                'icon' => 'warning',
+                'timer' => 3000,
+                'showConfirmButton' => false
+            ]);
             return;
         }
 	    $this->quiz['assessments_questions'][$index]['question_options'][] = [
@@ -44,6 +53,13 @@ class QuizBuilder extends Component
     public function removeOption(int $index, int $optionIndex): void
     {
         if (count($this->quiz['assessments_questions'][$index]['question_options']) <= 1) {
+            $this->dispatch('swal', [
+                'title' => 'Minimum Options Required',
+                'text' => 'You must have at least one option for each question.',
+                'icon' => 'warning',
+                'timer' => 3000,
+                'showConfirmButton' => false
+            ]);
             return;
         }
         unset($this->quiz['assessments_questions'][$index]['question_options'][$optionIndex]);
@@ -82,8 +98,6 @@ class QuizBuilder extends Component
         Excel::import($import, $this->excelFile);
 
         $this->importQuestions($import->getParsed());
-
-        $this->saveQuiz();
     }
 
     private function importQuestions($importedQuestions): void
@@ -93,6 +107,12 @@ class QuizBuilder extends Component
         } else {
             $this->quiz['assessments_questions'] = $importedQuestions;
         }
+
+        $this->dispatch('quiz-questions-imported',
+            assessment_questions: $this->quiz['assessments_questions'],
+            moduleIndex: $this->moduleIndex,
+            lessonIndex: $this->lessonIndex
+        );
     }
 
     private function checkExistingQuestions(): bool
@@ -109,12 +129,16 @@ class QuizBuilder extends Component
 
     public function saveQuiz(): void
     {
-        $this->dispatch('builder-hided', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
+        $this->dispatch('quiz-saved',
+            moduleIndex: $this->moduleIndex,
+            lessonIndex: $this->lessonIndex,
+            quiz: $this->quiz,
+        );
     }
 
 
     public function render(): View|Application|Factory
     {
-        return view('livewire.client.components.quiz-builder');
+        return view('livewire.client.components.course.quiz-builder');
     }
 }

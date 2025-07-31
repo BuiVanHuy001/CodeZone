@@ -9,9 +9,11 @@ use App\Models\Batch;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Module;
+use App\Models\ProgrammingAssignmentDetails;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -146,21 +148,8 @@ class CreateCourse extends Component
         }
     }
 
-	public function showAlert(): void
-	{
-		$this->dispatch('swal', [
-			'title' => 'Post Updated',
-			'text' => 'Post successfully updated.',
-			'icon' => 'success',
-			'timer' => 3000,
-			'showConfirmButton' => false,
-		]);
-		//        session()->flash('swal', 'Post successfully updated.');
-	}
-
     public function save()
     {
-	    dd($this->modules);
         $this->updateJsonFromMultilineInput('skills');
         $this->updateJsonFromMultilineInput('requirements');
         DB::beginTransaction();
@@ -174,9 +163,9 @@ class CreateCourse extends Component
                 'thumbnail_url' => $this->imageUrl,
                 'price' => $this->price ?? 0,
                 'review_count' => 0,
-                'lesson_count' => $lessonCount, // Will be updated later
+                'lesson_count' => $lessonCount,
                 'level' => $this->level,
-                'duration' => $courseDuration, // Will be updated later
+                'duration' => $courseDuration,
                 'status' => 'pending',
                 'category_id' => $this->category,
                 'requirements' => $this->requirementsJson,
@@ -191,7 +180,7 @@ class CreateCourse extends Component
                     'title' => $moduleData['title'],
                     'lesson_count' => $moduleLessonCount,
                     'position' => $moduleIndex,
-                    'duration' => 0, // Will be updated later
+                    'duration' => 0,
                     'course_id' => $course->id,
                 ]);
                 foreach ($moduleData['lessons'] as $lessonKey => $lessonData) {
@@ -201,7 +190,7 @@ class CreateCourse extends Component
                         'type' => $lessonData['type'],
                         'duration' => $lessonData['duration'] ?? 0,
                         'video_url' => $lessonData['video_url'],
-                        'content' => $lessonData['content'],
+                        'document' => $lessonData['content'], // Fix: Use 'content' for document
                         'preview' => $lessonData['preview'] ?? false,
                         'position' => $lessonKey,
                         'module_id' => $module->id
@@ -235,6 +224,14 @@ class CreateCourse extends Component
                                 }
                             }
                         }
+                        if ($assessmentData['type'] === 'programming') {
+                            ProgrammingAssignmentDetails::create([
+                                'assessment_id' => $assessment->id,
+                                'function_name' => $assessmentData['problem_details']['function_name'],
+                                'code_templates' => $assessmentData['problem_details']['code_templates'],
+                                'test_cases' => $assessmentData['problem_details']['test_cases']
+                            ]);
+                        }
                     }
                 }
                 $module->duration = $moduleDuration;
@@ -252,7 +249,7 @@ class CreateCourse extends Component
                 $course->enrollment_count = count($this->employeesAssigned);
                 foreach ($this->employeesAssigned as $employeeId) {
                     BatchEnrollments::create([
-                        'batches_id' => $batch->id,
+                        'batch_id' => $batch->id,
                         'user_id' => $employeeId,
                         'status' => 'not_started'
                     ]);

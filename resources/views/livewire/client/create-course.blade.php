@@ -48,7 +48,7 @@
                             </small>
                             @enderror
 
-                            <div class="course-field mb--15">
+                            <div class="course-field mb--15" wire:ignore>
                                 <label for="description">About Course</label>
                                 <input type="hidden" id="description_input" wire:model="description">
                                 <div id="toolbar-container"></div>
@@ -247,7 +247,7 @@
                 </div>
             </div>
 
-            <livewire:client.components.course-builder wire:model="modules"/>
+            <livewire:client.components.course.course-builder wire:model="modules"/>
 
             @if (auth()->user()->isBusiness())
                 <div class="accordion" id="learner">
@@ -296,6 +296,42 @@
     </div>
 
 </form>
+@script
+<script>
+    const courseDescriptionInput = document.querySelector('#description_input');
+    new EditorView(
+        {
+            extensions: [
+                lineNumbers(),
+                markdown(),
+                highlightSpecialChars(),
+                EditorView.lineWrapping,
+                EditorView.updateListener.of(update => {
+                    if (update.docChanged) {
+                        courseDescriptionInput.value = update.state.doc.toString();
+                        courseDescriptionInput.dispatchEvent(new Event('input'));
+                    }
+                }),
+                EditorView.theme({
+                    "&": {
+                        height: "200px",
+                        width: "100%",
+                        border: "1px solid #ddd",
+                        borderRadius: "4px",
+                        padding: "10px",
+                        fontSize: "13px",
+                    },
+                    ".cm-content": {
+                        caretColor: "#000",
+                    },
+                }),
+            ],
+            parent: document.getElementById('description'),
+        }
+    );
+</script>
+@endscript
+
 @push('scripts')
     <script type="module">
         document.addEventListener('livewire:initialized', () => {
@@ -335,11 +371,11 @@
                     );
                 }
             });
-
             Livewire.on('assignment-programming-updated', function (data) {
-                const codeTemplates = data[0][0];
+                const codeTemplates = JSON.parse(data.codeTemplate);
                 const languages = Object.keys(codeTemplates);
-
+                console.log("Programming languages available:", languages);
+                console.log(codeTemplates);
                 setTimeout(() => {
                     languages.forEach(function (langKey) {
                         const editorId = `code-editor-${langKey}`;
@@ -401,37 +437,5 @@
                 }, 500);
             });
         });
-
-        const courseDescriptionInput = document.querySelector('#description_input');
-        new EditorView(
-            {
-                extensions: [
-                    lineNumbers(),
-                    markdown(),
-                    highlightSpecialChars(),
-                    EditorView.lineWrapping,
-                    EditorView.updateListener.of(update => {
-                        if (update.docChanged) {
-                            courseDescriptionInput.value = update.state.doc.toString();
-                            courseDescriptionInput.dispatchEvent(new Event('input'));
-                        }
-                    }),
-                    EditorView.theme({
-                        "&": {
-                            height: "200px",
-                            width: "100%",
-                            border: "1px solid #ddd",
-                            borderRadius: "4px",
-                            padding: "10px",
-                            fontSize: "13px",
-                        },
-                        ".cm-content": {
-                            caretColor: "#000",
-                        },
-                    }),
-                ],
-                parent: document.getElementById('description'),
-            }
-        );
     </script>
 @endpush
