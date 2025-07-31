@@ -1,6 +1,6 @@
 <div class="section-title row m-5">
     <h2>{{ $assignment->title  }}</h2>
-    <div class="col-lg-8">
+    <div class="col-lg-8 markdown-body">
         @markdown($assignment->description)
     </div>
     <div class="col-lg-4">

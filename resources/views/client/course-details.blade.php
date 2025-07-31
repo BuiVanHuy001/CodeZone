@@ -221,7 +221,7 @@
                                     <div class="section-title">
                                         <h4 class="rbt-title-style-3">Description</h4>
                                     </div>
-                                    <div id="course-description-content">
+                                    <div class="markdown-body">
                                         @markdown($course->description)
                                     </div>
 
