@@ -247,7 +247,7 @@
                 </div>
             </div>
 
-            <livewire:client.components.course-builder wire:model="modules"/>
+            <livewire:client.components.course.course-builder wire:model="modules"/>
 
             @if (auth()->user()->isBusiness())
                 <div class="accordion" id="learner">
@@ -299,7 +299,6 @@
 @script
 <script>
     const courseDescriptionInput = document.querySelector('#description_input');
-    console.log(courseDescriptionInput);
     new EditorView(
         {
             extensions: [
@@ -373,9 +372,10 @@
                 }
             });
             Livewire.on('assignment-programming-updated', function (data) {
-                const codeTemplates = data[0][0];
+                const codeTemplates = JSON.parse(data.codeTemplate);
                 const languages = Object.keys(codeTemplates);
-
+                console.log("Programming languages available:", languages);
+                console.log(codeTemplates);
                 setTimeout(() => {
                     languages.forEach(function (langKey) {
                         const editorId = `code-editor-${langKey}`;
@@ -437,6 +437,5 @@
                 }, 500);
             });
         });
-
     </script>
 @endpush

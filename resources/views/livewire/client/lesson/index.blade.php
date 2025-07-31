@@ -22,14 +22,14 @@
                 @if($lesson->type === 'video')
                     <livewire:client.lesson.components.lesson-types.video :videoUrl="$lesson->video_url" :key="'video-' . $lesson->id"/>
                 @elseif($lesson->type === 'document')
-                    <livewire:client.lesson.components.lesson-types.document :documentContent="$lesson->content" :key="'video-' . $lesson->id"/>
+                    <livewire:client.lesson.components.lesson-types.document :documentContent="$lesson->document" :key="'document-' . $lesson->id"/>
                 @elseif($lesson->type === 'assessment')
                     @if($lesson->assessment->type === 'quiz')
                         <livewire:client.lesson.components.assessment-types.quiz :quiz="$lesson->assessment"/>
                     @elseif($lesson->assessment->type === 'assignment')
                         <livewire:client.lesson.components.assessment-types.assignment :assignment="$lesson->assessment"/>
                     @elseif($lesson->assessment->type === 'programming')
-                        <livewire:client.lesson.components.assessment-types.programming-practice/>
+                        <livewire:client.lesson.components.assessment-types.programming-practice :programming-practice="$lesson->assessment"/>
                     @endif
                 @endif
             </div>

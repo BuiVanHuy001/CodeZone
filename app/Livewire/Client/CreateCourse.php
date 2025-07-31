@@ -190,7 +190,7 @@ class CreateCourse extends Component
                         'type' => $lessonData['type'],
                         'duration' => $lessonData['duration'] ?? 0,
                         'video_url' => $lessonData['video_url'],
-                        'content' => $lessonData['content'],
+                        'document' => $lessonData['content'], // Fix: Use 'content' for document
                         'preview' => $lessonData['preview'] ?? false,
                         'position' => $lessonKey,
                         'module_id' => $module->id
@@ -227,7 +227,9 @@ class CreateCourse extends Component
                         if ($assessmentData['type'] === 'programming') {
                             ProgrammingAssignmentDetails::create([
                                 'assessment_id' => $assessment->id,
-                                'problem_details' => $assessmentData['problem_details'],
+                                'function_name' => $assessmentData['problem_details']['function_name'],
+                                'code_templates' => $assessmentData['problem_details']['code_templates'],
+                                'test_cases' => $assessmentData['problem_details']['test_cases']
                             ]);
                         }
                     }
@@ -247,7 +249,7 @@ class CreateCourse extends Component
                 $course->enrollment_count = count($this->employeesAssigned);
                 foreach ($this->employeesAssigned as $employeeId) {
                     BatchEnrollments::create([
-                        'batches_id' => $batch->id,
+                        'batch_id' => $batch->id,
                         'user_id' => $employeeId,
                         'status' => 'not_started'
                     ]);

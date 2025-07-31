@@ -3,13 +3,11 @@
 namespace App\Livewire\Client\Lesson\Components\AssessmentTypes;
 
 use App\Models\AssessmentAttempt;
-use App\Models\AssessmentQuestion;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Component;
-use function Pest\Laravel\json;
 
 class Quiz extends Component
 {

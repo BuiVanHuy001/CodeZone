@@ -13,7 +13,9 @@ return new class extends Migration {
     {
         Schema::create('programming_assignment_details', function (Blueprint $table) {
             $table->foreignIdFor(Assessment::class)->primary();
-            $table->json('problem_details');
+            $table->string('function_name', 50);
+            $table->json('code_templates');
+            $table->json('test_cases')->nullable();
             $table->timestamps();
         });
     }

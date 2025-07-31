@@ -1,9 +1,9 @@
 <div class="w-100 row assignment-section mt-4 inner rbt-default-form ms-5 rbt-default-form rbt-course-wrape">
     <h5 class="modal-title mb--20" id="LessonLabel">Lesson video</h5>
     <div class="rbt-create-course-thumbnail p-4 rounded border text-center">
-        @if($lesson['video_url'])
+        @if($videoURL)
             <video width="100%" controls>
-                <source src="{{ $lesson['video_url'] }}" type="video/mp4">
+                <source src="{{ $videoURL }}" type="video/mp4">
             </video>
         @else
             <div x-data
@@ -18,18 +18,18 @@
                     <h6 class="mb-4 fw-bold">Drag & Drop your video here</h6>
                     <input type="file"
                            id="video-upload"
-                           wire:model="lesson.video_url"
+                           wire:model="videoURL"
                            accept="video/mp4,video/mov"
                            style="display: none;"
                            x-ref="videoInput">
 
                     <button class="rbt-btn btn-md btn-gradient hover-icon-reverse"
                             type="button">
-                    <span class="icon-reverse-wrapper">
-                        <span class="btn-text">Browse Files</span>
-                        <span class="btn-icon"><i class="feather-folder-plus"></i></span>
-                        <span class="btn-icon"><i class="feather-folder-plus"></i></span>
-                    </span>
+                        <span class="icon-reverse-wrapper">
+                            <span class="btn-text">Browse Files</span>
+                            <span class="btn-icon"><i class="feather-folder-plus"></i></span>
+                            <span class="btn-icon"><i class="feather-folder-plus"></i></span>
+                        </span>
                     </button>
                 </div>
             </div>

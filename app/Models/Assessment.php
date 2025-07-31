@@ -37,6 +37,11 @@ class Assessment extends Model
         return $this->hasMany(AssessmentAttempt::class);
     }
 
+	public function problemDetails(): hasOne
+	{
+		return $this->hasOne(ProgrammingAssignmentDetails::class, 'assessment_id');
+	}
+
     public function getUserAttempts($user): array
     {
         return $this->attempts()

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Components;
+namespace App\Livewire\Client\Components\Course;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -9,14 +9,14 @@ use Illuminate\Support\Str;
 use Livewire\Attributes\Modelable;
 use Livewire\Component;
 
-class CourseProgrammingAssignmentBuilder extends Component {
-    public $moduleIndex;
-    public $lessonIndex;
-    public array $inputErrors = [];
-    public string|null $outputError = null;
-
+class ProgrammingPracticeBuilder extends Component
+{
+    public int $moduleIndex;
+    public int $lessonIndex;
     public array $newTestCase = ['input' => [], 'output' => []];
     public array $languages = [];
+    public array $inputErrors = [];
+    public string|null $outputError = null;
     public array $typeMap = [
         'int' => [
             'python' => 'int',
@@ -90,29 +90,29 @@ class CourseProgrammingAssignmentBuilder extends Component {
             'regex' => '/^\[(true|false)(,\s*(true|false))*\]$/'
         ]
     ];
-
+    public $programmingPractice;
+    public array $codeTemplates = [];
+    public array $testCases = [];
     public array $problemDetails = [
         'functionName' => '',
-        'params' => [],
         'returnType' => 'int',
-        'testCases' => [],
-        'allowedLanguages' => []
+        'params' => [],
     ];
-
-    #[Modelable]
-    public $lesson;
-
-    public function mount(): void
-    {
-        $this->dispatch('assignment-programming-ready');
-    }
 
     public function updatedLanguages(): void
     {
         if ($this->languages) {
             $this->makeCodeTemplate();
         }
-        $this->dispatch('assignment-programming-updated', [$this->problemDetails['allowedLanguages']]);
+        $this->dispatch('assignment-programming-updated',
+            moduleIndex: $this->moduleIndex,
+            lessonIndex: $this->lessonIndex,
+            programmingPractice: $this->programmingPractice,
+            problemDetails: $this->problemDetails,
+            codeTemplate: json_encode($this->codeTemplates),
+
+
+        );
     }
 
     private function makeCodeTemplate(): void
@@ -144,7 +144,7 @@ class CourseProgrammingAssignmentBuilder extends Component {
                 'cpp' => $this->generateCppTemplate($functionName, $returnType, $paramString),
                 default => '',
             };
-            $this->problemDetails['allowedLanguages'][$language] = $template;
+            $this->codeTemplates[$language] = $template;
         }
     }
 
@@ -285,7 +285,7 @@ class CourseProgrammingAssignmentBuilder extends Component {
                 return;
             }
 
-            $this->problemDetails['testCases'][] = [
+            $this->testCases[] = [
                 'input' => $inputData,
                 'output' => [
                     'type' => $this->problemDetails['returnType'],
@@ -362,9 +362,9 @@ class CourseProgrammingAssignmentBuilder extends Component {
 
     public function removeTestCase(int $index): void
     {
-        if (isset($this->problemDetails['testCases'][$index])) {
-            unset($this->problemDetails['testCases'][$index]);
-            $this->problemDetails['testCases'] = array_values($this->problemDetails['testCases']);
+        if (isset($this->testCases[$index])) {
+            unset($this->testCases[$index]);
+            $this->testCases = array_values($this->testCases);
             $this->dispatch('swal', [
                 'icon' => 'success',
                 'title' => 'Test Case Removed',
@@ -379,12 +379,19 @@ class CourseProgrammingAssignmentBuilder extends Component {
 
     public function saveProblemDetails(): void
     {
-        $this->lesson['assessments']['problem_details'] = json_encode($this->problemDetails);
-        $this->dispatch('builder-hided', $this->moduleIndex, $this->lessonIndex);
+        $this->dispatch('programming-practice-saved',
+            moduleIndex: $this->moduleIndex,
+            lessonIndex: $this->lessonIndex,
+            programmingPractice: $this->programmingPractice,
+            problemDetails: $this->problemDetails,
+            codeTemplates: json_encode($this->codeTemplates),
+            testCases: json_encode($this->testCases),
+            functionName: $this->problemDetails['functionName'],
+        );
     }
 
     public function render(): Factory|Application|View
     {
-        return view('livewire.client.components.course-programming-assignment-builder');
+        return view('livewire.client.components.course.programming-practice-builder');
     }
 }

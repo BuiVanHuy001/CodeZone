@@ -23,7 +23,7 @@
     <div id="question-{{ $lessonIndex }}-2" class="question" x-show="activeQuestion === 2">
         <div class="course-field mb--20">
             @foreach($quiz['assessments_questions'] as $questionKey => $question)
-                <div x-data="{ open: true }" class="rbt-course-wrape mb-4">
+                <div x-data="{ open: false }" class="rbt-course-wrape mb-4">
                     <div class="d-flex justify-content-between" style="cursor: auto;">
                         <div class="inner d-flex align-items-center gap-2">
                             <h6 class="rbt-title mb-0"><strong>Question No.{{ $questionKey + 1 }}

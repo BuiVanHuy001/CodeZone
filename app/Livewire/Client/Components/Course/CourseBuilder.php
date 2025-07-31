@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Livewire\Client\Components;
+namespace App\Livewire\Client\Components\Course;
 
 use App\Models\Lesson;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Modelable;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use function Laravel\Prompts\error;
 
 class CourseBuilder extends Component
 {
@@ -78,10 +76,47 @@ class CourseBuilder extends Component
         $this->activeTabs["$moduleIndex-$lessonIndex"] = 'quiz';
     }
 
+    #[On('quiz-questions-imported')]
+    public function importQuiz($assessment_questions, int $moduleIndex, int $lessonIndex): void
+    {
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['assessments_questions'] = $assessment_questions;
+        $this->dispatch('swal', [
+            'title' => 'Success',
+            'text' => 'Quiz questions imported successfully.',
+            'icon' => 'success',
+            'timer' => 3000,
+            'showConfirmButton' => false
+        ]);
+    }
+
+    #[On('quiz-saved')]
+    public function saveQuiz(int $moduleIndex, int $lessonIndex, $quiz): void
+    {
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['title'] = $quiz['title'];
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['description'] = $quiz['description'];
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['assessments_questions'] = $quiz['assessments_questions'];
+        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
+    }
+
     #[On('builder-hided')]
     public function hideAssessmentBuilder(int $moduleIndex, int $lessonIndex): void
     {
         $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
+    }
+
+    #[On('assignment-saved')]
+    public function saveAssignment(int $moduleIndex, int $lessonIndex, array $assignment): void
+    {
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['title'] = $assignment['title'];
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['description'] = $assignment['description'];
+        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
+        $this->dispatch('swal', [
+            'title' => 'Success',
+            'text' => 'Assignment saved successfully.',
+            'icon' => 'success',
+            'timer' => 3000,
+            'showConfirmButton' => false
+        ]);
     }
 
     #[On('assessment-builder-removed')]
@@ -118,15 +153,16 @@ class CourseBuilder extends Component
         $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
     }
 
-    public function addContent(int $moduleIndex, int $lessonIndex): void
+    public function addDocument(int $moduleIndex, int $lessonIndex): void
     {
         $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'document';
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = 'content';
+        $this->activeTabs["$moduleIndex-$lessonIndex"] = 'document';
     }
 
-    #[On('content-saved')]
-    public function saveContent(int $moduleIndex, int $lessonIndex): void
+    #[On('document-saved')]
+    public function saveDocument(int $moduleIndex, int $lessonIndex, string $document): void
     {
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['content'] = $document;
         $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
     }
 
@@ -140,10 +176,14 @@ class CourseBuilder extends Component
     }
 
     #[On('video-saved')]
-    public function saveVideo(int $moduleIndex, int $lessonIndex): void
+    public function saveVideo($moduleIndex, $lessonIndex, string $videoURL, int $duration): void
     {
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['video_url'] = $videoURL;
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['duration'] = $duration;
+
         $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
     }
+
 
     #[On('video-deleted')]
     public function deleteVideo(int $moduleIndex, int $lessonIndex): void
@@ -157,21 +197,42 @@ class CourseBuilder extends Component
         $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
     }
 
-    public function addProgramming(int $moduleIndex, int $lessonIndex): void
+    public function addProgrammingPractice(int $moduleIndex, int $lessonIndex): void
     {
         if (
             $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] !== 'assessment' ||
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] !== 'programming'
+            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] !== 'programming-practice'
         ) {
             $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'assessment';
             $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = [
                 'title' => '',
                 'type' => 'programming',
                 'description' => '',
-                'problem_details' => '',
+                'problem_details' => [
+                    'code_templates' => [],
+                    'test_cases' => []
+                ],
             ];
         }
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = 'programming';
+        $this->activeTabs["$moduleIndex-$lessonIndex"] = 'programming-practice';
+    }
+
+    #[On('programming-practice-saved')]
+    public function saveProgrammingPractice(int $moduleIndex, int $lessonIndex, $programmingPractice, $testCases, $codeTemplates, $functionName): void
+    {
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['title'] = $programmingPractice['title'];
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['description'] = $programmingPractice['description'];
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['problem_details']['function_name'] = $functionName;
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['problem_details']['code_templates'] = $codeTemplates;
+        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['problem_details']['test_cases'] = $testCases;
+        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
+        $this->dispatch('swal', [
+            'title' => 'Success',
+            'text' => 'Programming practice saved successfully.',
+            'icon' => 'success',
+            'timer' => 3000,
+            'showConfirmButton' => false
+        ]);
     }
 
     public function addModule(): void
@@ -224,6 +285,6 @@ class CourseBuilder extends Component
 
     public function render(): Factory|Application|View
     {
-        return view('livewire.client.components.course-builder');
+        return view('livewire.client.components.course.course-builder');
     }
 }

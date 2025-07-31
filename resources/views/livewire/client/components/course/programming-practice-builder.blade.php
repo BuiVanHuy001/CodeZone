@@ -2,13 +2,13 @@
     <h5 class="modal-title mb--20" id="LessonLabel">Programming Assessment</h5>
     <div class="course-field mb--20">
         <label for="{{ "assessment-title-$moduleIndex-$lessonIndex" }}">Title</label>
-        <input id="{{ "assessment-title-$moduleIndex-$lessonIndex" }}" wire:model="lesson.assessments.title" type="text" placeholder="Type your assignments title">
+        <input id="{{ "assessment-title-$moduleIndex-$lessonIndex" }}" wire:model="programmingPractice.title" type="text" placeholder="Type your assignments title">
     </div>
 
-    <div wire:ignore class="course-field mb--30">
+    <div class="course-field mb--30" wire:ignore>
         <label>Description</label>
-        <div id="description-editor"></div>
-        <input wire:model="lesson.assessments.description" type="hidden" id="input-description-editor"/>
+        <div id="programming-practice-description-{{ $moduleIndex }}-{{ $lessonIndex }}-editor"></div>
+        <input wire:model="programmingPractice.description" type="hidden" id="programming-practice-description-{{ $moduleIndex }}-{{ $lessonIndex }}-input"/>
         <small>Markdown is supported.</small>
     </div>
 
@@ -27,6 +27,7 @@
             @endforeach
         </select>
     </div>
+
     <div x-data="{ addParameterButton: true, parameterForm: false }" class="course-field mb--20 col-lg-6">
         <label>Parameter List</label>
         <div class="row">
@@ -97,7 +98,7 @@
     <div class="course-field mb--20 col-lg-6" x-data="{testCaseForm: false, addTestCaseButton: true}">
         <label>TestCase list</label>
         <div>
-            @forelse($this->problemDetails['testCases'] as $index => $testCase)
+            @forelse($testCases as $index => $testCase)
                 <ul>
                     <li x-data="{ open: false }" wire:key="testcase-list-{{ $index }}" class="mb-2">
                         <div @click="open = !open" class="d-flex justify-content-between align-items-center" style="cursor: pointer;">
@@ -233,3 +234,41 @@
         <button type="button" class="rbt-btn btn-md radius-round-10" wire:click="saveProblemDetails">Save</button>
     </div>
 </div>
+@script
+<script>
+    const programmingPracticeDescriptionEditor = document.getElementById('programming-practice-description-{{ $moduleIndex }}-{{ $lessonIndex }}-editor');
+    const programmingPracticeDescriptionInput = document.getElementById('programming-practice-description-{{ $moduleIndex }}-{{ $lessonIndex }}-input');
+    new EditorView(
+        {
+            extensions: [
+                lineNumbers(),
+                markdown(),
+                highlightActiveLineGutter(),
+                highlightActiveLine(),
+                highlightSpecialChars(),
+                EditorView.lineWrapping,
+                EditorView.updateListener.of(update => {
+                    if (update.docChanged) {
+                        programmingPracticeDescriptionInput.value = update.state.doc.toString();
+                        programmingPracticeDescriptionInput.dispatchEvent(new Event('input'));
+                    }
+                }),
+                EditorView.theme({
+                    "&": {
+                        height: "200px",
+                        width: "100%",
+                        border: "1px solid #ddd",
+                        borderRadius: "4px",
+                        padding: "10px",
+                        fontSize: "13px",
+                    },
+                    ".cm-content": {
+                        caretColor: "#000",
+                    },
+                }),
+            ],
+            doc: programmingPracticeDescriptionInput.value,
+            parent: programmingPracticeDescriptionEditor,
+        });
+</script>
+@endscript
