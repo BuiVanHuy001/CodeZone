@@ -14,6 +14,7 @@ return new class extends Migration {
 		Schema::create('organization_profiles', function (Blueprint $table) {
 			$table->foreignIdFor(User::class)->primary();
 			$table->text('bio')->nullable();
+			$table->text('about_me')->nullable();
 			$table->json('socials_links')->nullable();
 			$table->unsignedSmallInteger('course_count')->default(0)->comment('Number of courses created by the organization and max 65535 courses');
 			$table->timestamps();

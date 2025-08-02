@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Client\Business;
 
-use App\Models\OrganizationUsers;
+use App\Models\OrganizationUser;
 use App\Models\User;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
@@ -34,21 +34,21 @@ class EmployeesDashboard extends Component {
 
     public function addEmployee(User $user): void
     {
-        if (!OrganizationUsers::where('organization_id', auth()->user()->id)->where('user_id', $user->id)->exists()) {
-            OrganizationUsers::create(['organization_id' => auth()->user()->id, 'user_id' => $user->id,]);
+	    if (!OrganizationUser::where('organization_id', auth()->user()->id)->where('user_id', $user->id)->exists()) {
+		    OrganizationUser::create(['organization_id' => auth()->user()->id, 'user_id' => $user->id,]);
         }
     }
 
     public function deleteEmployee(User $user): void
     {
-	    OrganizationUsers::where('organization_id', auth()->user()->id)
+	    OrganizationUser::where('organization_id', auth()->user()->id)
 	                     ->where('user_id', $user->id)->delete();
     }
 
-    #[Layout('components.layouts.business-dashboard')]
+	#[Layout('components.layouts.dashboard')]
     public function render()
     {
-        $employees = OrganizationUsers::where('organization_id', auth()->user()->id)->with('user')->get();
+	    $employees = OrganizationUser::where('organization_id', auth()->user()->id)->with('user')->get();
 
         return view('livewire.client.business.employees', ['employees' => $employees]);
     }

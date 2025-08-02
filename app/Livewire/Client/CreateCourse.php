@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -260,23 +261,26 @@ class CreateCourse extends Component
             if (auth()->user()->isBusiness()) {
                 return redirect()
                     ->route('business.dashboard.index')
-                    ->with('sweetalert2', 'Course created successfully!');
+                    ->with('swal', 'Course created successfully!');
             }
             return redirect()
                 ->route('instructor.dashboard.index')
-                ->with('sweetalert2', 'Course created successfully!');
+                ->with('swal', 'Course created successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
-            dd('Error creating course: ' . $e->getMessage());
-            return redirect()->back()->with('sweetalert2', 'Something went wrong while creating the course');
+            $this->dispatch('swal', [
+                'icon' => 'error',
+                'title' => 'Error',
+                'text' => 'Something went wrong while creating the course: ' . $e->getMessage(),
+                'showConfirmButton' => true,
+            ]);
+            return redirect()->back()->with('swal', 'Something went wrong while creating the course');
         }
     }
 
+    #[Layout('components.layouts.dashboard')]
     public function render(): Factory|Application|View
     {
-        if (auth()->user()->isBusiness()) {
-            return view('livewire.client.create-course')->layout('components.layouts.business-dashboard');
-        }
-        return view('livewire.client.create-course')->layout('components.layouts.instructor-dashboard');
+        return view('livewire.client.create-course');
     }
 }

@@ -4,42 +4,66 @@ namespace App\Services\TraditionalLogin;
 
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use SweetAlert2\Laravel\Swal;
+use Livewire\Features\SupportEvents\HandlesEvents;
 
 class AuthenticationService
 {
+    use HandlesEvents;
     public function studentRegister($request): RedirectResponse
     {
         $validatedData = $request->validated();
 
-        $user = User::create(['name' => $validatedData['name'], 'email' => $validatedData['email'], 'password' => bcrypt($validatedData['password']),]);
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password'])
+        ]);
 
         auth()->login($user);
-        return redirect()->route('page.home')->with('sweetalert2', 'Registration successful!');
+        return redirect()
+            ->route('page.home')
+            ->with('swal', [
+                'title' => 'Registration Successful',
+                'text' => 'Welcome to CodeZone!',
+                'icon' => 'success',
+            ]);
     }
 
     public function logout(): RedirectResponse
     {
         auth()->logout();
-        return redirect()->route('page.home')->with('sweetalert2', 'Logout successful!');
+        return redirect()
+            ->route('page.home')
+            ->with('swal', [
+                'title' => 'Logout Successful',
+                'text' => 'You have been logged out.',
+                'icon' => 'success',
+            ]);
     }
 
 	public function login(): RedirectResponse
 	{
-		$request = request();
-		$data = $request->all();
+        $data = request()->all();
 
 		if (isset($data['email']) && !str_contains($data['email'], '@')) {
 			$data['email'] .= '@codezone.com';
-			$request->merge(['email' => $data['email']]);
+            request()->merge(['email' => $data['email']]);
 		}
 
-		$credentials = $request->validate(['email' => ['required', 'email'], 'password' => 'required|min:8',]);
+        $credentials = request()->validate([
+            'email' => ['required', 'email'],
+            'password' => 'required|min:8'
+        ]);
 
 		if (auth()->attempt($credentials)) {
-			return redirect()->intended()->with('sweetalert2', 'Login successful!');
+            return redirect()->intended()->with('swal', [
+                'title' => 'Login Successful',
+                'text' => 'Welcome back to CodeZone!',
+                'icon' => 'success',
+            ]);
 		}
 
-		return back()->withErrors(['email' => 'The provided credentials do not match our records.'])->withInput();
+        return back()->withErrors(['email' => 'Your credential is incorrect.'])
+            ->withInput();
 	}
 }

@@ -9,7 +9,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 class IndexDashboard extends Component {
-    #[Layout('components.layouts.business-dashboard')]
+	#[Layout('components.layouts.dashboard')]
     public function render(): View|Application|Factory
     {
         return view('livewire.client.business.index-dashboard');

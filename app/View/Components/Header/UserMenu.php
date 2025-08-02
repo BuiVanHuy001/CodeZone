@@ -20,13 +20,11 @@ class UserMenu extends Component {
      */
     public function render(): View|Closure|string
     {
-        $role = auth()->user()->getRole();
-        if ($role === 'student') {
-            return view('components.header.student-menu');
-        } elseif ($role === 'instructor') {
-            return view('components.header.instructor-menu');
-        }
-        return view('components.header.business-menu');
-
+	    $role = auth()->user()->role;
+	    return match ($role) {
+		    'student' => view('components.header.student-menu'),
+		    'instructor' => view('components.header.instructor-menu'),
+		    default => view('components.header.business-menu'),
+	    };
     }
 }

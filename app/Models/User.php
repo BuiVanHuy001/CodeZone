@@ -7,6 +7,7 @@ use App\View\Components\banner;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -62,6 +63,11 @@ class User extends Authenticatable
         return round(($completedLessons / $totalLessons) * 100, 2);
     }
 
+	public function organizationProfile(): HasOne
+	{
+		return $this->hasOne(OrganizationProfile::class, 'user_id');
+	}
+
     /**
      * Get all courses that user enrolled include business and normal courses.
      *
@@ -104,12 +110,12 @@ class User extends Authenticatable
 
     public function idEmployee(User $organization): bool
     {
-        return OrganizationUsers::where('organization_id', $organization->id)->where('user_id', $this->id)->exists();
+	    return OrganizationUser::where('organization_id', $organization->id)->where('user_id', $this->id)->exists();
     }
 
     public function isEmployeeOfThisBusiness(User $user)
     {
-        return OrganizationUsers::where('organization_id', $this->id)->where('user_id', $user->id)->exists();
+	    return OrganizationUser::where('organization_id', $this->id)->where('user_id', $user->id)->exists();
     }
 
     public function isEnrolledThisCourse(Course $course): bool

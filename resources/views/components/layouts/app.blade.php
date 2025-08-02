@@ -7,10 +7,8 @@
     <meta name="description" content="CodeZone is a platform for developers to learn, share, and grow their coding skills.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset("/images/favicon.ico") }}">
-
-    @include('sweetalert2::index')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('styles')
+    @include('sweetalert2::index')
     <title>{{ $title ?? 'CodeZone' }}</title>
 </head>
 <body class="rbt-header-sticky">

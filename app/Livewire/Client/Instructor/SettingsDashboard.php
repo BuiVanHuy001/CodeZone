@@ -12,7 +12,7 @@ use Livewire\Component;
 #[Title('My Settings')]
 class SettingsDashboard extends Component
 {
-    #[Layout('components.layouts.instructor-dashboard')]
+	#[Layout('components.layouts.dashboard')]
     public function render(): View|Application|Factory
     {
         return view('livewire.client.instructor.settings-dashboard');

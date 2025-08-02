@@ -8,7 +8,6 @@ use App\Models\Course;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use SweetAlert2\Laravel\Swal;
 
 class PageController extends Controller
 {
@@ -16,11 +15,6 @@ class PageController extends Controller
     {
         return view('client.homepage');
     }
-
-    //	public function becomeOurTeacherPage(): Factory|Application|View
-    //	{
-    //		//
-    //	}
 
     public function notFoundPage(): Factory|Application|View
     {

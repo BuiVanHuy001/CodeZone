@@ -702,20 +702,14 @@
 
             $(".close-button").on("click", function (e) {
                 $(".popup-mobile-menu").removeClass("active");
-                $(
-                    ".popup-mobile-menu .mainmenu .has-dropdown > a, .popup-mobile-menu .mainmenu .with-megamenu > a"
-                )
+                $(".popup-mobile-menu .mainmenu .has-dropdown > a, .popup-mobile-menu .mainmenu .with-megamenu > a")
                     .siblings(".submenu, .rbt-megamenu")
                     .removeClass("active")
                     .slideUp("400");
-                $(
-                    ".popup-mobile-menu .mainmenu .has-dropdown > a, .popup-mobile-menu .mainmenu .with-megamenu > a"
-                ).removeClass("open");
+                $(".popup-mobile-menu .mainmenu .has-dropdown > a, .popup-mobile-menu .mainmenu .with-megamenu > a").removeClass("open");
             });
 
-            $(
-                ".popup-mobile-menu .mainmenu .has-dropdown > a, .popup-mobile-menu .mainmenu .with-megamenu > a"
-            ).on("click", function (e) {
+            $(".popup-mobile-menu .mainmenu .has-dropdown > a, .popup-mobile-menu .mainmenu .with-megamenu > a").on("click", function (e) {
                 e.preventDefault();
                 $(this)
                     .siblings(".submenu, .rbt-megamenu")
@@ -729,15 +723,11 @@
                 function (e) {
                     e.target === this &&
                     $(".popup-mobile-menu").removeClass("active") &&
-                    $(
-                        ".popup-mobile-menu .mainmenu .has-dropdown > a, .popup-mobile-menu .mainmenu .with-megamenu > a"
-                    )
+                    $(".popup-mobile-menu .mainmenu .has-dropdown > a, .popup-mobile-menu .mainmenu .with-megamenu > a")
                         .siblings(".submenu, .rbt-megamenu")
                         .removeClass("active")
                         .slideUp("400") &&
-                    $(
-                        ".popup-mobile-menu .mainmenu .has-dropdown > a, .popup-mobile-menu .mainmenu .with-megamenu > a"
-                    ).removeClass("open");
+                    $(".popup-mobile-menu .mainmenu .has-dropdown > a, .popup-mobile-menu .mainmenu .with-megamenu > a").removeClass("open");
                 }
             );
         },
@@ -1111,7 +1101,3 @@
     };
     eduJs.i();
 })(window, document, jQuery);
-
-document.addEventListener('swal', function (e) {
-    Swal.fire(e.detail[0]);
-});

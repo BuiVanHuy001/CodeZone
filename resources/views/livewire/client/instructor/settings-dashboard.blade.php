@@ -32,11 +32,10 @@
             <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="rbt-dashboard-content-wrapper">
                     <div class="tutor-bg-photo bg_image bg_image--22 height-245"></div>
-                    <!-- Start Tutor Information  -->
                     <div class="rbt-tutor-information">
                         <div class="rbt-tutor-information-left">
                             <div class="thumbnail rbt-avatars size-lg position-relative">
-                                <img src="assets/images/team/avatar.jpg" alt="Instructor">
+                                <img src="{{ auth()->user()->getAvatarPath() }}" alt="Instructor">
                                 <div class="rbt-edit-photo-inner">
                                     <button class="rbt-edit-photo" title="Upload Photo">
                                         <i class="feather-camera"></i>
@@ -51,9 +50,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- End Tutor Information  -->
                 </div>
-                <!-- Start Profile Row  -->
+
                 <form action="#" class="rbt-profile-row rbt-default-form row row--15">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                         <div class="rbt-form-group">
@@ -183,12 +181,6 @@
                 </form>
                 <!-- End Profile Row  -->
             </div>
-
         </div>
-
-
-
-
-
     </div>
 </div>

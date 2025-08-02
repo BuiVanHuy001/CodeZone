@@ -1,6 +1,8 @@
-# 🌐 CodeZone - An Online Learning Platform
+# CodeZone - Online Programming Learning Platform
 
-A modern online learning platform built with **Laravel 12**, featuring traditional email authentication, Google/Facebook login via **Laravel Socialite**, and dynamic user interface powered by **Livewire** and **Alpine.js** in a SPA-style experience.
+CodeZone is a web-based learning platform developed to support students and instructors in teaching and learning
+programming more effectively. Built with Laravel 12 and Livewire 3, CodeZone offers modern features like interactive
+lessons, auto-graded coding assignments, and role-based course management.
 
 ---
 
@@ -11,47 +13,18 @@ A modern online learning platform built with **Laravel 12**, featuring tradition
 
 ---
 
-## 🚀 Key Features
+## 🚀 Features
 
-### 👤 User Authentication
-- Register / Login / Logout using email
-- Social authentication: Google, Facebook
-- Role-based access: `Student` and `Instructor`
-
-### 📚 Course Management
-- Instructors:
-    - Create, edit, and delete courses
-    - Manage course content
-- Students:
-    - View enrolled courses
-    - Learn through the interactive course interface
-
-### ⚙️ Dynamic SPA-style UI
-- Built with **Livewire 3** for seamless real-time updates
-- Enhanced interactivity using **Alpine.js**
----
-
-## 🧭 Project Structure Overview
-
-```bash
-app/
-└── Http/
-    └── Controllers/
-        ├── Auth/                 # Email & Socialite authentication
-        └── Client/
-            ├── Instructor/       # Instructor controllers
-            └── Student/          # Student controllers
-
-resources/
-└── views/
-    ├── layouts/                 # Shared layouts (header, footer, etc.)
-    └── client/
-        ├── instructor/
-        └── student/
-
-routes/
-└── web.php                      # Grouped routes by role
-```
+- 🎓 Role-based system: Admin, Instructor, Student, Organization
+- 📚 Course creation and management with modules & lessons
+- 🎥 Multiple lesson types: video, document, quiz, programming assignment
+- 🧠 Quiz engine: Multiple choice and True/False questions
+- 💻 Code assignment with auto-evaluation using test cases
+- 📈 Learning progress tracking
+- 📜 Certification generation upon course completion
+- 📅 Organization-based course batches (start/end dates)
+- 🔐 Access control for private enterprise courses
+- 📱 Responsive user interface using Tailwind CSS
 
 ---
 
@@ -72,26 +45,25 @@ routes/
 
 ## 🧪 How to Run the Project Locally
 
+## 📦 Installation
+
 ```bash
 # Clone the repository
-git clone https://github.com/yourname/online-learning-platform.git
-cd online-learning-platform
+git clone https://github.com/BuiVanHuy001/CodeZone.git
+cd codezone
 
 # Install dependencies
 composer install
-npm install && npm run dev
+npm install
 
-# Setup environment
+# Create .env file
 cp .env.example .env
+
+# Generate key
 php artisan key:generate
 
-# Configure your database in .env
-
-# Run migrations and seeders
-php artisan migrate --seed
-
-# Start the development server
-php artisan serve
+# Start local server
+php artisan serve & npm run dev
 ```
 
 ---
@@ -102,15 +74,6 @@ php artisan serve
 |------------|---------------------|-----------|
 | Student    | student@test.com    | password  |
 | Instructor | instructor@test.com | password  |
-
----
-
-## 📚 Documentation & References
-
-- [Laravel Documentation](https://laravel.com/docs)
-- [Livewire Docs](https://livewire.laravel.com/)
-- [Alpine.js Docs](https://alpinejs.dev/)
-- [SweetAlert2 Docs](https://sweetalert2.github.io/)
 
 ---
 

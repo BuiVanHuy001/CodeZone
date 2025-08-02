@@ -34,8 +34,8 @@
 
                 <nav class="mainmenu-nav">
                     <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                        <li><a wire:navigate href="{{ route('instructor.dashboard.settings') }}"
-                                @class(['active' => request()->is('instructor/dashboard/settings')])><i class="feather-settings"></i><span>Settings</span></a>
+                        <li><a wire:navigate href="{{ route('business.dashboard.settings') }}"
+                                @class(['active' => request()->is('business/dashboard/settings')])><i class="feather-settings"></i><span>Settings</span></a>
                         </li>
                         <li x-data>
                             <form action="{{ route('client.logout') }}" method="POST">

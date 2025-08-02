@@ -7,9 +7,8 @@
     <meta name="description" content="CodeZone is a platform for developers to learn, share, and grow their coding skills.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset("/images/favicon.ico") }}">
-    @yield('cus_css')
-    @include('sweetalert2::index')
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('sweetalert2::index')
     <title>{{ $title ?? 'CodeZone' }}</title>
 </head>
 <body class="rbt-header-sticky">
@@ -28,7 +27,7 @@
                 @endpersist
                 <div class="row g-5">
                     <div class="col-lg-3">
-                        <livewire:client.instructor.components.sidebar/>
+                        <x-client.dashboard.sidebar/>
                     </div>
 
                     <div class="col-lg-9">
@@ -52,12 +51,11 @@
         <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
     </svg>
 </div>
-
+@endpersist
 @stack('scripts')
 <script src="{{ asset('js/vendor/isotop.js') }}"></script>
 <script src="{{ asset('js/vendor/imageloaded.js') }}"></script>
 <script src="{{ asset('js/vendor/wow.js') }}"></script>
 <script src="{{ asset('js/vendor/waypoint.min.js') }}"></script>
-@endpersist
 </body>
 </html>

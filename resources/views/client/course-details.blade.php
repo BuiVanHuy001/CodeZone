@@ -268,24 +268,7 @@
                                             </ul>
                                         </div>
                                         <div class="content">
-                                            <p class="description">Hi, I'm Rafekul Islam! I'm one of CodeZone's Top
-                                                Instructors, and all my premium courses have earned the best-selling
-                                                status for outstanding performance and student satisfaction.</p>
-
-                                            <p class="description">
-                                                I'm a full-stack web developer and designer with a passion for building
-                                                beautiful web interfaces from scratch. I've been building websites and
-                                                apps
-                                                since 2010 and also have a Master's degree in Engineering.
-                                            </p>
-                                            <p class="description">
-                                                I discovered my passion for teaching and helping others by sharing
-                                                everything I knew during college. This passion led me to CodeZone in
-                                                2015,
-                                                where I now have the privilege of training 2,000,000+ learners in the
-                                                field
-                                                of web development.
-                                            </p>
+                                            {!! $course->author->isBusiness() ? nl2br(e($course->author->organizationProfile['about_me'])) : '' !!}
 
                                             <ul class="social-icon social-default icon-naked justify-content-start">
                                                 <li><a href="https://www.facebook.com/">

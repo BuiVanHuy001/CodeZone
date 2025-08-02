@@ -20,7 +20,7 @@ class CoursesDashboard extends Component {
 			->get();
 	}
 
-	#[Layout('components.layouts.business-dashboard')]
+	#[Layout('components.layouts.dashboard')]
 	public function render(): View|Application|Factory
 	{
 		return view('livewire.client.business.courses-dashboard');

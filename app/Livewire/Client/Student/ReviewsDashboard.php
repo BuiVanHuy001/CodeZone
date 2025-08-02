@@ -9,11 +9,9 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 class ReviewsDashboard extends Component {
-    #[Layout('components.layouts.student-dashboard')]
+	#[Layout('components.layouts.dashboard')]
     public function render(): View|Application|Factory
     {
-       return view('livewire.client.student.reviews-dashboard', [
-            'reviews' => $reviews
-        ]);
+	    return view('livewire.client.student.reviews-dashboard');
     }
 }
