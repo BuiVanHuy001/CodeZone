@@ -4,11 +4,9 @@ namespace App\Services\TraditionalLogin;
 
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Livewire\Features\SupportEvents\HandlesEvents;
 
 class AuthenticationService
 {
-    use HandlesEvents;
     public function studentRegister($request): RedirectResponse
     {
         $validatedData = $request->validated();

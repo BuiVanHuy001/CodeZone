@@ -19,8 +19,6 @@ import '../assets/js/vendor/paralax.min.js';
 import '../assets/js/vendor/countdown.js';
 import '../assets/js/vendor/plyr.js';
 import '../assets/js/vendor/jodit.min.js';
-import '../assets/js/vendor/Sortable.min.js';
-import Swal from 'sweetalert2';
 import Plyr from 'plyr';
 import {
     EditorView,
