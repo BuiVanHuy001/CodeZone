@@ -13,39 +13,31 @@ class PageController extends Controller
 {
     public function homePage(): Factory|Application|View
     {
-        return view('client.homepage');
+        return view('client.pages.homepage');
     }
 
     public function notFoundPage(): Factory|Application|View
     {
-        return view('client.404');
+        return view('client.errors.404');
     }
 
     public function forbidden(): Factory|Application|View
     {
-        return view('client.403');
+        return view('client.errors.403');
     }
 
     public function maintenancePage(): Factory|Application|View
     {
-        return view('client.maintenance');
+        return view('client.errors.maintenance');
     }
 
     public function courseDetail(Course $course): View|Application|Factory
     {
         $isReviewable = false;
-
-        if (auth()->check()) {
-            $isReviewable = auth()->user()->batchEnrollments
-                ->where('batch.course_id', $course->id)
-                ->isNotEmpty() && !auth()->user()->reviews()->where('reviewable_type', 'course')->where('reviewable_id', $course->id)->exists();
-        }
-
         $reviews = $course->reviews()->with('user')->latest()->get();
 
-        return view('client.course-details', [
+        return view('client.pages.course-details', [
             'course' => $course,
-            'isReviewable' => $isReviewable,
             'reviews' => $reviews,
         ]);
     }

@@ -39,7 +39,6 @@ import {foldGutter} from "@codemirror/language";
 import {autocompletion} from "@codemirror/autocomplete";
 import {markdown} from "@codemirror/lang-markdown";
 
-window.Swal = Swal;
 window.Plyr = Plyr;
 
 window.EditorView = EditorView;

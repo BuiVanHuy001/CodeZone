@@ -7,8 +7,8 @@ return [
 	| Class Namespace
 	|---------------------------------------------------------------------------
 	|
-	| This value sets the root class namespace for Livewire component classes in
-	| your application. This value will change where component auto-discovery
+	| This value sets the root class namespace for Livewire components classes in
+	| your application. This value will change where components auto-discovery
 	| finds components. It's also referenced by the file creation commands.
 	|
 	*/
@@ -20,9 +20,9 @@ return [
 	| View Path
 	|---------------------------------------------------------------------------
 	|
-	| This value is used to specify where Livewire component Blade templates are
+	| This value is used to specify where Livewire components Blade templates are
 	| stored when running file creation commands like `artisan make:livewire`.
-	| It is also used if you choose to omit a component's render() method.
+	| It is also used if you choose to omit a components's render() method.
 	|
 	*/
 
@@ -32,7 +32,7 @@ return [
 	|---------------------------------------------------------------------------
 	| Layout
 	|---------------------------------------------------------------------------
-	| The view that will be used as the layout when rendering a single component
+	| The view that will be used as the layout when rendering a single components
 	| as an entire page via `Route::get('/post/create', CreatePost::class);`.
 	| In this case, the view returned by CreatePost will render into $slot.
 	|
@@ -45,7 +45,7 @@ return [
 	| Lazy Loading Placeholder
 	|---------------------------------------------------------------------------
 	| Livewire allows you to lazy load components that would otherwise slow down
-	| the initial page load. Every component can have a custom placeholder or
+	| the initial page load. Every components can have a custom placeholder or
 	| you can define the default placeholder view for all components below.
 	|
 	*/
@@ -77,7 +77,7 @@ return [
 	| Render On Redirect
 	|---------------------------------------------------------------------------
 	|
-	| This value determines if Livewire will run a component's `render()` method
+	| This value determines if Livewire will run a components's `render()` method
 	| after a redirect has been triggered using something like `redirect(...)`
 	| Setting this to true will render the view once more before redirecting
 	|

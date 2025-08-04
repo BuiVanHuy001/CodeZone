@@ -20,7 +20,7 @@ class AuthenticationController
 
     public function showRegistrationForm(): Factory|Application|View
     {
-        return view('client.register');
+	    return view('client.auth.register');
     }
 
     public function login(): RedirectResponse
@@ -30,7 +30,7 @@ class AuthenticationController
 
     public function showLoginForm(): Factory|Application|View
     {
-        return view('client.login');
+	    return view('client.auth.login');
     }
 
 

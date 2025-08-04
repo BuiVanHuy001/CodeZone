@@ -12,8 +12,8 @@
     <title>{{ $title ?? 'CodeZone' }}</title>
 </head>
 <body class="rbt-header-sticky">
-@persist('header')
-<x-header/>
+@persist('header-banner')
+<x-client.header.index/>
 <div class="rbt-page-banner-wrapper">
     <div class="rbt-banner-image"></div>
 </div>
@@ -22,12 +22,12 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                @persist('dashboard.banner-top')
-                <x-dashboard.banner-top/>
+                @persist('banner-top')
+                <x-client.dashboard.banner-top/>
                 @endpersist
                 <div class="row g-5">
                     <div class="col-lg-3">
-                        <x-client.dashboard.sidebar/>
+                        <x-client.dashboard.sidebar.index/>
                     </div>
 
                     <div class="col-lg-9">
@@ -39,13 +39,13 @@
     </div>
 </div>
 
-@persist('footer')
+@persist('footer-separator')
 <div class="rbt-separator-mid">
     <div class="container">
         <hr class="rbt-separator m-0">
     </div>
 </div>
-<x-footer/>
+<x-client.footer/>
 <div class="rbt-progress-parent">
     <svg class="rbt-back-circle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">
         <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
