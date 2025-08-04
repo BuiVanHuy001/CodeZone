@@ -70,10 +70,11 @@ php artisan serve & npm run dev
 
 ## 🔐 Default Login Accounts (if seeded)
 
-| Role       | Email               | Password  |
-|------------|---------------------|-----------|
-| Student    | student@test.com    | password  |
-| Instructor | instructor@test.com | password  |
+| Role         | Email               | Password  |
+|--------------|---------------------|-----------|
+| Student      | oanh@zalo.com       | password  |
+| Instructor   | huy@codezone.com    | password  |
+| Organization | hi@zalo.com         | password  |
 
 ---
 
