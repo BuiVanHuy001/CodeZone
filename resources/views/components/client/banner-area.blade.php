@@ -10,7 +10,7 @@
                             <h1 class="title">The Largest <span class="color-primary">Online Learning Platform</span> to Empower Your Career Growth.</h1>
                             <p class="description">Join top instructors, enroll in quality courses, and master new skills at your own pace.</p>
                             <div class="slider-btn">
-                                <a class="rbt-btn btn-gradient hover-icon-reverse" href="{{ route('test') }}">
+                                <a class="rbt-btn btn-gradient hover-icon-reverse" href="#">
                                 <span class="icon-reverse-wrapper">
                                     <span class="btn-text">View courses</span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
