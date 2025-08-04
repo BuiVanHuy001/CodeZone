@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "050bba5575bce2c402bde8a1cabed64e",
+    "content-hash": "b2f01b79a3a35bfd4d1c06eb73ba6631",
     "packages": [
         {
             "name": "brick/math",
@@ -65,6 +65,51 @@
                 }
             ],
             "time": "2025-03-29T13:50:30+00:00"
+        },
+        {
+            "name": "buivanhuy/sweetalert-laravel",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BuiVanHuy001/sweetalert-laravel.git",
+                "reference": "4dfcfbed31fbe249ee3c9a0f47701d47a8a8b3c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BuiVanHuy001/sweetalert-laravel/zipball/4dfcfbed31fbe249ee3c9a0f47701d47a8a8b3c0",
+                "reference": "4dfcfbed31fbe249ee3c9a0f47701d47a8a8b3c0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=8.0",
+                "php": ">=8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Swal": "SweetAlert\\Facades\\Swal"
+                    },
+                    "providers": [
+                        "SweetAlert\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SweetAlert\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "SweetAlert2 integration for Laravel (supports Livewire, Blade)",
+            "support": {
+                "issues": "https://github.com/BuiVanHuy001/sweetalert-laravel/issues",
+                "source": "https://github.com/BuiVanHuy001/sweetalert-laravel/tree/v1.0.1"
+            },
+            "time": "2025-08-03T08:59:09+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -2507,16 +2552,16 @@
         },
         {
             "name": "livewire/livewire",
-            "version": "v3.6.3",
+            "version": "v3.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/livewire/livewire.git",
-                "reference": "56aa1bb63a46e06181c56fa64717a7287e19115e"
+                "reference": "ef04be759da41b14d2d129e670533180a44987dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/livewire/livewire/zipball/56aa1bb63a46e06181c56fa64717a7287e19115e",
-                "reference": "56aa1bb63a46e06181c56fa64717a7287e19115e",
+                "url": "https://api.github.com/repos/livewire/livewire/zipball/ef04be759da41b14d2d129e670533180a44987dc",
+                "reference": "ef04be759da41b14d2d129e670533180a44987dc",
                 "shasum": ""
             },
             "require": {
@@ -2571,7 +2616,7 @@
             "description": "A front-end framework for Laravel.",
             "support": {
                 "issues": "https://github.com/livewire/livewire/issues",
-                "source": "https://github.com/livewire/livewire/tree/v3.6.3"
+                "source": "https://github.com/livewire/livewire/tree/v3.6.4"
             },
             "funding": [
                 {
@@ -2579,7 +2624,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-12T22:26:52+00:00"
+            "time": "2025-07-17T05:12:15+00:00"
         },
         {
             "name": "maatwebsite/excel",
@@ -4708,47 +4753,6 @@
                 }
             ],
             "time": "2025-02-21T14:16:57+00:00"
-        },
-        {
-            "name": "sweetalert2/laravel",
-            "version": "0.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sweetalert2/sweetalert2-laravel.git",
-                "reference": "dc4d153a767cbfeb698e1288ce30b6359d009716"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sweetalert2/sweetalert2-laravel/zipball/dc4d153a767cbfeb698e1288ce30b6359d009716",
-                "reference": "dc4d153a767cbfeb698e1288ce30b6359d009716",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "^11.0 || ^12.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "SweetAlert2\\Laravel\\ServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "SweetAlert2\\Laravel\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Official SweetAlert2 integration for Laravel framework",
-            "support": {
-                "issues": "https://github.com/sweetalert2/sweetalert2-laravel/issues",
-                "source": "https://github.com/sweetalert2/sweetalert2-laravel/tree/0.1.0"
-            },
-            "time": "2025-04-23T06:44:32+00:00"
         },
         {
             "name": "symfony/clock",

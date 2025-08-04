@@ -8,5 +8,5 @@ class Reaction extends Model
 {
     public static array $ACTIONS = ['like', 'dislike'];
 
-    public static array $REACTABLE_TYPES = ['comment', 'course', 'review', 'blogs'];
+    public static array $REACTABLE_TYPES = ['comment', 'builders', 'review', 'blogs'];
 }

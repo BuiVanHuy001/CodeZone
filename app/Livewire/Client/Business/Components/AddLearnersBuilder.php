@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Client\Business\Components;
 
-use App\Models\OrganizationUsers;
+use App\Models\OrganizationUser;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -20,7 +20,7 @@ class AddLearnersBuilder extends Component {
         if (!auth()->user()->isBusiness()) {
             return [];
         }
-        return OrganizationUsers::where('organization_id', auth()->user()->id)->with('user')->get();
+	    return OrganizationUser::where('organization_id', auth()->user()->id)->with('user')->get();
     }
 
     public function addEmployeeAssign(string $userId): void

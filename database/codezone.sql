@@ -273,7 +273,7 @@ VALUES ('9303a0c5-874a-4cac-a613-851e1590a4bf', 'Final Exam', 'final-exam', 1, 5
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('0d0608c9-a65c-4d51-b773-a36d046abd19', 'Leetcode 26 Solution', 'leetcode-26-solution', '',
-        '/storage/course/videos/GX5FBNDGZsPeNWFEIA3FUGL0T5t52Kc9M1eti6uQ.mp4', 1, 730, true, 'video', null,
+        '/storage/builders/videos/GX5FBNDGZsPeNWFEIA3FUGL0T5t52Kc9M1eti6uQ.mp4', 1, 730, true, 'video', null,
         '7605e1be-b401-4e9b-a518-64708c0aa037', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
@@ -437,7 +437,7 @@ VALUES ('2e312400-3486-4405-b4d3-e4f720a7da55', 'DSA Fundamentals Checkpoint', '
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('304d5b6b-9034-49dd-9831-e342a8fbf685', 'Introduction to Data Structures', 'introduction-to-data-structures',
-        '', '/storage/course/videos/BiM0GH2njoh10BKeCmXcM2Y3BomUvdO97bImxLrr.mp4', 0, 339, false, 'video', null,
+        '', '/storage/builders/videos/BiM0GH2njoh10BKeCmXcM2Y3BomUvdO97bImxLrr.mp4', 0, 339, false, 'video', null,
         '3fce986b-bdc9-4666-88af-3cd2edf069b0', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
@@ -640,17 +640,17 @@ Mastering Big O helps you write **efficient algorithms** and **ace technical int
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('65c89d7b-98d4-43b5-9a1d-9150aca50d18', 'Dynamic Programming part 1', 'dynamic-programming-part-1', '',
-        '/storage/course/videos/nsrfivqfMeYlrO09ExBlH0PG1RH39K4vu8E4SqNm.mp4', 0, 399, false, 'video', null,
+        '/storage/builders/videos/nsrfivqfMeYlrO09ExBlH0PG1RH39K4vu8E4SqNm.mp4', 0, 399, false, 'video', null,
         '20fa6d1b-e347-4d44-a5dc-20d82abdf007', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('96fd5bcb-f2b4-44b7-9a3c-3977fe79b29f', 'Leetcode 414 Solution', 'leetcode-414-solution', '',
-        '/storage/course/videos/M4N1IKQV8U9sEDTmCyrzthJDU1jjGY5hZ9xzTf2u.mp4', 3, 1138, false, 'video', null,
+        '/storage/builders/videos/M4N1IKQV8U9sEDTmCyrzthJDU1jjGY5hZ9xzTf2u.mp4', 3, 1138, false, 'video', null,
         '7605e1be-b401-4e9b-a518-64708c0aa037', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('a8d866b2-5ce5-4c88-aaa9-565e4ca546fd', 'Linked Lists part 1', 'linked-lists-part-1', '',
-        '/storage/course/videos/2La54hMf1hQpE5QPSLTg8HTApIO7MIT9QMi1Ueim.mp4', 0, 816, false, 'video', null,
+        '/storage/builders/videos/2La54hMf1hQpE5QPSLTg8HTApIO7MIT9QMi1Ueim.mp4', 0, 816, false, 'video', null,
         '23493ff1-bdfa-4c5b-be87-8d7c91d5c0ba', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
@@ -659,7 +659,7 @@ VALUES ('b676262a-7dff-4a29-beb0-30736ef17eba', 'Advanced DSA Challenge', 'advan
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('bd7fee7a-477c-4d24-8a22-31ab82e8ca27', 'What is Big O Notation?', 'what-is-big-o-notation', '',
-        '/storage/course/videos/Ki8v9pwKTZXO0XUblAKY3d6kwaxNHUQUQPef6dxg.mp4', 0, 1183, false, 'video', null,
+        '/storage/builders/videos/Ki8v9pwKTZXO0XUblAKY3d6kwaxNHUQUQPef6dxg.mp4', 0, 1183, false, 'video', null,
         '464b9331-6c2a-4a3c-bc9c-dad1ef415149', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
@@ -821,11 +821,11 @@ This document covers **core DP concepts**, **implementation strategies**, and **
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('f3a79cac-7fca-4882-b608-472460392b65', 'Linked Lists part 2', 'linked-lists-part-2', '',
-        '/storage/course/videos/gcopPvszbJWSwN5CnaMxm9hmLQOITPuadSNsqN0Y.mp4', 1, 239, false, 'video', null,
+        '/storage/builders/videos/gcopPvszbJWSwN5CnaMxm9hmLQOITPuadSNsqN0Y.mp4', 1, 239, false, 'video', null,
         '23493ff1-bdfa-4c5b-be87-8d7c91d5c0ba', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('f60a2afe-27bd-416a-91d4-bdd3255f6a7c', 'Course outline', 'course-outline', '# Data Structures Mastery (53 Hours) - Detailed Curriculum
+VALUES ('f60a2afe-27bd-416a-91d4-bdd3255f6a7c', 'Course outline', 'builders-outline', '# Data Structures Mastery (53 Hours) - Detailed Curriculum
 
 ## Module 1: Foundations (5 Hours)
 1. **Introduction to Data Structures**
@@ -909,7 +909,7 @@ VALUES ('f60a2afe-27bd-416a-91d4-bdd3255f6a7c', 'Course outline', 'course-outlin
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('f7bc7faf-9ac5-42f0-8a41-b10d7f0aa0ed', 'Dynamic Programming part 2', 'dynamic-programming-part-2', '',
-        '/storage/course/videos/6sYbUn79mCiqBqe0sgciBmRJxsXy6CnMhtardJc3.mp4', 1, 239, false, 'video', null,
+        '/storage/builders/videos/6sYbUn79mCiqBqe0sgciBmRJxsXy6CnMhtardJc3.mp4', 1, 239, false, 'video', null,
         '20fa6d1b-e347-4d44-a5dc-20d82abdf007', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)

@@ -13718,7 +13718,7 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
 }
 
 /*-------------------------------
-    Offcanvas Menu Sidebar
+    Offcanvas Menu OverView
 --------------------------------*/
 .side-menu,
 .rbt-cart-side-menu {
@@ -25340,7 +25340,7 @@ figcaption {
 }
 
 /*---------------------------
-    Blog Sidebar Styles
+    Blog OverView Styles
 ----------------------------*/
 .rbt-categori-leftbar {
     display: flex;
@@ -29616,7 +29616,7 @@ blockquote.has-text-align-right cite,
 }
 
 /*-------------------------
-Course Sidebar
+Course OverView
 -------------------------*/
 .course-sidebar-top {
     margin-top: -500px;
@@ -29836,10 +29836,10 @@ Course Sidebar
 }
 
 /*-----------------------
-    Course Sidebar
+    Course OverView
 ------------------------*/
 /*-----------------------------
-    Rbt Sidebar Common Style
+    Rbt OverView Common Style
 --------------------------------*/
 .rbt-check-group {
     position: relative;
@@ -29946,7 +29946,7 @@ Course Sidebar
 }
 
 /*---------------------------------
-    Rbt Sidebar Widget Wrapper
+    Rbt OverView Widget Wrapper
 -----------------------------------*/
 .rbt-sidebar-widget-wrapper {
     box-shadow: var(--shadow-1);

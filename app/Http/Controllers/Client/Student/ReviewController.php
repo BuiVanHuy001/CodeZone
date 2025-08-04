@@ -15,7 +15,7 @@ class ReviewController extends Controller
     //    public function store(Request $request, string $reviewable_type, string $reviewable_id)
     //    {
     //        $allowedTypes = [
-    //            'course' => Course::class,
+    //            'builders' => Course::class,
     //            'lesson' => \App\Models\Lesson::class,
     //        ];
     //

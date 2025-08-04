@@ -3,7 +3,9 @@
     <div class="row">
         <div class="col-6">
             <h5 class="rbt-title-style-3">{{ $programmingPractice->title }}</h5>
-            @markdown($programmingPractice->description)
+            <div class="markdown-body">
+                @markdown($programmingPractice->description)
+            </div>
         </div>
         <div class="col-6">
             <h5>Select programming language</h5>

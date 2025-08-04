@@ -3,16 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
-use App\View\Components\banner;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasSlug;
 
     protected $fillable = ['name', 'email', 'password', 'slug', 'avatar_url'];
@@ -21,7 +19,32 @@ class User extends Authenticatable
 
     public static array $ROLES = ['student', 'admin', 'instructor', 'super_admin', 'organization'];
 
-    public static array $STATUSES = ['active', 'pending', 'banned', 'suspended', 'rejected', 'deleted'];
+	public static array $STATUSES = [
+		'active' => [
+			'label' => 'Active',
+			'class' => 'bg-color-success-opacity color-success'
+		],
+		'pending' => [
+			'label' => 'Pending',
+			'class' => 'bg-color-warning-opacity color-warning'
+		],
+		'banned' => [
+			'label' => 'Banned',
+			'class' => 'bg-color-danger-opacity color-danger'
+		],
+		'suspended' => [
+			'label' => 'Suspended',
+			'class' => 'bg-color-danger-opacity color-danger'
+		],
+		'rejected' => [
+			'label' => 'Rejected',
+			'class' => 'bg-color-secondary-opacity color-secondary'
+		],
+		'deleted' => [
+			'label' => 'Deleted',
+			'class' => 'bg-color-secondary-opacity color-secondary'
+		],
+	];
 
     protected function casts(): array
     {
@@ -43,6 +66,16 @@ class User extends Authenticatable
         return $this->hasMany(TrackingProgress::class);
     }
 
+	public function getStatusClassAttribute(): string
+	{
+		return self::$STATUSES[$this->status]['class'] ?? 'bg-color-secondary-opacity color-secondary';
+	}
+
+	public function getStatusLabelAttribute(): string
+	{
+		return self::$STATUSES[$this->status]['label'] ?? 'Unknown';
+	}
+
     public function calculateCourseProgress(Course $course): float|int
     {
         $totalLessons = $course->lesson_count;
@@ -62,14 +95,19 @@ class User extends Authenticatable
         return round(($completedLessons / $totalLessons) * 100, 2);
     }
 
-    /**
-     * Get all courses that user enrolled include business and normal courses.
-     *
-     * @return HasMany
-     */
-    public function getAllEnrollmentCourse()
+	public function organizationProfile(): HasOne
+	{
+		return $this->hasOne(OrganizationProfile::class, 'user_id');
+	}
+
+	public function getEnrolledBusinessCourses()
     {
-        //
+
+    }
+
+	public function getEnrollerCourse()
+	{
+
     }
 
     /**
@@ -104,12 +142,12 @@ class User extends Authenticatable
 
     public function idEmployee(User $organization): bool
     {
-        return OrganizationUsers::where('organization_id', $organization->id)->where('user_id', $this->id)->exists();
+	    return OrganizationUser::where('organization_id', $organization->id)->where('user_id', $this->id)->exists();
     }
 
     public function isEmployeeOfThisBusiness(User $user)
     {
-        return OrganizationUsers::where('organization_id', $this->id)->where('user_id', $user->id)->exists();
+	    return OrganizationUser::where('organization_id', $this->id)->where('user_id', $user->id)->exists();
     }
 
     public function isEnrolledThisCourse(Course $course): bool

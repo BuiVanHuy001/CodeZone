@@ -31,7 +31,11 @@ abstract class SocialLoginService implements SocialLoginStrategyInterface
 
             auth()->login($authUser, true);
 
-            return redirect()->intended()->with('sweetalert2', 'Logged in with ' . $this->provider);
+	        return redirect()->intended()->with('swal', [
+		        'title' => 'Login Successful',
+		        'text' => 'Welcome back, ' . $authUser->name . '!',
+		        'icon' => 'success',
+	        ]);
 
         } catch (\Exception $e) {
             if (!auth()->check()) {
