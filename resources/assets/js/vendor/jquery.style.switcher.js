@@ -309,3 +309,14 @@
         });
     });
 })(jQuery);
+
+document.addEventListener('livewire:navigated', () => {
+    $('#my_switcher').styleSwitcher();
+
+    const activeStyle = Cookies.get("styleCookieName");
+    if (activeStyle === "dark") {
+        $("body").removeClass("active-light-mode").addClass("active-dark-mode").attr("data-theme", "dark");
+    } else if (activeStyle === "light") {
+        $("body").removeClass("active-dark-mode").addClass("active-light-mode").attr("data-theme", "light");
+    }
+});

@@ -11,7 +11,7 @@
     --fgColor-accent: Highlight;
 }
 
-.markdown-body, [data-theme="dark"] {
+[data-theme="dark"] .markdown-body {
     color-scheme: dark;
     --focus-outlineColor: #1f6feb;
     --fgColor-default: #f0f6fc;
@@ -65,7 +65,7 @@
     --color-prettylights-syntax-sublimelinter-gutter-mark: #3d444d;
 }
 
-.markdown-body, [data-theme="light"] {
+[data-theme="light"] .markdown-body {
     color-scheme: light;
     --focus-outlineColor: #0969da;
     --fgColor-default: #1f2328;

@@ -3,8 +3,11 @@
     <div class="row">
         <div class="col-6">
             <h5 class="rbt-title-style-3">{{ $programmingPractice->title }}</h5>
-            <div class="markdown-body">
-                @markdown($programmingPractice->description)
+            <div class="markdown-body mt-4 has-show-more">
+                <div class="has-show-more-inner-content">
+                    @markdown($programmingPractice->description)
+                </div>
+                <div class="rbt-show-more-btn">Show More</div>
             </div>
         </div>
         <div class="col-6">
@@ -31,7 +34,7 @@
 </div>
 @push('scripts')
     <script>
-        document.addEventListener('livewire:initialized', () => {
+        document.addEventListener('livewire:navigated', () => {
             let editorView;
             const userCodeInput = document.getElementById('code-input');
             const codeTemplates = @json($codeTemplates);
@@ -110,7 +113,6 @@
             });
 
             Livewire.on('programming-practice-init', (event) => {
-                console.log('Programming practice initialized with event');
                 initOrUpdateEditor(event[0][0], codeTemplates[event[0][0]]);
             });
         });

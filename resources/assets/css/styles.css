@@ -86,7 +86,7 @@
     --dark-shadow-2: 0px 4px 52px 0px rgba(2, 5, 17, 0.15);
     --dark-shadow-3: 0px 4px 52px 0px rgba(2, 5, 17, 0.20);
     --dark-shadow-4: 0px 4px 52px rgba(2, 5, 17, 0.20);
-    --dark-shadow-5: 0px 4px 27.9px rgba(47, 87, 239, 0.15);
+    --dark-shadow-5: 0px 4px 28px rgba(47, 87, 239, 0.15);
     --shadow-primary: 0px 4px 10px rgba(37, 47, 63, 0.1);
     --shadow-light: 0 2px 6px 0 rgba(0, 0, 0, 0.05);
     --shadow-dark: 0 2px 6px 0 rgba(0, 0, 0, 0.2);
@@ -104,8 +104,8 @@
     --transition-2: 256ms ease-in-out;
     --transition-3: transform .85s cubic-bezier(.23, 1, .32, 1), background .3s, border .3s, border-radius .3s, box-shadow .3s;
     --transition-4: all .25s cubic-bezier(.645, .045, .355, 1);
-    --font-primary: "Euclid Circular";
-    --font-secondary: "Euclid Circular";
+    --font-primary: "SF Pro Display";
+    --font-secondary: "SF Pro Display";
     --font-alt: "Source Serif Pro", serif;
     --font-size-b1: 24px;
     --font-size-b2: 18px;
@@ -135,7 +135,7 @@
 }
 
 /**
- * Reset Styels
+ * Reset Styles
  */
 * {
     -webkit-box-sizing: border-box;
@@ -503,7 +503,7 @@ html {
 body {
     font-size: 18px;
     line-height: 1.5;
-    font-family: var(--font-primary);
+    font-family: var(--font-primary), serif;
     color: var(--color-body);
     font-weight: 400;
     scroll-behavior: auto;
@@ -8349,10 +8349,8 @@ textarea:-ms-input-placeholder {
     position: absolute;
     bottom: -2px;
     left: 0;
-    background: url(../images/bg/banner-bg-shape-1.png);
     background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    background: url(../images/bg/banner-bg-shape-1.png) no-repeat center center;
     width: 100%;
     height: 148px;
     z-index: -1;
@@ -10973,10 +10971,7 @@ Primary style
 
 @media only screen and (max-width: 575px) {
     .header-space-betwween {
-        padding-left: 0;
-        padding-right: 0;
-        padding-top: 0;
-        padding-bottom: 0;
+        padding: 0;
     }
 }
 
@@ -11400,10 +11395,9 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
     border: 0 none;
     box-shadow: none;
     height: inherit;
-    padding: 10px 20px;
     border-radius: inherit;
     line-height: 23px;
-    padding-right: 40px;
+    padding: 10px 40px 10px 20px;
     background-color: transparent;
 }
 
@@ -11415,8 +11409,7 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
 .search-field input {
     height: auto;
     box-shadow: none;
-    padding: 0 20px;
-    padding-right: 65px;
+    padding: 0 65px 0 20px;
     line-height: 47px;
 }
 
@@ -12976,7 +12969,7 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
     display: inline-block;
     position: relative;
     z-index: 2;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .rbt-badge-card::before {
@@ -13039,8 +13032,7 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
     display: flex;
     flex-wrap: wrap;
     background: #f5f5fa;
-    margin: -25px;
-    margin-top: 20px;
+    margin: 20px -25px -25px;
     padding: 16px 25px;
     justify-content: space-between;
 }
@@ -13201,8 +13193,7 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
 }
 
 .demo-single .inner .content {
-    padding: 10px;
-    padding-bottom: 0;
+    padding: 10px 10px 0;
     position: absolute;
     bottom: -30px;
     width: 100%;
@@ -14175,7 +14166,7 @@ fieldset:disabled {
     line-height: 60px;
     color: var(--color-white);
     font-size: 16px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     font-weight: 500;
     display: inline-block;
     position: relative;
@@ -14579,7 +14570,7 @@ fieldset:disabled {
     -webkit-transition: var(--transition);
     transition: var(--transition);
     border-radius: 50%;
-    border: 1.5px solid var(--color-white);
+    border: 2px solid var(--color-white);
 }
 
 .rbt-btn.with-animation::before {
@@ -14837,7 +14828,6 @@ button.btn-underline-gradient {
     font-size: 16px;
     letter-spacing: 1px;
     font-weight: 500;
-    display: inline-block;
     position: relative;
     z-index: 1;
     transition: all 0.4s ease-in-out;
@@ -15239,7 +15229,7 @@ span.transparent-button:hover i {
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     opacity: 0.5;
     margin-bottom: 6px;
 }
@@ -15248,7 +15238,7 @@ span.transparent-button:hover i {
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     opacity: 0.5;
     margin-bottom: 0;
 }
@@ -15265,7 +15255,7 @@ span.transparent-button:hover i {
     padding-bottom: 14px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     opacity: 0.5;
     margin-bottom: 6px;
     border-bottom: 1px solid var(--color-border);
@@ -15385,24 +15375,21 @@ span.transparent-button:hover i {
 }
 
 .rbt-article-content-wrapper {
-    padding: 50px 100px;
     background: #fff;
     box-shadow: var(--shadow-2);
-    padding-top: 0;
+    padding: 0 100px 50px;
     overflow: hidden;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .rbt-article-content-wrapper {
-        padding: 50px 30px;
-        padding-top: 0;
+        padding: 0 30px 50px;
     }
 }
 
 @media only screen and (max-width: 767px) {
     .rbt-article-content-wrapper {
-        padding: 50px 30px;
-        padding-top: 0;
+        padding: 0 30px 50px;
     }
 }
 
@@ -15501,14 +15488,14 @@ span.transparent-button:hover i {
     flex-direction: column;
     position: relative;
     margin: 0 auto;
-    padding: 60px 0px 235px;
+    padding: 60px 0 235px;
     width: 100%;
     overflow: hidden;
 }
 
 @media only screen and (max-width: 767px) {
     .rbt-page-banner-wrapper {
-        padding: 40px 0px 180px;
+        padding: 40px 0 180px;
     }
 }
 
@@ -16184,12 +16171,11 @@ span.transparent-button:hover i {
 }
 
 .rbt-card.card-list-2 .rbt-card-body {
-    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     flex-basis: 60%;
-    padding-left: 30px;
+    padding: 0 0 0 30px;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -16345,23 +16331,19 @@ span.transparent-button:hover i {
 }
 
 .rbt-card.elegant-course .rbt-meta {
-    margin: -3px;
-    margin-bottom: -6px;
+    margin: -3px -3px -6px;
 }
 
 .rbt-card.elegant-course .rbt-meta li {
-    margin: 3px;
-    margin-bottom: 6px;
+    margin: 3px 3px 6px;
 }
 
 .rbt-card.elegant-course .rbt-meta-badge {
-    margin: -3px;
-    margin-bottom: -6px;
+    margin: -3px -3px -6px;
 }
 
 .rbt-card.elegant-course .rbt-meta-badge li {
-    margin: 3px;
-    margin-bottom: 6px;
+    margin: 3px 3px 6px;
 }
 
 .rbt-card.elegant-course .rbt-meta-badge li .rbt-badge {
@@ -16396,8 +16378,7 @@ span.transparent-button:hover i {
 }
 
 .rbt-card.event-grid-card .rbt-meta {
-    margin: -3px;
-    margin-bottom: 10px;
+    margin: -3px -3px 10px;
 }
 
 .rbt-card.event-grid-card .rbt-meta li {
@@ -16792,10 +16773,8 @@ span.transparent-button:hover i {
 .rbt-flipbox .rbt-flipbox-wrap .rbt-flipbox-face {
     transform-style: preserve-3d;
     backface-visibility: hidden;
-    backface-visibility: hidden;
     transition: 0.6s;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transform-style: preserve-3d;
 }
 
 .rbt-flipbox .rbt-flipbox-wrap .rbt-flipbox-front .content > a {
@@ -16826,7 +16805,6 @@ span.transparent-button:hover i {
     flex-direction: column;
     align-items: baseline;
     justify-content: space-between;
-    text-align: center;
     border-radius: 6px;
     text-align: left;
 }
@@ -16837,7 +16815,6 @@ span.transparent-button:hover i {
 }
 
 .rbt-flipbox:hover .rbt-flipbox-wrap .rbt-flipbox-face {
-    backface-visibility: inherit;
     backface-visibility: inherit;
 }
 
@@ -16861,7 +16838,6 @@ span.transparent-button:hover i {
 .service-card-5 .inner {
     border-radius: 5px;
     padding: 20px;
-    transition: 0.4s;
     display: flex;
     align-items: center;
     transition: 0.35s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.35s 0.1s cubic-bezier(0.23, 1, 0.32, 1);
@@ -17174,7 +17150,6 @@ span.transparent-button:hover i {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 2;
     transition: 0.5s;
     opacity: 0;
     width: 58px;
@@ -17997,9 +17972,8 @@ span.transparent-button:hover i {
     background-color: transparent;
     border-bottom: 0 none;
     box-shadow: none;
-    padding: 20px 30px;
     margin-bottom: 0;
-    padding-right: 38px;
+    padding: 20px 38px 20px 30px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -18046,7 +18020,7 @@ span.transparent-button:hover i {
 .rbt-accordion-style .card .card-header button::before {
     position: absolute;
     content: "\e996";
-    font-family: "feather" !important;
+    font-family: "feather", serif !important;
     right: -18px;
     top: 50%;
     transform: translateY(-50%);
@@ -18092,7 +18066,7 @@ span.transparent-button:hover i {
 
 .rbt-accordion-style.rbt-accordion-02 .card .card-header {
     border-bottom: 1px solid var(--color-border);
-    padding: 0px 20px 20px 0;
+    padding: 0 20px 20px 0;
 }
 
 .rbt-accordion-style.rbt-accordion-02 .card .card-header button::before {
@@ -18145,8 +18119,7 @@ span.transparent-button:hover i {
 }
 
 .rbt-accordion-style.rbt-accordion-04 .card .card-header {
-    padding: 15px 20px;
-    padding-right: 38px;
+    padding: 15px 38px 15px 20px;
     border-radius: var(--radius) !important;
 }
 
@@ -18163,7 +18136,7 @@ span.transparent-button:hover i {
 
 .rbt-accordion-style.rbt-accordion-05 .card .card-header {
     padding: 0;
-    border-radius: none !important;
+    border-radius: 0 !important;
 }
 
 .rbt-accordion-style.rbt-accordion-05 .card .card-header button {
@@ -18177,7 +18150,7 @@ span.transparent-button:hover i {
 
 .rbt-accordion-style.rbt-accordion-05 .card .card-body {
     border-top: 0 none;
-    padding: 0px;
+    padding: 0;
     margin-top: 12px;
     background: transparent;
 }
@@ -18269,7 +18242,6 @@ span.transparent-button:hover i {
     background: linear-gradient(90deg, var(--color-border-2), var(--color-border-2));
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-background-clip: text;
     -webkit-text-fill-color: rgba(255, 255, 255, 0.001);
     white-space: nowrap;
 }
@@ -18491,8 +18463,7 @@ span.transparent-button:hover i {
 
 .rbt-counterup .inner .icon,
 .rbt-counterup .inner .rbt-round-icon {
-    margin: 0 auto;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
 }
 
 .rbt-counterup .inner .icon img,
@@ -18520,7 +18491,6 @@ span.transparent-button:hover i {
     font-weight: 700;
     font-size: 50px;
     line-height: 56px;
-    margin-bottom: 0;
     position: relative;
     display: inline-block;
     padding: 0 24px;
@@ -19027,7 +18997,7 @@ span.transparent-button:hover i {
 }
 
 .pricing-table.style-3 {
-    padding: 60px 0px;
+    padding: 60px 0;
     text-align: center;
     background: transparent;
     box-shadow: none;
@@ -19035,7 +19005,7 @@ span.transparent-button:hover i {
 
 @media only screen and (max-width: 767px) {
     .pricing-table.style-3 {
-        padding: 30px 0px;
+        padding: 30px 0;
     }
 }
 
@@ -19116,13 +19086,12 @@ span.transparent-button:hover i {
 
 .pricing-badge {
     background: var(--color-secondary);
-    padding: 0 17px;
     position: absolute;
     right: 0;
     top: 15px;
     height: 30px;
     line-height: 30px;
-    padding-left: 25px;
+    padding: 0 17px 0 25px;
 }
 
 .pricing-badge span {
@@ -19219,8 +19188,7 @@ span.transparent-button:hover i {
 
 @media only screen and (max-width: 767px) {
     .advance-pricing .pricing-right {
-        padding: 60px 20px;
-        padding-bottom: 40px;
+        padding: 60px 20px 40px;
     }
 }
 
@@ -19232,13 +19200,12 @@ span.transparent-button:hover i {
     width: 22px;
     height: 22px;
     background: var(--color-success);
-    margin: 0 auto;
     line-height: 22px;
     text-align: center;
     border-radius: 100%;
     color: var(--color-white);
     font-size: 14px;
-    margin-right: 10px;
+    margin: 0 10px 0 auto;
     display: inline-block;
 }
 
@@ -19283,11 +19250,11 @@ span.transparent-button:hover i {
     background: var(--color-white);
     box-shadow: var(--shadow-2);
     border-radius: 500px;
-    padding: 0px 20px;
+    padding: 0 20px;
     font-size: 12px;
     font-weight: 500;
     z-index: 1;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     transition: 0.4s;
     height: 35px;
     line-height: 34px;
@@ -19305,7 +19272,7 @@ span.transparent-button:hover i {
     padding: 0 22px;
     background: var(--color-gray-light);
     font-size: 14px;
-    letter-spacing: 0.3px;
+    letter-spacing: 0;
     border-radius: 6px;
     color: var(--color-body);
 }
@@ -19315,7 +19282,7 @@ span.transparent-button:hover i {
     height: 30px;
     line-height: 30px;
     font-size: 12px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .rbt-badge.variation-03 {
@@ -19346,8 +19313,7 @@ span.transparent-button:hover i {
 }
 
 .rbt-badge-2 .image {
-    margin: 0;
-    margin-right: 10px;
+    margin: 0 10px 0 0;
 }
 
 .rbt-badge-2 strong {
@@ -19395,7 +19361,7 @@ span.transparent-button:hover i {
     color: #ffffff;
     display: block;
     font-weight: var(--f-bold);
-    font-family: var(--font-secondary);
+    font-family: var(--font-secondary), serif;
 }
 
 .rbt-badge-3::before {
@@ -19403,10 +19369,8 @@ span.transparent-button:hover i {
     width: 100%;
     height: 100%;
     position: absolute;
-    background: url(../images/icons/offer-badge-bg-color.svg);
     background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    background: url(../images/icons/offer-badge-bg-color.svg) no-repeat center center;
     left: 0;
     top: 0;
     z-index: -1;
@@ -19425,7 +19389,7 @@ span.transparent-button:hover i {
     padding: 6px 10px;
     background: var(--white-opacity);
     font-size: 14px;
-    letter-spacing: 0.3px;
+    letter-spacing: 0;
     border-radius: 6px;
     color: var(--color-heading);
     position: relative;
@@ -19470,9 +19434,7 @@ span.transparent-button:hover i {
     font-size: 14px;
     line-height: 15px;
     font-weight: 500;
-    color: var(--color-heading);
     margin-bottom: 15px;
-    display: inline-block;
     padding: 10px 20px;
     border-radius: 100px;
     text-transform: uppercase;
@@ -19519,9 +19481,7 @@ span.transparent-button:hover i {
 .team-style-default .inner .content,
 .rbt-default-card .inner .content {
     text-align: center;
-    padding: 20px;
-    padding-top: 85px;
-    padding-bottom: 35px;
+    padding: 85px 20px 35px;
 }
 
 .team-style-default .inner .content .title,
@@ -19587,7 +19547,7 @@ span.transparent-button:hover i {
     display: block;
     font-size: 14px;
     margin-bottom: 12px;
-    letter-spacing: 0.6px;
+    letter-spacing: 1px;
     font-style: italic;
 }
 
@@ -20062,12 +20022,10 @@ span.transparent-button:hover i {
 .rbt-team-tab-thumb {
     list-style: none;
     padding: 0;
-    margin: 0;
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    margin: 0px auto;
-    margin-bottom: -30px;
+    margin: 0 auto -30px;
     outline: none;
     border: 0 none;
 }
@@ -20162,12 +20120,11 @@ span.transparent-button:hover i {
 .rbt-team-tab-thumb li .rbt-team-thumbnail .thumb::before {
     content: "\e94b";
     position: absolute;
-    font-family: "feather" !important;
+    font-family: "feather", serif !important;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--color-white);
-    font-size: 18px;
     z-index: 2;
     font-size: 28px;
     opacity: 0;
@@ -20315,7 +20272,7 @@ span.transparent-button:hover i {
     display: block;
     font-size: 14px;
     margin-bottom: 12px;
-    letter-spacing: 0.6px;
+    letter-spacing: 1px;
     font-style: italic;
 }
 
@@ -20334,12 +20291,10 @@ span.transparent-button:hover i {
 .rbt-team-modal-thumb {
     list-style: none;
     padding: 0;
-    margin: 0;
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    margin: 0px auto;
-    margin-bottom: 0;
+    margin: 0 auto;
     outline: none;
     border: 0 none;
 }
@@ -20388,12 +20343,11 @@ span.transparent-button:hover i {
 .rbt-team-modal-thumb .rbt-team-thumbnail .thumb::before {
     content: "\e94b";
     position: absolute;
-    font-family: "feather" !important;
+    font-family: "feather", serif !important;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--color-white);
-    font-size: 18px;
     z-index: 2;
     font-size: 28px;
     opacity: 0;
@@ -20417,7 +20371,6 @@ span.transparent-button:hover i {
     display: flex;
     flex-wrap: wrap;
     padding: 0;
-    margin: 0;
     list-style: none;
     justify-content: center;
     margin: -5px;
@@ -20653,7 +20606,7 @@ span.transparent-button:hover i {
 
 .rbt-progress-parent::after {
     position: absolute;
-    font-family: "feather" !important;
+    font-family: "feather", serif !important;
     content: "\e914";
     text-align: center;
     line-height: 46px;
@@ -20676,7 +20629,7 @@ span.transparent-button:hover i {
 
 .rbt-progress-parent::before {
     position: absolute;
-    font-family: "feather" !important;
+    font-family: "feather", serif !important;
     content: "\e914";
     text-align: center;
     line-height: 46px;
@@ -20739,8 +20692,7 @@ span.transparent-button:hover i {
     border: 0 none;
     height: 70px;
     line-height: 70px;
-    padding: 0 20px;
-    padding-right: 172px;
+    padding: 0 172px 0 20px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -20845,9 +20797,9 @@ span.transparent-button:hover i {
 
 .brand-style-1 li {
     flex-basis: 25%;
-    border-width: 1px 0px 0px 1px;
+    border-width: 1px 0 0 1px;
     border-style: solid;
-    margin: 0px 0px -1px 0px;
+    margin: 0 0 -1px 0;
     border-color: var(--color-border-2);
     padding: 70px 0;
     text-align: center;
@@ -21085,7 +21037,7 @@ span.transparent-button:hover i {
 .filter-tab-button button,
 .filter-tab-button a {
     border: 0 none;
-    padding: 0px 35px;
+    padding: 0 35px;
     text-transform: capitalize;
     background: var(--color-white);
     color: var(--color-body);
@@ -21105,7 +21057,7 @@ span.transparent-button:hover i {
     .filter-button-default a,
     .filter-tab-button button,
     .filter-tab-button a {
-        padding: 0px 20px;
+        padding: 0 20px;
     }
 }
 
@@ -21114,7 +21066,7 @@ span.transparent-button:hover i {
     .filter-button-default a,
     .filter-tab-button button,
     .filter-tab-button a {
-        padding: 0px 24px;
+        padding: 0 24px;
     }
 }
 
@@ -21174,8 +21126,6 @@ span.transparent-button:hover i {
 }
 
 .rbt-default-tab-button li {
-    margin-top: 0;
-    margin-bottom: 0;
     position: relative;
     margin: 3px;
     flex-grow: 1;
@@ -21356,11 +21306,9 @@ span.transparent-button:hover i {
 }
 
 .rbt-contact-form.contact-form-style-1 {
-    padding: 50px;
     position: relative;
-    z-index: 1;
     max-width: 490px;
-    padding-left: 60px;
+    padding: 50px 50px 50px 60px;
     z-index: 2;
     background: var(--color-white);
     box-shadow: var(--shadow-1);
@@ -21382,7 +21330,6 @@ span.transparent-button:hover i {
 @media only screen and (max-width: 767px) {
     .rbt-contact-form.contact-form-style-1 {
         padding: 30px 20px;
-        padding-left: 20px;
         max-width: inherit;
     }
 }
@@ -21466,7 +21413,7 @@ span.transparent-button:hover i {
     color: var(--color-body);
     transition: 0.3s;
     z-index: -1;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     font-size: 18px;
     line-height: 28px;
 }
@@ -21476,11 +21423,8 @@ span.transparent-button:hover i {
     border: 0;
     border-bottom: 2px solid var(--color-border);
     background-color: transparent;
-    padding-bottom: 8px;
-    padding-top: 20px;
     border-radius: 0;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 20px 0 8px;
 }
 
 .form-group input[type=submit] {
@@ -21754,13 +21698,11 @@ Testimonial Thumbnail
 ul.testimonial-thumb-wrapper {
     list-style: none;
     padding: 0;
-    margin: 0;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     max-width: 510px;
-    margin: 0px auto;
-    margin-bottom: -30px;
+    margin: 0 auto -30px;
     outline: none;
     border: 0 none;
 }
@@ -22612,7 +22554,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 .rbt-default-tab .tab-button .tabs__tab .nav-link {
     color: var(--color-heading);
     padding: 24px 44px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     outline: none;
     border: 0 none;
 }
@@ -22714,13 +22656,11 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 
 .rbt-category-gallery .hover-content .title {
     margin: 0;
-    color: inherit;
     opacity: 0;
     transform: translateY(10px);
     transition-property: transform, opacity;
     transition-duration: 0.45s;
     transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
-    margin-bottom: 0;
     color: var(--color-white);
 }
 
@@ -22822,7 +22762,6 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
     font-weight: 300;
     display: block;
     color: var(--color-heading);
-    display: block;
     padding: 9px 10px;
     transition: 0.4s;
 }
@@ -22888,7 +22827,6 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
     width: 100%;
     background-color: var(--color-heading);
     border-radius: 5px;
-    opacity: 0.5;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -23039,7 +22977,6 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 -------------------------*/
 .countdown-style-1 .countdown {
     display: flex;
-    margin: 0 -20px;
     justify-content: flex-start;
     flex-wrap: wrap;
     margin: -10px;
@@ -23062,7 +22999,6 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
     text-align: center;
     text-transform: uppercase;
     margin-top: 0;
-    display: block;
     font-weight: 300;
     font-size: 18px;
     line-height: 36px;
@@ -23102,10 +23038,8 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 .single-progress .title {
     font-size: 18px;
     font-weight: 400;
-    margin-bottom: 0;
-    color: #acacac;
     color: var(--color-body);
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     margin-bottom: 18px;
 }
 
@@ -23173,7 +23107,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
     font-weight: 400;
     margin-bottom: 0;
     color: var(--color-body);
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .progress-info span.progress-number {
@@ -23217,7 +23151,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
     font-style: italic;
     margin-bottom: 0;
     font-size: 14px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     color: var(--color-body);
 }
 
@@ -23348,13 +23282,10 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 }
 
 .rbt-cat-box-1.variation-2 .inner .icons {
-    margin-bottom: 10px;
     position: relative;
-    margin-top: -25px;
     background: #fff;
     width: 70px;
-    margin-right: auto;
-    margin-left: auto;
+    margin: -25px auto 10px;
     height: 70px;
     line-height: 70px;
     padding: 15px;
@@ -23746,7 +23677,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
     display: block;
     font-size: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     margin-bottom: 10px;
 }
 
@@ -23819,7 +23750,6 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 
 .ui-slider .ui-slider-handle {
     border-radius: 100%;
-    cursor: default;
     height: 10px;
     position: absolute;
     touch-action: none;
@@ -23866,7 +23796,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
     color: var(--color-body);
     font-size: 12px;
     display: inline-block;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     font-weight: 600;
     opacity: 0.5;
     text-transform: uppercase;
@@ -23876,9 +23806,8 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
     border: 0 none;
     flex-grow: 1;
     font-size: 12px;
-    font-weight: 400;
     width: 100px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     box-shadow: none;
     font-weight: 600;
     opacity: 0.5;
@@ -23892,7 +23821,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 .price__output--wrap .price--filter a.rbt-btn {
     padding: 6px 10px;
     font-size: 12px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     border-radius: 6px;
     line-height: 16px;
@@ -23906,16 +23835,14 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
     border: 0 none;
     box-shadow: var(--shadow-1);
     height: 50px;
-    padding: 10px 20px;
     outline: none;
     color: var(--color-body);
     border-radius: var(--radius);
     font-size: 16px;
     line-height: 28px;
     font-weight: 400;
-    padding-right: 30px;
+    padding: 10px 30px 10px 20px;
     background-color: var(--color-white);
-    outline: none;
 }
 
 .rbt-modern-select.bg-transparent .bootstrap-select button.btn-light {
@@ -23975,12 +23902,11 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 }
 
 .rbt-modern-select .bootstrap-select .dropdown-menu li.no-results {
-    padding: 4px 8px;
     background: transparent;
     white-space: nowrap;
     font-size: 16px;
     color: var(--color-danger);
-    padding-bottom: 10px;
+    padding: 4px 8px 10px;
 }
 
 .rbt-modern-select .dropdown-item.active,
@@ -24056,8 +23982,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 .rbt-modern-select .bs-actionsbox,
 .rbt-modern-select .bs-donebutton,
 .rbt-modern-select .bs-searchbox {
-    padding: 10px;
-    padding-bottom: 5px;
+    padding: 10px 10px 5px;
 }
 
 .rbt-modern-select .bs-searchbox + .bs-actionsbox {
@@ -24066,8 +23991,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 
 .rbt-modern-select .bs-actionsbox .btn-group button {
     width: calc(50% - 10px);
-    margin: 5px;
-    margin-left: 5px !important;
+    margin: 5px !important;
 }
 
 .rbt-modern-select .bs-actionsbox .btn-group {
@@ -24092,7 +24016,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 .rbt-course .rbt-course-icon::before, .rbt-course .rbt-course-icon::after {
     position: absolute;
     color: var(--color-heading);
-    font-family: "feather" !important;
+    font-family: "feather", serif !important;
     font-size: 18px;
     transform: translateY(-50%);
     top: 50%;
@@ -24269,7 +24193,7 @@ body.modal-open {
     display: block;
     font-size: 14px;
     margin-bottom: 12px;
-    letter-spacing: 0.6px;
+    letter-spacing: 1px;
     font-style: italic;
 }
 
@@ -24351,10 +24275,8 @@ body.modal-open {
     display: flex;
     justify-content: flex-start;
     padding: 0;
-    margin: 0;
     list-style: none;
-    margin: -10px;
-    margin-bottom: 40px;
+    margin: -10px -10px 40px;
 }
 
 @media only screen and (max-width: 575px) {
@@ -24430,13 +24352,12 @@ body.modal-open {
     width: 22px;
     height: 22px;
     background: var(--color-success);
-    margin: 0 auto;
     line-height: 22px;
     text-align: center;
     border-radius: 100%;
     color: var(--color-white);
     font-size: 14px;
-    margin-right: 10px;
+    margin: 0 10px 0 auto;
     display: inline-block;
 }
 
@@ -24763,17 +24684,15 @@ body.modal-open {
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .rbt-search-dropdown .wrapper {
-        margin: 15px 0;
         display: block;
-        margin-top: 0;
+        margin: 0 0 15px;
     }
 }
 
 @media only screen and (max-width: 767px) {
     .rbt-search-dropdown .wrapper {
-        margin: 15px 0;
         display: block;
-        margin-top: 0;
+        margin: 0 0 15px;
     }
 }
 
@@ -24821,10 +24740,7 @@ body.modal-open {
 }
 
 .rbt-search-dropdown .rbt-card .rbt-card-body {
-    padding-top: 18px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 8px;
+    padding: 18px 5px 8px;
 }
 
 .rbt-search-dropdown .rbt-card .rbt-card-body .rbt-card-title {
@@ -24904,8 +24820,7 @@ body.modal-open {
     background: transparent;
     height: 50px;
     line-height: 50px;
-    padding: 0 20px;
-    padding-right: 60px;
+    padding: 0 60px 0 20px;
     border-radius: 500px;
     min-width: 300px;
     border: 2px solid var(--color-white);
@@ -25101,7 +25016,7 @@ img.mfp-img {
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
+    letter-spacing: 0;
     width: 40px;
     height: 40px;
 }
@@ -25214,7 +25129,7 @@ figcaption {
     text-align: center;
     margin-top: 10px;
     font-size: 16px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     font-weight: 400;
 }
 
@@ -25311,16 +25226,14 @@ figcaption {
     font-size: 14px;
     line-height: 1.3;
     color: var(--color-body);
-    margin: 0 12px;
-    margin-bottom: 5px;
+    margin: 0 12px 5px;
     position: relative;
 }
 
 @media only screen and (max-width: 767px) {
     .blog-meta li {
         font-size: 14px;
-        margin: 0 7px;
-        margin-bottom: 10px;
+        margin: 0 7px 10px;
     }
 }
 
@@ -25347,7 +25260,6 @@ figcaption {
     gap: 20px;
     align-items: center;
     flex-direction: column;
-    align-items: center;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -25386,7 +25298,7 @@ figcaption {
 
 .rbt-categori-list a {
     border: 0 none;
-    padding: 0px 35px;
+    padding: 0 35px;
     text-transform: capitalize;
     background: var(--color-white);
     color: var(--color-body);
@@ -25399,26 +25311,25 @@ figcaption {
     transition: 0.4s;
     display: inline-block;
     min-width: 100px;
-    transition: 0.4s;
     text-align: center;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .rbt-categori-list a {
-        padding: 0px 20px;
+        padding: 0 20px;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .rbt-categori-list a {
-        padding: 0px 10px;
+        padding: 0 10px;
         font-size: 14px;
     }
 }
 
 @media only screen and (max-width: 767px) {
     .rbt-categori-list a {
-        padding: 0px 20px;
+        padding: 0 20px;
         font-size: 14px;
         height: 50px;
         line-height: 50px;
@@ -25449,7 +25360,7 @@ figcaption {
 }
 
 .rbt-categori-list.medium-size a {
-    padding: 0px 25px;
+    padding: 0 25px;
     font-size: 16px;
     height: 50px;
     line-height: 49px;
@@ -25715,7 +25626,6 @@ figcaption {
     color: var(--color-body);
     display: block;
     margin-top: 10px;
-    display: block;
 }
 
 @media only screen and (max-width: 767px) {
@@ -25936,8 +25846,7 @@ blockquote.has-text-align-right,
     .wp-block-quote.is-large,
     blockquote.has-text-align-right,
     .wp-block-quote.has-text-align-right {
-        padding: 20px;
-        padding-left: 40px;
+        padding: 20px 20px 20px 40px;
     }
 }
 
@@ -25950,8 +25859,7 @@ blockquote.has-text-align-right,
     .wp-block-quote.is-large,
     blockquote.has-text-align-right,
     .wp-block-quote.has-text-align-right {
-        padding: 20px;
-        padding-left: 40px;
+        padding: 20px 20px 20px 40px;
     }
 }
 
@@ -26196,8 +26104,7 @@ blockquote.has-text-align-right cite,
     font-weight: 700;
     font-size: 18px;
     line-height: 28px;
-    padding: 0;
-    padding-bottom: 15px;
+    padding: 0 0 15px;
     color: var(--color-heading);
     position: relative;
     transition: 0.4s;
@@ -26436,10 +26343,9 @@ blockquote.has-text-align-right cite,
 .cart-table .table tbody tr td {
     text-align: center;
     border: none;
-    padding: 25px 20px;
     vertical-align: middle;
     border-bottom: 1px solid var(--color-border);
-    padding-left: 0;
+    padding: 25px 20px 25px 0;
 }
 
 @media only screen and (max-width: 575px) {
@@ -26710,8 +26616,7 @@ blockquote.has-text-align-right cite,
     line-height: 23px;
     font-weight: 700;
     color: var(--color-heading);
-    margin: 0;
-    margin-top: 20px;
+    margin: 20px 0 0;
 }
 
 .cart-summary .cart-summary-wrap h2 span {
@@ -27068,8 +26973,7 @@ blockquote.has-text-align-right cite,
 .rbt-minicart-wrapper .minicart-item {
     display: flex;
     position: relative;
-    margin: 0;
-    margin-bottom: 20px;
+    margin: 0 0 20px;
 }
 
 .rbt-minicart-wrapper .minicart-item .close-btn {
@@ -27314,10 +27218,8 @@ blockquote.has-text-align-right cite,
     position: absolute;
     bottom: -1px;
     left: 0;
-    background: url(../images/bg/banner-bg-shape-1.svg);
     background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    background: url(../images/bg/banner-bg-shape-1.svg) no-repeat center center;
     width: 100vw;
     height: 145px;
     z-index: 9;
@@ -27478,7 +27380,6 @@ blockquote.has-text-align-right cite,
 }
 
 .rbt-banner-1 .content .shape-wrapper img {
-    max-width: none;
     height: auto;
     max-width: 534px;
 }
@@ -27565,17 +27466,13 @@ blockquote.has-text-align-right cite,
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .rbt-banner-1.variation-2 {
-        padding: 0 60px;
-        padding-top: 100px;
-        padding-bottom: 100px;
+        padding: 100px 60px;
     }
 }
 
 @media only screen and (max-width: 767px) {
     .rbt-banner-1.variation-2 {
-        padding: 0 15px;
-        padding-top: 60px;
-        padding-bottom: 50px;
+        padding: 60px 15px 50px;
     }
 }
 
@@ -27704,8 +27601,7 @@ blockquote.has-text-align-right cite,
     letter-spacing: -2.5px;
     max-width: 950px;
     line-height: 1.06;
-    margin: 0 auto;
-    margin-bottom: 45px;
+    margin: 0 auto 45px;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -28059,7 +27955,7 @@ blockquote.has-text-align-right cite,
 
 .rbt-banner-5 .inner .subtitle {
     font-size: 18px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     display: block;
     margin-bottom: 18px;
     color: var(--color-white);
@@ -28135,7 +28031,7 @@ blockquote.has-text-align-right cite,
 }
 
 .rbt-banner-5 .inner .description {
-    font-family: var(--font-primary);
+    font-family: var(--font-primary), serif;
     padding: 0 22%;
     font-size: 24px;
     line-height: 1.7;
@@ -28885,7 +28781,7 @@ blockquote.has-text-align-right cite,
     display: block;
     margin-top: 10px;
     font-weight: 300;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 /* Gif Banner Area  */
@@ -29245,14 +29141,12 @@ blockquote.has-text-align-right cite,
 }
 
 .rbt-course-main-content .course-content-right {
-    margin: 0 -5px;
-    margin-bottom: -10px;
+    margin: 0 -5px -10px;
 }
 
 .rbt-course-main-content .course-content-right span {
     display: inline-block;
-    margin: 0 5px;
-    margin-bottom: 10px;
+    margin: 0 5px 10px;
 }
 
 .rbt-course-main-content .course-content-right .min-lable,
@@ -29261,8 +29155,7 @@ blockquote.has-text-align-right cite,
 }
 
 .rbt-course-main-content .course-content-right.only-lock {
-    margin: 0;
-    margin-bottom: -10px;
+    margin: 0 0 -10px;
 }
 
 .about-author-list .about-author:last-child {
@@ -29323,8 +29216,7 @@ blockquote.has-text-align-right cite,
     border-radius: 5px;
     background: var(--warning-opacity);
     text-align: center;
-    padding: 22px 10px;
-    padding-top: 10px;
+    padding: 10px 10px 22px;
 }
 
 .rating-box .rating-number {
@@ -29777,9 +29669,8 @@ Course OverView
     Contact Styles
 --------------------------*/
 .rbt-address {
-    padding: 40px;
     background: var(--color-white);
-    padding-bottom: 50px;
+    padding: 40px 40px 50px;
     transition: 0.3s;
     border-radius: var(--radius);
     overflow: hidden;
@@ -29789,22 +29680,19 @@ Course OverView
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .rbt-address {
-        padding: 30px;
-        padding-bottom: 40px;
+        padding: 30px 30px 40px;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .rbt-address {
-        padding: 30px;
-        padding-bottom: 40px;
+        padding: 30px 30px 40px;
     }
 }
 
 @media only screen and (max-width: 767px) {
     .rbt-address {
-        padding: 30px;
-        padding-bottom: 40px;
+        padding: 30px 30px 40px;
     }
 }
 
@@ -29859,7 +29747,7 @@ Course OverView
 
 .rbt-tag-list a {
     border: 0 none;
-    padding: 0px 19px;
+    padding: 0 19px;
     text-transform: capitalize;
     background: var(--color-white);
     color: var(--color-body);
@@ -29871,8 +29759,7 @@ Course OverView
     display: block;
     transition: 0.4s;
     text-align: center;
-    margin: 0 5px;
-    margin-bottom: 10px;
+    margin: 0 5px 10px;
 }
 
 .rbt-tag-list a:hover {
@@ -29907,7 +29794,7 @@ Course OverView
 .rbt-show-more-btn::after {
     content: "\e92e";
     position: absolute;
-    font-family: "feather";
+    font-family: "feather", serif;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
@@ -29927,6 +29814,10 @@ Course OverView
     overflow: hidden;
     position: relative;
     width: 100%;
+}
+
+.markdown-body.has-show-more .has-show-more-inner-content {
+    max-height: 600px;
 }
 
 .has-show-more .rbt-course-details-list-wrapper {
@@ -30005,7 +29896,7 @@ Course OverView
     margin-bottom: 15px;
     color: var(--color-heading);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     opacity: 0.8;
 }
 
@@ -30387,9 +30278,8 @@ Course OverView
     height: 40px;
     display: flex;
     align-items: center;
-    padding: 20px;
     border-radius: 6px;
-    padding-left: 30px;
+    padding: 20px 20px 20px 30px;
     cursor: pointer;
 }
 
@@ -30519,8 +30409,7 @@ Course OverView
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 20px;
-    padding-right: 10px;
+    padding: 8px 10px 8px 20px;
 }
 
 .lesson-top-bar h5 {
@@ -30612,7 +30501,7 @@ Course OverView
     right: 0;
     top: 50%;
     transform: translateY(-50%);
-    font-family: "feather" !important;
+    font-family: "feather", serif !important;
 }
 
 .footer-style-1 .newsletter-form .right-icon.icon-email::after {
@@ -30697,9 +30586,7 @@ Course OverView
 .copyright-style-1 .copyright-link {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -10px;
-    margin-top: -5px;
-    margin-bottom: -5px;
+    margin: -5px -10px;
 }
 
 .copyright-style-1 .copyright-link li {
@@ -30892,7 +30779,6 @@ Course OverView
 .rbt-splash-slider {
     background-color: var(--color-light);
     padding: 100px 150px;
-    padding-bottom: 100px;
     position: relative;
     overflow: hidden;
     background-image: url(../images/splash/bg/bg-2.png);
@@ -30904,28 +30790,24 @@ Course OverView
 @media only screen and (min-width: 1200px) and (max-width: 1599px) {
     .rbt-splash-slider {
         padding: 100px 50px;
-        padding-bottom: 100px;
     }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .rbt-splash-slider {
         padding: 100px 50px;
-        padding-bottom: 100px;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .rbt-splash-slider {
         padding: 100px 50px;
-        padding-bottom: 100px;
     }
 }
 
 @media only screen and (max-width: 767px) {
     .rbt-splash-slider {
         padding: 60px 15px;
-        padding-bottom: 60px;
     }
 }
 
@@ -30934,10 +30816,8 @@ Course OverView
     position: absolute;
     bottom: -2px;
     left: 0;
-    background: url(../images/bg/banner-bg-shape-1.svg);
     background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    background: url(../images/bg/banner-bg-shape-1.svg) no-repeat center center;
     width: 100%;
     height: 145px;
     z-index: 9;
@@ -30945,8 +30825,7 @@ Course OverView
 
 .rbt-splash-slider .banner-top {
     display: flex;
-    margin: 0 -40px;
-    margin-bottom: 25px;
+    margin: 0 -40px 25px;
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1599px) {
@@ -30988,10 +30867,10 @@ Course OverView
 .rbt-splash-slider .banner-top .banner-badge-top .subtitle {
     font-size: 16px;
     color: var(--color-heading);
-    font-family: var(--font-primary);
+    font-family: var(--font-primary), serif;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -31068,7 +30947,7 @@ Course OverView
     color: var(--color-body);
     font-size: 18px;
     font-weight: 400;
-    font-family: var(--font-primary);
+    font-family: var(--font-primary), serif;
 }
 
 .rbt-splash-slider .inner .description strong {
@@ -31107,10 +30986,9 @@ Course OverView
 .rbt-splash-slider .service-wrapper {
     position: relative;
     z-index: 10;
-    background: rgba(39, 0, 255, 0.5);
     border-radius: 10px;
     backdrop-filter: blur(15px);
-    background-image: linear-gradient(218.15deg, rgba(185, 102, 231, 0.3882352941) 0%, rgba(47, 87, 239, 0.2901960784) 100%);
+    background: rgba(39, 0, 255, 0.5) linear-gradient(218.15deg, rgba(185, 102, 231, 0.3882352941) 0%, rgba(47, 87, 239, 0.2901960784) 100%);
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -31666,7 +31544,7 @@ Course OverView
     font-size: 18px;
     font-weight: 500;
     transition: 0.3s ease-in-out;
-    letter-spacing: 0.2px;
+    letter-spacing: 0;
     margin: 0;
 }
 
@@ -31696,8 +31574,7 @@ Course OverView
     right: -70px;
     bottom: -20px;
     z-index: 2;
-    padding: 7px;
-    padding-top: 16px;
+    padding: 16px 7px 7px;
     box-shadow: var(--shadow-1);
     border-radius: 10px;
     transition: opacity 0.6s ease 0.12s, transform 0.4s ease;
@@ -31705,7 +31582,7 @@ Course OverView
     height: auto;
     background: rgba(255, 255, 255, 0.4);
     border: 2px solid #FFFFFF;
-    backdrop-filter: blur(7.5px);
+    backdrop-filter: blur(8px);
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -31965,7 +31842,6 @@ Course OverView
     transition: 0.5s all ease-in-out;
     position: relative;
     border-radius: 10px;
-    position: relative;
     z-index: 1;
     height: 100%;
     display: flex;
@@ -32100,9 +31976,8 @@ Course OverView
 
 .rbt-splash-service .liststyle {
     padding: 0;
-    margin: 0;
     list-style: none;
-    margin-top: 20px;
+    margin: 20px 0 0;
     font-size: 14px;
     color: var(--color-heading);
 }
@@ -32162,7 +32037,6 @@ Course OverView
     position: relative;
     top: -220px;
     margin-bottom: -220px;
-    position: relative;
 }
 
 .rbt-splash-callto-action .inner {
@@ -32397,8 +32271,7 @@ Course OverView
 
 @media only screen and (max-width: 767px) {
     .rbt-splash-feature-box .inner .content {
-        padding: 40px 20px;
-        padding-bottom: 20px;
+        padding: 40px 20px 20px;
     }
 }
 
@@ -32685,7 +32558,7 @@ Course OverView
 .rbt-buy-now-content .label-text {
     font-size: 14px;
     margin-top: 60px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     opacity: 0.8;
 }
 
@@ -32760,7 +32633,6 @@ Course OverView
 .rbt-splash-slider {
     background-color: var(--color-light);
     padding: 100px 150px;
-    padding-bottom: 100px;
     position: relative;
     overflow: hidden;
     background-image: url(../images/splash/bg/bg-2.png);
@@ -32772,28 +32644,24 @@ Course OverView
 @media only screen and (min-width: 1200px) and (max-width: 1599px) {
     .rbt-splash-slider {
         padding: 100px 50px;
-        padding-bottom: 100px;
     }
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .rbt-splash-slider {
         padding: 100px 50px;
-        padding-bottom: 100px;
     }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .rbt-splash-slider {
         padding: 100px 50px;
-        padding-bottom: 100px;
     }
 }
 
 @media only screen and (max-width: 767px) {
     .rbt-splash-slider {
         padding: 60px 15px;
-        padding-bottom: 60px;
     }
 }
 
@@ -32802,10 +32670,8 @@ Course OverView
     position: absolute;
     bottom: -2px;
     left: 0;
-    background: url(../images/bg/banner-bg-shape-1.svg);
     background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    background: url(../images/bg/banner-bg-shape-1.svg) no-repeat center center;
     width: 100%;
     height: 145px;
     z-index: 9;
@@ -32813,8 +32679,7 @@ Course OverView
 
 .rbt-splash-slider .banner-top {
     display: flex;
-    margin: 0 -40px;
-    margin-bottom: 25px;
+    margin: 0 -40px 25px;
 }
 
 @media only screen and (min-width: 1200px) and (max-width: 1599px) {
@@ -32856,10 +32721,10 @@ Course OverView
 .rbt-splash-slider .banner-top .banner-badge-top .subtitle {
     font-size: 16px;
     color: var(--color-heading);
-    font-family: var(--font-primary);
+    font-family: var(--font-primary), serif;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -32936,7 +32801,7 @@ Course OverView
     color: var(--color-body);
     font-size: 18px;
     font-weight: 400;
-    font-family: var(--font-primary);
+    font-family: var(--font-primary), serif;
 }
 
 .rbt-splash-slider .inner .description strong {
@@ -32975,10 +32840,9 @@ Course OverView
 .rbt-splash-slider .service-wrapper {
     position: relative;
     z-index: 10;
-    background: rgba(39, 0, 255, 0.5);
     border-radius: 10px;
     backdrop-filter: blur(15px);
-    background-image: linear-gradient(218.15deg, rgba(185, 102, 231, 0.3882352941) 0%, rgba(47, 87, 239, 0.2901960784) 100%);
+    background: rgba(39, 0, 255, 0.5) linear-gradient(218.15deg, rgba(185, 102, 231, 0.3882352941) 0%, rgba(47, 87, 239, 0.2901960784) 100%);
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -33534,7 +33398,7 @@ Course OverView
     font-size: 18px;
     font-weight: 500;
     transition: 0.3s ease-in-out;
-    letter-spacing: 0.2px;
+    letter-spacing: 0;
     margin: 0;
 }
 
@@ -33564,8 +33428,7 @@ Course OverView
     right: -70px;
     bottom: -20px;
     z-index: 2;
-    padding: 7px;
-    padding-top: 16px;
+    padding: 16px 7px 7px;
     box-shadow: var(--shadow-1);
     border-radius: 10px;
     transition: opacity 0.6s ease 0.12s, transform 0.4s ease;
@@ -33573,7 +33436,7 @@ Course OverView
     height: auto;
     background: rgba(255, 255, 255, 0.4);
     border: 2px solid #FFFFFF;
-    backdrop-filter: blur(7.5px);
+    backdrop-filter: blur(8px);
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -33833,7 +33696,6 @@ Course OverView
     transition: 0.5s all ease-in-out;
     position: relative;
     border-radius: 10px;
-    position: relative;
     z-index: 1;
     height: 100%;
     display: flex;
@@ -33968,9 +33830,8 @@ Course OverView
 
 .rbt-splash-service .liststyle {
     padding: 0;
-    margin: 0;
     list-style: none;
-    margin-top: 20px;
+    margin: 20px 0 0;
     font-size: 14px;
     color: var(--color-heading);
 }
@@ -34030,7 +33891,6 @@ Course OverView
     position: relative;
     top: -220px;
     margin-bottom: -220px;
-    position: relative;
 }
 
 .rbt-splash-callto-action .inner {
@@ -34265,8 +34125,7 @@ Course OverView
 
 @media only screen and (max-width: 767px) {
     .rbt-splash-feature-box .inner .content {
-        padding: 40px 20px;
-        padding-bottom: 20px;
+        padding: 40px 20px 20px;
     }
 }
 
@@ -34553,7 +34412,7 @@ Course OverView
 .rbt-buy-now-content .label-text {
     font-size: 14px;
     margin-top: 60px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     opacity: 0.8;
 }
 
@@ -35323,10 +35182,8 @@ Course OverView
 }
 
 .active-dark-mode .rbt-banner-1:after {
-    background: url(../images/dark/bg/banner-bg-shape-1.svg);
     background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    background: url(../images/dark/bg/banner-bg-shape-1.svg) no-repeat center center;
 }
 
 .active-dark-mode .rbt-banner-1 .content .inner .title {
@@ -35865,7 +35722,7 @@ Course OverView
 
 .active-dark-mode .rbt-category-menu-wrapper .category-dropdown-menu .category-menu-item .rbt-vertical-nav-content .vartical-nav-content-menu li a,
 .active-dark-mode .rbt-category-menu-wrapper .update-category-dropdown .category-menu-item .rbt-vertical-nav-content .vartical-nav-content-menu li a {
-    padding: 5px 0px;
+    padding: 5px 0;
 }
 
 .active-dark-mode .rbt-category-menu-wrapper .category-dropdown-menu .category-menu-item .rbt-vertical-nav-content .vartical-nav-content-menu li:hover a, .active-dark-mode .rbt-category-menu-wrapper .category-dropdown-menu .category-menu-item .rbt-vertical-nav-content .vartical-nav-content-menu li.active a,
@@ -36303,10 +36160,8 @@ Course OverView
 }
 
 .active-dark-mode .rbt-round-bottom-shape::after {
-    background: url(../images/dark/bg/banner-bg-shape-1.svg);
     background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    background: url(../images/dark/bg/banner-bg-shape-1.svg) no-repeat center center;
 }
 
 .active-dark-mode .rbt-border {
@@ -36561,7 +36416,6 @@ Course OverView
     background: linear-gradient(180deg, rgba(76, 90, 238, 0.2) 0%, rgba(78, 90, 236, 0.05) 80%);
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-background-clip: text;
     -webkit-text-fill-color: rgba(255, 255, 255, 0.001);
     white-space: nowrap;
 }

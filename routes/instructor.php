@@ -16,6 +16,6 @@ Route::middleware(EnsureUserIsInstructor::class)->group(function () {
         Route::get('/profile', Profile::class)->name('instructor.dashboard.profile');
         Route::get('/reviews', Reviews::class)->name('instructor.dashboard.reviews');
         Route::get('/settings', Settings::class)->name('instructor.dashboard.settings');
-        Route::get('/create-builders', CourseCreation::class)->name('instructor.courses.create');
+	    Route::get('/create-course', CourseCreation::class)->name('instructor.courses.create');
     });
 });
