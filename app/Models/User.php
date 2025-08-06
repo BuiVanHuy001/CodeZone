@@ -100,9 +100,18 @@ class User extends Authenticatable
 		return $this->hasOne(OrganizationProfile::class, 'user_id');
 	}
 
-	public function getEnrolledBusinessCourses()
+	public function instructorProfile(): HasOne
     {
+	    return $this->hasOne(InstructorProfile::class, 'user_id');
+    }
 
+	public function getProfile(): HasOne
+	{
+		if ($this->isBusiness()) {
+			return $this->organizationProfile();
+		} else {
+			return $this->instructorProfile();
+		}
     }
 
 	public function getEnrollerCourse()
@@ -145,7 +154,7 @@ class User extends Authenticatable
 	    return OrganizationUser::where('organization_id', $organization->id)->where('user_id', $this->id)->exists();
     }
 
-    public function isEmployeeOfThisBusiness(User $user)
+	public function isEmployeeOfThisBusiness(User $user): bool
     {
 	    return OrganizationUser::where('organization_id', $this->id)->where('user_id', $user->id)->exists();
     }

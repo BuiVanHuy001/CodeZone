@@ -252,7 +252,7 @@
                                             </ul>
                                         </div>
                                         <div class="content">
-                                            {!! $course->author->isBusiness() ? nl2br(e($course->author->organizationProfile['about_me'])) : '' !!}
+                                            {!! !is_null($course->author->getProfile) ? nl2br(e($course->author->getProfile['about_me'])) : '' !!}
 
                                             <ul class="social-icon social-default icon-naked justify-content-start">
                                                 <li><a href="https://www.facebook.com/">
