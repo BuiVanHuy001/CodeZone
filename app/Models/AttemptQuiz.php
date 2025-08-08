@@ -7,7 +7,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AttemptQuiz extends Model
 {
+	protected $primaryKey = 'assessment_attempt_id';
+	public $incrementing = false;
+
     public $guarded = [];
+
+	protected $casts = [
+		'user_answers' => 'array',
+	];
 
     public function assessmentAttempt(): BelongsTo
     {

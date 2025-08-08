@@ -11,7 +11,6 @@ class AssessmentQuestion extends Model
 
 	public static array $TYPES = [
 		'multiple_choice' => 'Multiple Choice',
-		'true_false' => 'True/False'
 	];
 
     public function isMultipleAnswers(): bool
@@ -27,6 +26,6 @@ class AssessmentQuestion extends Model
 
 	public function options(): hasMany
 	{
-		return $this->hasMany(AssessmentQuestionOptions::class, 'assessment_question_id');
+		return $this->hasMany(AssessmentQuestionOptions::class);
 	}
 }

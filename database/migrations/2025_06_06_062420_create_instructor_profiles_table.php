@@ -13,16 +13,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('instructor_profiles', function (Blueprint $table) {
-            $table->text('bio')->nullable();
-            $table->string('heading')->nullable();
-            $table->unsignedInteger('student_count')->default(0);
-            $table->unsignedInteger('course_count')->default(0);
-            $table->unsignedInteger('review_count')->default(0);
-            $table->decimal('rating', 2, 1)->default(0);
-            $table->json('social_links')->nullable();
-
             $table->foreignIdFor(User::class)->primary();
-
+	        $table->text('bio')->nullable();
+	        $table->text('about_me')->nullable();
+	        $table->json('socials_links')->nullable();
+	        $table->mediumInteger('course_count')->default(0); // max 16,383 courses
+	        $table->Integer('student_count')->default(0); // max 2,147,483,647 students
+	        $table->decimal('rating', 3, 2)->default(0.00);
+	        $table->Integer('review_count')->default(0); // max 2,147,483,647 reviews
             $table->timestamps();
         });
     }

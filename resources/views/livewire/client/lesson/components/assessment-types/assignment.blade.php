@@ -1,7 +1,10 @@
 <div class="section-title row m-5">
     <h2>{{ $assignment->title  }}</h2>
-    <div class="col-lg-8 markdown-body">
-        @markdown($assignment->description)
+    <div class="col-lg-8 markdown-body has-show-more">
+        <div class="content has-show-more-inner-content">
+            @markdown($assignment->description)
+        </div>
+        <div class="rbt-show-more-btn">Show More</div>
     </div>
     <div class="col-lg-4">
         <div class="bg-color-white rbt-shadow-box">

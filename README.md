@@ -1,8 +1,10 @@
+
 # CodeZone - Online Programming Learning Platform
 
-CodeZone is a web-based learning platform developed to support students and instructors in teaching and learning
-programming more effectively. Built with Laravel 12 and Livewire 3, CodeZone offers modern features like interactive
-lessons, auto-graded coding assignments, and role-based course management.
+**CodeZone** is a web-based learning platform designed to support students and instructors in teaching and learning
+programming more effectively.  
+Built with **Laravel 12** and **Livewire 3**, CodeZone offers modern features like interactive lessons, auto-graded
+coding assignments, and role-based course management.
 
 ---
 
@@ -15,16 +17,15 @@ lessons, auto-graded coding assignments, and role-based course management.
 
 ## 🚀 Features
 
-- 🎓 Role-based system: Admin, Instructor, Student, Organization
-- 📚 Course creation and management with modules & lessons
-- 🎥 Multiple lesson types: video, document, quiz, programming assignment
-- 🧠 Quiz engine: Multiple choice and True/False questions
-- 💻 Code assignment with auto-evaluation using test cases
-- 📈 Learning progress tracking
-- 📜 Certification generation upon course completion
-- 📅 Organization-based course batches (start/end dates)
-- 🔐 Access control for private enterprise courses
-- 📱 Responsive user interface using Tailwind CSS
+- 🎓 **Role-based system**: Admin, Instructor, Student, Organization
+- 📚 **Course creation & management** with modules and lessons
+- 🎥 **Multiple lesson types**: Video, Document, Quiz, Programming Assignment
+- 🧠 **Quiz engine**: Multiple choice & True/False questions
+- 💻 **Code assignments** with auto-evaluation using test cases
+- 📈 **Learning progress tracking**
+- 📜 **Certification generation** upon course completion
+- 📅 **Organization-based course batches** with start/end dates
+- 🔐 **Access control** for private enterprise courses
 
 ---
 
@@ -43,9 +44,7 @@ lessons, auto-graded coding assignments, and role-based course management.
 
 ---
 
-## 🧪 How to Run the Project Locally
-
-## 📦 Installation
+## 📦 Installation & Local Setup
 
 ```bash
 # Clone the repository
@@ -56,48 +55,66 @@ cd codezone
 composer install
 npm install
 
-# Create .env file
+# Create environment file
 cp .env.example .env
 
-# Generate key
+# Generate application key
 php artisan key:generate
 
-# Start local server
+# Run database migrations
+php artisan migrate
+
+# (Optional) Import sample database
+# Execute the SQL script from `database/codezone.sql`
+# Replace the public folder in storage/app with the one from Google Drive:
+# https://drive.google.com/drive/folders/1owAxrNEtvWm9NyBgthAGN-gIZnMqCwx9?usp=drive_link
+
+# Start development servers
 php artisan serve & npm run dev
-```
+````
 
 ---
 
 ## 🔐 Default Login Accounts (if seeded)
 
-| Role         | Email               | Password  |
-|--------------|---------------------|-----------|
-| Student      | oanh@zalo.com       | password  |
-| Instructor   | huy@codezone.com    | password  |
-| Organization | hi@zalo.com         | password  |
+| Role         | Email            | Password |
+|--------------|------------------|----------|
+| Student      | oanh@zalo.com    | password |
+| Instructor   | huy@codezone.com | password |
+| Organization | hi@zalo.com      | password |
 
 ---
 
-## 📌 Notes
+## 📌 Requirements
 
-- Ensure your system runs PHP 8.2+, Node.js 18+, Composer 2+
-- Social login requires the following keys in your `.env` file:
-    - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`
-    - `FACEBOOK_CLIENT_ID`, `FACEBOOK_CLIENT_SECRET`
+* PHP 8.2+
+* Node.js 18+
+* Composer 2+
+
+For **social login**, you must configure these variables in `.env`:
+
+```
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+FACEBOOK_CLIENT_ID=
+FACEBOOK_CLIENT_SECRET=
+```
 
 ---
 
-## 📬 Contact / Contributing
+## 📬 Contact & Contribution
 
 For feedback, contributions, or bug reports:
 
-- Email: `work.buivanhuy@gmail.com`
-- GitHub Issues
+* **Email**: [work.buivanhuy@gmail.com](mailto:work.buivanhuy@gmail.com)
+* **GitHub Issues**: [Submit here](https://github.com/BuiVanHuy001/CodeZone/issues)
 
 ---
 
-## 🧑‍💻 Author
+## 👨‍💻 Author
 
-**Bui Van Huy** – [GitHub](https://github.com/buivanhuy001)
+**Bui Van Huy**
+
+* GitHub: [buivanhuy001](https://github.com/buivanhuy001)
 
 ---

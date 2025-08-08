@@ -11,7 +11,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Account Settings')]
-class Setting extends Component
+class Settings extends Component
 {
 	public string $bio;
 	public string $aboutMe;

@@ -168,9 +168,303 @@ VALUES (25, 'Other', 'other', null, null, null, 0, null, '2025-06-14 20:39:39', 
 INSERT INTO codezone.courses (id, title, slug, heading, description, thumbnail_url, price, enrollment_count,
                               review_count, lesson_count, rating, duration, level, status, category_id, skills,
                               requirements, user_id, created_at, updated_at)
-VALUES ('4b9e2ba8-f070-450a-adf5-a72a56c28517', 'Python Data Structures & Algorithms + LEETCODE Exercises',
+VALUES ('cc916e6f-c8d3-4184-805f-c52d7ff0573b', 'Python Data Structures & Algorithms + LEETCODE Exercises',
         'python-data-structures-algorithms-leetcode-exercises',
-        'DSA + LEETCODE for Coding Interviews — Clear, Step-by-Step Animated Walkthroughs!', '# Data Structures Mastery (53 Hours) - Detailed Curriculum
+        'DSA + LEETCODE for Coding Interviews — Clear, Step-by-Step Animated Walkthroughs!', '# **Course Description: Python Data Structures & Algorithms + LeetCode Exercises**
+
+## **Master the Fundamentals of Data Structures & Algorithms (DSA) in Python with Hands-On LeetCode Practice**
+
+### **🚀 Course Overview**
+This **comprehensive course** is designed to help you master **Data Structures and Algorithms (DSA)** using **Python**, with a strong emphasis on **real-world problem-solving** through **LeetCode exercises**. Whether you\'re preparing for **coding interviews, competitive programming, or improving your problem-solving skills**, this course provides structured learning with practical coding challenges.
+
+### **🎯 What You Will Learn**
+✔ **Core Data Structures** – Arrays, Linked Lists, Stacks, Queues, Hash Tables, Trees, Graphs, Heaps.
+✔ **Essential Algorithms** – Sorting, Searching, Recursion, Dynamic Programming, Greedy Algorithms, Graph Traversal (BFS/DFS).
+✔ **Big-O Complexity Analysis** – Learn how to optimize your code for efficiency.
+✔ **LeetCode-Style Problems** – Solve **100+ handpicked LeetCode problems** with step-by-step explanations.
+✔ **Interview Preparation** – Common patterns, tips, and tricks used in **FAANG & top tech company interviews**.
+
+### **🔥 Key Features**
+✅ **Python-Based DSA** – All concepts implemented in Python for clarity and ease of learning.
+✅ **Interactive Coding Exercises** – Practice problems after each topic to reinforce learning.
+✅ **LeetCode Challenges** – Carefully selected problems from **Easy to Hard** difficulty.
+✅ **Optimized Solutions** – Learn multiple approaches (Brute Force → Optimal) for each problem.
+✅ **Real-World Applications** – Understand how DSA is used in **software development, AI, and system design**.
+
+### **📝 Course Outline**
+#### **1️⃣ Python Refresher & Big-O Analysis**
+- Python basics for DSA
+- Time & Space Complexity (Big-O Notation)
+
+#### **2️⃣ Data Structures Deep Dive**
+- **Arrays & Strings** (Two-Pointer, Sliding Window)
+- **Linked Lists** (Singly, Doubly, Circular)
+- **Stacks & Queues** (Monotonic Stacks, Priority Queues)
+- **Hash Tables & Sets** (Hashing, Collision Handling)
+- **Trees & BSTs** (Binary Trees, AVL, Trie)
+- **Graphs** (BFS, DFS, Dijkstra’s, Topological Sort)
+- **Heaps** (Min-Heap, Max-Heap)
+
+#### **3️⃣ Algorithms & Problem-Solving Techniques**
+- **Sorting & Searching** (QuickSort, MergeSort, Binary Search)
+- **Recursion & Backtracking**
+- **Dynamic Programming** (Memoization, Tabulation)
+- **Greedy Algorithms**
+- **Graph Algorithms** (Shortest Path, MST)
+
+#### **4️⃣ LeetCode-Style Practice**
+- **Top Interview Questions** (Blind 75, Grind 169)
+- **Pattern-Based Problem Solving** (Sliding Window, Two Pointers, Fast & Slow Pointers)
+- **Mock Interviews & Whiteboard Practice**
+
+### **🎓 Who Is This Course For?**
+✔ **Aspiring Software Engineers** preparing for coding interviews.
+✔ **Computer Science students** wanting to strengthen DSA fundamentals.
+✔ **Self-taught programmers** looking to improve problem-solving skills.
+✔ **Competitive programmers** aiming to enhance algorithmic thinking.
+
+### **💡 Why Enroll?**
+- **Industry-Relevant Content** – Designed with **FAANG interview standards** in mind.
+- **Hands-On Learning** – Write real Python code and solve problems interactively.
+- **Lifetime Access** – Continuously updated with new problems and trends.
+
+### **🚀 Ready to Master DSA with Python?**
+**Enroll now and start solving LeetCode problems like a pro!** 🚀  ',
+        '/storage/tmp/3hbGCnzHBblq4yhWSI3NWt636xlbxO0Vmz4B7OWz.png', 0.000, 5, 0, 28, 0.0, 11313, 'beginner', 'pending',
+        8, '[
+        {
+            "name": "Basic Python programming knowledge (e.g., variables, loops, functions)"
+        },
+        {
+            "name": "No prior experience with data structures or algorithms needed"
+        },
+        {
+            "name": "An eager attitude to learn DSA and tackle coding challenges"
+        }
+    ]', '[
+        {
+            "name": "Solve 100+ coding exercises to ace DSA interviews with confidence."
+        },
+        {
+            "name": "Think like a pro coder to tackle complex problems efficiently."
+        },
+        {
+            "name": "Master data structures—linked lists, trees, heaps, graphs—for practical use."
+        },
+        {
+            "name": "Learn algorithms—sorting, recursion, dynamic programming—with clarity."
+        },
+        {
+            "name": "Analyze time and space complexity to optimize your coding solutions."
+        },
+        {
+            "name": "Grasp DSA concepts faster with animated examples for deeper insight."
+        },
+        {
+            "name": "Apply DSA to solve LeetCode challenges and practical coding problems."
+        },
+        {
+            "name": "Boost your developer skills to excel in technical interviews confidently."
+        }
+    ]', 10, '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', 'Dynamic Programming', 'dynamic-programming', 6, 4, 1821,
+        'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('1bd186cc-4bde-44b2-9d81-339df37a11ab', 'Final ', 'final', 1, 6, 0, 'cc916e6f-c8d3-4184-805f-c52d7ff0573b',
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('556c749e-6f40-44f2-97d1-ce38071414b7', 'Introduction', 'introduction', 3, 0, 956,
+        'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('9a7ec28c-498e-4190-bf20-4f402c827ebd', 'LinkedList', 'linkedlist', 3, 3, 2033,
+        'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('b4b107fc-ac88-432b-9735-a0b395252662', 'Array', 'array', 5, 1, 2908, 'cc916e6f-c8d3-4184-805f-c52d7ff0573b',
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('c94c5850-027f-4802-b843-64551ce117eb', 'Leetcode practice', 'leetcode-practice', 4, 5, 1868,
+        'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('e1c1e032-44f8-4218-8c1d-3759b8b2feab', 'Binary Search', 'binary-search', 6, 2, 1727,
+        'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('0be846bb-9749-4b88-b75b-ac91aaffc2fc', 'Big O notation', 'big-o-notation', '',
+        '/storage/course/videos/y6QK38eX8mgPh75NboYdfqw1O5l6DeqACyr6rNG9.mp4', 4, 1183, false, 'video', null,
+        '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('0ec2fde8-929d-445b-b7a7-a433d0de6701', 'Implement Binary Search by Loop', 'implement-binary-search-by-loop',
+        '', '/storage/course/videos/eSfYd64Co2lf6S9b090JHO2HvOT5oA6jbrbzFvtj.mp4', 1, 604, false, 'video', null,
+        'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('19a17557-cfda-452d-ad1b-e11484ad7e16', 'Leetcode 26: Remove Duplicates from Sorted Array',
+        'leetcode-26-remove-duplicates-from-sorted-array', '', '', 0, 0, false, 'assessment', null,
+        'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('351e8cdd-3e4e-47db-b978-50b6415b7555', 'Binary Search Document', 'binary-search-document', '# **Binary Search: Comprehensive Documentation**
+
+## **1. Introduction to Binary Search**
+Binary search is an **efficient search algorithm** that finds the position of a target value within a **sorted array**. It works by repeatedly dividing the search interval in half, drastically reducing the search space with each step.
+
+### **Key Properties**
+✔ **Time Complexity:** `O(log n)` (much faster than linear search `O(n)`).
+✔ **Space Complexity:**
+   - Iterative: `O(1)` (constant space).
+   - Recursive: `O(log n)` (stack space for recursion).
+✔ **Requirement:** The input array **must be sorted** (ascending/descending).
+
+---
+
+## **2. How Binary Search Works**
+1. Compare the target value to the **middle element** of the array.
+2. If the target is **equal** to the middle element, return its index.
+3. If the target is **less** than the middle element, search the **left half**.
+4. If the target is **greater**, search the **right half**.
+5. Repeat until the target is found or the search space is exhausted.
+
+---
+
+## **3. Implementation in Python**
+### **1️⃣ Iterative Approach (Using Loop)**
+```python
+def binary_search_iterative(arr, target):
+    left, right = 0, len(arr) - 1
+
+    while left <= right:
+        mid = (left + right) // 2  # Find middle index
+        if arr[mid] == target:
+            return mid  # Target found
+        elif arr[mid] < target:
+            left = mid + 1  # Search right half
+        else:
+            right = mid - 1  # Search left half
+    return -1  # Target not found
+```
+
+### **2️⃣ Recursive Approach**
+```python
+def binary_search_recursive(arr, target, left, right):
+    if left > right:
+        return -1  # Base case: target not found
+
+    mid = (left + right) // 2
+    if arr[mid] == target:
+        return mid
+    elif arr[mid] < target:
+        return binary_search_recursive(arr, target, mid + 1, right)  # Search right
+    else:
+        return binary_search_recursive(arr, target, left, mid - 1)  # Search left
+
+# Helper function for easier calling
+def binary_search(arr, target):
+    return binary_search_recursive(arr, target, 0, len(arr) - 1)
+```
+
+---
+
+## **4. Example Walkthrough**
+**Input:**
+```python
+arr = [1, 3, 5, 7, 9, 11]
+target = 7
+```
+**Steps (Iterative):**
+1. `left = 0`, `right = 5` → `mid = 2` (`arr[2] = 5`).
+   - `5 < 7` → search right (`left = 3`).
+2. `left = 3`, `right = 5` → `mid = 4` (`arr[4] = 9`).
+   - `9 > 7` → search left (`right = 3`).
+3. `left = 3`, `right = 3` → `mid = 3` (`arr[3] = 7`).
+   - Found! Return `3`.
+
+**Output:**
+```
+3
+```
+
+---
+
+## **5. Edge Cases & Validation**
+| **Test Case**               | **Expected Output** | **Explanation** |
+|-----------------------------|---------------------|-----------------|
+| `arr = [1, 2, 3], target = 2` | `1` | Target found at index `1`. |
+| `arr = [1, 2, 3], target = 4` | `-1` | Target not in array. |
+| `arr = [], target = 1`       | `-1` | Empty array. |
+| `arr = [5], target = 5`      | `0` | Single-element array. |
+
+---
+
+## **6. When to Use Binary Search?**
+✅ Searching in **large sorted datasets** (e.g., databases, logs).
+✅ Problems where **O(log n)** time is critical (e.g., competitive programming).
+✅ As a sub-routine in advanced algorithms (e.g., **binary search trees**).
+
+---
+
+## **7. Common Mistakes to Avoid**
+❌ **Forgetting to sort the array** (binary search only works on sorted data).
+❌ **Integer overflow** when calculating `mid` (use `left + (right - left) // 2` instead).
+❌ **Incorrect termination condition** (`while left <= right` vs. `while left < right`).
+
+---
+
+## **8. Practice Problems (LeetCode)**
+1. [704. Binary Search](https://leetcode.com/problems/binary-search/) (Easy)
+2. [35. Search Insert Position](https://leetcode.com/problems/search-insert-position/) (Easy)
+3. [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) (Medium)
+
+---
+
+## **9. Key Takeaways**
+✔ Binary search is **O(log n)** and **much faster** than linear search.
+✔ Can be implemented **iteratively (preferred)** or **recursively**.
+✔ Always verify the **array is sorted** before applying binary search.  ', '', 5, 0, false, 'document', null,
+        'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('37a1c2f7-06a7-4b59-ba06-07520228d9c7', 'About instructor', 'about-instructor', '',
+        '/storage/course/videos/Pc3Ms9LNpj5tf3dVophT1SNhdlA486Sjy33Vwrbx.mp4', 0, 617, true, 'video', null,
+        '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('40c120bd-6b57-436c-baf7-ddbe300e8dc0', 'Final Exam', 'final-exam', '', '', 0, 0, false, 'assessment', null,
+        '1bd186cc-4bde-44b2-9d81-339df37a11ab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('41d66766-11f3-4272-9eee-5a0046d9cc95', 'Implement Binary Search by Recursion',
+        'implement-binary-search-by-recursion', '',
+        '/storage/course/videos/OKbEzFoRDOWd9hsvDI5G48SKmCIFUDvPnqrhNsIr.mp4', 2, 444, false, 'video', null,
+        'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('4ba5f1fc-80a2-4bc4-ae4b-1da3a7ed8c8a', 'What is array', 'what-is-array', '',
+        '/storage/course/videos/wLsgdD7dvb3o3PWvtCZtUat8xu5k0KBoy42JM5cy.mp4', 0, 1667, false, 'video', null,
+        'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('587e5ca3-68bf-4062-b9aa-4ddc933ff275', 'Introduction to Data Structures', 'introduction-to-data-structures',
+        '', '/storage/course/videos/vf0iEjHF2LvGPJFI5bbr3XKLKxWljuk5SxoDWitz.mp4', 1, 339, false, 'video', null,
+        '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('59c9f55a-8525-4f7a-b325-1a893ca8ba9e', 'Leetcode 414: Solution', 'leetcode-414-solution', '',
+        '/storage/course/videos/nXFh28njdfqHzOX9WCNbNHaF7woJRSSW0oa8xsDW.mp4', 3, 1138, false, 'video', null,
+        'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('5c7cf1d0-a121-49da-a057-f6591a85c45c', 'Quiz Check point', 'quiz-check-point', '', '', 3, 0, false,
+        'assessment', null, '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('5d851d4d-df65-4ce3-84f4-37a6bf72ed4a', 'Review those Algorithms', 'review-those-algorithms', '',
+        '/storage/course/videos/biJ9JeIoN46mCKock3uyZkDbhfQm548QKu2iSpki.mp4', 3, 217, false, 'video', null,
+        'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('60341bee-6475-4c30-9baf-3bd6a68a00dc', 'Course outline', 'course-outline', '# Data Structures Mastery (53 Hours) - Detailed Curriculum
 
 ## Module 1: Foundations (5 Hours)
 1. **Introduction to Data Structures**
@@ -249,421 +543,613 @@ VALUES ('4b9e2ba8-f070-450a-adf5-a72a56c28517', 'Python Data Structures & Algori
 - Line-by-line Coding
 - Downloadable Source Code
 - Problem Solving Sessions
-- Q&A Support', '/storage/tmp/yAFaMWzcmu5m4diYz2JdDai7F5lePcB1wWEbWGGI.png', 0.000, 5, 0, 17, 0.0, 5083, 'beginner',
-        'pending', 8, null, null, 10, '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('20fa6d1b-e347-4d44-a5dc-20d82abdf007', 'Dynamic Programming (DP) - Complete Guide',
-        'dynamic-programming-dp-complete-guide', 4, 2, 638, '4b9e2ba8-f070-450a-adf5-a72a56c28517',
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('23493ff1-bdfa-4c5b-be87-8d7c91d5c0ba', 'Linear Structures', 'linear-structures', 3, 1, 1055,
-        '4b9e2ba8-f070-450a-adf5-a72a56c28517', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('3fce986b-bdc9-4666-88af-3cd2edf069b0', 'Foundations', 'foundations', 2, 0, 339,
-        '4b9e2ba8-f070-450a-adf5-a72a56c28517', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('464b9331-6c2a-4a3c-bc9c-dad1ef415149', 'Big O Notation', 'big-o-notation', 3, 4, 1183,
-        '4b9e2ba8-f070-450a-adf5-a72a56c28517', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('7605e1be-b401-4e9b-a518-64708c0aa037', 'Leetcode practice', 'leetcode-practice', 4, 3, 1868,
-        '4b9e2ba8-f070-450a-adf5-a72a56c28517', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('9303a0c5-874a-4cac-a613-851e1590a4bf', 'Final Exam', 'final-exam', 1, 5, 0,
-        '4b9e2ba8-f070-450a-adf5-a72a56c28517', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+- Q&A Support', '', 2, 0, false, 'document', null, '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('0d0608c9-a65c-4d51-b773-a36d046abd19', 'Leetcode 26 Solution', 'leetcode-26-solution', '',
-        '/storage/builders/videos/GX5FBNDGZsPeNWFEIA3FUGL0T5t52Kc9M1eti6uQ.mp4', 1, 730, true, 'video', null,
-        '7605e1be-b401-4e9b-a518-64708c0aa037', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES ('78b15904-716e-4ef8-abe1-ec0e95a2e377', 'Remove element from array', 'remove-element-from-array', '',
+        '/storage/course/videos/HQQK0DVU1FVChGYOY2NTgQ5CsK3tUpFxyf6esIKQ.mp4', 2, 0, false, 'video', null,
+        'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('16e30c16-a854-4c38-87a4-d1fc2daf4ea3', 'Linked Lists Document', 'linked-lists-document', '# Linked Lists - Tài liệu tổng quan
+VALUES ('7dd41449-fe08-41ea-887f-54d621e293e4', 'Insert element from array', 'insert-element-from-array', '',
+        '/storage/course/videos/bdVhSmaZEvbUhmvB2TqZ06eaoWM2xr4MbSk7s2vR.mp4', 1, 1241, false, 'video', null,
+        'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('819e7f7d-72eb-4291-a737-6c2d94a816be', 'Linked List document', 'linked-list-document', '# **Linked Lists - Comprehensive Documentation**
 
-## 1. Giới thiệu
+## **1. Introduction to Linked Lists**
+A **Linked List** is a linear data structure consisting of nodes connected via pointers. Unlike arrays, linked list elements are **not stored in contiguous memory locations**.
 
-Linked List (Danh sách liên kết) là một cấu trúc dữ liệu tuyến tính gồm các node được liên kết với nhau thông qua các con trỏ. Khác với mảng, các phần tử trong linked list không được lưu trữ liên tiếp trong bộ nhớ.
+### **Key Characteristics**
+- Dynamic size (can grow/shrink during runtime)
+- Efficient insertions/deletions (no shifting required)
+- Sequential access (no random access like arrays)
 
-## 2. Các loại Linked List
+---
 
-### 2.1. Singly Linked List (Danh sách liên kết đơn)
-- Mỗi node chứa:
-  - Data (dữ liệu)
-  - Next (con trỏ trỏ tới node kế tiếp)
-- Đặc điểm:
-  - Chỉ có thể duyệt theo một chiều (từ đầu đến cuối)
-  - Node cuối trỏ vào NULL
+## **2. Types of Linked Lists**
 
-### 2.2. Doubly Linked List (Danh sách liên kết đôi)
-- Mỗi node chứa:
-  - Data (dữ liệu)
-  - Next (con trỏ trỏ tới node kế tiếp)
-  - Prev (con trỏ trỏ tới node trước đó)
-- Đặc điểm:
-  - Có thể duyệt hai chiều (từ đầu đến cuối và ngược lại)
-  - Tốn thêm bộ nhớ để lưu con trỏ prev
+### **2.1 Singly Linked List**
+- **Node Structure**:
+  ```cpp
+  struct Node {
+      int data;
+      Node* next;  // Pointer to next node
+  };
+  ```
+- **Traversal**: Unidirectional (head → tail)
+- **Termination**: Last node points to `NULL`
 
-### 2.3. Circular Linked List (Danh sách liên kết vòng)
-- Có hai biến thể:
-  - Circular Singly Linked List: Node cuối trỏ vào node đầu
-  - Circular Doubly Linked List: Node cuối trỏ vào node đầu và node đầu trỏ vào node cuối
-- Đặc điểm:
-  - Không có node nào trỏ vào NULL
-  - Có thể duyệt vòng từ bất kỳ node nào
+### **2.2 Doubly Linked List**
+- **Node Structure**:
+  ```cpp
+  struct Node {
+      int data;
+      Node* next;  // Pointer to next node
+      Node* prev;  // Pointer to previous node
+  };
+  ```
+- **Traversal**: Bidirectional (head ↔ tail)
+- **Advantage**: Easier deletions/backward traversals
 
-## 3. Các thao tác cơ bản
+### **2.3 Circular Linked List**
+- **Variants**:
+  - **Circular Singly Linked List**: Tail points to head
+  - **Circular Doubly Linked List**: Tail ↔ head connection
+- **Termination**: No `NULL` pointers (forms a loop)
 
-### 3.1. Thêm node
-- **Insert at beginning**: Thêm node vào đầu danh sách
-- **Insert at end**: Thêm node vào cuối danh sách
-- **Insert after a node**: Thêm node vào sau một node xác định
+---
 
-### 3.2. Xóa node
-- **Delete from beginning**: Xóa node ở đầu danh sách
-- **Delete from end**: Xóa node ở cuối danh sách
-- **Delete a specific node**: Xóa node có giá trị xác định
+## **3. Core Operations**
 
-### 3.3. Duyệt danh sách
-- Duyệt từ đầu đến cuối (với singly linked list)
-- Duyệt hai chiều (với doubly linked list)
-- Duyệt vòng (với circular linked list)
+### **3.1 Insertion**
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Insert at head | **O(1)** |
+| Insert at tail | **O(1)** (with tail pointer) or **O(n)** |
+| Insert after a node | **O(n)** (search) + **O(1)** (insert) |
 
-## 4. Độ phức tạp thao tác
+### **3.2 Deletion**
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Delete head | **O(1)** |
+| Delete tail | **O(n)** (singly), **O(1)** (doubly with tail) |
+| Delete specific node | **O(n)** (search) + **O(1)** (delete) |
 
-| Thao tác           | Singly Linked List | Doubly Linked List |
-|--------------------|-------------------|-------------------|
-| Truy cập phần tử   | O(n)              | O(n)              |
-| Tìm kiếm           | O(n)              | O(n)              |
-| Chèn đầu           | O(1)              | O(1)              |
-| Chèn cuối          | O(n)              | O(1)*             |
-| Chèn giữa          | O(n)              | O(n)              |
-| Xóa đầu            | O(1)              | O(1)              |
-| Xóa cuối           | O(n)              | O(1)*             |
-| Xóa giữa           | O(n)              | O(n)              |
+### **3.3 Traversal**
+- **Singly Linked List**: Head → Tail (**O(n)**)
+- **Doubly Linked List**: Head ↔ Tail (**O(n)**)
+- **Circular Linked List**: Loop until revisiting start node
 
-*: Nếu có con trỏ tail
+---
 
-## 5. Ưu điểm và nhược điểm
+## **4. Time Complexity Summary**
 
-### Ưu điểm:
-- Kích thước linh động (có thể thêm/xóa node dễ dàng)
-- Không lãng phí bộ nhớ (chỉ cấp phát khi cần)
-- Thao tác chèn/xóa ở đầu danh sách nhanh (O(1))
+| Operation | Singly Linked | Doubly Linked |
+|-----------|--------------|--------------|
+| Access    | O(n)         | O(n)         |
+| Search    | O(n)         | O(n)         |
+| Insert Head | O(1)       | O(1)         |
+| Insert Tail | O(n)       | O(1)*        |
+| Delete Head | O(1)       | O(1)         |
+| Delete Tail | O(n)       | O(1)*        |
 
-### Nhược điểm:
-- Truy cập ngẫu nhiên chậm (luôn phải duyệt từ đầu)
-- Tốn thêm bộ nhớ để lưu con trỏ
-- Không có tính locality of reference như mảng
+*With tail pointer
 
-## 6. Ứng dụng
+---
 
-- Triển khai Stack và Queue
-- Lưu trữ lịch sử trình duyệt (back/forward)
-- Quản lý bộ nhớ trong hệ điều hành
-- Biểu diễn đa thức trong toán học
-- Hash table collision handling
+## **5. Advantages & Disadvantages**
 
-## 7. So sánh với Array
+### **Advantages**:
+✔ Dynamic size (no pre-allocation)
+✔ Efficient insertions/deletions (**O(1)** at head)
+✔ No memory waste (allocates per node)
 
-| Tiêu chí          | Linked List       | Array             |
-|-------------------|-------------------|-------------------|
-| Kích thước        | Linh động        | Cố định           |
-| Truy cập ngẫu nhiên | Chậm (O(n))     | Nhanh (O(1))      |
-| Chèn/xóa đầu      | Nhanh (O(1))     | Chậm (O(n))       |
-| Chèn/xóa cuối     | Chậm (O(n))      | Nhanh (O(1))*     |
-| Bộ nhớ phụ        | Cần cho con trỏ  | Không cần         |
-| Locality of reference | Kém       | Tốt              |
+### **Disadvantages**:
+❌ No random access (**O(n)** search time)
+❌ Extra memory for pointers
+❌ Poor cache locality (non-contiguous memory)
 
-*: Đối với dynamic array
+---
 
-## 8. Triển khai code mẫu (C++)
+## **6. Applications**
+- **Stacks & Queues** implementations
+- **Browser history** (back/forward navigation)
+- **Memory management** in operating systems
+- **Polynomial representation** in mathematics
+- **Collision handling** in hash tables
 
+---
+
+## **7. Linked List vs. Array**
+
+| Feature         | Linked List      | Array           |
+|----------------|-----------------|----------------|
+| Size           | Dynamic         | Fixed           |
+| Random Access  | O(n)            | O(1)            |
+| Insert Head    | O(1)            | O(n)            |
+| Memory Overhead| Pointers        | None            |
+| Cache Locality | Poor            | Excellent       |
+
+---
+
+## **8. Code Implementation (C++)**
+
+### **Singly Linked List**
 ```cpp
-// Node structure for singly linked list
-struct Node {
-    int data;
-    Node* next;
-    Node(int val) : data(val), next(nullptr) {}
-};
-
-// Basic operations
-class LinkedList {
+class SinglyLinkedList {
 private:
+    struct Node {
+        int data;
+        Node* next;
+        Node(int val) : data(val), next(nullptr) {}
+    };
     Node* head;
-public:
-    LinkedList() : head(nullptr) {}
 
-    void insertAtBeginning(int val) {
+public:
+    SinglyLinkedList() : head(nullptr) {}
+
+    // Insert at head (O(1))
+    void push(int val) {
         Node* newNode = new Node(val);
         newNode->next = head;
         head = newNode;
     }
 
+    // Delete node (O(n))
     void deleteNode(int val) {
         Node* temp = head;
         Node* prev = nullptr;
 
-        while(temp && temp->data != val) {
+        while (temp && temp->data != val) {
             prev = temp;
             temp = temp->next;
         }
 
-        if(!temp) return;
+        if (!temp) return;  // Not found
 
-        if(!prev) {
-            head = temp->next;
-        } else {
-            prev->next = temp->next;
-        }
+        if (!prev) head = temp->next;  // Delete head
+        else prev->next = temp->next;
 
         delete temp;
     }
+};
+```
 
-    void display() {
-        Node* temp = head;
-        while(temp) {
-            cout << temp->data << " ";
-            temp = temp->next;
+### **Doubly Linked List**
+```cpp
+class DoublyLinkedList {
+private:
+    struct Node {
+        int data;
+        Node* prev;
+        Node* next;
+        Node(int val) : data(val), prev(nullptr), next(nullptr) {}
+    };
+    Node* head;
+    Node* tail;  // Enables O(1) tail operations
+
+public:
+    DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+
+    // Insert at tail (O(1))
+    void append(int val) {
+        Node* newNode = new Node(val);
+        if (!head) head = tail = newNode;
+        else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
         }
-        cout << endl;
     }
 };
-```', '', 2, 0, false, 'document', null, '23493ff1-bdfa-4c5b-be87-8d7c91d5c0ba', '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('2e312400-3486-4405-b4d3-e4f720a7da55', 'DSA Fundamentals Checkpoint', 'dsa-fundamentals-checkpoint', '', '', 1,
-        0, false, 'assessment', null, '464b9331-6c2a-4a3c-bc9c-dad1ef415149', '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('304d5b6b-9034-49dd-9831-e342a8fbf685', 'Introduction to Data Structures', 'introduction-to-data-structures',
-        '', '/storage/builders/videos/BiM0GH2njoh10BKeCmXcM2Y3BomUvdO97bImxLrr.mp4', 0, 339, false, 'video', null,
-        '3fce986b-bdc9-4666-88af-3cd2edf069b0', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('3b86d194-7a49-4bff-8549-de9576e9a49a', 'Leetcode 26', 'leetcode-26', '', '', 0, 0, false, 'assessment', null,
-        '7605e1be-b401-4e9b-a518-64708c0aa037', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('4872dd9a-f7a1-4128-9f0a-51083a0883b1', 'Final Exam', 'final-exam', '', '', 0, 0, false, 'assessment', null,
-        '9303a0c5-874a-4cac-a613-851e1590a4bf', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('5626586c-c37c-4dac-b46d-c262096f144a', 'Big O Notaion document', 'big-o-notaion-document', '# **Big O Notation - Complete Guide**
-
-## **1. Introduction**
-**Big O Notation** describes how the runtime or space requirements of an algorithm grow as the input size grows. It provides an upper bound on complexity, focusing on the worst-case scenario.
-
-### **Why Use Big O?**
-- Predict algorithm scalability
-- Compare efficiency of different approaches
-- Optimize code performance
-
----
-
-## **2. Common Time Complexities**
-### **O(1) - Constant Time**
-- Runtime does not depend on input size
-- **Example:** Array index access
-```python
-def get_first(arr):
-    return arr[0]  # Always takes 1 step
-```
-
-### **O(log n) - Logarithmic Time**
-- Halves the problem size at each step
-- **Example:** Binary search
-```python
-def binary_search(arr, target):
-    low, high = 0, len(arr)-1
-    while low <= high:
-        mid = (low + high) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            low = mid + 1
-        else:
-            high = mid - 1
-```
-
-### **O(n) - Linear Time**
-- Runtime grows proportionally with input size
-- **Example:** Linear search
-```python
-def linear_search(arr, target):
-    for item in arr:  # Worst case: n iterations
-        if item == target:
-            return True
-```
-
-### **O(n log n) - Linearithmic Time**
-- Common in efficient sorting algorithms
-- **Example:** Merge sort, Quick sort
-```python
-def merge_sort(arr):
-    if len(arr) > 1:
-        mid = len(arr) // 2
-        L, R = arr[:mid], arr[mid:]
-        merge_sort(L)  # O(log n) splits
-        merge_sort(R)
-        merge(L, R)    # O(n) per merge
-```
-
-### **O(n²) - Quadratic Time**
-- Nested loops over the input
-- **Example:** Bubble sort
-```python
-def bubble_sort(arr):
-    for i in range(len(arr)):          # n iterations
-        for j in range(len(arr)-1):    # n iterations
-            if arr[j] > arr[j+1]:
-                arr[j], arr[j+1] = arr[j+1], arr[j]
-```
-
-### **O(2ⁿ) - Exponential Time**
-- Doubles with each addition to input
-- **Example:** Recursive Fibonacci
-```python
-def fib(n):
-    if n <= 1: return n
-    return fib(n-1) + fib(n-2)  # Branches exponentially
-```
-
-### **O(n!) - Factorial Time**
-- Worst complexity, grows factorially
-- **Example:** Permutations of a string
-```python
-def permute(s):
-    if len(s) == 1: return [s]
-    return [c + p
-            for i, c in enumerate(s)
-            for p in permute(s[:i] + s[i+1:])]
 ```
 
 ---
 
-## **3. Space Complexity**
-Measures memory growth relative to input size.
-
-| **Example**               | **Space** | **Explanation**                     |
-|---------------------------|----------|-------------------------------------|
-| Sum of array              | `O(1)`   | Uses constant extra space           |
-| Copy of array             | `O(n)`   | Stores a full duplicate             |
-| Recursive Fibonacci       | `O(n)`   | Call stack depth grows with input   |
-| Balanced BST traversal    | `O(log n)`| Max call stack depth is tree height |
+## **9. Practice Problems**
+1. [Reverse a Linked List (LeetCode 206)](https://leetcode.com/problems/reverse-linked-list/)
+2. [Detect Cycle (LeetCode 141)](https://leetcode.com/problems/linked-list-cycle/)
+3. [Merge Two Sorted Lists (LeetCode 21)](https://leetcode.com/problems/merge-two-sorted-lists/)
 
 ---
 
-## **4. Complexity Chart**
-![Big O Complexity Chart](https://miro.medium.com/max/1400/1*yiyfZodqXNwMouC0-B0Wlg.png)
-*(Visualization of how complexities compare)*
+## **10. Key Takeaways**
+- Use linked lists for **frequent insertions/deletions**.
+- Prefer arrays when **random access** is critical.
+- **Doubly linked lists** simplify backward traversal but consume more memory.', '', 2, 0, false, 'document', null,
+        '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('835138e6-c935-4464-9490-b591e7bb2d5e', 'Leetcode 26: Solution', 'leetcode-26-solution', '',
+        '/storage/course/videos/OiVwwvJwmmUCxI0BTVQVZ7hjUfTj9H299eP5pKGn.mp4', 1, 730, false, 'video', null,
+        'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('86ce3ac9-81d8-4c0d-9a08-82e62055b7d9', 'Array document', 'array-document', '# **Arrays: A Comprehensive Guide**
+
+## **1. What is an Array?**
+An **array** is a **data structure** that stores a **fixed-size** collection of elements of the **same type**. It provides an efficient way to store and access multiple values under a single variable name.
+
+### **Key Properties:**
+- **Fixed size** (static in most languages, but some support dynamic arrays).
+- **Contiguous memory allocation** (elements are stored in adjacent memory locations).
+- **Zero-based or one-based indexing** (depends on the programming language).
+- **Homogeneous elements** (all elements must be of the same data type in statically-typed languages).
 
 ---
 
-## **5. Rules for Analysis**
-1. **Drop Constants**
-   `O(2n)` → `O(n)`
-   `O(500)` → `O(1)`
+## **2. Array Representation**
+An array can be visualized as a **block of memory** divided into slots:
 
-2. **Drop Non-Dominant Terms**
-   `O(n² + n)` → `O(n²)`
-   `O(n + log n)` → `O(n)`
+| Index | 0 | 1 | 2 | 3 | 4 |
+|-------|---|---|---|---|---|
+| Value | 10 | 20 | 30 | 40 | 50 |
 
-3. **Different Inputs → Different Variables**
-   ```python
-   def two_arrays(a, b):
-       for x in a:  # O(a)
-           print(x)
-       for y in b:  # O(b)
-           print(y)
-   ```
-   **Total:** `O(a + b)`, not `O(n)`
-
-4. **Nested Loops Multiply**
-   ```python
-   for i in range(n):      # O(n)
-       for j in range(n):  # O(n)
-           print(i, j)     # O(n²) total
-   ```
+- **Indexing**: Starts at `0` (in most languages like C, Java, Python) or `1` (e.g., MATLAB, Lua).
+- **Element Access**: `array[2]` returns `30` in the above example.
 
 ---
 
-## **6. Real-World Examples**
-### **O(1)**
-- Hash table lookup (average case)
-- Math operations (`x + y`)
+## **3. Basic Array Operations**
+### **a) Declaration & Initialization**
+#### **C/C++**
+```c
+int numbers[5] = {10, 20, 30, 40, 50};
+```
+#### **Java**
+```java
+int[] numbers = {10, 20, 30, 40, 50};
+```
+#### **Python (Lists are dynamic arrays)**
+```python
+numbers = [10, 20, 30, 40, 50]
+```
+#### **JavaScript**
+```javascript
+let numbers = [10, 20, 30, 40, 50];
+```
 
-### **O(log n)**
-- Binary search
-- Balanced BST operations
+### **b) Accessing Elements**
+```java
+int firstElement = numbers[0]; // 10
+int thirdElement = numbers[2]; // 30
+```
 
-### **O(n)**
-- Finding max in unsorted array
-- Counting elements
+### **c) Updating Elements**
+```python
+numbers[1] = 99  # Updates the second element to 99
+```
 
-### **O(n log n)**
-- Efficient sorting (Merge Sort, Heap Sort)
+### **d) Finding Length**
+```javascript
+let length = numbers.length; // 5
+```
 
-### **O(n²)**
-- Bubble Sort
-- Checking all pairs in an array
-
-### **O(2ⁿ)**
-- Subset generation
-- Brute-force password cracking
-
-### **O(n!)**
-- Traveling Salesman (brute-force)
-- Generating all permutations
+### **e) Iterating Over an Array**
+#### **Using a for-loop (C/Java)**
+```c
+for (int i = 0; i < 5; i++) {
+    printf("%d ", numbers[i]);
+}
+```
+#### **Using forEach (JavaScript)**
+```javascript
+numbers.forEach(num => console.log(num));
+```
+#### **Using for-in (Python)**
+```python
+for num in numbers:
+    print(num)
+```
 
 ---
 
-## **7. Cheat Sheet**
-| **Operation**            | **Time**  | **Space** |
-|--------------------------|----------|----------|
-| Array access             | `O(1)`   | `O(1)`   |
-| Binary search            | `O(log n)`| `O(1)`   |
-| Merge sort               | `O(n log n)`| `O(n)` |
-| Fibonacci (memoized)     | `O(n)`   | `O(n)`   |
-| Nested loops             | `O(n²)`  | `O(1)`   |
+## **4. Time Complexity of Array Operations**
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Access (`arr[i]`) | **O(1)** |
+| Search (Linear) | **O(n)** |
+| Insertion (at end) | **O(1)** (Amortized for dynamic arrays) |
+| Insertion (at middle) | **O(n)** (Requires shifting) |
+| Deletion | **O(n)** (Requires shifting) |
 
 ---
 
-## **8. Key Takeaways**
-1. Big O describes **worst-case** growth rates.
-2. Focus on **dominant terms** (drop constants/lesser terms).
-3. **Space complexity** matters for memory-constrained systems.
-4. **O(n log n)** is often the "best practical" complexity for sorting/searching.
+## **5. Types of Arrays**
+### **a) One-Dimensional (1D) Array**
+- A simple list of elements.
+- Example: `[1, 2, 3, 4, 5]`
 
-Mastering Big O helps you write **efficient algorithms** and **ace technical interviews**! 🚀', '', 2, 0, false,
-        'document', null, '464b9331-6c2a-4a3c-bc9c-dad1ef415149', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+### **b) Multi-Dimensional Array**
+- **2D Array (Matrix)**:
+  ```java
+  int matrix[3][3] = {
+      {1, 2, 3},
+      {4, 5, 6},
+      {7, 8, 9}
+  };
+  ```
+- **3D Array**:
+  ```python
+  threeD = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
+  ```
+
+### **c) Dynamic Arrays (Resizable)**
+- Automatically expand when full (e.g., Python `list`, C++ `std::vector`, Java `ArrayList`).
+- Example (Python):
+  ```python
+  dynamic_array = []
+  dynamic_array.append(10)  # Expands as needed
+  ```
+
+---
+
+## **6. Advantages & Disadvantages**
+### **Advantages:**
+✔ **Fast access** (O(1) time for indexing).
+✔ **Memory efficiency** (contiguous storage).
+✔ **Simple to use** in most programming languages.
+
+### **Disadvantages:**
+❌ **Fixed size** (static arrays cannot grow).
+❌ **Insertions/deletions are slow** (O(n) due to shifting).
+❌ **Memory wastage** if allocated size is too large.
+
+---
+
+## **7. Common Use Cases**
+- Storing and accessing large datasets.
+- Implementing other data structures (stacks, queues, heaps).
+- Matrix operations in scientific computing.
+- Lookup tables and caching.
+
+---
+
+## **8. Example: Searching an Array (Linear Search)**
+```java
+public int linearSearch(int[] arr, int target) {
+    for (int i = 0; i < arr.length; i++) {
+        if (arr[i] == target) {
+            return i;
+        }
+    }
+    return -1; // Not found
+}
+```
+
+---
+
+## **9. Conclusion**
+Arrays are **fundamental** in programming due to their **simplicity and efficiency** in accessing elements. While they have limitations (fixed size, slow insertions), they serve as the basis for more complex data structures like **ArrayLists, Hash Tables, and Dynamic Arrays**.',
+        '', 4, 0, false, 'document', null, 'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('65c89d7b-98d4-43b5-9a1d-9150aca50d18', 'Dynamic Programming part 1', 'dynamic-programming-part-1', '',
-        '/storage/builders/videos/nsrfivqfMeYlrO09ExBlH0PG1RH39K4vu8E4SqNm.mp4', 0, 399, false, 'video', null,
-        '20fa6d1b-e347-4d44-a5dc-20d82abdf007', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES ('8e2d4e3b-693e-41ec-a9bc-71ebe6dba7e5', 'Leetcode 414: Third Maximum Number',
+        'leetcode-414-third-maximum-number', '', '', 2, 0, false, 'assessment', null,
+        'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('96fd5bcb-f2b4-44b7-9a3c-3977fe79b29f', 'Leetcode 414 Solution', 'leetcode-414-solution', '',
-        '/storage/builders/videos/M4N1IKQV8U9sEDTmCyrzthJDU1jjGY5hZ9xzTf2u.mp4', 3, 1138, false, 'video', null,
-        '7605e1be-b401-4e9b-a518-64708c0aa037', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES ('a0f8388a-5e70-42d6-8a24-748231426a02', 'LinkedList part 2', 'linkedlist-part-2', '',
+        '/storage/course/videos/1GD3gY83SMQuiACN5DeQiMdJDmlEkdDXa07ESx4O.mp4', 1, 1217, false, 'video', null,
+        '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('a8d866b2-5ce5-4c88-aaa9-565e4ca546fd', 'Linked Lists part 1', 'linked-lists-part-1', '',
-        '/storage/builders/videos/2La54hMf1hQpE5QPSLTg8HTApIO7MIT9QMi1Ueim.mp4', 0, 816, false, 'video', null,
-        '23493ff1-bdfa-4c5b-be87-8d7c91d5c0ba', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES ('a797bf9e-3a71-421a-ac9e-f1380cdfb87f', 'Big O notation document', 'big-o-notation-document', '# **Linked Lists - Comprehensive Documentation**
+
+## **1. Introduction to Linked Lists**
+A **Linked List** is a linear data structure consisting of nodes connected via pointers. Unlike arrays, linked list elements are **not stored in contiguous memory locations**.
+
+### **Key Characteristics**
+- Dynamic size (can grow/shrink during runtime)
+- Efficient insertions/deletions (no shifting required)
+- Sequential access (no random access like arrays)
+
+---
+
+## **2. Types of Linked Lists**
+
+### **2.1 Singly Linked List**
+- **Node Structure**:
+  ```cpp
+  struct Node {
+      int data;
+      Node* next;  // Pointer to next node
+  };
+  ```
+- **Traversal**: Unidirectional (head → tail)
+- **Termination**: Last node points to `NULL`
+
+### **2.2 Doubly Linked List**
+- **Node Structure**:
+  ```cpp
+  struct Node {
+      int data;
+      Node* next;  // Pointer to next node
+      Node* prev;  // Pointer to previous node
+  };
+  ```
+- **Traversal**: Bidirectional (head ↔ tail)
+- **Advantage**: Easier deletions/backward traversals
+
+### **2.3 Circular Linked List**
+- **Variants**:
+  - **Circular Singly Linked List**: Tail points to head
+  - **Circular Doubly Linked List**: Tail ↔ head connection
+- **Termination**: No `NULL` pointers (forms a loop)
+
+---
+
+## **3. Core Operations**
+
+### **3.1 Insertion**
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Insert at head | **O(1)** |
+| Insert at tail | **O(1)** (with tail pointer) or **O(n)** |
+| Insert after a node | **O(n)** (search) + **O(1)** (insert) |
+
+### **3.2 Deletion**
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Delete head | **O(1)** |
+| Delete tail | **O(n)** (singly), **O(1)** (doubly with tail) |
+| Delete specific node | **O(n)** (search) + **O(1)** (delete) |
+
+### **3.3 Traversal**
+- **Singly Linked List**: Head → Tail (**O(n)**)
+- **Doubly Linked List**: Head ↔ Tail (**O(n)**)
+- **Circular Linked List**: Loop until revisiting start node
+
+---
+
+## **4. Time Complexity Summary**
+
+| Operation | Singly Linked | Doubly Linked |
+|-----------|--------------|--------------|
+| Access    | O(n)         | O(n)         |
+| Search    | O(n)         | O(n)         |
+| Insert Head | O(1)       | O(1)         |
+| Insert Tail | O(n)       | O(1)*        |
+| Delete Head | O(1)       | O(1)         |
+| Delete Tail | O(n)       | O(1)*        |
+
+*With tail pointer
+
+---
+
+## **5. Advantages & Disadvantages**
+
+### **Advantages**:
+✔ Dynamic size (no pre-allocation)
+✔ Efficient insertions/deletions (**O(1)** at head)
+✔ No memory waste (allocates per node)
+
+### **Disadvantages**:
+❌ No random access (**O(n)** search time)
+❌ Extra memory for pointers
+❌ Poor cache locality (non-contiguous memory)
+
+---
+
+## **6. Applications**
+- **Stacks & Queues** implementations
+- **Browser history** (back/forward navigation)
+- **Memory management** in operating systems
+- **Polynomial representation** in mathematics
+- **Collision handling** in hash tables
+
+---
+
+## **7. Linked List vs. Array**
+
+| Feature         | Linked List      | Array           |
+|----------------|-----------------|----------------|
+| Size           | Dynamic         | Fixed           |
+| Random Access  | O(n)            | O(1)            |
+| Insert Head    | O(1)            | O(n)            |
+| Memory Overhead| Pointers        | None            |
+| Cache Locality | Poor            | Excellent       |
+
+---
+
+## **8. Code Implementation (C++)**
+
+### **Singly Linked List**
+```cpp
+class SinglyLinkedList {
+private:
+    struct Node {
+        int data;
+        Node* next;
+        Node(int val) : data(val), next(nullptr) {}
+    };
+    Node* head;
+
+public:
+    SinglyLinkedList() : head(nullptr) {}
+
+    // Insert at head (O(1))
+    void push(int val) {
+        Node* newNode = new Node(val);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    // Delete node (O(n))
+    void deleteNode(int val) {
+        Node* temp = head;
+        Node* prev = nullptr;
+
+        while (temp && temp->data != val) {
+            prev = temp;
+            temp = temp->next;
+        }
+
+        if (!temp) return;  // Not found
+
+        if (!prev) head = temp->next;  // Delete head
+        else prev->next = temp->next;
+
+        delete temp;
+    }
+};
+```
+
+### **Doubly Linked List**
+```cpp
+class DoublyLinkedList {
+private:
+    struct Node {
+        int data;
+        Node* prev;
+        Node* next;
+        Node(int val) : data(val), prev(nullptr), next(nullptr) {}
+    };
+    Node* head;
+    Node* tail;  // Enables O(1) tail operations
+
+public:
+    DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+
+    // Insert at tail (O(1))
+    void append(int val) {
+        Node* newNode = new Node(val);
+        if (!head) head = tail = newNode;
+        else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+    }
+};
+```
+
+---
+
+## **9. Practice Problems**
+1. [Reverse a Linked List (LeetCode 206)](https://leetcode.com/problems/reverse-linked-list/)
+2. [Detect Cycle (LeetCode 141)](https://leetcode.com/problems/linked-list-cycle/)
+3. [Merge Two Sorted Lists (LeetCode 21)](https://leetcode.com/problems/merge-two-sorted-lists/)
+
+---
+
+## **10. Key Takeaways**
+- Use linked lists for **frequent insertions/deletions**.
+- Prefer arrays when **random access** is critical.
+- **Doubly linked lists** simplify backward traversal but consume more memory.', '', 5, 0, false, 'document', null,
+        '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('b676262a-7dff-4a29-beb0-30736ef17eba', 'Advanced DSA Challenge', 'advanced-dsa-challenge', '', '', 3, 0, false,
-        'assessment', null, '20fa6d1b-e347-4d44-a5dc-20d82abdf007', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES ('bed128e8-a4c2-4e87-87f5-10d5323b2047', 'Quiz about Binary Search', 'quiz-about-binary-search', '', '', 4, 0,
+        false, 'assessment', null, 'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('bd7fee7a-477c-4d24-8a22-31ab82e8ca27', 'What is Big O Notation?', 'what-is-big-o-notation', '',
-        '/storage/builders/videos/Ki8v9pwKTZXO0XUblAKY3d6kwaxNHUQUQPef6dxg.mp4', 0, 1183, false, 'video', null,
-        '464b9331-6c2a-4a3c-bc9c-dad1ef415149', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('d679a70a-45ea-4c0c-8e37-78858fb0abe3', 'Dynamic Programming Document', 'dynamic-programming-document', '# **Dynamic Programming (DP) - Complete Guide**
+VALUES ('d0366ee2-8e19-41a7-9b8d-ddd46cb290ad', 'Dynamic Programming document', 'dynamic-programming-document', '# **Dynamic Programming (DP) - Complete Guide**
 
 ## **1. Introduction**
 Dynamic Programming is an optimization technique that breaks complex problems into simpler subproblems, stores their solutions (memoization/tabulation), and reuses them to avoid redundant calculations.
@@ -816,111 +1302,128 @@ def climbStairs(n):
 ---
 
 This document covers **core DP concepts**, **implementation strategies**, and **classic problems**. Use it as a cheat sheet for interviews! 🚀',
-        '', 2, 0, false, 'document', null, '20fa6d1b-e347-4d44-a5dc-20d82abdf007', '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+        '', 2, 0, false, 'document', null, '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('f3a79cac-7fca-4882-b608-472460392b65', 'Linked Lists part 2', 'linked-lists-part-2', '',
-        '/storage/builders/videos/gcopPvszbJWSwN5CnaMxm9hmLQOITPuadSNsqN0Y.mp4', 1, 239, false, 'video', null,
-        '23493ff1-bdfa-4c5b-be87-8d7c91d5c0ba', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES ('d1f0c612-5008-4ba2-9354-befbc9ba665a', 'LinkedList part 1', 'linkedlist-part-1', '',
+        '/storage/course/videos/Nc4j3zuqWznD9vzZIpRto9BpddyIlZf4ni19RHSd.mp4', 0, 816, false, 'video', null,
+        '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('f60a2afe-27bd-416a-91d4-bdd3255f6a7c', 'Course outline', 'builders-outline', '# Data Structures Mastery (53 Hours) - Detailed Curriculum
-
-## Module 1: Foundations (5 Hours)
-1. **Introduction to Data Structures**
-   - What are Data Structures?
-   - Types and Classifications
-   - Real-world Applications
-
-2. **Recursion Deep Dive**
-   - Principle of Recursion
-   - Writing Base Cases
-   - Head vs Tail Recursion
-   - Recursion vs Iteration
-   - Common Recursion Problems
-
-## Module 2: Linear Structures (12 Hours)
-1. **Arrays**
-   - Memory Representation
-   - Operations (Insert/Delete/Search)
-   - Dynamic Arrays
-   - Array ADT Implementation
-
-2. **Linked Lists**
-   - Singly Linked Lists
-   - Doubly Linked Lists
-   - Circular Linked Lists
-   - Implementation and Operations
-
-## Module 3: Abstract Data Types (10 Hours)
-1. **Stacks**
-   - LIFO Principle
-   - Array vs Linked List Implementation
-   - Applications (Parsing, Undo Operations)
-
-2. **Queues**
-   - FIFO Principle
-   - Circular Queues
-   - Priority Queues
-   - Deque Implementation
-
-## Module 4: Hierarchical Structures (15 Hours)
-1. **Trees**
-   - Binary Trees
-   - Tree Traversals (Pre/In/Post-order)
-   - Threaded Binary Trees
-
-2. **Binary Search Trees**
-   - Insertion/Deletion
-   - Balanced vs Unbalanced
-   - Practical Applications
-
-3. **AVL Trees**
-   - Rotations (LL, RR, LR, RL)
-   - Balance Factor Calculations
-   - Performance Analysis
-
-## Module 5: Advanced Concepts (11 Hours)
-1. **Graphs**
-   - Representation (Matrix, List)
-   - Traversal (BFS, DFS)
-   - Shortest Path Algorithms
-   - Minimum Spanning Trees
-
-2. **Hashing**
-   - Hash Functions
-   - Collision Handling
-   - Applications in Databases
-
-## Module 6: Practical Implementation
-- **Coding Challenges**
-- **Real-world Case Studies**
-- **Optimization Techniques**
-- **Final Project Guidance**
-
-## Features:
-- Whiteboard Explanations
-- Line-by-line Coding
-- Downloadable Source Code
-- Problem Solving Sessions
-- Q&A Support', '', 1, 0, false, 'document', null, '3fce986b-bdc9-4666-88af-3cd2edf069b0', '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES ('e65c59a7-8fa5-4a94-ae93-d6a8e08e46b0', 'Dynamic Programming part 2', 'dynamic-programming-part-2', '',
+        '/storage/course/videos/yjsiKqHeF6bkI2p72usgYhPWwhKsjkIjdSBvAeRq.mp4', 1, 239, false, 'video', null,
+        '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('f7bc7faf-9ac5-42f0-8a41-b10d7f0aa0ed', 'Dynamic Programming part 2', 'dynamic-programming-part-2', '',
-        '/storage/builders/videos/6sYbUn79mCiqBqe0sgciBmRJxsXy6CnMhtardJc3.mp4', 1, 239, false, 'video', null,
-        '20fa6d1b-e347-4d44-a5dc-20d82abdf007', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES ('eb93c554-343b-49f6-bae1-cac28b57fa7e', 'What is Binary Search', 'what-is-binary-search', '',
+        '/storage/course/videos/j1WaG8QluPemFBHAEgy4Yblocz9cgdbrLDonsShB.mp4', 0, 462, false, 'video', null,
+        'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('fdb98679-878a-44be-8f67-bab93a95e1f1', 'Leetcode 414', 'leetcode-414', '', '', 2, 0, false, 'assessment', null,
-        '7605e1be-b401-4e9b-a518-64708c0aa037', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES ('f4631405-8421-438a-be4b-dee58f2d3192', 'Dynamic Programming part 1', 'dynamic-programming-part-1', '',
+        '/storage/course/videos/RBFXf05qV03Egx286nkjJxjR34DBGavkr1Bmxeoi.mp4', 0, 399, false, 'video', null,
+        '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('fac9d284-526d-48ae-8a21-136ca36182f2', 'Programming practice about array', 'programming-practice-about-array',
+        '', '', 3, 0, false, 'assessment', null, 'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (4, 'Advanced DSA Challenge',
-        'This 6-question quiz contains multiple correct answers for some questions. Select all that apply.', 'quiz', 6,
-        'b676262a-7dff-4a29-beb0-30736ef17eba', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (1, 'Merge Sorted Array', '# **Merge Sorted Arrays (LeetCode Problem 88)**
+
+## **Problem Restatement**
+You are given two integer arrays `nums1` and `nums2`, sorted in **non-decreasing order**, and two integers `m` and `n`, representing the number of elements in `nums1` and `nums2` respectively.
+
+**Task:**
+Merge `nums2` into `nums1` in **sorted order**. The merged array should be stored inside `nums1` (do not return a new array).
+
+**Constraints:**
+- `nums1.length == m + n` (extra space is reserved for merging).
+- `nums2.length == n`.
+- The last `n` elements in `nums1` are `0` and should be ignored initially.
+
+---
+
+## **Approach**
+### **Optimal Solution: Two-Pointer Technique (Backward Merge)**
+Since both arrays are sorted, we can merge them efficiently by:
+1. **Comparing elements from the end** of `nums1` and `nums2` (to avoid overwriting `nums1` prematurely).
+2. **Placing the larger element** at the current end of `nums1`.
+3. **Decrementing pointers** accordingly until all elements are merged.
+
+**Time Complexity:** `O(m + n)`
+**Space Complexity:** `O(1)` (in-place, no extra space used).
+
+---
+
+## **Solution Code (Python)**
+```python
+def merge(nums1, m, nums2, n):
+    # Initialize pointers for nums1, nums2, and the merged array\'s end
+    p1 = m - 1  # Last valid element in nums1
+    p2 = n - 1  # Last element in nums2
+    p = m + n - 1  # Position to place the next largest element
+
+    # Merge in reverse order
+    while p1 >= 0 and p2 >= 0:
+        if nums1[p1] > nums2[p2]:
+            nums1[p] = nums1[p1]
+            p1 -= 1
+        else:
+            nums1[p] = nums2[p2]
+            p2 -= 1
+        p -= 1
+
+    # If there are remaining elements in nums2, copy them
+    while p2 >= 0:
+        nums1[p] = nums2[p2]
+        p2 -= 1
+        p -= 1
+
+# Example Usage
+nums1 = [1, 2, 3, 0, 0, 0]
+m = 3
+nums2 = [2, 5, 6]
+n = 3
+merge(nums1, m, nums2, n)
+print(nums1)  # Output: [1, 2, 2, 3, 5, 6]
+```
+
+---
+
+## **Explanation**
+1. **Initialization:**
+   - `p1` points to the last valid element in `nums1` (`m-1`).
+   - `p2` points to the last element in `nums2` (`n-1`).
+   - `p` points to the last position of the merged array (`m+n-1`).
+
+2. **Comparison & Placement:**
+   - Compare `nums1[p1]` and `nums2[p2]`, place the **larger** one at `nums1[p]`.
+   - Decrement the respective pointer (`p1` or `p2`) and `p`.
+
+3. **Handling Remaining Elements:**
+   - If `nums2` has leftover elements (when `p1` exhausts first), copy them into `nums1`.
+
+---
+
+## **Key Takeaways**
+✅ **Efficiency:** Merges in `O(m+n)` time without extra space.
+✅ **Edge Cases:** Handles cases where `nums1` or `nums2` is empty.
+✅ **In-Place:** Modifies `nums1` directly (required by the problem).
+
+This approach is **optimal** for merging sorted arrays in-place. Would you like a breakdown of alternative approaches (e.g., using extra space)? 😊',
+        'programming', 1, 'fac9d284-526d-48ae-8a21-136ca36182f2', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (5, 'Remove Duplicates from Sorted Array', '# Remove Duplicates from Sorted Array
+VALUES (2, 'Test your understanding of Binary Search with these 4 questions!',
+        'Includes single-choice (✔) and multiple-choice (☑) questions. Each option has an explanation.', 'quiz', 2,
+        'bed128e8-a4c2-4e87-87f5-10d5323b2047', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
+VALUES (3, 'Fundamentals Checkpoint',
+        'Add a summary of short text to prepare students for the activities for the Quiz. The text is shown on the course page beside the tooltip beside the Quiz name.',
+        'quiz', 5, '5c7cf1d0-a121-49da-a057-f6591a85c45c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
+VALUES (4, 'Remove Duplicates from Sorted Array', '# Remove Duplicates from Sorted Array
 
 ## Problem Statement
 Given an integer array `nums` sorted in **non-decreasing order**, remove the duplicates **in-place** such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in `nums`.
@@ -947,9 +1450,9 @@ class Solution:
 
         return i + 1
 
-```', 'programming', 1, '3b86d194-7a49-4bff-8549-de9576e9a49a', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+```', 'programming', 1, '19a17557-cfda-452d-ad1b-e11484ad7e16', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (6, 'Third Maximum Number', '# 414. Third Maximum Number
+VALUES (5, 'Third Maximum Number', '# 414. Third Maximum Number
 
 ## Problem Statement
 Given an integer array `nums`, return the **third distinct maximum** number in this array. If the third maximum does not exist, return the **maximum** number.
@@ -1008,355 +1511,345 @@ Given an integer array `nums`, return the **third distinct maximum** number in t
 - `1 <= nums.length <= 10^4`
 - `-2^31 <= nums[i] <= 2^31 - 1`
 
-##Solution
+#### Solution Code (Python)
 ```python
-class Solution:
-    def thirdMaximumNumber(self, nums):
-        distinct = set(nums)
-        if len(distinct) < 3:
-            return max(distinct)
-        else:
-            distinct.remove(max(distinct))
-            distinct.remove(max(distinct))
-            return max(distinct)
+def thirdMax(nums):
+    # Remove duplicates and sort in descending order
+    distinct_nums = sorted(list(set(nums)), reverse=True)
 
-```', 'programming', 1, 'fdb98679-878a-44be-8f67-bab93a95e1f1', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+    # Return the third maximum if exists, else return the maximum
+    return distinct_nums[2] if len(distinct_nums) >= 3 else distinct_nums[0]
+```', 'programming', 1, '8e2d4e3b-693e-41ec-a9bc-71ebe6dba7e5', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (7, 'DSA Fundamentals Checkpoint',
-        'Test your understanding of core Data Structures and Algorithms concepts with these 5 multiple-choice questions. Each question has one correct answer.',
-        'quiz', 5, '2e312400-3486-4405-b4d3-e4f720a7da55', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (8, '', '', 'assignment', 1, '5626586c-c37c-4dac-b46d-c262096f144a', '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (9, 'Assignment: Implement and Analyze a Stack Using Linked List', '# **Assignment: Implement and Analyze a Stack Using Linked List**
+VALUES (6, 'Assignment: Third Maximum Number in Array', '# Assignment: Third Maximum Number in Array
 
-## **📝 Description**
-In this assignment, you will implement a **Stack** data structure using a **Singly Linked List** in Python. You will then analyze the time complexity of each operation and compare it with an array-based implementation.
+## **Description**
+This assignment focuses on implementing a solution to find the **third distinct maximum number** in an array, a fundamental problem in Data Structures and Algorithms (DSA). The problem tests your ability to manipulate arrays, handle edge cases, and optimize for time/space complexity.
 
-### **Learning Objectives**
-1. Understand how to implement a Stack using Linked Lists
-2. Analyze time/space complexity of operations
-3. Compare Linked List vs. Array implementations
+### **Problem Statement**
+Given an integer array `nums`, return the **third distinct maximum** number. If it doesn’t exist, return the **maximum** number.
+
+**Examples:**
+1. Input: `[3, 2, 1]` → Output: `1`
+   *(3rd max exists)*
+2. Input: `[1, 2]` → Output: `2`
+   *(3rd max missing, return max)*
+3. Input: `[2, 2, 3, 1]` → Output: `1`
+   *(Duplicates ignored)*
 
 ---
 
-## **📋 Requirements**
-
-### **1. Implement a `Node` Class**
+## **Requirements**
+### **1. Function Signature**
 ```python
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
+def thirdMax(nums: list[int]) -> int:
 ```
 
-### **2. Implement a `LinkedListStack` Class**
-Your stack should support these operations:
-| **Method**       | **Description**                              | **Time Complexity** |
-|------------------|--------------------------------------------|---------------------|
-| `push(item)`     | Adds `item` to the top of the stack         |                     |
-| `pop()`          | Removes and returns the top item            |                     |
-| `peek()`         | Returns the top item without removing it    |                     |
-| `is_empty()`     | Returns `True` if the stack is empty        |                     |
-| `size()`         | Returns the number of items in the stack    |                     |
+### **2. Tasks**
+- **Remove duplicates** from the array.
+- Identify the **top three distinct maximums**.
+- Return the 3rd max if it exists, else return the **absolute max**.
 
-### **3. Analyze Time Complexity**
-Fill in the **Time Complexity** column in the table above for each operation.
-
-### **4. Compare with Array-Based Stack**
-Write a short analysis (50-100 words) comparing:
-- **Pros/Cons** of Linked List vs. Array implementations
-- **When to use each**
+### **3. Constraints**
+- Handle arrays with lengths from `1` to `10^4`.
+- Support integers in range `[-2^31, 2^31 - 1]`.
+- Optimize for **time complexity** (avoid O(n²) solutions).
 
 ---
 
-## **📂 Submission Format**
-Submit a **single Python file** named:
-```
-stack_[YourName]_[StudentID].py
-```
-Example: `stack_JohnDoe_123456.py`
+## **Solution Approach**
+### **Key Steps**
+1. **Deduplication**: Convert the array to a set to remove duplicates.
+2. **Sorting**: Sort the distinct elements in **descending order**.
+3. **Validation**: Check if there are ≥3 distinct elements:
+   - If yes, return the 3rd element.
+   - If no, return the 1st element (max).
 
-### **File Structure**
+### **Time Complexity**
+- **O(n log n)** due to sorting (optimal for this approach).
+
+### **Space Complexity**
+- **O(n)** for storing distinct elements.
+
+---
+
+## **Submission Guidelines**
+### **1. File Structure**
+```
+/assignment
+  ├── third_max.py      # Solution code
+  ├── README.md         # Explanation (optional)
+  └── test_cases.py     # Custom test cases (optional)
+```
+
+### **2. Code Template**
 ```python
-# Node Class
-class Node:
-    # ... your code ...
-
-# LinkedListStack Class
-class LinkedListStack:
-    # ... your code ...
-
-# Time Complexity Analysis (as comments)
-# push(item): O(?)
-# pop(): O(?)
-# ...
-
-# Comparison Analysis (as a multi-line string)
-COMPARISON = """
-Linked List vs. Array:
-- ...
-"""
+def thirdMax(nums):
+    distinct_nums = sorted(list(set(nums)), reverse=True)
+    return distinct_nums[2] if len(distinct_nums) >= 3 else distinct_nums[0]
 ```
 
----
+### **3. Testing**
+- Include **at least 5 test cases** covering:
+  - Arrays with duplicates.
+  - Arrays with <3 unique numbers.
+  - Negative numbers.
+  - Edge cases (e.g., single-element arrays).
 
-## **✅ Test Cases**
-Your code should pass these tests:
-
-### **Test 1: Basic Operations**
+Example test case:
 ```python
-stack = LinkedListStack()
-stack.push(10)
-stack.push(20)
-assert stack.pop() == 20
-assert stack.peek() == 10
-assert stack.size() == 1
-```
-
-### **Test 2: Edge Cases**
-```python
-stack = LinkedListStack()
-assert stack.is_empty() == True
-assert stack.pop() == None  # Underflow
-assert stack.peek() == None
+assert thirdMax([2, 2, 3, 1]) == 1
 ```
 
 ---
 
-## **📝 Grading Rubric**
-| **Criteria**               | **Points** |
-|----------------------------|------------|
-| Correct `Node` class       | 10         |
-| Correct `LinkedListStack`  | 50         |
-| Accurate time complexity   | 20         |
-| Insightful comparison      | 20         |
-| **Total**                  | **100**    |
+## **Evaluation Criteria**
+| Criteria                | Points |
+|-------------------------|--------|
+| Correctness             | 50     |
+| Time/Space Complexity   | 30     |
+| Code Readability        | 10     |
+| Test Coverage           | 10     |
 
 ---
 
-## **💡 Tips**
-1. For `push()`, insert at the **head** of the linked list for O(1) time.
-2. Handle edge cases (e.g., popping from an empty stack).
-3. Test your code thoroughly before submission.
+## **Tips**
+- Use Python’s `set()` for deduplication.
+- Leverage built-in sorting (`sorted()`) for simplicity.
+- Document edge cases in your `README.md`.
 
-**Deadline**: Submit by **23:59, [Due Date]** via Google Classroom.
+**Deadline**: Submit by **DD/MM/YYYY**.
+**Penalty**: Late submissions lose 10%/day.
 
 ---
 
-This assignment tests your understanding of **Linked Lists**, **Stacks**, and **Algorithmic Analysis**. Good luck! 🚀',
-        'assignment', 1, '4872dd9a-f7a1-4128-9f0a-51083a0883b1', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+**Note**: Plagiarism results in zero marks. Write your own solution! 🔍
+
+### **Key Features of This Assignment File**:
+1. **Structured Requirements**: Clear separation of problem, solution, and submission details.
+2. **Code Template**: Ready-to-use Python snippet for quick implementation.
+3. **Evaluation Metrics**: Transparent grading rubric.
+4. **Practical Constraints**: Real-world limits (array size, integer range).
+', 'assignment', 1, '40c120bd-6b57-436c-baf7-ddbe300e8dc0', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (6, 'Which operations are O(1) in a Hash Table with good hash distribution?', 'multiple_choice', 2, 4,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (1, 'What is the time complexity of Binary Search?', 'multiple_choice', 1, 2, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (7, 'In an AVL Tree, rotations are used to:', 'multiple_choice', 3, 4, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (2, 'Which conditions must be true for Binary Search? (Choose all that apply)', 'multiple_choice', 2, 2,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (8, 'Which traversal(s) can reconstruct a BST uniquely?', 'multiple_choice', 4, 4, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (3, 'What is the time complexity of inserting an element at the beginning of a dynamic array?',
+        'multiple_choice', 2, 3, '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (9, 'Graph representations include:', 'multiple_choice', 5, 4, '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (4, 'Which data structure uses the LIFO principle?', 'multiple_choice', 3, 3, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (10, 'Which scenarios suit a Queue?', 'multiple_choice', 6, 4, '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (5, 'In a Binary Search Tree, all nodes in the left subtree must be:', 'multiple_choice', 4, 3,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (11, 'Recursion requires:', 'multiple_choice', 7, 4, '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (6, 'What is the base case condition for a recursive Fibonacci sequence?', 'multiple_choice', 5, 3,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (12, 'What is the time complexity of inserting an element at the beginning of a dynamic array?',
-        'multiple_choice', 2, 7, '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (13, 'Which data structure uses the LIFO principle?', 'multiple_choice', 3, 7, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (14, 'In a Binary Search Tree, all nodes in the left subtree must be:', 'multiple_choice', 4, 7,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (15, 'What is the base case condition for a recursive Fibonacci sequence?', 'multiple_choice', 5, 7,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (16, 'Which algorithm uses a divide and conquer approach?', 'multiple_choice', 6, 7, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (7, 'Which algorithm uses a divide and conquer approach?', 'multiple_choice', 6, 3, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (21, 'Insertion', false, 'With a good hash function, inserts take constant time on average.', 0, 6,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (1, 'O(1)', false, 'Constant time is impossible for search algorithms over unsorted data.', 0, 1,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (22, 'Lookup', true, 'Same as insertion – O(1) for ideal hashing.', 1, 6, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (2, 'O(n)', false, 'Linear time applies to brute-force (e.g., linear search)', 1, 1, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (23, 'Sorting', false, 'Hash tables are unordered; sorting requires O(n log n).', 2, 6, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (3, 'O(log n)', true, 'Binary search halves the search space each iteration, leading to logarithmic time.', 2, 1,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (24, 'Traversal', false, 'Traversing all elements is O(n), not O(1).', 3, 6, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (4, 'O(n log n)', false, 'This is the time complexity of sorting algorithms like Merge Sort.', 3, 1,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (25, 'Maintain balance', false, 'Rotations ensure the tree’s height difference (balance factor) ≤ 1.', 0, 7,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (5, 'The input array must be sorted', true,
+        'Correct: Binary search relies on sorted order to divide the search space.', 0, 2, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (26, 'Preserve BST properties', true, 'Rotations keep the left < root < right ordering intact.', 1, 7,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (6, 'The algorithm can only be implemented recursively.', false,
+        'It can be implemented iteratively (preferred for space efficiency).', 1, 2, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (27, 'Reduce tree height to 1', false, 'AVL trees aim for balance, not minimal height.', 2, 7,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (7, 'It works with linked lists as efficiently as arrays.', false,
+        'Linked lists lack O(1) random access, making binary search inefficient.', 2, 2, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (28, 'Convert it to a linked list', false, 'Rotations prevent linked-list-like degeneration.', 3, 7,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (8, 'It requires random access to elements.', false,
+        'Correct: Binary search needs mid-index access, which arrays provide in O(1).', 3, 2, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (29, 'Pre-order only', false, 'Pre-order alone can’t distinguish left/right subtrees.', 0, 8,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (9, 'O(1)', false,
+        'Inserting at the beginning requires shifting all existing elements right, which takes linear time.', 0, 3,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (30, 'Pre-order + In-order', true, 'In-order gives sorted order; pre-order identifies the root.', 1, 8,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (10, 'O(n)', true, 'All elements must be shifted to accommodate the new element at index 0.', 1, 3,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (31, 'Post-order only', false, 'Like pre-order, it lacks subtree context alone.', 2, 8, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (11, 'O(log n)', false, 'Logarithmic time is irrelevant for array insertion operations.', 2, 3,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (32, 'In-order + Post-order', true, 'In-order provides sorting, post-order gives root position.', 3, 8,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (12, 'O(n^²)', false, 'No nested loops are involved in this operation.', 3, 3, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (33, 'Adjacency Matrix', true, 'A 2D array where matrix[i][j] indicates edge i→j.', 0, 9, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (13, 'Queue', false, 'Queues follow FIFO (First-In-First-Out).', 0, 4, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (34, 'Adjacency List', true, 'An array of lists, where each list stores neighbors.', 1, 9, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (14, 'Stack', true, 'Stacks process the most recently added item first (Last-In-First-Out).', 1, 4,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (35, 'Binary Heap', false, 'Heaps are used for priority queues, not graph representation.', 2, 9,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (15, 'Linked List', false, 'Linked lists can implement LIFO/FIFO but aren’t inherently LIFO.', 2, 4,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (36, 'Hash Set', false, 'Hash sets store elements, not graph edges.', 3, 9, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (16, 'Tree', false, 'Trees follow hierarchical ordering, not LIFO.', 3, 4, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (37, 'Printer job scheduling', true, 'Jobs are processed in the order they’re received (FIFO).', 0, 10,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (17, 'Less than the root node', true, 'BST property mandates left subtree values < root < right subtree.', 0, 5,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (38, 'Undo functionality in editors', true, 'Undo uses a stack (LIFO) to reverse recent actions.', 1, 10,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (18, 'BST property mandates left subtree values < root < right subtree.', false,
+        'This describes the right subtree.', 1, 5, '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (39, 'Breadth-First Search', false, 'BFS uses queues to process nodes level-by-level.', 2, 10,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (19, 'Equal to the root node', false, 'Duplicates are typically not allowed in standard BSTs.', 2, 5,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (40, 'Recursive function calls', false, 'Recursion uses the call stack (LIFO).', 3, 10, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (20, 'Unordered', false, 'BSTs are ordered by definition.', 3, 5, '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (41, 'Base case', true, 'Terminates the recursion to prevent infinite loops.', 0, 11, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (21, 'if (n == 0) return 1;', false,
+        'This would return Fibonacci(0) = 1, which is mathematically wrong (should be 0).', 0, 6, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (42, 'Recursive case', true, 'Calls itself with modified parameters to progress toward the base case.
-', 1, 11, '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (22, 'if (n <= 1) return n;', true, 'Fibonacci(0) = 0 and Fibonacci(1) = 1 are the base cases.', 1, 6,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (43, 'Static variables only
-', false, 'Recursion can use any variable scope.', 2, 11, '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (23, 'if (n > 1) return n;', false, 'This skips the base case entirely.', 2, 6, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (44, 'Loops', false, 'Recursion replaces iterative loops with function calls.', 3, 11, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (24, 'No base case needed', false, 'Recursion requires a base case to terminate.', 3, 6, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (45, 'O(1)', false,
-        'Inserting at the beginning requires shifting all existing elements right, which takes linear time.', 0, 12,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (25, 'Bubble Sort', false, 'Bubble Sort uses iterative comparison-swapping.', 0, 7, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (46, 'O(n)', true, 'All elements must be shifted to accommodate the new element at index 0.', 1, 12,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (26, 'Linear Search', false, 'This checks elements one-by-one without dividing.', 1, 7, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (47, 'O(log n)', false, 'Logarithmic time is irrelevant for array insertion operations.', 2, 12,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (27, 'Merge Sort', true, 'It splits the array into halves, sorts them, and merges (divide-and-conquer).', 2, 7,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (48, 'O(n^²)', false, 'No nested loops are involved in this operation.', 3, 12, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (49, 'Queue', false, 'Queues follow FIFO (First-In-First-Out).', 0, 13, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (50, 'Stack', true, 'Stacks process the most recently added item first (Last-In-First-Out).', 1, 13,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (51, 'Linked List', false, 'Linked lists can implement LIFO/FIFO but aren’t inherently LIFO.', 2, 13,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (52, 'Tree', false, 'Trees follow hierarchical ordering, not LIFO.', 3, 13, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (53, 'Less than the root node', true, 'BST property mandates left subtree values < root < right subtree.', 0, 14,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (54, 'BST property mandates left subtree values < root < right subtree.', false,
-        'This describes the right subtree.', 1, 14, '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (55, 'Equal to the root node', false, 'Duplicates are typically not allowed in standard BSTs.', 2, 14,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (56, 'Unordered', false, 'BSTs are ordered by definition.', 3, 14, '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (57, 'if (n == 0) return 1;', false,
-        'This would return Fibonacci(0) = 1, which is mathematically wrong (should be 0).', 0, 15,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (58, 'if (n <= 1) return n;', true, 'Fibonacci(0) = 0 and Fibonacci(1) = 1 are the base cases.', 1, 15,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (59, 'if (n > 1) return n;', false, 'This skips the base case entirely.', 2, 15, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (60, 'No base case needed', false, 'Recursion requires a base case to terminate.', 3, 15, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (61, 'Bubble Sort', false, 'Bubble Sort uses iterative comparison-swapping.', 0, 16, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (62, 'Linear Search', false, 'This checks elements one-by-one without dividing.', 1, 16, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (63, 'Merge Sort', true, 'It splits the array into halves, sorts them, and merges (divide-and-conquer).', 2, 16,
-        '2025-07-31 10:47:15', '2025-07-31 10:47:15');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (64, 'Breadth-First Search', false, 'BFS traverses level-by-level (no division).', 3, 16, '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (28, 'Breadth-First Search', false, 'BFS traverses level-by-level (no division).', 3, 7, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.programming_assignment_details (assessment_id, function_name, code_templates, test_cases,
                                                      created_at, updated_at)
-VALUES (5, 'removeDuplicates', '{
+VALUES (1, 'merge', '{
+    "python": "class Solution:\\n   def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> List[int]:\\n        pass"
+}', '[
+    {
+        "input": {
+            "m": {
+                "type": "int",
+                "value": "3"
+            },
+            "n": {
+                "type": "int",
+                "value": "3"
+            },
+            "nums1": {
+                "type": "array<int>",
+                "value": "[1, 2, 3, 0, 0, 0]"
+            },
+            "nums2": {
+                "type": "array<int>",
+                "value": "[2, 5, 6]"
+            }
+        },
+        "output": {
+            "type": "array<int>",
+            "value": "[1, 2, 2, 3, 5, 6]"
+        }
+    },
+    {
+        "input": {
+            "m": {
+                "type": "int",
+                "value": "1"
+            },
+            "n": {
+                "type": "int",
+                "value": "1"
+            },
+            "nums1": {
+                "type": "array<int>",
+                "value": "[1]"
+            },
+            "nums2": {
+                "type": "array<int>",
+                "value": "[2]"
+            }
+        },
+        "output": {
+            "type": "array<int>",
+            "value": "[1, 2]"
+        }
+    },
+    {
+        "input": {
+            "m": {
+                "type": "int",
+                "value": "3"
+            },
+            "n": {
+                "type": "int",
+                "value": "3"
+            },
+            "nums1": {
+                "type": "array<int>",
+                "value": "[4, 5, 6, 0, 0, 0]"
+            },
+            "nums2": {
+                "type": "array<int>",
+                "value": "[1, 2, 3]"
+            }
+        },
+        "output": {
+            "type": "array<int>",
+            "value": "[1, 2, 3, 4, 5, 6]"
+        }
+    }
+]', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.programming_assignment_details (assessment_id, function_name, code_templates, test_cases,
+                                                     created_at, updated_at)
+VALUES (4, 'removeDuplicates', '{
     "python": "class Solution:\\n   def removeDuplicates(self, nums: List[int]) -> int:\\n        pass"
 }', '[
     {
@@ -1375,19 +1868,43 @@ VALUES (5, 'removeDuplicates', '{
         "input": {
             "nums": {
                 "type": "array<int>",
-                "value": "[1, 2, 3, 3, 3, 4, 4, 5]"
+                "value": "[0, 0, 1, 1, 1, 2, 2, 3, 3, 4]"
             }
         },
         "output": {
             "type": "int",
             "value": "5"
         }
+    },
+    {
+        "input": {
+            "nums": {
+                "type": "array<int>",
+                "value": "[7, 7, 7]"
+            }
+        },
+        "output": {
+            "type": "int",
+            "value": "1"
+        }
+    },
+    {
+        "input": {
+            "nums": {
+                "type": "array<int>",
+                "value": "[0, 1, 2, 3]"
+            }
+        },
+        "output": {
+            "type": "int",
+            "value": "4"
+        }
     }
-]', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+]', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.programming_assignment_details (assessment_id, function_name, code_templates, test_cases,
                                                      created_at, updated_at)
-VALUES (6, 'thirdMaximumNumber', '{
-    "python": "class Solution:\\n   def thirdMaximumNumber(self, nums: List[int]) -> int:\\n        pass"
+VALUES (5, '', '{
+    "python": "class Solution:\\n   def (self, nums: List[int]) -> int:\\n        pass"
 }', '[
     {
         "input": {
@@ -1412,18 +1929,30 @@ VALUES (6, 'thirdMaximumNumber', '{
             "type": "int",
             "value": "2"
         }
+    },
+    {
+        "input": {
+            "nums": {
+                "type": "array<int>",
+                "value": "[2, 2, 3, 1]"
+            }
+        },
+        "output": {
+            "type": "int",
+            "value": "1"
+        }
     }
-]', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+]', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.batches (id, start_at, end_at, course_id, created_at, updated_at)
-VALUES (1, '2025-08-01 00:00:00', '2026-09-18 00:00:00', '4b9e2ba8-f070-450a-adf5-a72a56c28517', '2025-07-31 10:47:15',
-        '2025-07-31 10:47:15');
+VALUES (1, '2025-08-08 00:00:00', '2026-08-08 00:00:00', 'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (1, 1, 2, 'not_started', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (1, 1, 8, 'not_started', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (2, 1, 3, 'not_started', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (2, 1, 9, 'not_started', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (3, 1, 4, 'not_started', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (3, 1, 3, 'not_started', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (4, 1, 5, 'not_started', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (4, 1, 7, 'not_started', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (5, 1, 6, 'not_started', '2025-07-31 10:47:15', '2025-07-31 10:47:15');
+VALUES (5, 1, 4, 'not_started', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
