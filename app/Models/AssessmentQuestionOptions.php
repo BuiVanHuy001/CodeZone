@@ -11,6 +11,6 @@ class AssessmentQuestionOptions extends Model
 
 	public function assessmentQuestion(): BelongsTo
 	{
-		return $this->belongsTo(AssessmentQuestion::class, 'assessment_question_id');
+		return $this->belongsTo(AssessmentQuestion::class);
 	}
 }
