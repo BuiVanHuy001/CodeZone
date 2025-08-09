@@ -59,6 +59,84 @@ VALUES (10, 'Zalo', 'zalo', 'hi@zalo.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '3H6eUsprpP', 'organization', 'active',
         'https://s120-ava-talk.zadn.vn/e/6/2/5/36/120/16782d311b12da6d28daa13e343986b8.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
+INSERT INTO codezone.instructor_profiles (user_id, bio, about_me, socials_links, course_count, student_count, rating,
+                                          review_count, created_at, updated_at)
+VALUES (1, '# Bui Van Huy - Programming Instructor Profile
+
+## 🚀 Professional Summary
+Senior programming instructor with a decade of experience shaping Vietnam\'s next generation of developers. Specializing in transforming complex technical concepts into engaging, digestible lessons for diverse learning styles.
+
+## 🛠 Technical Expertise
+| Category        | Technologies                          |
+|-----------------|---------------------------------------|
+| Frontend        | JavaScript, React, TypeScript        |
+| Backend         | Node.js, Python (Django/Flask), Java |
+| Databases       | MongoDB, PostgreSQL, Firebase        |
+| DevOps          | Docker, AWS, CI/CD Pipelines         |
+
+## 🏆 Career Highlights
+- **Trained 1,200+ students** across university programs and corporate workshops
+- Developed **15+ specialized courses** in web development and algorithms
+- Recognized as **Top Educator** by TechEd Vietnam (2021, 2023)
+- Speaker at **DevConf Vietnam** and **Google Developer Groups** events
+
+## 📚 Current Teaching Focus
+1. Modern JavaScript Frameworks (Next.js, Vue)
+2. Cloud-Native Application Development
+3. Interview Preparation (LeetCode, System Design)
+4. AI-Assisted Programming Techniques
+
+## 🌱 Personal Philosophy
+> "The art of teaching code lies not in perfect syntax, but in cultivating computational thinking. My classroom is a sandbox where mistakes become milestones."
+
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-blue)](https://github.com/huydev)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/bùi-văn-huy-huy-610619309/)', 'I\'m Bui Van Huy, a passionate programming instructor with 10+ years of experience in both teaching and software development. I specialize in full-stack web development (JavaScript, React, Node.js) and backend programming with Python and Java. My teaching focuses on helping students build strong problem-solving skills and practical coding abilities.
+
+I believe the best way to learn programming is through hands-on projects and real-world examples. In my classes, I combine technical knowledge with industry insights to prepare students for actual development environments. When I\'m not teaching, I enjoy contributing to open-source projects and exploring new technologies in AI/ML.
+
+"Good code teaches itself. Great code inspires others to learn."', '{
+    "github": "BuiVanHuy001",
+    "youtube": "@bui-van-huy",
+    "facebook": "buivanhuy.dev",
+    "linkedin": "in/bùi-văn-huy-huy-610619309"
+}', 0, 0, 0.00, 0, '2025-08-09 15:10:24', '2025-08-09 16:04:01');
+INSERT INTO codezone.organization_profiles (user_id, bio, about_me, socials_links, course_count, created_at, updated_at)
+VALUES (10, '# Zalo – Vietnam\'s Leading Connection and Innovation Platform
+
+## Introduction
+**Zalo** is one of Vietnam\'s most popular messaging and social networking apps, developed by **VNG Corporation** (VinaGame). Launched in 2012, Zalo quickly became Vietnam\'s national app with over **100 million users**, evolving from a simple messaging platform to a comprehensive multi-service digital ecosystem.
+
+## Key Features
+- **Messaging & Calls**: Supports multimedia messages, group video calls, and security encryption
+- **ZaloPay**: Integrated e-wallet for payments, money transfers, and online shopping
+- **Zalo OA (Official Account)**: Business solution for advertising and customer care
+- **Mini Apps**: Platform for mini applications accessible directly within Zalo
+- **Zalo AI**: AI-powered features including voice recognition and support chatbots
+
+## Mission & Vision
+Zalo aims to become Vietnam\'s **"Super App"**, integrating all utilities from communication and entertainment to finance. Guided by the philosophy **"Connecting Value - Simplifying Life"**, Zalo continuously innovates to deliver personalized, secure, and convenient experiences.
+
+## Achievements
+- **#1 most downloaded** app on both App Store & Google Play in Vietnam
+- Strategic partner with major corporations like **Vietcombank, Vinamilk, and Shopee**
+- Recipient of **"Excellent Vietnamese App"** award by MIC
+
+## Contact
+- Website: [https://zalo.me](https://zalo.me)
+- Headquarters: VNG Building, District 7, Ho Chi Minh City, Vietnam
+
+> *"Zalo - More than messaging, it\'s a world of connections!"*  ', 'Zalo is Vietnam\'s leading communication and connectivity platform, developed by VNG Corporation. Launched in 2012, Zalo has become an indispensable part of digital life for over 100 million users, offering diverse features including messaging, video calls, digital payments (ZaloPay), and business solutions (Zalo OA).
+
+More than just a messaging app, Zalo aims to become a comprehensive digital ecosystem, integrating AI technology and continuously innovating to deliver convenient, secure, and personalized experiences for users.
+
+Our mission is to connect people, empower businesses, and contribute to building the future digital society.
+
+"Zalo – Connecting millions of possibilities!"', '{
+    "github": null,
+    "website": "chat.zalo.me",
+    "facebook": "zaloapp",
+    "linkedin": "company/zalocareers"
+}', 0, '2025-08-09 14:49:51', '2025-08-09 15:40:25');
 INSERT INTO codezone.organization_users (user_id, organization_id, status, created_at, updated_at)
 VALUES (2, 10, 'active', '2025-07-31 10:32:10', '2025-07-31 10:32:10');
 INSERT INTO codezone.organization_users (user_id, organization_id, status, created_at, updated_at)
