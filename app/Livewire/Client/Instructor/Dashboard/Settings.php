@@ -2,15 +2,14 @@
 
 namespace App\Livewire\Client\Instructor\Dashboard;
 
+use App\Livewire\Client\Shared\SettingsBase;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
-use Livewire\Component;
 
-#[Title('My Settings')]
-class Settings extends Component
+
+class Settings extends SettingsBase
 {
 	#[Layout('components.layouts.dashboard')]
     public function render(): View|Application|Factory
