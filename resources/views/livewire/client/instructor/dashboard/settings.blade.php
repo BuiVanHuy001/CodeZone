@@ -19,19 +19,13 @@
                         <span class="title">Password</span>
                     </a>
                 </li>
-                <li role="presentation">
-                    <a href="#" class="tab-button" id="social-tab" data-bs-toggle="tab" data-bs-target="#social"
-                       role="tab" aria-controls="social" aria-selected="false">
-                        <span class="title">Social Share</span>
-                    </a>
-                </li>
             </ul>
         </div>
 
         <div class="tab-content">
             <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="rbt-dashboard-content-wrapper">
-                    <div class="tutor-bg-photo bg_image bg_image--22 height-245"></div>
+                    <div class="tutor-bg-photo bg_image bg_image--14 height-245"></div>
                     <div class="rbt-tutor-information">
                         <div class="rbt-tutor-information-left">
                             <div class="thumbnail rbt-avatars size-lg position-relative">
@@ -43,76 +37,120 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="rbt-tutor-information-right">
-                            <div class="tutor-btn">
-                                <a class="rbt-btn btn-sm btn-border color-white radius-round-10" href="#">Edit
-                                    Cover Photo</a>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <form action="#" class="rbt-profile-row rbt-default-form row row--15">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="rbt-form-group">
-                            <label for="firstname">First Name</label>
-                            <input id="firstname" type="text" value="John">
+                <form class="rbt-profile-row rbt-default-form row row--15">
+                    <div class="col-12 row mb-3">
+                        <h5>Basic info</h5>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="rbt-form-group">
+                                <label for="firstname">Business Name</label>
+                                <input class="disabled" id="firstname" type="text" value="{{ $user->name }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="rbt-form-group">
+                                <label for="lastname">Email</label>
+                                <input class="disabled" id="lastname" type="text" value="{{ $user->email }}">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="rbt-form-group">
+                                <label for="bio">About me</label>
+                                <textarea cols="20" rows="5" wire:model.lazy="aboutMe">{{ $aboutMe }}</textarea>
+                                <small style="margin-top: -5px; display: block"><i class="feather-info"></i> A brief
+                                    description about yourself.</small>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="rbt-form-group">
+                                <label for="bio">Biography</label>
+                                <div id="bio-editor" wire:ignore></div>
+                                <input type="hidden" id="bio-input" wire:model.lazy="bio">
+                                <small class="d-block"><i class="feather-info"></i> This will
+                                    be displayed on your public profile. Markdown is supported.</small>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="rbt-form-group">
-                            <label for="lastname">Last Name</label>
-                            <input id="lastname" type="text" value="Due">
+
+                    <div class="col-12 row">
+                        <h5>Social accounts</h5>
+                        <div class="col-4">
+                            <div class="rbt-form-group">
+                                <label for="facebook">Facebook</label>
+                                <input wire:model.blur="socialLinks.facebook" id="facebook" type="url" placeholder="https://facebook.com/">
+                                @if(isset($socialLinks['facebook']))
+                                    <small class="d-block mb-3" style="margin-top: -15px">
+                                        <a href="https://facebook.com/{{ $socialLinks['facebook'] }}" target="_blank"><i class="feather-facebook"></i>/{{ $socialLinks['facebook'] }}
+                                        </a>
+                                    </small>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="rbt-form-group">
+                                <label for="linkedin">Linkedin</label>
+                                <input wire:model.blur="socialLinks.linkedin" id="linkedin" type="url" placeholder="https://linkedin.com/">
+                                @if(isset($socialLinks['linkedin']))
+                                    <small class="d-block mb-3" style="margin-top: -15px">
+                                        <a href="https://linkedin.com/{{ $socialLinks['linkedin'] }}" target="_blank"><i class="feather-linkedin"></i>/{{ $socialLinks['linkedin'] }}
+                                        </a>
+                                    </small>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="rbt-form-group">
+                                <label for="website">Website</label>
+                                <input wire:model.blur="socialLinks.website" id="website" type="url" placeholder="https://website.com/">
+                                @if(isset($socialLinks['website']))
+                                    <small class="d-block mb-3" style="margin-top: -15px">
+                                        <a href="https://{{ $socialLinks['website'] }}" target="_blank"><i class="feather-globe"></i>{{ $socialLinks['website'] }}
+                                        </a>
+                                    </small>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="rbt-form-group">
+                                <label for="github"><i class="feather-github"></i> Github</label>
+                                <input wire:model.blur="socialLinks.github" id="github" type="url" placeholder="https://github.com/">
+                                @if(isset($socialLinks['github']))
+                                    <small class="d-block mb-3" style="margin-top: -15px">
+                                        <i class="feather-link"></i> Link:
+                                        <a href="https://github.com/{{ $socialLinks['github'] }}" target="_blank" wire:text="socialLinks.github"></a>
+                                    </small>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="rbt-form-group">
+                                <label for="youtube"><i class="feather-youtube"></i> Youtube</label>
+                                <input wire:model.blur="socialLinks.youtube" id="youtube" type="url" placeholder="https://www.youtube.com/">
+                                @if (isset($socialLinks['youtube']))
+                                    <small class="d-block mb-3" style="margin-top: -15px">
+                                        <i class="feather-link"></i> Link:
+                                        <a href="https://www.youtube.com/{{ $socialLinks['youtube'] }}" target="_blank" wire:text="socialLinks.youtube"></a>
+                                    </small>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="rbt-form-group">
-                            <label for="username">User Name</label>
-                            <input id="username" type="text" value="johndue">
+                    @if ($isDirty)
+                        <div class="col-12 mt--20">
+                            <div class="rbt-form-group">
+                                <button onclick="confirmCancel()" class="rbt-btn btn-border btn-sm">Cancel</button>
+                                <a wire:click.prevent="save" class="rbt-btn btn-gradient btn-sm" href="#">Save</a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="rbt-form-group">
-                            <label for="phonenumber">Phone Number</label>
-                            <input id="phonenumber" type="tel" value="+1-202-555-0174">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="rbt-form-group">
-                            <label for="skill">Skill/Occupation</label>
-                            <input id="skill" type="text" value="Full Stack Developer">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div class="filter-select rbt-modern-select">
-                            <label for="displayname" class="">Display name publicly as</label>
-                            <select id="displayname" class="w-100">
-                                <option>John Due</option>
-                                <option>John</option>
-                                <option>Due</option>
-                                <option>Due John</option>
-                                <option>johndue</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="rbt-form-group">
-                            <label for="bio">Bio</label>
-                            <textarea id="bio" cols="20" rows="5">I'm the Front-End Developer for #Rainbow IT in Bangladesh, OR. I have serious passion for UI effects, animations and creating intuitive, dynamic user experiences.</textarea>
-                        </div>
-                    </div>
-                    <div class="col-12 mt--20">
-                        <div class="rbt-form-group">
-                            <a class="rbt-btn btn-gradient" href="#">Update Info</a>
-                        </div>
-                    </div>
+                    @endif
                 </form>
-                <!-- End Profile Row  -->
             </div>
 
             <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-                <!-- Start Profile Row  -->
-                <form action="#" class="rbt-profile-row rbt-default-form row row--15">
+                <form class="rbt-profile-row rbt-default-form row row--15">
                     <div class="col-12">
                         <div class="rbt-form-group">
                             <label for="currentpassword">Current Password</label>
@@ -133,54 +171,71 @@
                     </div>
                     <div class="col-12 mt--10">
                         <div class="rbt-form-group">
-                            <a class="rbt-btn btn-gradient" href="#">Update Password</a>
+                            <button class="rbt-btn btn-gradient">Update Password</button>
                         </div>
                     </div>
                 </form>
-                <!-- End Profile Row  -->
-            </div>
-
-            <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">
-                <!-- Start Profile Row  -->
-                <form action="#" class="rbt-profile-row rbt-default-form row row--15">
-                    <div class="col-12">
-                        <div class="rbt-form-group">
-                            <label for="facebook"><i class="feather-facebook"></i> Facebook</label>
-                            <input id="facebook" type="text" placeholder="https://facebook.com/">
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="rbt-form-group">
-                            <label for="twitter"><i class="feather-twitter"></i> Twitter</label>
-                            <input id="twitter" type="text" placeholder="https://twitter.com/">
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="rbt-form-group">
-                            <label for="linkedin"><i class="feather-linkedin"></i> Linkedin</label>
-                            <input id="linkedin" type="text" placeholder="https://linkedin.com/">
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="rbt-form-group">
-                            <label for="website"><i class="feather-globe"></i> Website</label>
-                            <input id="website" type="text" placeholder="https://website.com/">
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="rbt-form-group">
-                            <label for="github"><i class="feather-github"></i> Github</label>
-                            <input id="github" type="text" placeholder="https://github.com/">
-                        </div>
-                    </div>
-                    <div class="col-12 mt--10">
-                        <div class="rbt-form-group">
-                            <a class="rbt-btn btn-gradient" href="#">Update Profile</a>
-                        </div>
-                    </div>
-                </form>
-                <!-- End Profile Row  -->
             </div>
         </div>
     </div>
 </div>
+@script
+<script>
+    let bioEditor = document.getElementById('bio-editor');
+    let bioInput = document.getElementById('bio-input');
+    new EditorView(
+        {
+            doc: @json($bio),
+            extensions: [
+                lineNumbers(),
+                markdown(),
+                highlightSpecialChars(),
+                EditorView.lineWrapping,
+                keymap.of([
+                    ...defaultKeymap,
+                    ...historyKeymap,
+                ]),
+                EditorView.updateListener.of(update => {
+                    if (update.docChanged) {
+                        @this.
+                        set('bio', update.state.doc.toString())
+                        ;
+                    }
+                }),
+                EditorView.theme({
+                    "&": {
+                        height: "300px",
+                        width: "100%",
+                        border: "1px solid #ddd",
+                        borderRadius: "4px",
+                        padding: "10px",
+                        fontSize: "13px",
+                    },
+                    ".cm-content": {
+                        caretColor: "#000",
+                    },
+                }),
+            ],
+            parent: bioEditor,
+        });
+</script>
+@endscript
+@push('scripts')
+    <script>
+        function confirmCancel() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Your changes will be lost if you cancel.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, cancel it!',
+                cancelButtonText: 'No, keep it'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    @this.
+                    call('cancel');
+                }
+            });
+        }
+    </script>
+@endpush

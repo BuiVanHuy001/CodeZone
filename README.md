@@ -88,8 +88,9 @@ php artisan serve & npm run dev
 ## 📌 Requirements
 
 * PHP 8.2+
-* Node.js 18+
 * Composer 2+
+* Node.js 18+
+* MySQL 5.7+
 
 For **social login**, you must configure these variables in `.env`:
 
