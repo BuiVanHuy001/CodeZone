@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Business\Dashboard;
+namespace App\Livewire\Client\Organization\Dashboard;
 
 use App\Models\OrganizationUser;
 use App\Models\User;
@@ -11,7 +11,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-class Employees extends Component
+class Members extends Component
 {
     public string $activeTab = 'list';
 
@@ -57,6 +57,6 @@ class Employees extends Component
     {
 	    $employees = OrganizationUser::where('organization_id', auth()->user()->id)->with('user')->get();
 
-	    return view('livewire.client.business.dashboard.employees', ['employees' => $employees]);
+        return view('livewire.client.organization.dashboard.members', ['employees' => $employees]);
     }
 }

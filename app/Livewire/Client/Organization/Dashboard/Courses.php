@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Business\Dashboard;
+namespace App\Livewire\Client\Organization\Dashboard;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -24,6 +24,6 @@ class Courses extends Component
 	#[Layout('components.layouts.dashboard')]
 	public function render(): View|Application|Factory
 	{
-		return view('livewire.client.business.dashboard.courses');
+		return view('livewire.client.organization.dashboard.courses');
 	}
 }

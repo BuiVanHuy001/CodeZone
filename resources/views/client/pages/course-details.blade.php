@@ -251,27 +251,23 @@
                                                 <li><a href="#"><i class="feather-video"></i>16 courses</a></li>
                                             </ul>
                                         </div>
-                                        <div class="content">
-                                            {!! !is_null($course->author->getProfile) ? nl2br(e($course->author->getProfile['about_me'])) : '' !!}
+                                        <div class="content has-show-more">
+                                            <div class="has-show-more-inner-content" style="max-height: 200px">
+                                                {!! !is_null($course->author->getProfile) ? nl2br(e($course->author->getProfile['about_me'])) : '' !!}
+                                            </div>
+                                            <div class="rbt-show-more-btn">Show more</div>
 
-                                            <ul class="social-icon social-default icon-naked justify-content-start">
-                                                <li><a href="https://www.facebook.com/">
-                                                        <i class="feather-facebook"></i>
-                                                    </a>
-                                                </li>
-                                                <li><a href="https://www.twitter.com">
-                                                        <i class="feather-twitter"></i>
-                                                    </a>
-                                                </li>
-                                                <li><a href="https://www.instagram.com/">
-                                                        <i class="feather-instagram"></i>
-                                                    </a>
-                                                </li>
-                                                <li><a href="https://www.linkdin.com/">
-                                                        <i class="feather-linkedin"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                            @if($course->author->getProfile && $course->author->getProfile->socials_links)
+                                                <ul class="social-icon social-default icon-naked justify-content-start">
+                                                    @foreach($course->author->getProfile->socials_links as $platform => $link)
+                                                        <li>
+                                                            <a href="https://www.{{ $platform }}.com/{{ $link }}" target="_blank">
+                                                                <i class="feather-{{ $platform === 'website' ? 'globe' : $platform }}"></i>
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -782,7 +778,7 @@
                             </a>
 
                             <div class="content-item-content">
-                                @if(!$course->author->isBusiness())
+                                @if(!$course->author->isOrganization())
                                 <div
                                     class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
                                     <div class="rbt-price">
@@ -801,7 +797,7 @@
                                     </a>
                                 </div>
                                 @else
-                                <h5 class="text-center text-primary">This is Business Course</h5>
+                                    <h5 class="text-center text-primary">This is Organization Course</h5>
                                 @endif
 
 

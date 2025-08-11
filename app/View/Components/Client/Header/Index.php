@@ -11,19 +11,11 @@ use Illuminate\Database\Eloquent\Collection;
 class Index extends Component
 {
 	public Collection $categories;
-	public string $menuView;
 
     public function __construct()
     {
         $this->categories = Category::fetchCategoriesWithChildren();
 
-	    $role = auth()->user()?->role ?? 'guest';
-
-	    $this->menuView = match ($role) {
-		    'student' => 'components.client.header.menus.student',
-		    'instructor' => 'components.client.header.menus.instructor',
-		    default => 'components.client.header.menus.business',
-	    };
     }
 
     public function render(): View|Closure|string

@@ -56,7 +56,7 @@
             eduJs.logout()
         },
         logout: function () {
-            $('#menu-logout-btn').on('click', function (e) {
+            $('.menu-logout-btn').on('click', function (e) {
                 e.preventDefault();
                 Swal.fire({
                     title: 'Logout',
@@ -69,7 +69,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // If confirmed, submit the logout form
-                        $('#menu-logout-form').submit();
+                        $('.menu-logout-form').submit();
                     } else {
                         // If cancelled, do nothing
                         e.preventDefault();

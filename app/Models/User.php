@@ -48,7 +48,10 @@ class User extends Authenticatable
 
     protected function casts(): array
     {
-        return ['email_verified_at' => 'datetime', 'password' => 'hashed'];
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed'
+        ];
     }
 
     public function courses(): HasMany
@@ -107,7 +110,7 @@ class User extends Authenticatable
 
 	public function getProfile(): HasOne
 	{
-		if ($this->isBusiness()) {
+        if ($this->isOrganization()) {
 			return $this->organizationProfile();
 		} else {
 			return $this->instructorProfile();
@@ -139,7 +142,7 @@ class User extends Authenticatable
         return $this->role === 'instructor';
     }
 
-    public function isBusiness(): bool
+    public function isOrganization(): bool
     {
         return $this->role === 'organization';
     }
@@ -154,7 +157,7 @@ class User extends Authenticatable
 	    return OrganizationUser::where('organization_id', $organization->id)->where('user_id', $this->id)->exists();
     }
 
-	public function isEmployeeOfThisBusiness(User $user): bool
+    public function isEmployeeOfThisOrganization(User $user): bool
     {
 	    return OrganizationUser::where('organization_id', $this->id)->where('user_id', $user->id)->exists();
     }
@@ -174,6 +177,11 @@ class User extends Authenticatable
     public function getAvatarPath(): string
     {
         return $this->avatar_url ?? asset('images/team/temp-avatar.webp');
+    }
+
+    public function getDashboardMenu(): array
+    {
+        return config("menus.$this->role", []);
     }
 
     public function slugSourceField(): string

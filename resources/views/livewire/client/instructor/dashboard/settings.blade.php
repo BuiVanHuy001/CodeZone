@@ -45,7 +45,7 @@
                         <h5>Basic info</h5>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="rbt-form-group">
-                                <label for="firstname">Business Name</label>
+                                <label for="firstname">Full Name</label>
                                 <input class="disabled" id="firstname" type="text" value="{{ $user->name }}">
                             </div>
                         </div>

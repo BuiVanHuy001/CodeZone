@@ -4,13 +4,13 @@
             <li role="presentation">
                 <a href="#" wire:click.prevent="setTab('list')" @class(['tab-button', 'active' => $activeTab === 'list']) id="list-tab-4" data-bs-toggle="tab"
                    data-bs-target="#list-4" role="tab" aria-controls="list-4" aria-selected="true">
-                    <span class="title">Employees List</span>
+                    <span class="title">Member List</span>
                 </a>
             </li>
             <li role="presentation">
                 <a href="#" wire:click.prevent="setTab('add')" @class(['tab-button', 'active' => $activeTab === 'add']) class="" id="add-tab-4" data-bs-toggle="tab"
                    data-bs-target="#add-4" role="tab" aria-controls="add-4" aria-selected="false">
-                    <span class="title">Add Employee</span>
+                    <span class="title">Add Member</span>
                 </a>
             </li>
         </ul>
@@ -25,7 +25,6 @@
                         <tr>
                             <th>Name</th>
                             <th>Status</th>
-                            <th>Enrolled amount</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -42,7 +41,6 @@
                                 <td>
                                     <span class="rbt-badge-5 {{$employee->user->getStatusClassAttribute() }}">{{ $employee->user->getStatusLabelAttribute() }}</span>
                                 </td>
-                                <td>12</td>
                                 <td>
                                     <div class="rbt-button-group justify-content-end">
                                         <a class="rbt-btn btn-xs bg-color-danger-opacity radius-round color-danger" href="#" wire:click.prevent="deleteEmployee({{ $employee->user->id }})" title="Delete"><i class="feather-trash-2 pl--0"></i></a>
@@ -51,7 +49,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center">No employees found</td>
+                                <td colspan="5" class="text-center">No members found</td>
                             </tr>
                         @endforelse
                     </table>

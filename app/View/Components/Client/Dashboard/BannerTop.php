@@ -23,7 +23,7 @@ class BannerTop extends Component
 			],
 			'organization' => [
 				'background' => 'bg_image--11',
-				'route' => 'business.courses.create',
+				'route' => 'organization.courses.create',
 			],
 		];
 

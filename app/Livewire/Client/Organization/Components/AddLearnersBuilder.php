@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Livewire\Client\Business\Components;
+namespace App\Livewire\Client\Organization\Components;
 
 use App\Models\OrganizationUser;
 use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
+use LaravelIdea\Helper\App\Models\_IH_OrganizationUser_C;
 use Livewire\Attributes\Modelable;
 use Livewire\Component;
 
@@ -15,9 +17,9 @@ class AddLearnersBuilder extends Component {
     public array $learners = [];
 
 
-    private function getEmployees()
+    private function getEmployees(): Collection|_IH_OrganizationUser_C|array
     {
-        if (!auth()->user()->isBusiness()) {
+        if (!auth()->user()->isOrganization()) {
             return [];
         }
 	    return OrganizationUser::where('organization_id', auth()->user()->id)->with('user')->get();
@@ -26,9 +28,11 @@ class AddLearnersBuilder extends Component {
     public function addEmployeeAssign(string $userId): void
     {
         $user = User::find($userId);
-        if (auth()->user()->isBusiness() && auth()->user()->isEmployeeOfThisBusiness($user)) {
-            if (!in_array($userId, $this->learners)) {
-                $this->learners[] = $userId;
+        if (auth()->user()->isEmployeeOfThisOrganization($user)) {
+            if (auth()->user()->isOrganization()) {
+                if (!in_array($userId, $this->learners)) {
+                    $this->learners[] = $userId;
+                }
             }
         }
     }
@@ -43,6 +47,6 @@ class AddLearnersBuilder extends Component {
     public function render(): View|Application|Factory
     {
         $employees = $this->getEmployees();
-        return view('livewire.client.business.components.add-learners-builder', ['employees' => $employees,]);
+        return view('livewire.client.organization.components.add-learners-builder', ['employees' => $employees,]);
     }
 }

@@ -32,7 +32,7 @@ class SettingsBase extends Component {
         $this->user = auth()->user();
         $this->profile = $this->user->getProfile;
         if (!$this->profile) {
-            if ($this->user->isBusiness()) {
+            if ($this->user->isOrganization()) {
                 $this->profile = OrganizationProfile::create(
                     ['user_id' => $this->user->id],
 
