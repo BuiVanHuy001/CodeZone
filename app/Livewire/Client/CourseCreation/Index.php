@@ -241,7 +241,7 @@ class Index extends Component
             }
             $course->duration = $courseDuration;
             $course->lesson_count = $lessonCount;
-            if (auth()->user()->isBusiness()) {
+            if (auth()->user()->isOrganization()) {
 	            $batch = Batch::create([
                     'start_at' => $this->startDate,
                     'end_at' => $this->endDate,
@@ -258,9 +258,9 @@ class Index extends Component
             }
             $course->save();
             DB::commit();
-            if (auth()->user()->isBusiness()) {
+            if (auth()->user()->isOrganization()) {
                 return redirect()
-                    ->route('business.dashboard.index')
+                    ->route('organization.dashboard.overview')
                     ->with('swal', 'Course created successfully!');
             }
             return redirect()

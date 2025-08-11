@@ -109,7 +109,7 @@ VALUES (10, '# Zalo – Vietnam\'s Leading Connection and Innovation Platform
 ## Key Features
 - **Messaging & Calls**: Supports multimedia messages, group video calls, and security encryption
 - **ZaloPay**: Integrated e-wallet for payments, money transfers, and online shopping
-- **Zalo OA (Official Account)**: Business solution for advertising and customer care
+- **Zalo OA (Official Account)**: Organization solution for advertising and customer care
 - **Mini Apps**: Platform for mini applications accessible directly within Zalo
 - **Zalo AI**: AI-powered features including voice recognition and support chatbots
 

@@ -45,14 +45,14 @@
                         <h5>Basic info</h5>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="rbt-form-group">
-                                <label for="firstname">Business Name</label>
-                                <input id="firstname" type="text" value="{{ $user->name }}">
+                                <label for="firstname">Organization Name</label>
+                                <input class="disabled" id="firstname" type="text" value="{{ $user->name }}">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="rbt-form-group">
                                 <label for="lastname">Email</label>
-                                <input id="lastname" type="text" value="{{ $user->email }}">
+                                <input class="disabled" id="lastname" type="text" value="{{ $user->email }}">
                             </div>
                         </div>
                         <div class="col-12">

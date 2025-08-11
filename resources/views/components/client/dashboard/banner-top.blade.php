@@ -19,7 +19,7 @@
                 </div>
             </div>
         </div>
-        @if($courseCreateRoute)
+        @if($courseCreateRoute && !auth()->user()->isStudent())
             <div class="rbt-tutor-information-right">
                 <div class="tutor-btn">
                     <a class="rbt-btn btn-md hover-icon-reverse" wire:navigate href="{{ $courseCreateRoute }}">

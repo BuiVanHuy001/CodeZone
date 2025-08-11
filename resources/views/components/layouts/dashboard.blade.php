@@ -27,7 +27,7 @@
                 @endpersist
                 <div class="row g-5">
                     <div class="col-lg-3">
-                        <x-client.dashboard.sidebar.index/>
+                        <x-client.dashboard.sidebar/>
                     </div>
 
                     <div class="col-lg-9">

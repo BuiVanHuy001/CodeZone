@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureUserIsBusiness {
+class EnsureUserIsOrganization {
     /**
      * Handle an incoming request.
      *
@@ -14,7 +14,7 @@ class EnsureUserIsBusiness {
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || !auth()->user()->isBusiness()) {
+        if (!auth()->check() || !auth()->user()->isOrganization()) {
             return redirect()->route('page.forbidden');
         }
         return $next($request);

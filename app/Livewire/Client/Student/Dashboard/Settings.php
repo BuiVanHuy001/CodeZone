@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Business\Dashboard;
+namespace App\Livewire\Client\Student\Dashboard;
 
 use App\Livewire\Client\Shared\SettingsBase;
 use Illuminate\Contracts\View\Factory;
@@ -10,8 +10,8 @@ use Livewire\Attributes\Layout;
 
 class Settings extends SettingsBase {
 	#[Layout('components.layouts.dashboard')]
-	public function render(): View|Application|Factory
+	public function render(): Factory|Application|View
 	{
-        return view('livewire.client.business.dashboard.settings');
+		return view('livewire.client.student.dashboard.settings');
 	}
 }

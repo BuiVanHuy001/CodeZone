@@ -1,5 +1,5 @@
 <div class="accordion-body card-body">
-    <h6>Company's employees</h6>
+    <h6>Member List</h6>
     <div class="rbt-dashboard-table table-responsive mobile-table-750">
         <table class="rbt-table table table-borderless">
             <thead>

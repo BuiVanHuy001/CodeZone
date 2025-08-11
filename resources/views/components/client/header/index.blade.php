@@ -113,27 +113,7 @@
                                             <span class="name">{{ auth()->user()->name }}</span>
                                         </div>
                                     </div>
-
-                                    @include($menuView)
-
-                                    <hr class="mt--10 mb--10">
-                                    <ul class="user-list-wrapper">
-                                        <li>
-                                            <a href="">
-                                                <i class="feather-settings"></i>
-                                                <span>Account Settings</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <form id="menu-logout-form" action="{{ route('client.logout') }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <a id="menu-logout-btn" href="#">
-                                                    <i class="feather-log-out"></i><span>Logout</span>
-                                                </a>
-                                            </form>
-                                        </li>
-                                    </ul>
+                                    <x-client.header.menu/>
                                 </div>
                             </div>
                         </li>

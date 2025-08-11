@@ -41,10 +41,10 @@
 
         <div class="rbt-profile-row row row--15 mt--15">
             <div class="col-lg-4 col-md-4">
-                <div class="rbt-profile-content b2">Skill/Occupation</div>
+                <div class="rbt-profile-content b2">About me</div>
             </div>
             <div class="col-lg-8 col-md-8">
-                <div class="rbt-profile-content b2">Application Developer</div>
+                <div class="rbt-profile-content b2">{!! nl2br(e(auth()->user()->getProfile->about_me)) !!}</div>
             </div>
         </div>
 
@@ -53,8 +53,8 @@
                 <div class="rbt-profile-content b2">Biography</div>
             </div>
             <div class="col-lg-8 col-md-8">
-                <div class="rbt-profile-content b2">I'm the Front-End Developer for #Rainbow IT in Bangladesh, OR. I
-                    have serious passion for UI effects, animations and creating intuitive, dynamic user experiences.
+                <div class="rbt-profile-content b2 markdown-body">
+                    @markdown(auth()->user()->getProfile->bio)
                 </div>
             </div>
         </div>

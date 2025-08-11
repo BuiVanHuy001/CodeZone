@@ -249,14 +249,14 @@
 
             <livewire:client.course-creation.components.builders.course wire:model="modules"/>
 
-            @if (auth()->user()->isBusiness())
+            @if (auth()->user()->isOrganization())
                 <div class="accordion" id="learner">
                     <div class="accordion-item card">
                         <h2 class="accordion-header card-header" id="learner">
                             <button wire:click="setTab('learners')" class="accordion-button" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#accCollapseLearner" aria-expanded="true"
                                     aria-controls="">
-                                Add learners
+                                Add members to course
                             </button>
                         </h2>
                         <div id="accCollapseLearner" @class([
@@ -264,7 +264,7 @@
                             'show' => in_array('learners', $openTabs),
                         ]) aria-labelledby="learner"
                              data-bs-parent="#learner">
-                            <livewire:client.business.components.add-learners-builder
+                            <livewire:client.organization.components.add-learners-builder
                                 :openTabs="$openTabs"
                                 wire:model="employeesAssigned"/>
                         </div>
