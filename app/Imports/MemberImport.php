@@ -52,10 +52,7 @@ class MemberImport implements ToCollection, SkipsOnError, SkipsOnFailure, WithHe
 
     private function parseDob(string|int $dob): string
     {
-        if (is_numeric($dob)) {
-            return Carbon::parse(Date::excelToDateTimeObject($dob))->format('Y-m-d');
-        }
-        return Carbon::parse($dob)->format('Y-m-d');
+        return Carbon::parse(Date::excelToDateTimeObject($dob))->format('Y-m-d');
     }
 
     private function parseGender(string $gender): ?string

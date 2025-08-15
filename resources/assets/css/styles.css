@@ -24085,7 +24085,7 @@ body.modal-open {
 
 .rbt-team-modal,
 .rbt-default-modal {
-    z-index: 99999998;
+    z-index: 99999999;
     background: var(--color-white);
     padding: 60px 15px !important;
 }
@@ -24098,6 +24098,7 @@ body.modal-open {
 .rbt-team-modal .modal-dialog,
 .rbt-default-modal .modal-dialog {
     width: 100%;
+    max-width: 900px;
 }
 
 .rbt-team-modal .modal-dialog .modal-content,
@@ -29109,7 +29110,7 @@ blockquote.has-text-align-right cite,
 }
 
 .rbt-course-main-content li a.active {
-    color: var(--color-primary) !important;
+    color: var(--color-primary);
 }
 
 .rbt-course-main-content li:first-child {
@@ -36935,16 +36936,50 @@ Course OverView
     background-color: #273041;
 }
 
-.cursor-pointer {
-    cursor: pointer !important;
+.cursor-not-allowed {
+    cursor: not-allowed !important;
 }
 
-.modal-fullscreen {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    max-height: 100% !important;
-    border-radius: 0 !important;
+.file-upload-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-upload-label input {
+    display: none;
+}
+
+.file-upload-label svg {
+    height: 50px;
+    fill: rgb(82, 82, 82);
+    margin-bottom: 20px;
+}
+
+.file-upload-label {
+    width: 100%;
+    cursor: pointer;
+    padding: 30px 70px;
+    border-radius: 40px;
+    border: 2px dashed rgb(82, 82, 82);
+}
+
+.file-upload-design {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.browse-button {
+    background-color: rgb(82, 82, 82);
+    padding: 5px 15px;
+    border-radius: 10px;
+    color: white;
+    transition: all 0.3s;
+}
+
+.browse-button:hover {
+    background-color: rgb(14, 14, 14);
 }
