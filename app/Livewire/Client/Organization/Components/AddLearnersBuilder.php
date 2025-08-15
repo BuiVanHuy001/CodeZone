@@ -28,7 +28,7 @@ class AddLearnersBuilder extends Component {
     public function addEmployeeAssign(string $userId): void
     {
         $user = User::find($userId);
-        if (auth()->user()->isEmployeeOfThisOrganization($user)) {
+        if (auth()->user()->isMemberOfOrganization($user, auth()->user()->id)) {
             if (auth()->user()->isOrganization()) {
                 if (!in_array($userId, $this->learners)) {
                     $this->learners[] = $userId;

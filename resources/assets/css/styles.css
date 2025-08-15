@@ -36939,5 +36939,47 @@ Course OverView
 .cursor-not-allowed {
     cursor: not-allowed !important;
 }
-/*# sourceMappingURL=../maps/styles.css.map */
 
+.file-upload-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-upload-label input {
+    display: none;
+}
+
+.file-upload-label svg {
+    height: 50px;
+    fill: rgb(82, 82, 82);
+    margin-bottom: 20px;
+}
+
+.file-upload-label {
+    width: 100%;
+    cursor: pointer;
+    padding: 30px 70px;
+    border-radius: 40px;
+    border: 2px dashed rgb(82, 82, 82);
+}
+
+.file-upload-design {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.browse-button {
+    background-color: rgb(82, 82, 82);
+    padding: 5px 15px;
+    border-radius: 10px;
+    color: white;
+    transition: all 0.3s;
+}
+
+.browse-button:hover {
+    background-color: rgb(14, 14, 14);
+}

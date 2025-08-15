@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Lesson extends Model
 {
-    use HasSlug, HasUUID, HasDuration;
+    use HasUUID, HasDuration;
 
     protected $guarded = [];
 

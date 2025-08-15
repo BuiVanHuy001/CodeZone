@@ -135,7 +135,7 @@
                 </span>
             </button>
 
-            <a href="{{ asset('excel_file/Sample.xlsx') }}" download class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
+            <a href="{{ asset('excel_file/SampleImportQuiz.xlsx') }}" download class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
                 <span class="icon-reverse-wrapper">
                     <span class="btn-text">Download Sample File</span>
                     <span class="btn-icon"><i class="feather-download"></i></span>

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\HasDuration;
-use App\Traits\HasSlug;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Module extends Model
 {
-	use HasSlug, HasUUID, HasDuration;
+    use HasUUID, HasDuration;
 
 	protected $guarded = [];
 	public $incrementing = false;

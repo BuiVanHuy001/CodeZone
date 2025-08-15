@@ -117,16 +117,6 @@ class User extends Authenticatable
 		}
     }
 
-	public function getEnrollerCourse()
-	{
-
-    }
-
-    /**
-     * Get all courses that user enrolled normal courses.
-     *
-     * @return HasMany
-     */
     public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class, 'user_id');
@@ -152,16 +142,12 @@ class User extends Authenticatable
         return $this->role === 'student';
     }
 
-    public function idEmployee(User $organization): bool
+    public function isMemberOfOrganization(string $userId, string $organizationId): bool
     {
-	    return OrganizationUser::where('organization_id', $organization->id)->where('user_id', $this->id)->exists();
+        return OrganizationUser::where('organization_id', $organizationId)
+                               ->where('user_id', $userId)
+                               ->exists();
     }
-
-    public function isEmployeeOfThisOrganization(User $user): bool
-    {
-	    return OrganizationUser::where('organization_id', $this->id)->where('user_id', $user->id)->exists();
-    }
-
     public function isEnrolledThisCourse(Course $course): bool
     {
         $isReviewable = false;
