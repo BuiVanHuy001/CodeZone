@@ -55,7 +55,7 @@ VALUES (9, 'Rylee John', 'rylee-john', 'berge.thurman@zalo.com', '2025-07-16 07:
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
                             avatar_url, created_at, updated_at)
-VALUES (10, 'Cao Đẳng Việt Mỹ', 'cao-dang-viet-my', 'huy423210063@caodangvietmy.edu.vn', '2025-07-16 07:57:22',
+VALUES (10, 'Cao Đẳng Việt Mỹ', 'cao-dang-viet-my', 'caodang@vietmy.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '3H6eUsprpP', 'organization', 'active',
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4wRHjRQ3yRY15tizUO350Rw4oBjdTzhUsg&s',
         '2025-07-16 07:57:22', '2025-07-16 07:57:22');
@@ -265,337 +265,1261 @@ VALUES (25, 'Other', 'other', null, null, null, 0, null, '2025-06-14 20:39:39', 
 INSERT INTO codezone.courses (id, title, slug, heading, description, thumbnail_url, price, enrollment_count,
                               review_count, lesson_count, rating, duration, level, status, category_id, skills,
                               requirements, user_id, created_at, updated_at)
-VALUES ('3623d6e8-b930-4b73-80e0-c0a86e327732', 'Python Từ Cơ Bản Đến Nâng Cao: Ứng Dụng Giải Bài Tập LeetCode',
-        'python-tu-co-ban-den-nang-cao-ung-dung-giai-bai-tap-leetcode',
-        'Khóa học này giúp bạn học Python từ những kiến thức cơ bản nhất đến nâng cao, đồng thời áp dụng trực tiếp vào việc giải bài tập trên LeetCode.', '# Python Từ Cơ Bản Đến Nâng Cao: Ứng Dụng Giải Bài Tập LeetCode
+VALUES ('cc916e6f-c8d3-4184-805f-c52d7ff0573b', 'Python Data Structures & Algorithms + LEETCODE Exercises',
+        'python-data-structures-algorithms-leetcode-exercises',
+        'DSA + LEETCODE for Coding Interviews — Clear, Step-by-Step Animated Walkthroughs!', '# **Course Description: Python Data Structures & Algorithms + LeetCode Exercises**
 
-## 📖 Giới thiệu khóa học
-Khóa học này được thiết kế để giúp bạn học **Python từ số 0 đến thành thạo**, đồng thời áp dụng trực tiếp vào việc giải quyết các bài toán **LeetCode**.
-Không chỉ học ngôn ngữ lập trình, bạn sẽ nắm vững **cấu trúc dữ liệu, thuật toán** và rèn luyện **tư duy giải quyết vấn đề** – những kỹ năng quan trọng để thành công trong các kỳ **coding interview**.
+## **Master the Fundamentals of Data Structures & Algorithms (DSA) in Python with Hands-On LeetCode Practice**
 
----
+### **🚀 Course Overview**
+This **comprehensive course** is designed to help you master **Data Structures and Algorithms (DSA)** using **Python**, with a strong emphasis on **real-world problem-solving** through **LeetCode exercises**. Whether you\'re preparing for **coding interviews, competitive programming, or improving your problem-solving skills**, this course provides structured learning with practical coding challenges.
 
-## 🎯 Bạn sẽ học được gì?
-- Viết code Python từ cơ bản đến nâng cao.
-- Hiểu rõ và áp dụng các cấu trúc dữ liệu: list, stack, queue, linked list, tree, graph.
-- Thành thạo các thuật toán quan trọng: tìm kiếm, sắp xếp, đệ quy, dynamic programming, backtracking.
-- Giải được nhiều bài toán LeetCode từ **Easy → Medium → Hard**.
-- Chuẩn bị tốt cho **phỏng vấn lập trình viên** tại các công ty công nghệ lớn.
+### **🎯 What You Will Learn**
+✔ **Core Data Structures** – Arrays, Linked Lists, Stacks, Queues, Hash Tables, Trees, Graphs, Heaps.
+✔ **Essential Algorithms** – Sorting, Searching, Recursion, Dynamic Programming, Greedy Algorithms, Graph Traversal (BFS/DFS).
+✔ **Big-O Complexity Analysis** – Learn how to optimize your code for efficiency.
+✔ **LeetCode-Style Problems** – Solve **100+ handpicked LeetCode problems** with step-by-step explanations.
+✔ **Interview Preparation** – Common patterns, tips, and tricks used in **FAANG & top tech company interviews**.
 
----
+### **🔥 Key Features**
+✅ **Python-Based DSA** – All concepts implemented in Python for clarity and ease of learning.
+✅ **Interactive Coding Exercises** – Practice problems after each topic to reinforce learning.
+✅ **LeetCode Challenges** – Carefully selected problems from **Easy to Hard** difficulty.
+✅ **Optimized Solutions** – Learn multiple approaches (Brute Force → Optimal) for each problem.
+✅ **Real-World Applications** – Understand how DSA is used in **software development, AI, and system design**.
 
-## 👨‍🎓 Đối tượng học viên
-- Người mới bắt đầu muốn học lập trình với Python.
-- Sinh viên CNTT đang học cấu trúc dữ liệu & thuật toán.
-- Lập trình viên đang chuẩn bị cho **phỏng vấn kỹ sư phần mềm**.
+### **📝 Course Outline**
+#### **1️⃣ Python Refresher & Big-O Analysis**
+- Python basics for DSA
+- Time & Space Complexity (Big-O Notation)
 
----
+#### **2️⃣ Data Structures Deep Dive**
+- **Arrays & Strings** (Two-Pointer, Sliding Window)
+- **Linked Lists** (Singly, Doubly, Circular)
+- **Stacks & Queues** (Monotonic Stacks, Priority Queues)
+- **Hash Tables & Sets** (Hashing, Collision Handling)
+- **Trees & BSTs** (Binary Trees, AVL, Trie)
+- **Graphs** (BFS, DFS, Dijkstra’s, Topological Sort)
+- **Heaps** (Min-Heap, Max-Heap)
 
-## 📚 Nội dung khóa học
-1. **Python Cơ bản**
-   Biến, kiểu dữ liệu, vòng lặp, hàm, xử lý chuỗi.
+#### **3️⃣ Algorithms & Problem-Solving Techniques**
+- **Sorting & Searching** (QuickSort, MergeSort, Binary Search)
+- **Recursion & Backtracking**
+- **Dynamic Programming** (Memoization, Tabulation)
+- **Greedy Algorithms**
+- **Graph Algorithms** (Shortest Path, MST)
 
-2. **Python Nâng cao**
-   OOP, file I/O, modules, thuật toán cơ bản.
+#### **4️⃣ LeetCode-Style Practice**
+- **Top Interview Questions** (Blind 75, Grind 169)
+- **Pattern-Based Problem Solving** (Sliding Window, Two Pointers, Fast & Slow Pointers)
+- **Mock Interviews & Whiteboard Practice**
 
-3. **Cấu trúc dữ liệu & Giải thuật**
-   Stack, Queue, Linked List, Binary Tree, Graph, Dynamic Programming.
+### **🎓 Who Is This Course For?**
+✔ **Aspiring Software Engineers** preparing for coding interviews.
+✔ **Computer Science students** wanting to strengthen DSA fundamentals.
+✔ **Self-taught programmers** looking to improve problem-solving skills.
+✔ **Competitive programmers** aiming to enhance algorithmic thinking.
 
-4. **Luyện tập với LeetCode**
-   Bộ bài tập chọn lọc từ dễ đến khó: Two Sum, Binary Search, Longest Substring Without Repeating Characters, Word Ladder,…
+### **💡 Why Enroll?**
+- **Industry-Relevant Content** – Designed with **FAANG interview standards** in mind.
+- **Hands-On Learning** – Write real Python code and solve problems interactively.
+- **Lifetime Access** – Continuously updated with new problems and trends.
 
----
-
-## ⏰ Thời lượng
-- **12 tuần** (3 buổi/tuần, mỗi buổi 90 phút).
-- Bao gồm **lý thuyết + bài tập + luyện LeetCode trực tiếp**.
-
----
-
-## 👨‍🏫 Giảng viên
-**Nguyễn Minh Huy** – Software Engineer
-- 5+ năm kinh nghiệm phát triển phần mềm.
-- Đã hướng dẫn nhiều học viên chinh phục LeetCode và chuẩn bị phỏng vấn thành công.
-
----
-
-## 🌐 Ngôn ngữ
-- Giảng dạy: **Tiếng Việt**
-- Bài tập thực hành: **Python 3**
-
----', 'XD7NHzZhbWkwbDm1wQGb2jdUVpmGJ9-metaNjE3Mzc3OV9jNjljLndlYnA=-.webp', 0.000, 8, 0, 11, 0.0, 8036, 'beginner',
-        'pending', 8, '[
+### **🚀 Ready to Master DSA with Python?**
+**Enroll now and start solving LeetCode problems like a pro!** 🚀  ',
+        '/storage/tmp/3hbGCnzHBblq4yhWSI3NWt636xlbxO0Vmz4B7OWz.png', 0.000, 5, 0, 28, 0.0, 11313, 'beginner', 'pending',
+        8, '[
         {
-            "name": "Viết code Python thành thạo từ cơ bản đến nâng cao."
+            "name": "Basic Python programming knowledge (e.g., variables, loops, functions)"
         },
         {
-            "name": "Hiểu và triển khai các cấu trúc dữ liệu & thuật toán thông dụng."
+            "name": "No prior experience with data structures or algorithms needed"
         },
         {
-            "name": "Giải quyết hiệu quả các bài toán LeetCode từ Easy → Medium → Hard."
-        },
-        {
-            "name": "Chuẩn bị sẵn sàng cho phỏng vấn kỹ sư phần mềm."
+            "name": "An eager attitude to learn DSA and tackle coding challenges"
         }
     ]', '[
         {
-            "name": "Có kiến thức cơ bản về toán (cấp 3 trở lên)."
+            "name": "Solve 100+ coding exercises to ace DSA interviews with confidence."
         },
         {
-            "name": "Không cần kinh nghiệm lập trình trước đó."
+            "name": "Think like a pro coder to tackle complex problems efficiently."
+        },
+        {
+            "name": "Master data structures—linked lists, trees, heaps, graphs—for practical use."
+        },
+        {
+            "name": "Learn algorithms—sorting, recursion, dynamic programming—with clarity."
+        },
+        {
+            "name": "Analyze time and space complexity to optimize your coding solutions."
+        },
+        {
+            "name": "Grasp DSA concepts faster with animated examples for deeper insight."
+        },
+        {
+            "name": "Apply DSA to solve LeetCode challenges and practical coding problems."
+        },
+        {
+            "name": "Boost your developer skills to excel in technical interviews confidently."
         }
-    ]', 10, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+    ]', 10, '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('22272c16-ee1c-4f8f-b41f-0a82a11e9c2b', 'Python Cơ Bản', 3, 0, 764, '3623d6e8-b930-4b73-80e0-c0a86e327732',
-        '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES ('0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', 'Dynamic Programming', 6, 4, 1821,
+        'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('43cbd234-d5c4-40ea-b2f2-dc83952a1b29', 'Cấu trúc Dữ liệu & Thuật toán', 3, 2, 2033,
-        '3623d6e8-b930-4b73-80e0-c0a86e327732', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES ('1bd186cc-4bde-44b2-9d81-339df37a11ab', 'Final ', 1, 6, 0, 'cc916e6f-c8d3-4184-805f-c52d7ff0573b',
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('8845d78f-00b3-4de7-817a-bd7150f83027', 'Python Nâng Cao', 3, 1, 4101, '3623d6e8-b930-4b73-80e0-c0a86e327732',
-        '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES ('556c749e-6f40-44f2-97d1-ce38071414b7', 'Introduction', 3, 0, 956,
+        'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('eb58d50c-de74-4173-8d50-8d6206c9078e', 'Luyện tập LeetCode', 2, 3, 1138,
-        '3623d6e8-b930-4b73-80e0-c0a86e327732', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
+VALUES ('9a7ec28c-498e-4190-bf20-4f402c827ebd', 'LinkedList', 3, 3, 2033,
+        'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('b4b107fc-ac88-432b-9735-a0b395252662', 'Array', 5, 1, 2908, 'cc916e6f-c8d3-4184-805f-c52d7ff0573b',
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('c94c5850-027f-4802-b843-64551ce117eb', 'Leetcode practice', 4, 5, 1868,
+        'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('e1c1e032-44f8-4218-8c1d-3759b8b2feab', 'Binary Search', 6, 2, 1727,
+        'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('1f7cdce1-fb49-4450-8a2f-c4b1e6db80a2', 'Quiz Python nâng cao', '', '', 3, 0, false, 'assessment', null,
-        '43cbd234-d5c4-40ea-b2f2-dc83952a1b29', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
+VALUES ('0be846bb-9749-4b88-b75b-ac91aaffc2fc', 'Big O notation', '',
+        '/storage/course/videos/y6QK38eX8mgPh75NboYdfqw1O5l6DeqACyr6rNG9.mp4', 4, 1183, false, 'video', null,
+        '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('2e9808ae-dd21-4b03-8ce3-5e33af945185', 'Thuật toán Tìm kiếm Nhị phân', '',
-        'CLAfk5wniE8aJanTVxMHRIATKvkjDI-metaTGlua2VkIExpc3QgLSBDYcyCzIF1IHRydcyBYyBkdcybzIMgbGllzKPMgnUgRGFuaCBzYcyBY2ggbGllzIJuIGtlzILMgXQgLSBQaGHMgsyAbiAyLm1wNA==-.mp4',
-        2, 1217, false, 'video', null, '43cbd234-d5c4-40ea-b2f2-dc83952a1b29', '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
+VALUES ('0ec2fde8-929d-445b-b7a7-a433d0de6701', 'Implement Binary Search by Loop', '',
+        '/storage/course/videos/eSfYd64Co2lf6S9b090JHO2HvOT5oA6jbrbzFvtj.mp4', 1, 604, false, 'video', null,
+        'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('3d5dd980-471b-4f9e-a5e1-ad551b65ac16', 'Stack và Queue trong Python', '',
-        'iSatomgUVh5aw9HhO0MLmTTMN2Npsy-metaTGlua2VkIExpc3QgLSBDYcyCzIF1IHRydcyBYyBkdcybzIMgbGllzKPMgnUgRGFuaCBzYcyBY2ggbGllzIJuIGtlzILMgXQgLSBQaGHMgsyAbiAxLm1wNA==-.mp4',
-        1, 816, false, 'video', null, '43cbd234-d5c4-40ea-b2f2-dc83952a1b29', '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
+VALUES ('19a17557-cfda-452d-ad1b-e11484ad7e16', 'Leetcode 26: Remove Duplicates from Sorted Array', '', '', 0, 0, false,
+        'assessment', null,
+        'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('42d563f6-8efa-4900-b218-3e1e590ece85', 'Chuỗi trong Python', '',
-        '3eSuOwzIyHNADjKn6AxR8M8FnrMqgB-metaW0tob8yBYSBob8yjYyBsYcyjzIJwIHRyacyAbmggUHl0aG9uIGNvzJsgYmHMiW5dIC0gQmHMgGkgMTAtIEtpZcyCzIl1IGNodW_MgsyDaSB0cm9uZyBQeXRob24gLSBQaGHMgsyAbiA0IC0gSG93S3RlYW0gLSBZb3VUdWJlLm1wNA==-.mp4',
-        3, 1754, false, 'video', null, '8845d78f-00b3-4de7-817a-bd7150f83027', '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('78bd174d-58d0-45eb-b12a-43b53bf37a18', 'Giới thiệu Python và Cài đặt môi trường', '',
-        'jb7RZlF1l1zq17R7yeUfnOGnHWPJan-metaW0tob8yBYSBob8yjYyBsYcyjzIJwIHRyacyAbmggUHl0aG9uIGNvzJsgYmHMiW5dIC0gQmHMgGkgMS0gR2lvzJvMgWkgdGhpZcyjzIJ1IG5nb8yCbiBuZ3XMm8yDIGxhzKPMgnAgdHJpzIBuaCBQeXRob24gLSBIb3dLdGVhbSAtIFlvdVR1YmUubXA0-.mp4',
-        1, 764, true, 'video', null, '22272c16-ee1c-4f8f-b41f-0a82a11e9c2b', '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('91c85b8a-dd5f-415f-8759-71b4b7be5e46', 'Biến và Kiểu dữ liệu cơ bản', '# Python Cơ Bản
+VALUES ('351e8cdd-3e4e-47db-b978-50b6415b7555', 'Binary Search Document', '# **Binary Search: Comprehensive Documentation**
 
-## 🐍 Giới thiệu
-Python là một ngôn ngữ lập trình thông dịch, dễ học, cú pháp rõ ràng, được sử dụng rộng rãi trong **khoa học dữ liệu, phát triển web, trí tuệ nhân tạo, và tự động hóa**.
+## **1. Introduction to Binary Search**
+Binary search is an **efficient search algorithm** that finds the position of a target value within a **sorted array**. It works by repeatedly dividing the search interval in half, drastically reducing the search space with each step.
 
-Tài liệu này sẽ giới thiệu những kiến thức cơ bản nhất để bắt đầu với Python.
+### **Key Properties**
+✔ **Time Complexity:** `O(log n)` (much faster than linear search `O(n)`).
+✔ **Space Complexity:**
+   - Iterative: `O(1)` (constant space).
+   - Recursive: `O(log n)` (stack space for recursion).
+✔ **Requirement:** The input array **must be sorted** (ascending/descending).
 
 ---
 
-## 1. Cài đặt Python
-- Tải Python từ [python.org](https://www.python.org/downloads/).
-- Kiểm tra phiên bản:
-```bash
-python --version
+## **2. How Binary Search Works**
+1. Compare the target value to the **middle element** of the array.
+2. If the target is **equal** to the middle element, return its index.
+3. If the target is **less** than the middle element, search the **left half**.
+4. If the target is **greater**, search the **right half**.
+5. Repeat until the target is found or the search space is exhausted.
+
+---
+
+## **3. Implementation in Python**
+### **1️⃣ Iterative Approach (Using Loop)**
+```python
+def binary_search_iterative(arr, target):
+    left, right = 0, len(arr) - 1
+
+    while left <= right:
+        mid = (left + right) // 2  # Find middle index
+        if arr[mid] == target:
+            return mid  # Target found
+        elif arr[mid] < target:
+            left = mid + 1  # Search right half
+        else:
+            right = mid - 1  # Search left half
+    return -1  # Target not found
 ```
-- Chạy chương trình Python:
-```bash
-python hello.py
+
+### **2️⃣ Recursive Approach**
+```python
+def binary_search_recursive(arr, target, left, right):
+    if left > right:
+        return -1  # Base case: target not found
+
+    mid = (left + right) // 2
+    if arr[mid] == target:
+        return mid
+    elif arr[mid] < target:
+        return binary_search_recursive(arr, target, mid + 1, right)  # Search right
+    else:
+        return binary_search_recursive(arr, target, left, mid - 1)  # Search left
+
+# Helper function for easier calling
+def binary_search(arr, target):
+    return binary_search_recursive(arr, target, 0, len(arr) - 1)
 ```
 
 ---
 
-## 2. Cú pháp cơ bản
-### In ra màn hình
+## **4. Example Walkthrough**
+**Input:**
 ```python
-print("Hello, Python!")
+arr = [1, 3, 5, 7, 9, 11]
+target = 7
 ```
+**Steps (Iterative):**
+1. `left = 0`, `right = 5` → `mid = 2` (`arr[2] = 5`).
+   - `5 < 7` → search right (`left = 3`).
+2. `left = 3`, `right = 5` → `mid = 4` (`arr[4] = 9`).
+   - `9 > 7` → search left (`right = 3`).
+3. `left = 3`, `right = 3` → `mid = 3` (`arr[3] = 7`).
+   - Found! Return `3`.
 
-### Biến và kiểu dữ liệu
-```python
-x = 10          # int
-y = 3.14        # float
-name = "Alice"  # string
-is_active = True # boolean
+**Output:**
 ```
-
-### Toán tử cơ bản
-```python
-a, b = 5, 2
-print(a + b)  # cộng
-print(a - b)  # trừ
-print(a * b)  # nhân
-print(a / b)  # chia (float)
-print(a // b) # chia lấy nguyên
-print(a % b)  # chia lấy dư
-print(a ** b) # lũy thừa
+3
 ```
 
 ---
 
-## 3. Cấu trúc điều khiển
-### Câu lệnh if
-```python
-x = 10
-if x > 5:
-    print("Lớn hơn 5")
-elif x == 5:
-    print("Bằng 5")
-else:
-    print("Nhỏ hơn 5")
+## **5. Edge Cases & Validation**
+| **Test Case**               | **Expected Output** | **Explanation** |
+|-----------------------------|---------------------|-----------------|
+| `arr = [1, 2, 3], target = 2` | `1` | Target found at index `1`. |
+| `arr = [1, 2, 3], target = 4` | `-1` | Target not in array. |
+| `arr = [], target = 1`       | `-1` | Empty array. |
+| `arr = [5], target = 5`      | `0` | Single-element array. |
+
+---
+
+## **6. When to Use Binary Search?**
+✅ Searching in **large sorted datasets** (e.g., databases, logs).
+✅ Problems where **O(log n)** time is critical (e.g., competitive programming).
+✅ As a sub-routine in advanced algorithms (e.g., **binary search trees**).
+
+---
+
+## **7. Common Mistakes to Avoid**
+❌ **Forgetting to sort the array** (binary search only works on sorted data).
+❌ **Integer overflow** when calculating `mid` (use `left + (right - left) // 2` instead).
+❌ **Incorrect termination condition** (`while left <= right` vs. `while left < right`).
+
+---
+
+## **8. Practice Problems (LeetCode)**
+1. [704. Binary Search](https://leetcode.com/problems/binary-search/) (Easy)
+2. [35. Search Insert Position](https://leetcode.com/problems/search-insert-position/) (Easy)
+3. [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) (Medium)
+
+---
+
+## **9. Key Takeaways**
+✔ Binary search is **O(log n)** and **much faster** than linear search.
+✔ Can be implemented **iteratively (preferred)** or **recursively**.
+✔ Always verify the **array is sorted** before applying binary search.  ', '', 5, 0, false, 'document', null,
+        'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('37a1c2f7-06a7-4b59-ba06-07520228d9c7', 'About instructor', '',
+        '/storage/course/videos/Pc3Ms9LNpj5tf3dVophT1SNhdlA486Sjy33Vwrbx.mp4', 0, 617, true, 'video', null,
+        '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('40c120bd-6b57-436c-baf7-ddbe300e8dc0', 'Final Exam', '', '', 0, 0, false, 'assessment', null,
+        '1bd186cc-4bde-44b2-9d81-339df37a11ab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('41d66766-11f3-4272-9eee-5a0046d9cc95', 'Implement Binary Search by Recursion', '',
+        '/storage/course/videos/OKbEzFoRDOWd9hsvDI5G48SKmCIFUDvPnqrhNsIr.mp4', 2, 444, false, 'video', null,
+        'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('4ba5f1fc-80a2-4bc4-ae4b-1da3a7ed8c8a', 'What is array', '',
+        '/storage/course/videos/wLsgdD7dvb3o3PWvtCZtUat8xu5k0KBoy42JM5cy.mp4', 0, 1667, false, 'video', null,
+        'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('587e5ca3-68bf-4062-b9aa-4ddc933ff275', 'Introduction to Data Structures', '',
+        '/storage/course/videos/vf0iEjHF2LvGPJFI5bbr3XKLKxWljuk5SxoDWitz.mp4', 1, 339, false, 'video', null,
+        '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('59c9f55a-8525-4f7a-b325-1a893ca8ba9e', 'Leetcode 414: Solution', '',
+        '/storage/course/videos/nXFh28njdfqHzOX9WCNbNHaF7woJRSSW0oa8xsDW.mp4', 3, 1138, false, 'video', null,
+        'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('5c7cf1d0-a121-49da-a057-f6591a85c45c', 'Quiz Check point', '', '', 3, 0, false,
+        'assessment', null, '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('5d851d4d-df65-4ce3-84f4-37a6bf72ed4a', 'Review those Algorithms', '',
+        '/storage/course/videos/biJ9JeIoN46mCKock3uyZkDbhfQm548QKu2iSpki.mp4', 3, 217, false, 'video', null,
+        'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('60341bee-6475-4c30-9baf-3bd6a68a00dc', 'Course outline', '# Data Structures Mastery (53 Hours) - Detailed Curriculum
+
+## Module 1: Foundations (5 Hours)
+1. **Introduction to Data Structures**
+   - What are Data Structures?
+   - Types and Classifications
+   - Real-world Applications
+
+2. **Recursion Deep Dive**
+   - Principle of Recursion
+   - Writing Base Cases
+   - Head vs Tail Recursion
+   - Recursion vs Iteration
+   - Common Recursion Problems
+
+## Module 2: Linear Structures (12 Hours)
+1. **Arrays**
+   - Memory Representation
+   - Operations (Insert/Delete/Search)
+   - Dynamic Arrays
+   - Array ADT Implementation
+
+2. **Linked Lists**
+   - Singly Linked Lists
+   - Doubly Linked Lists
+   - Circular Linked Lists
+   - Implementation and Operations
+
+## Module 3: Abstract Data Types (10 Hours)
+1. **Stacks**
+   - LIFO Principle
+   - Array vs Linked List Implementation
+   - Applications (Parsing, Undo Operations)
+
+2. **Queues**
+   - FIFO Principle
+   - Circular Queues
+   - Priority Queues
+   - Deque Implementation
+
+## Module 4: Hierarchical Structures (15 Hours)
+1. **Trees**
+   - Binary Trees
+   - Tree Traversals (Pre/In/Post-order)
+   - Threaded Binary Trees
+
+2. **Binary Search Trees**
+   - Insertion/Deletion
+   - Balanced vs Unbalanced
+   - Practical Applications
+
+3. **AVL Trees**
+   - Rotations (LL, RR, LR, RL)
+   - Balance Factor Calculations
+   - Performance Analysis
+
+## Module 5: Advanced Concepts (11 Hours)
+1. **Graphs**
+   - Representation (Matrix, List)
+   - Traversal (BFS, DFS)
+   - Shortest Path Algorithms
+   - Minimum Spanning Trees
+
+2. **Hashing**
+   - Hash Functions
+   - Collision Handling
+   - Applications in Databases
+
+## Module 6: Practical Implementation
+- **Coding Challenges**
+- **Real-world Case Studies**
+- **Optimization Techniques**
+- **Final Project Guidance**
+
+## Features:
+- Whiteboard Explanations
+- Line-by-line Coding
+- Downloadable Source Code
+- Problem Solving Sessions
+- Q&A Support', '', 2, 0, false, 'document', null, '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('78b15904-716e-4ef8-abe1-ec0e95a2e377', 'Remove element from array', '',
+        '/storage/course/videos/HQQK0DVU1FVChGYOY2NTgQ5CsK3tUpFxyf6esIKQ.mp4', 2, 0, false, 'video', null,
+        'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('7dd41449-fe08-41ea-887f-54d621e293e4', 'Insert element from array', '',
+        '/storage/course/videos/bdVhSmaZEvbUhmvB2TqZ06eaoWM2xr4MbSk7s2vR.mp4', 1, 1241, false, 'video', null,
+        'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('819e7f7d-72eb-4291-a737-6c2d94a816be', 'Linked List document', '# **Linked Lists - Comprehensive Documentation**
+
+## **1. Introduction to Linked Lists**
+A **Linked List** is a linear data structure consisting of nodes connected via pointers. Unlike arrays, linked list elements are **not stored in contiguous memory locations**.
+
+### **Key Characteristics**
+- Dynamic size (can grow/shrink during runtime)
+- Efficient insertions/deletions (no shifting required)
+- Sequential access (no random access like arrays)
+
+---
+
+## **2. Types of Linked Lists**
+
+### **2.1 Singly Linked List**
+- **Node Structure**:
+  ```cpp
+  struct Node {
+      int data;
+      Node* next;  // Pointer to next node
+  };
+  ```
+- **Traversal**: Unidirectional (head → tail)
+- **Termination**: Last node points to `NULL`
+
+### **2.2 Doubly Linked List**
+- **Node Structure**:
+  ```cpp
+  struct Node {
+      int data;
+      Node* next;  // Pointer to next node
+      Node* prev;  // Pointer to previous node
+  };
+  ```
+- **Traversal**: Bidirectional (head ↔ tail)
+- **Advantage**: Easier deletions/backward traversals
+
+### **2.3 Circular Linked List**
+- **Variants**:
+  - **Circular Singly Linked List**: Tail points to head
+  - **Circular Doubly Linked List**: Tail ↔ head connection
+- **Termination**: No `NULL` pointers (forms a loop)
+
+---
+
+## **3. Core Operations**
+
+### **3.1 Insertion**
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Insert at head | **O(1)** |
+| Insert at tail | **O(1)** (with tail pointer) or **O(n)** |
+| Insert after a node | **O(n)** (search) + **O(1)** (insert) |
+
+### **3.2 Deletion**
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Delete head | **O(1)** |
+| Delete tail | **O(n)** (singly), **O(1)** (doubly with tail) |
+| Delete specific node | **O(n)** (search) + **O(1)** (delete) |
+
+### **3.3 Traversal**
+- **Singly Linked List**: Head → Tail (**O(n)**)
+- **Doubly Linked List**: Head ↔ Tail (**O(n)**)
+- **Circular Linked List**: Loop until revisiting start node
+
+---
+
+## **4. Time Complexity Summary**
+
+| Operation | Singly Linked | Doubly Linked |
+|-----------|--------------|--------------|
+| Access    | O(n)         | O(n)         |
+| Search    | O(n)         | O(n)         |
+| Insert Head | O(1)       | O(1)         |
+| Insert Tail | O(n)       | O(1)*        |
+| Delete Head | O(1)       | O(1)         |
+| Delete Tail | O(n)       | O(1)*        |
+
+*With tail pointer
+
+---
+
+## **5. Advantages & Disadvantages**
+
+### **Advantages**:
+✔ Dynamic size (no pre-allocation)
+✔ Efficient insertions/deletions (**O(1)** at head)
+✔ No memory waste (allocates per node)
+
+### **Disadvantages**:
+❌ No random access (**O(n)** search time)
+❌ Extra memory for pointers
+❌ Poor cache locality (non-contiguous memory)
+
+---
+
+## **6. Applications**
+- **Stacks & Queues** implementations
+- **Browser history** (back/forward navigation)
+- **Memory management** in operating systems
+- **Polynomial representation** in mathematics
+- **Collision handling** in hash tables
+
+---
+
+## **7. Linked List vs. Array**
+
+| Feature         | Linked List      | Array           |
+|----------------|-----------------|----------------|
+| Size           | Dynamic         | Fixed           |
+| Random Access  | O(n)            | O(1)            |
+| Insert Head    | O(1)            | O(n)            |
+| Memory Overhead| Pointers        | None            |
+| Cache Locality | Poor            | Excellent       |
+
+---
+
+## **8. Code Implementation (C++)**
+
+### **Singly Linked List**
+```cpp
+class SinglyLinkedList {
+private:
+    struct Node {
+        int data;
+        Node* next;
+        Node(int val) : data(val), next(nullptr) {}
+    };
+    Node* head;
+
+public:
+    SinglyLinkedList() : head(nullptr) {}
+
+    // Insert at head (O(1))
+    void push(int val) {
+        Node* newNode = new Node(val);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    // Delete node (O(n))
+    void deleteNode(int val) {
+        Node* temp = head;
+        Node* prev = nullptr;
+
+        while (temp && temp->data != val) {
+            prev = temp;
+            temp = temp->next;
+        }
+
+        if (!temp) return;  // Not found
+
+        if (!prev) head = temp->next;  // Delete head
+        else prev->next = temp->next;
+
+        delete temp;
+    }
+};
 ```
 
-### Vòng lặp for
-```python
-for i in range(5):
-    print(i)  # in ra từ 0 đến 4
+### **Doubly Linked List**
+```cpp
+class DoublyLinkedList {
+private:
+    struct Node {
+        int data;
+        Node* prev;
+        Node* next;
+        Node(int val) : data(val), prev(nullptr), next(nullptr) {}
+    };
+    Node* head;
+    Node* tail;  // Enables O(1) tail operations
+
+public:
+    DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+
+    // Insert at tail (O(1))
+    void append(int val) {
+        Node* newNode = new Node(val);
+        if (!head) head = tail = newNode;
+        else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+    }
+};
 ```
 
-### Vòng lặp while
+---
+
+## **9. Practice Problems**
+1. [Reverse a Linked List (LeetCode 206)](https://leetcode.com/problems/reverse-linked-list/)
+2. [Detect Cycle (LeetCode 141)](https://leetcode.com/problems/linked-list-cycle/)
+3. [Merge Two Sorted Lists (LeetCode 21)](https://leetcode.com/problems/merge-two-sorted-lists/)
+
+---
+
+## **10. Key Takeaways**
+- Use linked lists for **frequent insertions/deletions**.
+- Prefer arrays when **random access** is critical.
+- **Doubly linked lists** simplify backward traversal but consume more memory.', '', 2, 0, false, 'document', null,
+        '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('835138e6-c935-4464-9490-b591e7bb2d5e', 'Leetcode 26: Solution', '',
+        '/storage/course/videos/OiVwwvJwmmUCxI0BTVQVZ7hjUfTj9H299eP5pKGn.mp4', 1, 730, false, 'video', null,
+        'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('86ce3ac9-81d8-4c0d-9a08-82e62055b7d9', 'Array document', '# **Arrays: A Comprehensive Guide**
+
+## **1. What is an Array?**
+An **array** is a **data structure** that stores a **fixed-size** collection of elements of the **same type**. It provides an efficient way to store and access multiple values under a single variable name.
+
+### **Key Properties:**
+- **Fixed size** (static in most languages, but some support dynamic arrays).
+- **Contiguous memory allocation** (elements are stored in adjacent memory locations).
+- **Zero-based or one-based indexing** (depends on the programming language).
+- **Homogeneous elements** (all elements must be of the same data type in statically-typed languages).
+
+---
+
+## **2. Array Representation**
+An array can be visualized as a **block of memory** divided into slots:
+
+| Index | 0 | 1 | 2 | 3 | 4 |
+|-------|---|---|---|---|---|
+| Value | 10 | 20 | 30 | 40 | 50 |
+
+- **Indexing**: Starts at `0` (in most languages like C, Java, Python) or `1` (e.g., MATLAB, Lua).
+- **Element Access**: `array[2]` returns `30` in the above example.
+
+---
+
+## **3. Basic Array Operations**
+### **a) Declaration & Initialization**
+#### **C/C++**
+```c
+int numbers[5] = {10, 20, 30, 40, 50};
+```
+#### **Java**
+```java
+int[] numbers = {10, 20, 30, 40, 50};
+```
+#### **Python (Lists are dynamic arrays)**
 ```python
+numbers = [10, 20, 30, 40, 50]
+```
+#### **JavaScript**
+```javascript
+let numbers = [10, 20, 30, 40, 50];
+```
+
+### **b) Accessing Elements**
+```java
+int firstElement = numbers[0]; // 10
+int thirdElement = numbers[2]; // 30
+```
+
+### **c) Updating Elements**
+```python
+numbers[1] = 99  # Updates the second element to 99
+```
+
+### **d) Finding Length**
+```javascript
+let length = numbers.length; // 5
+```
+
+### **e) Iterating Over an Array**
+#### **Using a for-loop (C/Java)**
+```c
+for (int i = 0; i < 5; i++) {
+    printf("%d ", numbers[i]);
+}
+```
+#### **Using forEach (JavaScript)**
+```javascript
+numbers.forEach(num => console.log(num));
+```
+#### **Using for-in (Python)**
+```python
+for num in numbers:
+    print(num)
+```
+
+---
+
+## **4. Time Complexity of Array Operations**
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Access (`arr[i]`) | **O(1)** |
+| Search (Linear) | **O(n)** |
+| Insertion (at end) | **O(1)** (Amortized for dynamic arrays) |
+| Insertion (at middle) | **O(n)** (Requires shifting) |
+| Deletion | **O(n)** (Requires shifting) |
+
+---
+
+## **5. Types of Arrays**
+### **a) One-Dimensional (1D) Array**
+- A simple list of elements.
+- Example: `[1, 2, 3, 4, 5]`
+
+### **b) Multi-Dimensional Array**
+- **2D Array (Matrix)**:
+  ```java
+  int matrix[3][3] = {
+      {1, 2, 3},
+      {4, 5, 6},
+      {7, 8, 9}
+  };
+  ```
+- **3D Array**:
+  ```python
+  threeD = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]
+  ```
+
+### **c) Dynamic Arrays (Resizable)**
+- Automatically expand when full (e.g., Python `list`, C++ `std::vector`, Java `ArrayList`).
+- Example (Python):
+  ```python
+  dynamic_array = []
+  dynamic_array.append(10)  # Expands as needed
+  ```
+
+---
+
+## **6. Advantages & Disadvantages**
+### **Advantages:**
+✔ **Fast access** (O(1) time for indexing).
+✔ **Memory efficiency** (contiguous storage).
+✔ **Simple to use** in most programming languages.
+
+### **Disadvantages:**
+❌ **Fixed size** (static arrays cannot grow).
+❌ **Insertions/deletions are slow** (O(n) due to shifting).
+❌ **Memory wastage** if allocated size is too large.
+
+---
+
+## **7. Common Use Cases**
+- Storing and accessing large datasets.
+- Implementing other data structures (stacks, queues, heaps).
+- Matrix operations in scientific computing.
+- Lookup tables and caching.
+
+---
+
+## **8. Example: Searching an Array (Linear Search)**
+```java
+public int linearSearch(int[] arr, int target) {
+    for (int i = 0; i < arr.length; i++) {
+        if (arr[i] == target) {
+            return i;
+        }
+    }
+    return -1; // Not found
+}
+```
+
+---
+
+## **9. Conclusion**
+Arrays are **fundamental** in programming due to their **simplicity and efficiency** in accessing elements. While they have limitations (fixed size, slow insertions), they serve as the basis for more complex data structures like **ArrayLists, Hash Tables, and Dynamic Arrays**.',
+        '', 4, 0, false, 'document', null, 'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('8e2d4e3b-693e-41ec-a9bc-71ebe6dba7e5', 'Leetcode 414: Third Maximum Number', '', '', 2, 0, false, 'assessment',
+        null,
+        'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('a0f8388a-5e70-42d6-8a24-748231426a02', 'LinkedList part 2', '',
+        '/storage/course/videos/1GD3gY83SMQuiACN5DeQiMdJDmlEkdDXa07ESx4O.mp4', 1, 1217, false, 'video', null,
+        '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('a797bf9e-3a71-421a-ac9e-f1380cdfb87f', 'Big O notation document', '# **Linked Lists - Comprehensive Documentation**
+
+## **1. Introduction to Linked Lists**
+A **Linked List** is a linear data structure consisting of nodes connected via pointers. Unlike arrays, linked list elements are **not stored in contiguous memory locations**.
+
+### **Key Characteristics**
+- Dynamic size (can grow/shrink during runtime)
+- Efficient insertions/deletions (no shifting required)
+- Sequential access (no random access like arrays)
+
+---
+
+## **2. Types of Linked Lists**
+
+### **2.1 Singly Linked List**
+- **Node Structure**:
+  ```cpp
+  struct Node {
+      int data;
+      Node* next;  // Pointer to next node
+  };
+  ```
+- **Traversal**: Unidirectional (head → tail)
+- **Termination**: Last node points to `NULL`
+
+### **2.2 Doubly Linked List**
+- **Node Structure**:
+  ```cpp
+  struct Node {
+      int data;
+      Node* next;  // Pointer to next node
+      Node* prev;  // Pointer to previous node
+  };
+  ```
+- **Traversal**: Bidirectional (head ↔ tail)
+- **Advantage**: Easier deletions/backward traversals
+
+### **2.3 Circular Linked List**
+- **Variants**:
+  - **Circular Singly Linked List**: Tail points to head
+  - **Circular Doubly Linked List**: Tail ↔ head connection
+- **Termination**: No `NULL` pointers (forms a loop)
+
+---
+
+## **3. Core Operations**
+
+### **3.1 Insertion**
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Insert at head | **O(1)** |
+| Insert at tail | **O(1)** (with tail pointer) or **O(n)** |
+| Insert after a node | **O(n)** (search) + **O(1)** (insert) |
+
+### **3.2 Deletion**
+| Operation | Time Complexity |
+|-----------|-----------------|
+| Delete head | **O(1)** |
+| Delete tail | **O(n)** (singly), **O(1)** (doubly with tail) |
+| Delete specific node | **O(n)** (search) + **O(1)** (delete) |
+
+### **3.3 Traversal**
+- **Singly Linked List**: Head → Tail (**O(n)**)
+- **Doubly Linked List**: Head ↔ Tail (**O(n)**)
+- **Circular Linked List**: Loop until revisiting start node
+
+---
+
+## **4. Time Complexity Summary**
+
+| Operation | Singly Linked | Doubly Linked |
+|-----------|--------------|--------------|
+| Access    | O(n)         | O(n)         |
+| Search    | O(n)         | O(n)         |
+| Insert Head | O(1)       | O(1)         |
+| Insert Tail | O(n)       | O(1)*        |
+| Delete Head | O(1)       | O(1)         |
+| Delete Tail | O(n)       | O(1)*        |
+
+*With tail pointer
+
+---
+
+## **5. Advantages & Disadvantages**
+
+### **Advantages**:
+✔ Dynamic size (no pre-allocation)
+✔ Efficient insertions/deletions (**O(1)** at head)
+✔ No memory waste (allocates per node)
+
+### **Disadvantages**:
+❌ No random access (**O(n)** search time)
+❌ Extra memory for pointers
+❌ Poor cache locality (non-contiguous memory)
+
+---
+
+## **6. Applications**
+- **Stacks & Queues** implementations
+- **Browser history** (back/forward navigation)
+- **Memory management** in operating systems
+- **Polynomial representation** in mathematics
+- **Collision handling** in hash tables
+
+---
+
+## **7. Linked List vs. Array**
+
+| Feature         | Linked List      | Array           |
+|----------------|-----------------|----------------|
+| Size           | Dynamic         | Fixed           |
+| Random Access  | O(n)            | O(1)            |
+| Insert Head    | O(1)            | O(n)            |
+| Memory Overhead| Pointers        | None            |
+| Cache Locality | Poor            | Excellent       |
+
+---
+
+## **8. Code Implementation (C++)**
+
+### **Singly Linked List**
+```cpp
+class SinglyLinkedList {
+private:
+    struct Node {
+        int data;
+        Node* next;
+        Node(int val) : data(val), next(nullptr) {}
+    };
+    Node* head;
+
+public:
+    SinglyLinkedList() : head(nullptr) {}
+
+    // Insert at head (O(1))
+    void push(int val) {
+        Node* newNode = new Node(val);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    // Delete node (O(n))
+    void deleteNode(int val) {
+        Node* temp = head;
+        Node* prev = nullptr;
+
+        while (temp && temp->data != val) {
+            prev = temp;
+            temp = temp->next;
+        }
+
+        if (!temp) return;  // Not found
+
+        if (!prev) head = temp->next;  // Delete head
+        else prev->next = temp->next;
+
+        delete temp;
+    }
+};
+```
+
+### **Doubly Linked List**
+```cpp
+class DoublyLinkedList {
+private:
+    struct Node {
+        int data;
+        Node* prev;
+        Node* next;
+        Node(int val) : data(val), prev(nullptr), next(nullptr) {}
+    };
+    Node* head;
+    Node* tail;  // Enables O(1) tail operations
+
+public:
+    DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+
+    // Insert at tail (O(1))
+    void append(int val) {
+        Node* newNode = new Node(val);
+        if (!head) head = tail = newNode;
+        else {
+            tail->next = newNode;
+            newNode->prev = tail;
+            tail = newNode;
+        }
+    }
+};
+```
+
+---
+
+## **9. Practice Problems**
+1. [Reverse a Linked List (LeetCode 206)](https://leetcode.com/problems/reverse-linked-list/)
+2. [Detect Cycle (LeetCode 141)](https://leetcode.com/problems/linked-list-cycle/)
+3. [Merge Two Sorted Lists (LeetCode 21)](https://leetcode.com/problems/merge-two-sorted-lists/)
+
+---
+
+## **10. Key Takeaways**
+- Use linked lists for **frequent insertions/deletions**.
+- Prefer arrays when **random access** is critical.
+- **Doubly linked lists** simplify backward traversal but consume more memory.', '', 5, 0, false, 'document', null,
+        '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('bed128e8-a4c2-4e87-87f5-10d5323b2047', 'Quiz about Binary Search', '', '', 4, 0,
+        false, 'assessment', null, 'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('d0366ee2-8e19-41a7-9b8d-ddd46cb290ad', 'Dynamic Programming document', '# **Dynamic Programming (DP) - Complete Guide**
+
+## **1. Introduction**
+Dynamic Programming is an optimization technique that breaks complex problems into simpler subproblems, stores their solutions (memoization/tabulation), and reuses them to avoid redundant calculations.
+
+### **When to Use DP:**
+- Problems with **optimal substructure** (solution depends on optimal solutions to subproblems)
+- Problems with **overlapping subproblems** (same subproblems recur multiple times)
+
+---
+
+## **2. Key Concepts**
+### **2.1 Optimal Substructure**
+A problem has optimal substructure if its optimal solution can be constructed from optimal solutions of its subproblems.
+**Example:** Fibonacci sequence (`fib(n) = fib(n-1) + fib(n-2)`).
+
+### **2.2 Overlapping Subproblems**
+Subproblems are recomputed multiple times. DP stores solutions to avoid redundancy.
+**Example:** In recursive Fibonacci, `fib(3)` is recalculated for `fib(5)` and `fib(4)`.
+
+### **2.3 Memoization vs. Tabulation**
+| **Memoization (Top-Down)**       | **Tabulation (Bottom-Up)**       |
+|----------------------------------|----------------------------------|
+| Recursive + Caching              | Iterative + Table Filling        |
+| `O(n)` stack space (recursion)   | `O(1)` space (if optimized)      |
+| Lazily computes subproblems      | Computes all subproblems         |
+
+---
+
+## **3. DP Techniques**
+### **3.1 Top-Down (Memoization)**
+- Recursive approach with caching.
+- **Example:** Fibonacci with memoization.
+```python
+def fib(n, memo={}):
+    if n in memo: return memo[n]
+    if n <= 2: return 1
+    memo[n] = fib(n-1, memo) + fib(n-2, memo)
+    return memo[n]
+```
+
+### **3.2 Bottom-Up (Tabulation)**
+- Iterative approach with a table (usually an array).
+- **Example:** Fibonacci with tabulation.
+```python
+def fib(n):
+    dp = [0, 1, 1]
+    for i in range(3, n+1):
+        dp.append(dp[i-1] + dp[i-2])
+    return dp[n]
+```
+
+### **3.3 Space Optimization**
+- Reduce space complexity by tracking only necessary variables.
+- **Example:** Fibonacci in `O(1)` space.
+```python
+def fib(n):
+    if n <= 1: return n
+    prev, curr = 0, 1
+    for _ in range(2, n+1):
+        prev, curr = curr, prev + curr
+    return curr
+```
+
+---
+
+## **4. Classic DP Problems**
+### **4.1 0/1 Knapsack**
+- **Problem:** Maximize value without exceeding weight capacity.
+- **DP State:** `dp[i][w] = max(value[i] + dp[i-1][w-wt[i]], dp[i-1][w])`
+
+### **4.2 Longest Common Subsequence (LCS)**
+- **Problem:** Find the longest subsequence common to two strings.
+- **DP State:**
+  ```python
+  if s1[i] == s2[j]:
+      dp[i][j] = 1 + dp[i-1][j-1]
+  else:
+      dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+  ```
+
+### **4.3 Coin Change**
+- **Problem:** Minimum coins to make an amount.
+- **DP State:** `dp[amount] = min(dp[amount], 1 + dp[amount - coin])`
+
+### **4.4 Edit Distance**
+- **Problem:** Minimum operations (insert/delete/replace) to convert string `A` to `B`.
+- **DP State:**
+  ```python
+  if A[i] == B[j]:
+      dp[i][j] = dp[i-1][j-1]
+  else:
+      dp[i][j] = 1 + min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])
+  ```
+
+---
+
+## **5. Time & Space Complexity**
+| **Problem**               | **Time**      | **Space**     |
+|---------------------------|--------------|--------------|
+| Fibonacci                 | `O(n)`       | `O(1)`       |
+| 0/1 Knapsack              | `O(n*W)`     | `O(W)`       |
+| LCS                       | `O(m*n)`     | `O(min(m,n))`|
+| Coin Change               | `O(n*amount)`| `O(amount)`  |
+
+---
+
+## **6. How to Solve DP Problems**
+### **6.1 Identify States**
+- What variables define the problem? (e.g., `index`, `remaining_weight`).
+
+### **6.2 Define Transitions**
+- How does the state change? (e.g., `dp[i][j] = dp[i-1][j] + dp[i][j-1]`).
+
+### **6.3 Base Cases**
+- Smallest subproblem solutions (e.g., `dp[0] = 0` for coin change).
+
+### **6.4 Implementation**
+- Choose memoization (recursive) or tabulation (iterative).
+
+---
+
+## **7. Example: Climbing Stairs**
+**Problem:** You can climb 1 or 2 steps at a time. How many ways to reach step `n`?
+
+### **Solution**
+```python
+def climbStairs(n):
+    if n <= 2: return n
+    prev, curr = 1, 2
+    for _ in range(3, n+1):
+        prev, curr = curr, prev + curr
+    return curr
+```
+**Time:** `O(n)` | **Space:** `O(1)`
+
+---
+
+## **8. Common Pitfalls**
+1. **Overcomplicating States:** Too many dimensions in `dp` table.
+2. **Missing Base Cases:** Forgetting to handle `n=0` or empty inputs.
+3. **Redundant Calculations:** Not caching results in top-down DP.
+
+---
+
+## **9. Practice Problems**
+1. [House Robber](https://leetcode.com/problems/house-robber/)
+2. [Unique Paths](https://leetcode.com/problems/unique-paths/)
+3. [Word Break](https://leetcode.com/problems/word-break/)
+
+---
+
+This document covers **core DP concepts**, **implementation strategies**, and **classic problems**. Use it as a cheat sheet for interviews! 🚀',
+        '', 2, 0, false, 'document', null, '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('d1f0c612-5008-4ba2-9354-befbc9ba665a', 'LinkedList part 1', '',
+        '/storage/course/videos/Nc4j3zuqWznD9vzZIpRto9BpddyIlZf4ni19RHSd.mp4', 0, 816, false, 'video', null,
+        '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('e65c59a7-8fa5-4a94-ae93-d6a8e08e46b0', 'Dynamic Programming part 2', '',
+        '/storage/course/videos/yjsiKqHeF6bkI2p72usgYhPWwhKsjkIjdSBvAeRq.mp4', 1, 239, false, 'video', null,
+        '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('eb93c554-343b-49f6-bae1-cac28b57fa7e', 'What is Binary Search', '',
+        '/storage/course/videos/j1WaG8QluPemFBHAEgy4Yblocz9cgdbrLDonsShB.mp4', 0, 462, false, 'video', null,
+        'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('f4631405-8421-438a-be4b-dee58f2d3192', 'Dynamic Programming part 1', '',
+        '/storage/course/videos/RBFXf05qV03Egx286nkjJxjR34DBGavkr1Bmxeoi.mp4', 0, 399, false, 'video', null,
+        '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+                              module_id, created_at, updated_at)
+VALUES ('fac9d284-526d-48ae-8a21-136ca36182f2', 'Programming practice about array', '', '', 3, 0, false, 'assessment',
+        null, 'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
+INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
+VALUES (1, 'Merge Sorted Array', '# **Merge Sorted Arrays (LeetCode Problem 88)**
+
+## **Problem Restatement**
+You are given two integer arrays `nums1` and `nums2`, sorted in **non-decreasing order**, and two integers `m` and `n`, representing the number of elements in `nums1` and `nums2` respectively.
+
+**Task:**
+Merge `nums2` into `nums1` in **sorted order**. The merged array should be stored inside `nums1` (do not return a new array).
+
+**Constraints:**
+- `nums1.length == m + n` (extra space is reserved for merging).
+- `nums2.length == n`.
+- The last `n` elements in `nums1` are `0` and should be ignored initially.
+
+---
+
+## **Approach**
+### **Optimal Solution: Two-Pointer Technique (Backward Merge)**
+Since both arrays are sorted, we can merge them efficiently by:
+1. **Comparing elements from the end** of `nums1` and `nums2` (to avoid overwriting `nums1` prematurely).
+2. **Placing the larger element** at the current end of `nums1`.
+3. **Decrementing pointers** accordingly until all elements are merged.
+
+**Time Complexity:** `O(m + n)`
+**Space Complexity:** `O(1)` (in-place, no extra space used).
+
+---
+
+## **Solution Code (Python)**
+```python
+def merge(nums1, m, nums2, n):
+    # Initialize pointers for nums1, nums2, and the merged array\'s end
+    p1 = m - 1  # Last valid element in nums1
+    p2 = n - 1  # Last element in nums2
+    p = m + n - 1  # Position to place the next largest element
+
+    # Merge in reverse order
+    while p1 >= 0 and p2 >= 0:
+        if nums1[p1] > nums2[p2]:
+            nums1[p] = nums1[p1]
+            p1 -= 1
+        else:
+            nums1[p] = nums2[p2]
+            p2 -= 1
+        p -= 1
+
+    # If there are remaining elements in nums2, copy them
+    while p2 >= 0:
+        nums1[p] = nums2[p2]
+        p2 -= 1
+        p -= 1
+
+# Example Usage
+nums1 = [1, 2, 3, 0, 0, 0]
+m = 3
+nums2 = [2, 5, 6]
 n = 3
-while n > 0:
-    print(n)
-    n -= 1
+merge(nums1, m, nums2, n)
+print(nums1)  # Output: [1, 2, 2, 3, 5, 6]
 ```
 
 ---
 
-## 4. Hàm
-```python
-def greet(name):
-    return f"Hello, {name}!"
+## **Explanation**
+1. **Initialization:**
+   - `p1` points to the last valid element in `nums1` (`m-1`).
+   - `p2` points to the last element in `nums2` (`n-1`).
+   - `p` points to the last position of the merged array (`m+n-1`).
 
-print(greet("Alice"))
-```
+2. **Comparison & Placement:**
+   - Compare `nums1[p1]` and `nums2[p2]`, place the **larger** one at `nums1[p]`.
+   - Decrement the respective pointer (`p1` or `p2`) and `p`.
 
----
-
-## 5. Danh sách (List)
-```python
-fruits = ["apple", "banana", "cherry"]
-fruits.append("orange")   # thêm phần tử
-print(fruits[0])          # truy cập phần tử
-print(len(fruits))        # độ dài list
-```
+3. **Handling Remaining Elements:**
+   - If `nums2` has leftover elements (when `p1` exhausts first), copy them into `nums1`.
 
 ---
 
-## 6. Tuple (bất biến)
-```python
-point = (10, 20)
-print(point[0])  # 10
-```
+## **Key Takeaways**
+✅ **Efficiency:** Merges in `O(m+n)` time without extra space.
+✅ **Edge Cases:** Handles cases where `nums1` or `nums2` is empty.
+✅ **In-Place:** Modifies `nums1` directly (required by the problem).
 
----
-
-## 7. Từ điển (Dictionary)
-```python
-person = {"name": "Alice", "age": 25}
-print(person["name"])
-person["age"] = 26
-```
-
----
-
-## 8. Set (tập hợp)
-```python
-nums = {1, 2, 3, 3}
-print(nums)  # {1, 2, 3}
-```
-
----
-
-## 9. Xử lý ngoại lệ
-```python
-try:
-    x = 10 / 0
-except ZeroDivisionError:
-    print("Không thể chia cho 0")
-finally:
-    print("Kết thúc")
-```
-
----
-
-## 10. Lập trình hướng đối tượng cơ bản
-```python
-class Person:
-    def __init__(self, name):
-        self.name = name
-
-    def say_hello(self):
-        print(f"Hello, tôi là {self.name}")
-
-p = Person("Alice")
-p.say_hello()
-```
-
----
-
-## 🎯 Kết luận
-Với những kiến thức cơ bản này, bạn đã có thể:
-- Viết script Python đơn giản.
-- Sử dụng biến, toán tử, vòng lặp, hàm.
-- Làm việc với list, tuple, dict, set.
-- Hiểu cách xử lý ngoại lệ và OOP cơ bản.
-
-Tiếp theo, bạn có thể học sâu hơn về **lập trình hàm, module, thư viện chuẩn và giải quyết bài tập trên LeetCode**.
-', '', 2, 0, false, 'document', null, '22272c16-ee1c-4f8f-b41f-0a82a11e9c2b', '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('921fcda5-6530-4472-b980-39a2f9382531', ' Quiz Python cơ bản', '', '', 3, 0, false, 'assessment', null,
-        '22272c16-ee1c-4f8f-b41f-0a82a11e9c2b', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('a38df9c5-02b1-4980-95f8-f54fac02b9fe', 'Giới thiệu Dynamic Programming', '',
-        '4UBDy0wBoO3YrmgV0BlUq9H86dn1Fy-metaTGVldGNvZGUgNDE0IC0gVGhpcmQgTWF4aW11bSBudW1iZXIgLSBDaGkgdGllzILMgXQgbmhpZcyCzIB1IGNhzIFjaCBnaWHMiWkubXA0-.mp4',
-        1, 1138, false, 'video', null, 'eb58d50c-de74-4173-8d50-8d6206c9078e', '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('ae4e673c-3fbf-4342-b7eb-19851d5f8f84', 'Lập trình Hướng đối tượng (OOP)', '',
-        'TGCTaxOOu7pm6qgdy70jNLz0qpoeNu-metaW0tob8yBYSBob8yjYyBsYcyjzIJwIHRyacyAbmggUHl0aG9uIGNvzJsgYmHMiW5dIC0gQmHMgGkgMTAtIEtpZcyCzIl1IGNodW_MgsyDaSB0cm9uZyBQeXRob24gLSBQaGHMgsyAbiA0IC0gSG93S3RlYW0gLSBZb3VUdWJlLm1wNA==-.mp4',
-        2, 1754, false, 'video', null, '8845d78f-00b3-4de7-817a-bd7150f83027', '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('ba744dac-fb70-46b7-ab17-43df20233e99', 'Bài tập cuối khóa', '', '', 2, 0, false, 'assessment', null,
-        'eb58d50c-de74-4173-8d50-8d6206c9078e', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
-                              module_id, created_at, updated_at)
-VALUES ('e62995da-405a-436e-ba4a-fe7fffda8c80', 'Hàm và Đệ quy', '',
-        'pIvwLtdypLAklIAW94wv1Qd3bredgR-metaW0tob8yBYSBob8yjYyBsYcyjzIJwIHRyacyAbmggUHl0aG9uIGNvzJsgYmHMiW5dIC0gQmHMgGkgNC0gQ29tbWVudCB0cm9uZyBQeXRob24gLSBIb3dLdGVhbSAtIFlvdVR1YmUubXA0-.mp4',
-        1, 593, true, 'video', null, '8845d78f-00b3-4de7-817a-bd7150f83027', '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+This approach is **optimal** for merging sorted arrays in-place. Would you like a breakdown of alternative approaches (e.g., using extra space)? 😊',
+        'programming', 1, 'fac9d284-526d-48ae-8a21-136ca36182f2', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (1, 'Python cơ bản', '## 📝 Giới thiệu
-Bài quiz này gồm **10 câu hỏi** từ mức **cơ bản đến nâng cao** trong Python.
-Nội dung bao quát từ cú pháp, kiểu dữ liệu, cấu trúc điều khiển, đến một số khái niệm nâng cao như **OOP**, **immutable types** và **dictionary keys**.
-
-Quiz được thiết kế để:
-- Ôn tập lại các kiến thức cơ bản về Python.
-- Kiểm tra khả năng phân biệt cú pháp đúng/sai.
-- Hiểu rõ bản chất của **mutable vs immutable**.
-- Luyện tập các thao tác phổ biến trên **list, string, dict**.
-- Chuẩn bị nền tảng để học các chủ đề nâng cao hơn (thuật toán, cấu trúc dữ liệu, LeetCode).
-
-## 🎯 Mục tiêu học tập
-Sau khi hoàn thành quiz, bạn sẽ:
-- Hiểu rõ sự khác biệt giữa **cú pháp Python** và các ngôn ngữ khác.
-- Nắm chắc cách sử dụng **list, tuple, dict, string**.
-- Phân biệt được kiểu dữ liệu nào có thể làm **key của dictionary**.
-- Thành thạo các toán tử quan trọng như `**`, `len()`, `append()`.
-- Rèn luyện tư duy lựa chọn đáp án đúng và loại bỏ các đáp án gây nhầm lẫn.
----
-', 'quiz', 9, '921fcda5-6530-4472-b980-39a2f9382531', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (2, 'Test your understanding of Binary Search with these 4 questions!',
+        'Includes single-choice (✔) and multiple-choice (☑) questions. Each option has an explanation.', 'quiz', 2,
+        'bed128e8-a4c2-4e87-87f5-10d5323b2047', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (2, 'Remove Duplicates from Sorted Array', '# Remove Duplicates from Sorted Array
+VALUES (3, 'Fundamentals Checkpoint',
+        'Add a summary of short text to prepare students for the activities for the Quiz. The text is shown on the course page beside the tooltip beside the Quiz name.',
+        'quiz', 5, '5c7cf1d0-a121-49da-a057-f6591a85c45c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
+VALUES (4, 'Remove Duplicates from Sorted Array', '# Remove Duplicates from Sorted Array
 
 ## Problem Statement
 Given an integer array `nums` sorted in **non-decreasing order**, remove the duplicates **in-place** such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in `nums`.
@@ -622,9 +1546,9 @@ class Solution:
 
         return i + 1
 
-```', 'programming', 1, '42d563f6-8efa-4900-b218-3e1e590ece85', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+```', 'programming', 1, '19a17557-cfda-452d-ad1b-e11484ad7e16', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (3, 'Third Maximum Number', '# 414. Third Maximum Number
+VALUES (5, 'Third Maximum Number', '# 414. Third Maximum Number
 
 ## Problem Statement
 Given an integer array `nums`, return the **third distinct maximum** number in this array. If the third maximum does not exist, return the **maximum** number.
@@ -681,506 +1605,450 @@ Given an integer array `nums`, return the **third distinct maximum** number in t
 
 ## Constraints
 - `1 <= nums.length <= 10^4`
-- `-2^31 <= nums[i] <= 2^31 - 1`', 'programming', 1, '42d563f6-8efa-4900-b218-3e1e590ece85', '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+- `-2^31 <= nums[i] <= 2^31 - 1`
+
+#### Solution Code (Python)
+```python
+def thirdMax(nums):
+    # Remove duplicates and sort in descending order
+    distinct_nums = sorted(list(set(nums)), reverse=True)
+
+    # Return the third maximum if exists, else return the maximum
+    return distinct_nums[2] if len(distinct_nums) >= 3 else distinct_nums[0]
+```', 'programming', 1, '8e2d4e3b-693e-41ec-a9bc-71ebe6dba7e5', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (4, 'Python nâng cao', '## 📝 Giới thiệu
-Bài quiz này gồm **10 câu hỏi nâng cao về Python**, tập trung vào những khái niệm thường gây nhầm lẫn và hay xuất hiện khi giải quyết các bài toán thực tế.
-Bạn sẽ phải vận dụng hiểu biết về **comprehension, generator, OOP, mutable default arguments, xử lý ngoại lệ, và độ phức tạp thuật toán**.
+VALUES (6, 'Assignment: Third Maximum Number in Array', '# Assignment: Third Maximum Number in Array
 
-Khác với quiz cơ bản, bài này chú trọng vào việc phân tích chi tiết: tại sao đáp án đúng, tại sao đáp án sai. Điều này giúp bạn **hiểu bản chất** thay vì chỉ ghi nhớ cú pháp.
+## **Description**
+This assignment focuses on implementing a solution to find the **third distinct maximum number** in an array, a fundamental problem in Data Structures and Algorithms (DSA). The problem tests your ability to manipulate arrays, handle edge cases, and optimize for time/space complexity.
 
-## 🎯 Mục tiêu học tập
-Sau khi hoàn thành quiz này, bạn sẽ:
-- Nắm chắc cách sử dụng **generator** và **yield**.
-- Hiểu được sự khác biệt giữa **mutable** và **immutable default arguments** trong Python.
-- Biết cách xử lý **exception** đúng cú pháp.
-- Hiểu rõ 3 tính chất chính của **OOP trong Python**.
-- Phân biệt được độ phức tạp thời gian của các **thuật toán phổ biến**.
+### **Problem Statement**
+Given an integer array `nums`, return the **third distinct maximum** number. If it doesn’t exist, return the **maximum** number.
 
-## ⏰ Thời gian
-Thời gian gợi ý: **20 phút** cho 10 câu hỏi.
-
----
-', 'quiz', 8, '1f7cdce1-fb49-4450-8a2f-c4b1e6db80a2', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (5, 'Giới thiệu Dynamic Programming', '## 📝 Giới thiệu
-Bài quiz này gồm **10 câu hỏi** từ mức **cơ bản đến nâng cao** trong Python.
-Nội dung bao quát từ cú pháp, kiểu dữ liệu, cấu trúc điều khiển, đến một số khái niệm nâng cao như **OOP**, **immutable types** và **dictionary keys**.
-
-Quiz được thiết kế để:
-- Ôn tập lại các kiến thức cơ bản về Python.
-- Kiểm tra khả năng phân biệt cú pháp đúng/sai.
-- Hiểu rõ bản chất của **mutable vs immutable**.
-- Luyện tập các thao tác phổ biến trên **list, string, dict**.
-- Chuẩn bị nền tảng để học các chủ đề nâng cao hơn (thuật toán, cấu trúc dữ liệu, LeetCode).
-
-## 🎯 Mục tiêu học tập
-Sau khi hoàn thành quiz, bạn sẽ:
-- Hiểu rõ sự khác biệt giữa **cú pháp Python** và các ngôn ngữ khác.
-- Nắm chắc cách sử dụng **list, tuple, dict, string**.
-- Phân biệt được kiểu dữ liệu nào có thể làm **key của dictionary**.
-- Thành thạo các toán tử quan trọng như `**`, `len()`, `append()`.
-- Rèn luyện tư duy lựa chọn đáp án đúng và loại bỏ các đáp án gây nhầm lẫn.
----
-', 'programming', 1, 'a38df9c5-02b1-4980-95f8-f54fac02b9fe', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
-VALUES (6, 'Python Problem Solving & Mini Application', '# Final Project: Python Problem Solving & Mini Application
-
-## 📝 Giới thiệu
-Đây là bài tập **cuối khóa** dành cho học viên sau khi đã hoàn thành toàn bộ khóa học Python từ cơ bản đến nâng cao.
-Mục tiêu là giúp bạn áp dụng kiến thức đã học (cú pháp, cấu trúc dữ liệu, OOP, xử lý ngoại lệ, và giải thuật) vào một **dự án nhỏ** và một số **bài tập thuật toán dạng LeetCode**.
+**Examples:**
+1. Input: `[3, 2, 1]` → Output: `1`
+   *(3rd max exists)*
+2. Input: `[1, 2]` → Output: `2`
+   *(3rd max missing, return max)*
+3. Input: `[2, 2, 3, 1]` → Output: `1`
+   *(Duplicates ignored)*
 
 ---
 
-## 🎯 Yêu cầu bài nộp
-Bạn cần nộp **một file nén (.zip)** hoặc **một folder chia sẻ Google Drive** chứa các nội dung sau:
-
-### 1. Mini Application (ứng dụng nhỏ)
-- Viết một chương trình Python dạng console có chức năng quản lý **Todo List**:
-  - Thêm, sửa, xóa công việc
-  - Đánh dấu hoàn thành
-  - Lưu dữ liệu ra file `todo.json`
-  - Load dữ liệu từ file khi khởi động lại chương trình
-- Yêu cầu sử dụng:
-  - **OOP** (class `Task`, class `TodoList`)
-  - **Exception Handling** (bắt lỗi khi nhập sai)
-  - **File I/O** (đọc/ghi JSON)
-
-### 2. Thuật toán (LeetCode Style)
-Giải ít nhất **3 trong 5 bài toán** sau:
-1. Two Sum
-2. Valid Parentheses
-3. Merge Two Sorted Lists
-4. Best Time to Buy and Sell Stock
-5. Valid Palindrome
-
-Mỗi bài cần có:
-- File `.py` riêng biệt
-- Code chạy được
-- Ít nhất 2 test case mẫu
-
----
-
-## 📂 Cấu trúc file nộp
-Ví dụ:
+## **Requirements**
+### **1. Function Signature**
+```python
+def thirdMax(nums: list[int]) -> int:
 ```
-final_project/
-│── mini_app/
-│ ├── todo.py
-│ └── todo.json
-│
-│── algorithms/
-│ ├── two_sum.py
-│ ├── valid_parentheses.py
-│ └── ...
-│
-└── README.md
+
+### **2. Tasks**
+- **Remove duplicates** from the array.
+- Identify the **top three distinct maximums**.
+- Return the 3rd max if it exists, else return the **absolute max**.
+
+### **3. Constraints**
+- Handle arrays with lengths from `1` to `10^4`.
+- Support integers in range `[-2^31, 2^31 - 1]`.
+- Optimize for **time complexity** (avoid O(n²) solutions).
+
+---
+
+## **Solution Approach**
+### **Key Steps**
+1. **Deduplication**: Convert the array to a set to remove duplicates.
+2. **Sorting**: Sort the distinct elements in **descending order**.
+3. **Validation**: Check if there are ≥3 distinct elements:
+   - If yes, return the 3rd element.
+   - If no, return the 1st element (max).
+
+### **Time Complexity**
+- **O(n log n)** due to sorting (optimal for this approach).
+
+### **Space Complexity**
+- **O(n)** for storing distinct elements.
+
+---
+
+## **Submission Guidelines**
+### **1. File Structure**
+```
+/assignment
+  ├── third_max.py      # Solution code
+  ├── README.md         # Explanation (optional)
+  └── test_cases.py     # Custom test cases (optional)
+```
+
+### **2. Code Template**
+```python
+def thirdMax(nums):
+    distinct_nums = sorted(list(set(nums)), reverse=True)
+    return distinct_nums[2] if len(distinct_nums) >= 3 else distinct_nums[0]
+```
+
+### **3. Testing**
+- Include **at least 5 test cases** covering:
+  - Arrays with duplicates.
+  - Arrays with <3 unique numbers.
+  - Negative numbers.
+  - Edge cases (e.g., single-element arrays).
+
+Example test case:
+```python
+assert thirdMax([2, 2, 3, 1]) == 1
 ```
 
 ---
 
-## 📊 Tiêu chí chấm điểm
-- **Hoàn thiện yêu cầu** (50%)
-- **Code sạch, dễ đọc, có comment** (20%)
-- **Ứng dụng OOP, xử lý ngoại lệ, file I/O** (20%)
-- **Sáng tạo thêm tính năng mới (optional)** (10%)
+## **Evaluation Criteria**
+| Criteria                | Points |
+|-------------------------|--------|
+| Correctness             | 50     |
+| Time/Space Complexity   | 30     |
+| Code Readability        | 10     |
+| Test Coverage           | 10     |
 
 ---
 
-## ⏰ Deadline
-- Thời hạn nộp: 7 ngày sau khi kết thúc khóa học
-- Hình thức nộp: nén file hoặc chia sẻ link Google Drive
+## **Tips**
+- Use Python’s `set()` for deduplication.
+- Leverage built-in sorting (`sorted()`) for simplicity.
+- Document edge cases in your `README.md`.
+
+**Deadline**: Submit by **DD/MM/YYYY**.
+**Penalty**: Late submissions lose 10%/day.
 
 ---
 
-## ✅ Kết quả mong đợi
-Sau khi hoàn thành bài này, bạn sẽ:
-- Tự tin viết một chương trình Python hoàn chỉnh
-- Áp dụng kiến thức đã học vào thực tế
-- Làm quen với format **giải thuật dạng LeetCode**
-', 'assignment', 1, 'ba744dac-fb70-46b7-ab17-43df20233e99', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (1, 'Hàm nào dùng để in ra màn hình trong Python?', 'multiple_choice', 1, 1, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (2, 'Kiểu dữ liệu của giá trị True trong Python là gì?', 'multiple_choice', 2, 1, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (3, 'Những kiểu dữ liệu nào là immutable trong Python?', 'multiple_choice', 3, 1, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (4, 'Những câu lệnh nào hợp lệ trong Python?', 'multiple_choice', 4, 1, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (5, 'Phương thức nào được dùng để thêm phần tử vào cuối list?', 'multiple_choice', 5, 1, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (6, 'Trong Python, những keyword nào được sử dụng để định nghĩa một hàm?', 'multiple_choice', 6, 1,
-        '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (7, 'Kết quả của đoạn code sau là gì? print(2 ** 3)', 'multiple_choice', 7, 1, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (8, 'Các kiểu dữ liệu sau có thể làm key của dictionary trong Python?', 'multiple_choice', 8, 1,
-        '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (9, 'Khi gọi hàm len("OpenAI"), kết quả là gì?', 'multiple_choice', 9, 1, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (10, 'Kết quả của đoạn code sau là gì? x = [i for i in range(3)]
-print(x)', 'multiple_choice', 1, 4, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (11, 'Những câu lệnh nào tạo ra generator trong Python?', 'multiple_choice', 2, 4, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (12, 'Kết quả của đoạn code sau là gì? a = [1, 2, 3]
-b = a
-b.append(4)
-print(a)', 'multiple_choice', 3, 4, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (13, 'Các phương thức nào thuộc về string trong Python?', 'multiple_choice', 4, 4, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (14, 'Kết quả của đoạn code sau là gì? def add(x, y=5):
-    return x + y
+**Note**: Plagiarism results in zero marks. Write your own solution! 🔍
 
-print(add(3))', 'multiple_choice', 5, 4, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+### **Key Features of This Assignment File**:
+1. **Structured Requirements**: Clear separation of problem, solution, and submission details.
+2. **Code Template**: Ready-to-use Python snippet for quick implementation.
+3. **Evaluation Metrics**: Transparent grading rubric.
+4. **Practical Constraints**: Real-world limits (array size, integer range).
+', 'assignment', 1, '40c120bd-6b57-436c-baf7-ddbe300e8dc0', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (15, 'Trong OOP Python, những khái niệm nào là tính chất cơ bản?', 'multiple_choice', 6, 4,
-        '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (1, 'What is the time complexity of Binary Search?', 'multiple_choice', 1, 2, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (16, 'Kết quả của đoạn code sau là gì? print(bool([]), bool([0]))', 'multiple_choice', 7, 4,
-        '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (2, 'Which conditions must be true for Binary Search? (Choose all that apply)', 'multiple_choice', 2, 2,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
-VALUES (17, 'Những thuật toán nào có độ phức tạp O(n log n)?', 'multiple_choice', 8, 4, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (3, 'What is the time complexity of inserting an element at the beginning of a dynamic array?',
+        'multiple_choice', 2, 3, '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
+VALUES (4, 'Which data structure uses the LIFO principle?', 'multiple_choice', 3, 3, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
+INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
+VALUES (5, 'In a Binary Search Tree, all nodes in the left subtree must be:', 'multiple_choice', 4, 3,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
+VALUES (6, 'What is the base case condition for a recursive Fibonacci sequence?', 'multiple_choice', 5, 3,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.assessment_questions (id, content, type, position, assessment_id, created_at, updated_at)
+VALUES (7, 'Which algorithm uses a divide and conquer approach?', 'multiple_choice', 6, 3, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (1, 'echo()', false, 'chỉ có trong PHP, không phải Python', 1, 1, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (1, 'O(1)', false, 'Constant time is impossible for search algorithms over unsorted data.', 0, 1,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (2, 'print()', true, 'đúng, đây là hàm chuẩn để in ra màn hình trong Python.', 2, 1, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (2, 'O(n)', false, 'Linear time applies to brute-force (e.g., linear search)', 1, 1, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (3, 'console.log()', false, 'chỉ dùng trong JavaScript.', 3, 1, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (3, 'O(log n)', true, 'Binary search halves the search space each iteration, leading to logarithmic time.', 2, 1,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (4, 'int', false, 'số nguyên, không phải kiểu boolean.', 1, 2, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (4, 'O(n log n)', false, 'This is the time complexity of sorting algorithms like Merge Sort.', 3, 1,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (5, 'str', false, 'chuỗi ký tự.', 2, 2, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (5, 'The input array must be sorted', true,
+        'Correct: Binary search relies on sorted order to divide the search space.', 0, 2, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (6, 'bool', true, 'đúng, True và False là hằng số của kiểu bool.', 3, 2, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (6, 'The algorithm can only be implemented recursively.', false,
+        'It can be implemented iteratively (preferred for space efficiency).', 1, 2, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (7, 'list', false, 'list có thể thay đổi phần tử nên là mutable.', 1, 3, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (7, 'It works with linked lists as efficiently as arrays.', false,
+        'Linked lists lack O(1) random access, making binary search inefficient.', 2, 2, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (8, 'tuple', true, 'tuple là immutable, không thể thay đổi sau khi tạo.', 2, 3, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (8, 'It requires random access to elements.', false,
+        'Correct: Binary search needs mid-index access, which arrays provide in O(1).', 3, 2, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (9, 'dict', false, 'dictionary cho phép thêm, xóa, sửa giá trị.', 3, 3, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (9, 'O(1)', false,
+        'Inserting at the beginning requires shifting all existing elements right, which takes linear time.', 0, 3,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (10, 'if x > 0: print(x)', true, 'đúng cú pháp.', 1, 4, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (10, 'O(n)', true, 'All elements must be shifted to accommodate the new element at index 0.', 1, 3,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (11, 'for i in range(5): print(i)', true, 'đúng cú pháp.', 2, 4, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (11, 'O(log n)', false, 'Logarithmic time is irrelevant for array insertion operations.', 2, 3,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (12, 'switch(x) { case 1: print(1) }', false, 'Python không có switch-case.', 3, 4, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (12, 'O(n^²)', false, 'No nested loops are involved in this operation.', 3, 3, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (13, 'add()', false, 'dùng cho set, không phải list.', 1, 5, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (13, 'Queue', false, 'Queues follow FIFO (First-In-First-Out).', 0, 4, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (14, 'append()', true, 'đúng, đây là cách thêm 1 phần tử vào cuối list.', 2, 5, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (14, 'Stack', true, 'Stacks process the most recently added item first (Last-In-First-Out).', 1, 4,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (15, 'insert()', false, 'chèn phần tử vào vị trí chỉ định, không phải cuối mặc định.', 3, 5,
-        '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (15, 'Linked List', false, 'Linked lists can implement LIFO/FIFO but aren’t inherently LIFO.', 2, 4,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (16, 'func', false, 'không tồn tại.', 1, 6, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (16, 'Tree', false, 'Trees follow hierarchical ordering, not LIFO.', 3, 4, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (17, 'def', true, 'từ khóa chuẩn để định nghĩa hàm.', 2, 6, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (17, 'Less than the root node', true, 'BST property mandates left subtree values < root < right subtree.', 0, 5,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (18, 'lambda', true, 'đúng, định nghĩa hàm ẩn danh (anonymous function).', 3, 6, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (18, 'BST property mandates left subtree values < root < right subtree.', false,
+        'This describes the right subtree.', 1, 5, '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (19, '6.', false, 'nhầm, 2 * 3 = 6 chứ không phải 2 ** 3', 1, 7, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (19, 'Equal to the root node', false, 'Duplicates are typically not allowed in standard BSTs.', 2, 5,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (20, '8.', true, 'đúng, ** là toán tử lũy thừa, 2 ** 3 = 8', 2, 7, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (20, 'Unordered', false, 'BSTs are ordered by definition.', 3, 5, '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (21, '9.', false, 'nhầm với 3 ** 2', 3, 7, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (21, 'if (n == 0) return 1;', false,
+        'This would return Fibonacci(0) = 1, which is mathematically wrong (should be 0).', 0, 6, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (22, 'list', false, 'list là mutable, không thể dùng làm key.', 1, 8, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (22, 'if (n <= 1) return n;', true, 'Fibonacci(0) = 0 and Fibonacci(1) = 1 are the base cases.', 1, 6,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (23, 'tuple', true, 'đúng, tuple là immutable nên dùng làm key được.', 2, 8, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (23, 'if (n > 1) return n;', false, 'This skips the base case entirely.', 2, 6, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (24, 'int', true, 'số nguyên có thể làm key.', 3, 8, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (24, 'No base case needed', false, 'Recursion requires a base case to terminate.', 3, 6, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (25, '5.', false, 'sai, vì "OpenAI" có 6 ký tự.', 1, 9, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (25, 'Bubble Sort', false, 'Bubble Sort uses iterative comparison-swapping.', 0, 7, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (26, '6.', true, 'đúng, chuỗi "OpenAI" dài 6 ký tự.', 2, 9, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (26, 'Linear Search', false, 'This checks elements one-by-one without dividing.', 1, 7, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (27, '7.', false, 'không có khoảng trắng dư.', 3, 9, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (27, 'Merge Sort', true, 'It splits the array into halves, sorts them, and merges (divide-and-conquer).', 2, 7,
+        '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
                                                   assessment_question_id, created_at, updated_at)
-VALUES (28, '[1, 2, 3]', false, 'range(3) tạo ra 0, 1, 2, không bao gồm 3.', 1, 10, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (29, '[0, 1, 2]', true, 'đúng, comprehension duyệt 0, 1, 2.', 2, 10, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (30, '[0, 1, 2, 3]', false, 'nhầm, range(3) không bao gồm 3.', 3, 10, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (31, '(x for x in range(5))', true, ' đúng, đây là generator expression.', 1, 11, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (32, 'yield x trong một hàm', true, 'dùng yield trong hàm sẽ tạo generator function.', 2, 11,
-        '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (33, '[x for x in range(5)] ', false, '❌ – đây là list comprehension, trả về list, không phải generator.', 3, 11,
-        '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (34, '[1, 2, 3] ', false, '❌ – sai, b tham chiếu cùng list với a.', 1, 12, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (35, '[1, 2, 3, 4] ', true, '✅ – đúng, thêm vào b cũng thay đổi a.', 2, 12, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (36, 'Error ', false, '❌ – code hợp lệ.', 3, 12, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (37, '.split() ', true, '✅ – đúng, chia chuỗi theo delimiter.', 1, 13, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (38, '.join()', true, '✅ – đúng, nối list thành chuỗi.', 2, 13, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (39, '.append() ', false, '❌ – chỉ có trong list, không có trong string.', 3, 13, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (40, '3.', false, 'nhầm, vì y mặc định là 5.', 1, 14, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (41, '8.', true, 'đúng, 3 + 5 = 8.', 2, 14, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (42, 'Error ', false, '❌ – không lỗi vì có giá trị mặc định cho y.', 3, 14, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (43, 'Kế thừa', true, 'cho phép class con dùng lại code của class cha.', 1, 15, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (44, 'Đa hình', true, 'cùng interface nhưng hành vi khác nhau.', 2, 15, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (45, 'Đóng gói', true, 'che giấu chi tiết, chỉ lộ ra interface.', 3, 15, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (46, '[1] và [1] ', false, '❌ – sai, vì list mặc định được dùng chung.', 1, 16, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (47, '[1] và [1, 1] ', true, '✅ – đúng, lần thứ hai tiếp tục append vào cùng list.', 2, 16,
-        '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (48, '[1, 1] và [1, 1] ', false, '❌ – sai, in ra kết quả lần 1 là [1].', 3, 16, '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (49, 'Merge Sort', true, 'đúng, chia để trị → O(n log n).', 1, 17, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (50, 'Quick Sort (trung bình)', true, 'trung bình O(n log n), nhưng worst case là O(n²).', 2, 17,
-        '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.assessment_question_options (id, content, is_correct, explanation, position,
-                                                  assessment_question_id, created_at, updated_at)
-VALUES (51, 'Bubble Sort', false, 'O(n²).', 3, 17, '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (28, 'Breadth-First Search', false, 'BFS traverses level-by-level (no division).', 3, 7, '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.programming_assignment_details (assessment_id, function_name, code_templates, test_cases,
                                                      created_at, updated_at)
-VALUES (2, 'removeDuplicates', '{
-    "python": "from typing import List\\n\\nclass Solution:\\n    def removeDuplicates(self, nums: List[int]) -> int:\\n        # TODO: implement your solution here\\n        pass\\n"
+VALUES (1, 'merge', '{
+    "python": "class Solution:\\n   def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> List[int]:\\n        pass"
 }', '[
     {
-        "inputs": [
-            {
-                "name": "nums",
-                "type": "int[]",
+        "input": {
+            "m": {
+                "type": "int",
+                "value": "3"
+            },
+            "n": {
+                "type": "int",
+                "value": "3"
+            },
+            "nums1": {
+                "type": "array<int>",
+                "value": "[1, 2, 3, 0, 0, 0]"
+            },
+            "nums2": {
+                "type": "array<int>",
+                "value": "[2, 5, 6]"
+            }
+        },
+        "output": {
+            "type": "array<int>",
+            "value": "[1, 2, 2, 3, 5, 6]"
+        }
+    },
+    {
+        "input": {
+            "m": {
+                "type": "int",
+                "value": "1"
+            },
+            "n": {
+                "type": "int",
+                "value": "1"
+            },
+            "nums1": {
+                "type": "array<int>",
                 "value": "[1]"
+            },
+            "nums2": {
+                "type": "array<int>",
+                "value": "[2]"
             }
-        ],
+        },
         "output": {
-            "type": "int",
-            "value": "1"
+            "type": "array<int>",
+            "value": "[1, 2]"
         }
     },
     {
-        "inputs": [
-            {
-                "name": "nums",
-                "type": "int[]",
-                "value": "[1,1,1,1]"
+        "input": {
+            "m": {
+                "type": "int",
+                "value": "3"
+            },
+            "n": {
+                "type": "int",
+                "value": "3"
+            },
+            "nums1": {
+                "type": "array<int>",
+                "value": "[4, 5, 6, 0, 0, 0]"
+            },
+            "nums2": {
+                "type": "array<int>",
+                "value": "[1, 2, 3]"
             }
-        ],
+        },
+        "output": {
+            "type": "array<int>",
+            "value": "[1, 2, 3, 4, 5, 6]"
+        }
+    }
+]', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
+INSERT INTO codezone.programming_assignment_details (assessment_id, function_name, code_templates, test_cases,
+                                                     created_at, updated_at)
+VALUES (4, 'removeDuplicates', '{
+    "python": "class Solution:\\n   def removeDuplicates(self, nums: List[int]) -> int:\\n        pass"
+}', '[
+    {
+        "input": {
+            "nums": {
+                "type": "array<int>",
+                "value": "[1, 1, 2]"
+            }
+        },
         "output": {
             "type": "int",
-            "value": "1"
+            "value": "2"
         }
     },
     {
-        "inputs": [
-            {
-                "name": "nums",
-                "type": "int[]",
-                "value": "[0,0,1,1,1,2,2,3,3,4]"
+        "input": {
+            "nums": {
+                "type": "array<int>",
+                "value": "[0, 0, 1, 1, 1, 2, 2, 3, 3, 4]"
             }
-        ],
+        },
         "output": {
             "type": "int",
             "value": "5"
         }
     },
     {
-        "inputs": [
-            {
-                "name": "nums",
-                "type": "int[]",
-                "value": "[-3,-3,-2,-1,-1,0,0,1,2,2]"
+        "input": {
+            "nums": {
+                "type": "array<int>",
+                "value": "[7, 7, 7]"
             }
-        ],
+        },
         "output": {
             "type": "int",
-            "value": "6"
+            "value": "1"
+        }
+    },
+    {
+        "input": {
+            "nums": {
+                "type": "array<int>",
+                "value": "[0, 1, 2, 3]"
+            }
+        },
+        "output": {
+            "type": "int",
+            "value": "4"
         }
     }
-]', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+]', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.programming_assignment_details (assessment_id, function_name, code_templates, test_cases,
                                                      created_at, updated_at)
-VALUES (3, 'thirdMaximumNumber', '{
-    "python": "from typing import List\\n\\nclass Solution:\\n    def thirdMaximumNumber(self, nums: List[int]) -> int:\\n        # TODO: implement your solution here\\n        pass\\n"
+VALUES (5, '', '{
+    "python": "class Solution:\\n   def (self, nums: List[int]) -> int:\\n        pass"
 }', '[
     {
-        "inputs": [
-            {
-                "name": "nums",
-                "type": "int[]",
-                "value": "[3,2,1]"
+        "input": {
+            "nums": {
+                "type": "array<int>",
+                "value": "[3, 2, 1]"
             }
-        ],
+        },
         "output": {
             "type": "int",
             "value": "1"
         }
     },
     {
-        "inputs": [
-            {
-                "name": "nums",
-                "type": "int[]",
-                "value": "[2,2,3,1]"
+        "input": {
+            "nums": {
+                "type": "array<int>",
+                "value": "[1, 2]"
             }
-        ],
-        "output": {
-            "type": "int",
-            "value": "1"
-        }
-    },
-    {
-        "inputs": [
-            {
-                "name": "nums",
-                "type": "int[]",
-                "value": "[1,2,2,5,3,5]"
-            }
-        ],
+        },
         "output": {
             "type": "int",
             "value": "2"
         }
-    }
-]', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.programming_assignment_details (assessment_id, function_name, code_templates, test_cases,
-                                                     created_at, updated_at)
-VALUES (5, 'twoSum', '{
-    "python": "from typing import List\\n\\nclass Solution:\\n    def twoSum(self, target: int, nums: List[int]) -> List[int]:\\n        # TODO: implement your solution here\\n        pass\\n"
-}', '[
+    },
     {
-        "inputs": [
-            {
-                "name": "target",
-                "type": "int",
-                "value": "989"
-            },
-            {
-                "name": "nums",
-                "type": "int[]",
-                "value": "[1, -2, 3]"
+        "input": {
+            "nums": {
+                "type": "array<int>",
+                "value": "[2, 2, 3, 1]"
             }
-        ],
+        },
         "output": {
-            "type": "int[]",
-            "value": "[1, -2, 3]"
+            "type": "int",
+            "value": "1"
         }
     }
-]', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-
+]', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.batches (id, start_at, end_at, course_id, created_at, updated_at)
-VALUES (1, '2025-09-10 00:00:00', '2027-06-10 00:00:00', '3623d6e8-b930-4b73-80e0-c0a86e327732', '2025-09-10 14:07:24',
-        '2025-09-10 14:07:24');
+VALUES (1, '2025-08-08 00:00:00', '2026-08-08 00:00:00', 'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53',
+        '2025-08-08 15:39:53');
 INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (1, 1, 2, 'not_started', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (1, 1, 8, 'not_started', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (2, 1, 3, 'not_started', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (2, 1, 9, 'not_started', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (3, 1, 4, 'not_started', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (3, 1, 3, 'not_started', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (4, 1, 5, 'not_started', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (4, 1, 7, 'not_started', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
 INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (5, 1, 6, 'not_started', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (6, 1, 7, 'not_started', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (7, 1, 8, 'not_started', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
-INSERT INTO codezone.batch_enrollments (id, batch_id, user_id, status, created_at, updated_at)
-VALUES (8, 1, 9, 'not_started', '2025-09-10 14:07:24', '2025-09-10 14:07:24');
+VALUES (5, 1, 4, 'not_started', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
