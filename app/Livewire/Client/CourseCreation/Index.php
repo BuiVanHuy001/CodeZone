@@ -4,8 +4,8 @@ namespace App\Livewire\Client\CourseCreation;
 
 use App\Models\Assessment;
 use App\Models\AssessmentQuestion;
-use App\Models\BatchEnrollments;
 use App\Models\Batch;
+use App\Models\BatchEnrollments;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Module;
@@ -13,7 +13,6 @@ use App\Models\ProgrammingAssignmentDetails;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -27,8 +26,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 
 #[Title('Create New Course')]
-class Index extends Component
-{
+class Index extends Component {
     use WithFileUploads;
 
     public function rules(): array
@@ -40,7 +38,7 @@ class Index extends Component
             'description' => 'nullable|max:1000',
             'price' => 'required|numeric|min:0',
             'category' => 'required|exists:categories,id',
-            'level' => 'required|in:beginner,intermediate,advanced',
+            'level' => ['required', Rule::in(Course::$LEVELS)],
             'startDate' => 'required|date|after_or_equal:today',
             'endDate' => 'required|date|after_or_equal:startDate',
             'modules' => 'required|array|min:1',
@@ -51,9 +49,6 @@ class Index extends Component
         ];
     }
 
-    /**
-     * @throws ValidationException
-     */
     public function updated($propertyName): void
     {
         $this->validateOnly($propertyName);
@@ -78,6 +73,7 @@ class Index extends Component
     public string $description = '';
     public $image;
     public $imageUrl;
+    public ?string $previousImagePath = null;
     public string $price = '0';
     public string $category = '';
     public string $level = '';
@@ -114,11 +110,10 @@ class Index extends Component
 
     private function updateJsonFromMultilineInput(string $field): void
     {
-        $lines = array_filter(
-	        array_map(
-		        'trim',
-		        explode("\n", $this->$field)
-	        )
+        $lines = array_filter(array_map(
+                'trim',
+                explode("\n", $this->$field)
+            )
         );
         if (empty($lines)) {
             $this->{$field . 'Json'} = null;
@@ -127,32 +122,44 @@ class Index extends Component
         }
     }
 
-
     public function updatedImage(): void
     {
-        $this->validate([
-            'image' => 'nullable|image|max:2048',
-        ]);
-        if ($this->image) {
-            $path = $this->image->storePublicly('tmp', 'public');
-            $this->imageUrl = Storage::url($path);
+        if ($this->image && $this->previousImagePath) {
+            File::delete($this->previousImagePath);
         }
-    }
 
-    public function deleteImage(): void
-    {
-        if ($this->imageUrl) {
-            $relativePath = str_replace('/storage/', '', $this->imageUrl);
-            Storage::disk('public')->delete($relativePath);
-            File::cleanDirectory(\storage_path('app/private/livewire-tmp'));
-            $this->reset(['image', 'imageUrl',]);
-        }
+        $this->previousImagePath = $this->image->getRealPath();
+
+        $this->imageUrl = $this->image->temporaryUrl();
     }
 
     public function save()
     {
+        if ($this->image) {
+            $this->image->storePublicly(path: 'course/thumbnails', options: 'public');
+            File::delete(storage_path('app/private/course/thumbnails/' . $this->image->getFileName()));
+            File::delete($this->image->getRealPath());
+        }
         $this->updateJsonFromMultilineInput('skills');
         $this->updateJsonFromMultilineInput('requirements');
+        $this->validateFields();
+
+        dd([
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'heading' => $this->heading,
+            'description' => $this->description,
+            'price' => $this->price,
+            'category' => $this->category,
+            'level' => $this->level,
+            'requirements' => $this->requirementsJson,
+            'skills' => $this->skillsJson,
+            'startDate' => $this->startDate,
+            'endDate' => $this->endDate,
+            'modules' => $this->modules,
+            'employeesAssigned' => $this->employeesAssigned,
+            'imageUrl' => $this->imageUrl,
+        ]);
         DB::beginTransaction();
         try {
             $courseDuration = 0;
@@ -171,7 +178,7 @@ class Index extends Component
                 'category_id' => $this->category,
                 'requirements' => $this->requirementsJson,
                 'skills' => $this->skillsJson,
-	            'user_id' => auth()->user()->id,
+                'user_id' => auth()->user()->id,
             ]);
             foreach ($this->modules as $moduleIndex => $moduleData) {
                 $moduleDuration = 0;
@@ -191,7 +198,7 @@ class Index extends Component
                         'type' => $lessonData['type'],
                         'duration' => $lessonData['duration'] ?? 0,
                         'video_url' => $lessonData['video_url'],
-                        'document' => $lessonData['content'], // Fix: Use 'content' for document
+                        'document' => $lessonData['content'], // Fix: Use 'content' for a document
                         'preview' => $lessonData['preview'] ?? false,
                         'position' => $lessonKey,
                         'module_id' => $module->id
@@ -242,7 +249,7 @@ class Index extends Component
             $course->duration = $courseDuration;
             $course->lesson_count = $lessonCount;
             if (auth()->user()->isOrganization()) {
-	            $batch = Batch::create([
+                $batch = Batch::create([
                     'start_at' => $this->startDate,
                     'end_at' => $this->endDate,
                     'course_id' => $course->id
@@ -278,7 +285,34 @@ class Index extends Component
         }
     }
 
-    #[Layout('components.layouts.dashboard')]
+    private function validateFields(): void
+    {
+        try {
+            $this->validate();
+        } catch (ValidationException $e) {
+            $this->dispatch('swal', [
+                'icon' => 'error',
+                'title' => 'Validation Failed',
+                'html' => 'Please fix the errors and try again. <br/>' .
+                    $this->prepareDisplayErrors($e->validator->errors()->toArray()),
+                'showConfirmButton' => true,
+            ]);
+
+            throw $e;
+        }
+    }
+
+    private function prepareDisplayErrors(array $errors): string
+    {
+        $html = '<ul>';
+        foreach ($errors as $field => $messages) {
+            $html .= '<li>' . $field . ': ' . implode(', ', $messages) . '</li>';
+        }
+        $html .= '</ul>';
+        return $html;
+    }
+
+    #[Layout('components.layouts.app')]
     public function render(): Factory|Application|View
     {
         return view('livewire.client.course-creation.index');

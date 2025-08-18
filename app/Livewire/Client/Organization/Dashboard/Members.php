@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Services\Business\MemberImportService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -17,9 +20,10 @@ class Members extends Component
     use WithFileUploads;
 
     public string $activeTab = 'list';
+
     public array $importedMembers = [];
     public array $dbMembers = [];
-    public array $tableRows = [];
+
     public bool $hasImported = false;
     public bool $showImportButton = false;
     public string $search = '';
@@ -79,11 +83,44 @@ class Members extends Component
     {
         $result = $importService->importFile($this->importUsersFile->getRealPath());
         $this->importedMembers = $result['displayMembers'];
+        $this->dbMembers = $result['dbMembers'];
+        if (!empty($result['failures'])) {
+            $html = $this->prepareForDisplayFailures($result['failures']);;
+            $this->dispatch('swal', [
+                'title' => 'Import Failed',
+                'html' => $html,
+                'icon' => 'error',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'OK',
+                'allowOutsideClick' => false,
+                'allowEscapeKey' => false,
+                'draggable' => true,
+            ]);
+        } else {
+            $this->dispatch('swal', [
+                'title' => 'Import Successful',
+                'text' => 'The import process has been completed successfully.',
+                'icon' => 'success',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'OK',
+            ]);
+        }
 
         $this->hasImported = !empty($this->importedMembers);
         $this->dispatch('import-finished');
     }
 
+    private function prepareForDisplayFailures(array|Collection $failures): string
+    {
+        $html = '<div>Some rows could not be imported due to validation errors. Please review the details below and try again.</div>';
+        foreach ($failures as $failure) {
+            $html .= '<div class="alert alert-danger" role="alert">';
+            $html .= '<strong>Row ' . $failure['row'] . ':</strong> ';
+            $html .= implode(' ', $failure['errors']);
+            $html .= '</div>';
+        }
+        return $html;
+    }
 
     public function deleteImportedMember(int $rowIndex): void
     {
@@ -104,11 +141,67 @@ class Members extends Component
         }
     }
 
+    public function importMembers(): void
+    {
+        DB::beginTransaction();
+        try {
+            foreach ($this->dbMembers as $member) {
+                ;
+                $user = User::createOrFirst([
+                    'email' => $member['mail'],
+                ], [
+                    'name' => $member['full_name'],
+                    'email' => $member['mail'],
+                    'password' => Hash::make($member['password']),
+                    'role' => 'student',
+                    'status' => 'active',
+                    'avatar_url' => $member['avatar_url'],
+                ]);
+                $user->studentProfile()->updateOrCreate([
+                    'user_id' => $user->id,
+                ], [
+                    'gender' => $member['gender'] === 'female',
+                    'dob' => $member['date_of_birth'],
+                    'addition_data' => json_encode($member['addition_data']),
+                ]);
+
+                OrganizationUser::create([
+                    'organization_id' => auth()->id(),
+                    'user_id' => $user->id
+                ]);
+            }
+            $this->reset([
+                'importedMembers',
+                'hasImported',
+                'showImportButton',
+                'importUsersFile'
+            ]);
+            $this->setTab('list');
+            $this->dispatch('swal', [
+                'title' => 'Import Successful',
+                'text' => 'The import process has been completed successfully.',
+                'icon' => 'success',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'OK',
+                'allowOutsideClick' => false,
+                'allowEscapeKey' => false,
+            ]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $this->dispatch('swal', [
+                'title' => 'Import Failed',
+                'text' => 'An error occurred while importing members: ' . $e->getMessage(),
+                'icon' => 'error',
+                'showConfirmButton' => true,
+            ]);
+        }
+    }
+
     public function cancelImportMembers(): void
     {
         $this->reset([
             'importedMembers',
-            'importErrors',
             'hasImported',
             'showImportButton',
             'importUsersFile'

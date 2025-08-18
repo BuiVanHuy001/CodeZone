@@ -53,7 +53,7 @@ class Course extends Model
         if ($this->thumbnail_url) {
             return asset($this->thumbnail_url);
         }
-        return asset('images/course/default-thumbnail.webp');
+        return asset('images/others/thumbnail-placeholder.svg');
     }
 
     public function getIntroductionVideo(): string

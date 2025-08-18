@@ -11,39 +11,14 @@ use Livewire\Attributes\Modelable;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
-class Course extends Component
-{
+class Course extends Component {
     #[Modelable]
     public array $modules;
     public array $activeTabs = [];
 
-    public function rules(): array
-    {
-        return [
-            'modules' => 'required|array|min:1',
-            'modules.*.title' => 'required|min:3|max:255',
-            'modules.*.lessons' => 'required|array|min:1',
-            'modules.*.lessons.*.title' => 'required|min:3|max:255',
-            'modules.*.lessons.*.type' => ['required', Rule::in(Lesson::$TYPES)],
-        ];
-    }
-
-    public array $messages = [
-        'modules.required' => 'At least one module is required.',
-        'modules.*.title.required' => 'Module title is required.',
-        'modules.*.title.min' => 'Module title must be at least :min characters.',
-        'modules.*.title.max' => 'Module title may not be greater than :max characters.',
-        'modules.*.lessons.required' => 'At least one lesson is required in each module.',
-        'modules.*.lessons.*.title.required' => 'Lesson title is required.',
-        'modules.*.lessons.*.title.min' => 'Lesson title must be at least :min characters.',
-        'modules.*.lessons.*.title.max' => 'Lesson title may not be greater than :max characters.',
-        'modules.*.lessons.*.type.required' => 'Lesson type is required.',
-        'modules.*.lessons.*.type.in' => 'Lesson type is invalid.',
-    ];
-
     public function updated($propertyName): void
     {
-        $this->validate();
+        $this->validateOnly($propertyName);
     }
 
     public function addQuiz(int $moduleIndex, int $lessonIndex): void
@@ -282,6 +257,30 @@ class Course extends Component
             $this->modules[$moduleIndex]['lessons'] = array_values($this->modules[$moduleIndex]['lessons']);
         }
     }
+
+    public function rules(): array
+    {
+        return [
+            'modules' => 'required|array|min:1',
+            'modules.*.title' => 'required|min:3|max:255',
+            'modules.*.lessons' => 'required|array|min:1',
+            'modules.*.lessons.*.title' => 'required|min:3|max:255',
+            'modules.*.lessons.*.type' => ['required', Rule::in(Lesson::$TYPES)],
+        ];
+    }
+
+    public array $messages = [
+        'modules.required' => 'At least one module is required.',
+        'modules.*.title.required' => 'Module title is required.',
+        'modules.*.title.min' => 'Module title must be at least :min characters.',
+        'modules.*.title.max' => 'Module title may not be greater than :max characters.',
+        'modules.*.lessons.required' => 'At least one lesson is required in each module.',
+        'modules.*.lessons.*.title.required' => 'Lesson title is required.',
+        'modules.*.lessons.*.title.min' => 'Lesson title must be at least :min characters.',
+        'modules.*.lessons.*.title.max' => 'Lesson title may not be greater than :max characters.',
+        'modules.*.lessons.*.type.required' => 'Lesson type is required.',
+        'modules.*.lessons.*.type.in' => 'Lesson type is invalid.',
+    ];
 
     public function render(): Factory|Application|View
     {
