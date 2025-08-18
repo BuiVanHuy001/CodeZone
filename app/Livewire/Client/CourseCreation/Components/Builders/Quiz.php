@@ -3,6 +3,7 @@
 namespace App\Livewire\Client\CourseCreation\Components\Builders;
 
 use App\Imports\QuizzesImport;
+use App\Services\CourseCreation\Builders\AssessmentTypes\QuizImportService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -90,13 +91,11 @@ class Quiz extends Component
         $this->quiz['assessments_questions'] = array_values($this->quiz['assessments_questions']);
     }
 
-    public function updatedExcelFile(): void
+    public function updatedExcelFile(QuizImportService $quizImportService): void
     {
         $this->validate(['excelFile' => 'required|file|mimes:xlsx,csv,xls']);
-        $import = new QuizzesImport();
-        Excel::import($import, $this->excelFile);
-
-        $this->importQuestions($import->getParsed());
+        $results = $quizImportService->importFile($this->excelFile->getRealPath());
+        //        $this->importQuestions($import->getParsed());
     }
 
     private function importQuestions($importedQuestions): void

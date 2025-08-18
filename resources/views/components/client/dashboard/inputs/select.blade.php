@@ -1,71 +1,35 @@
-<div {{ $attributes->class(['course-field mb--20']) }}>
-    @if($name !== 'languageSelected')
-        <label for="{{ $name }}">{{ $label }}</label>
-    @else
-        <h5>{{ $label }}</h5>
-    @endif
-    @if($isBoostrapSelect)
-        <div wire:ignore
-             class="rbt-modern-select bg-transparent height-45 w-100 mb--10"
-             x-data
-             x-init="
-         $nextTick(() => {
-         let select = $refs.select;
-         $(select).selectpicker();
-         $(select).on('changed.bs.select', function (e) {
-            @this.set('{{ $name }}', e.target.value);
-             });
-         });"
+<div class="course-field mb--20">
+    <label for="{{ $name }}">{{ $label }}</label>
+    <div class="rbt-modern-select bg-transparent height-45">
+        <select wire:ignore.self
+            {{ $attributes->merge([
+                'id' => $name,
+                'name' => $name,
+                'class' => 'form-select',
+                'wire:model' => 'model',
+                'placeholder' => $placeholder,
+                'class' => ($isError ? 'mb-0 border-danger ' : '') . 'w-100'
+            ]) }}
         >
-            <select
-                wire:model="{{ $name }}"
-                x-ref="select"
-                id="{{ $name }}"
-                @class([
-                    'w-100',
-                    'border-danger' => $errors->has($name),
-                ])
-            >
-                <option value="" disabled>{{ $placeholder }}</option>
-
-                @if($name === 'category')
-                    @foreach ($options as $category)
-                        @foreach ($category->getChildren($category->id) as $children)
-                            <option value="{{ $children->id }}">
-                                {{ $category->name . '->' . $children->name }}
-                            </option>
-                        @endforeach
+            <option value="">{{ $placeholder }}</option>
+            @if($name === 'category')
+                @foreach ($options as $category)
+                    @foreach ($category->getChildren($category->id) as $children)
+                        <option value="{{ $children->id }}">
+                            {{ $category->name . '->' . $children->name }}
+                        </option>
                     @endforeach
-                @elseif($name === 'problem.return_type')
-                    @foreach($options as $key => $type)
-                        <option value="{{ $key }}">{{ $type['label'] }}</option>
-                    @endforeach
-                @elseif($name === 'languageSelected')
-                    @foreach($options as $type)
-                        <option @checked(isset($default) && $default === $type)
-                                value="{{ $type }}">{{ \App\Models\ProgrammingAssignmentDetails::$SUPPORTED_LANGUAGES[$type] }}</option>
-                    @endforeach
-                @else
-                    @foreach ($options as $key => $label)
-                        <option value="{{ $key }}">{{ ucfirst($label) }}</option>
-                    @endforeach
-                @endif
-            </select>
-        </div>
-    @else
-        <select wire:model.lazy="{{ $name }}"
-            @class([
-                'w-100',
-                'border-danger' => $errors->has($name),
-            ])
-        >
-            <option value="">Select lesson type</option>
-            @foreach($options  as $key => $type)
-                <option value="{{ $key }}">{{ ucfirst($type) }}</option>
-            @endforeach
+                @endforeach
+            @else
+                <option value="">{{ $placeholder }}</option>
+                @foreach ($options as $option)
+                    <option value="{{ $option }}">
+                        {{ ucfirst($option) }}
+                    </option>
+                @endforeach
+            @endif
         </select>
-    @endif
-
+    </div>
     @error($name)
     <small class="text-danger d-block">
         <i class="feather-alert-triangle"></i> {{ $message }}

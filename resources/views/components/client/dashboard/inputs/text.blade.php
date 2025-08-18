@@ -1,21 +1,13 @@
-<div {{
-    $attributes->class([
-        'course-field mb--20'
-        ])
-    }}>
+<div class="course-field mb--15">
     <label for="{{ $name }}">{{ $label }}</label>
     <input
-        wire:model.lazy="{{ $model }}"
-        type="{{ $type }}"
-        @if($type === 'date')
-            min="{{ now()->format('Y-m-d') }}"
-        @endif
-        placeholder="{{ $placeholder }}"
-        value="{{ $value }}"
-        @class([
-            'mb-0',
-            'border-danger' => $errors->has($name),
-        ])
+        {{ $attributes->merge([
+            'id' => $name,
+            'name' => $name,
+            'type' => $type,
+            'placeholder' => $placeholder,
+            'class' => ($isError ? 'mb-0 border-danger' : '')
+        ]) }}
     >
 
     @error($name)
@@ -23,16 +15,13 @@
         <i class="feather-alert-triangle"></i> {{ $message }}
     </small>
     @enderror
-
-    @if($name === 'title')
+    @if($name === 'title' && isset($slug))
         <small class="mb-3">
             <i class="feather-info"></i> Permalink: https://codezone.com/course/{{ $slug }}
         </small>
-        <br/>
-    @endif
-    @if(!empty($info))
+    @else
         <small class="mb-3">
-            <i class="feather-info"></i> {!! $info !!}
+            <i class="feather-info"></i> {{ $info ?? 'This field is required.' }}
         </small>
     @endif
 </div>

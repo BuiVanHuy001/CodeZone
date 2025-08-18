@@ -108,6 +108,11 @@ class User extends Authenticatable
 	    return $this->hasOne(InstructorProfile::class, 'user_id');
     }
 
+    public function studentProfile(): HasOne|User
+    {
+        return $this->hasOne(StudentProfile::class, 'user_id');
+    }
+
 	public function getProfile(): HasOne
 	{
         if ($this->isOrganization()) {
@@ -175,10 +180,6 @@ class User extends Authenticatable
         return $this->name;
     }
 
-    public function getRole(): string
-    {
-        return $this->role;
-    }
     public function reviews(): hasMany
     {
         return $this->hasMany(Review::class, with("user_id"));
