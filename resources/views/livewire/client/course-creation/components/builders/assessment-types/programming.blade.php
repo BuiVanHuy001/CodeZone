@@ -1,5 +1,8 @@
-<div class="w-100 row assignment-section mt-4 inner rbt-default-form ms-5 rbt-default-form rbt-course-wrape">
-    <h5 class="modal-title mb--20" id="LessonLabel">Programming Assessment</h5>
+<div class="course-field mb--20 mt-3 rbt-course-wrape position-relative">
+    <h6>Programming Assessment</h6>
+    <div class="position-absolute" style="right: 10px; top: 10px; cursor: pointer;">
+        <i wire:click="removeQuiz" @click="activeTab = null" class="feather-trash me-auto"></i>
+    </div>
     <div class="course-field mb--20">
         <label for="{{ "assessment-title-$moduleIndex-$lessonIndex" }}">Title</label>
         <input id="{{ "assessment-title-$moduleIndex-$lessonIndex" }}" wire:model="programmingPractice.title" type="text" placeholder="Type your assignments title">
@@ -230,8 +233,7 @@
     @endforeach
 
     <div class="d-flex pt--30 justify-content-between">
-        <button type="button" class="rbt-btn btn-border btn-md radius-round-10">Cancel</button>
-        <button type="button" class="rbt-btn btn-md radius-round-10" wire:click="saveProblemDetails">Save</button>
+        <button type="button" class="awe-btn bg-danger">Cancel</button>
     </div>
 </div>
 @script

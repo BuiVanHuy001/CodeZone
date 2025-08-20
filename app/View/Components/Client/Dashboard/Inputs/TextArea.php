@@ -5,7 +5,6 @@ namespace App\View\Components\Client\Dashboard\Inputs;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Livewire\Attributes\Modelable;
 
 class TextArea extends Component {
     /**
@@ -16,6 +15,8 @@ class TextArea extends Component {
         public string $name = '',
         public string $placeholder = '',
         public string $rows = '5',
+        public string $info = '',
+        public bool   $isError = false,
     ) {}
 
     /**

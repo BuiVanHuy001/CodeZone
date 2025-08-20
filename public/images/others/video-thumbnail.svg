@@ -1,0 +1,20 @@
+<svg width="800" height="450" viewBox="0 0 800 450" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>video placeholder</title>
+    <desc>Created using Figma</desc>
+    <g id="Canvas" transform="translate(29986 31294)">
+        <g id="video placeholder">
+            <g id="Rectangle">
+                <use xlink:href="#path0_fill" transform="translate(-29986 -31294)" fill="#C4C4C4"/>
+            </g>
+            <g id="Polygon">
+                <use xlink:href="#path1_fill" transform="matrix(-4.37114e-08 1 -1 -4.37114e-08 -29466 -31189)"
+                     fill="#ADAAAA"/>
+            </g>
+        </g>
+    </g>
+    <defs>
+        <path id="path0_fill" d="M 0 0L 800 0L 800 450L 0 450L 0 0Z"/>
+        <path id="path1_fill" d="M 120 0L 223.923 180L 16.077 180L 120 0Z"/>
+    </defs>
+</svg>

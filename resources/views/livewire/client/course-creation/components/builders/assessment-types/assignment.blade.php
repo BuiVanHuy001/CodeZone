@@ -1,5 +1,9 @@
-<div class="w-100 row assignment-section mt-4 inner rbt-default-form ms-5 rbt-default-form rbt-course-wrape">
-    <h5 class="modal-title mb--20" id="LessonLabel">Assignment</h5>
+<div class="course-field mb--20 mt-3 rbt-course-wrape position-relative">
+    <h6>Assignment</h6>
+    <div class="position-absolute" style="right: 10px; top: 10px; cursor: pointer;">
+        <i wire:click="removeQuiz" @click="activeTab = null" class="feather-trash me-auto"></i>
+    </div>
+
     <div class="course-field mb--20">
         <label>Assignment Title</label>
         <input type="text"
@@ -13,19 +17,6 @@
                id="assignment-description-{{ $moduleIndex }}-{{ $lessonIndex }}-input"
                value="{{ $assignment['description'] }}"
                wire:model="assignment.description"/>
-    </div>
-    <div class="d-flex pt--30 justify-content-between">
-        <button wire:click="removeAssignment"
-                type="button"
-                class="rbt-btn btn-border btn-md radius-round-10">
-            Cancel
-        </button>
-
-        <button wire:click="saveAssignment"
-                type="button"
-                class="rbt-btn btn-md radius-round-10">
-            Save
-        </button>
     </div>
 </div>
 @script

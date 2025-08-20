@@ -1,20 +1,10 @@
-<div class="w-100 row assignment-section mt-4 inner rbt-default-form ms-5 rbt-default-form rbt-course-wrape">
-    <h5 class="modal-title mb--20" id="LessonLabel">Lesson document</h5>
-    <div class="course-field mb--30">
-        <label>Type you lesson document</label>
+<div class="course-field mb--20">
+    <h6>Document</h6>
         <div id="document-{{ $moduleIndex }}-{{ $lessonIndex }}-editor"></div>
         <input type="hidden" id="content-{{ $moduleIndex }}-{{ $lessonIndex }}-input" wire:model="document" value="{{ $document }}">
         <small>Markdown is supported.</small>
-    </div>
-
-    <div class="d-flex pt--30 justify-content-between">
-        <button type="button" class="rbt-btn btn-border btn-md radius-round-10" wire:click="removeContent">
-            Cancel
-        </button>
-        <button wire:click="saveDocument" type="button" class="rbt-btn btn-md radius-round-10">Save
-        </button>
-    </div>
 </div>
+
 @script
 <script>
     const documentEditor = document.getElementById('document-{{ $moduleIndex }}-{{ $lessonIndex }}-editor')

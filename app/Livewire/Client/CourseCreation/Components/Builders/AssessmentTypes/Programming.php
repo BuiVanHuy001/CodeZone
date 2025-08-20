@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Livewire\Client\CourseCreation\Components\Builders;
+namespace App\Livewire\Client\CourseCreation\Components\Builders\AssessmentTypes;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
-use Livewire\Attributes\Modelable;
 use Livewire\Component;
 
-class ProgrammingPractice extends Component
+class Programming extends Component
 {
     public int $moduleIndex;
     public int $lessonIndex;
@@ -392,6 +391,6 @@ class ProgrammingPractice extends Component
 
     public function render(): Factory|Application|View
     {
-        return view('livewire.client.course-creation.components.builders.programming-practice');
+        return view('livewire.client.course-creation.components.builders.assessment-types.programming');
     }
 }

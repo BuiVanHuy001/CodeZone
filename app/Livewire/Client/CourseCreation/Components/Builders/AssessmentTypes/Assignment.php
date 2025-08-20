@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Livewire\Client\CourseCreation\Components\Builders;
+namespace App\Livewire\Client\CourseCreation\Components\Builders\AssessmentTypes;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Livewire\Attributes\Modelable;
 use Livewire\Component;
 
 class Assignment extends Component
@@ -13,6 +12,14 @@ class Assignment extends Component
 	public int $moduleIndex;
 	public int $lessonIndex;
 	public array $assignment;
+
+    public function mount()
+    {
+        $this->assignment = [
+            'description' => '',
+            'title' => ''
+        ];
+    }
 
 	public function removeAssignment(): void
 	{
@@ -34,6 +41,6 @@ class Assignment extends Component
 
 	public function render(): View|Application|Factory
 	{
-        return view('livewire.client.course-creation.components.builders.assignment');
+        return view('livewire.client.course-creation.components.builders.assessment-types.assignment');
 	}
 }

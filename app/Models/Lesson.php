@@ -41,7 +41,7 @@ class Lesson extends Model
         return $this->title;
     }
 
-    public function getIcon()
+    public function getIcon(): string
     {
         if ($this->type === 'video' && $this->video_url !== '') {
             return 'video';
