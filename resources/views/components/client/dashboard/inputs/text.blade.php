@@ -5,9 +5,12 @@
             'id' => $name,
             'name' => $name,
             'type' => $type,
-            'placeholder' => $placeholder,
-            'class' => ($isError ? 'mb-0 border-danger' : '')
+            'placeholder' => $placeholder
         ]) }}
+        @class([
+            'mb-0',
+            'border-danger' => $isError,
+        ])
     >
 
     @error($name)

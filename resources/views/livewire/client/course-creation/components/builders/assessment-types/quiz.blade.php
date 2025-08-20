@@ -1,28 +1,30 @@
-<div x-data="{ activeQuestion: 1 }" class="ms-5 mt-4 w-100 quiz-section rbt-default-form rbt-course-wrape">
-    <h5 class="modal-title mb--20 d-flex justify-content-between align-items-center">
-        <div>Quiz</div>
-        <div>
-            <i wire:click="removeQuiz" @click="activeTab = null" class="feather-trash me-auto"></i>
-        </div>
-    </h5>
-    <div id="question-{{ $lessonIndex }}-1" class="question" x-show="activeQuestion === 1">
-        <div class="course-field mb--10">
-            <label for="">Quiz Title</label>
-            <input id="" wire:model="quiz.title" type="text" placeholder="Type your quiz title here">
-        </div>
-        <div class="course-field mb--20">
-            <label for="modal-field-2">Quiz Description</label>
-            <textarea wire:model="quiz.description" id="modal-field-2"></textarea>
-            <small><i class="feather-info"></i>
-                Add a summary of short text to prepare students for the
-                activities for the Quiz. The text is shown on the course
-                page beside the tooltip beside the Quiz name.
-            </small>
+<div x-data="{ activeQuestion: 1 }" class="course-field mb--20 mt-3 rbt-course-wrape position-relative">
+    <h6>Quiz</h6>
+    <pre>{{ json_encode($quiz, JSON_PRETTY_PRINT) }}</pre>
+    <div class="position-absolute" style="right: 10px; top: 10px; cursor: pointer;">
+        <i wire:click="removeQuiz" @click="activeTab = null" class="feather-trash me-auto"></i>
+    </div>
+    <div id="question-1" class="question" x-show="activeQuestion === 1">
+        <x-client.dashboard.inputs.text
+            wire:model.lazy="quiz.title"
+            name="quiz.title"
+            label="Quiz Title"
+            placeholder="Enter course title"
+            info="Provide a clear, descriptive title for this quiz assessment."
+            :isError="$errors->has('quiz.title')"
+        />
+        <div class="course-field mb--30">
+            <label>Quiz Description</label>
+            <div wire:ignore id="quiz-description-editor"></div>
+            <input type="hidden"
+                   id="quiz-description-input"
+                   value="{{ $quiz['description'] }}"
+                   wire:model="quiz.description"/>
         </div>
     </div>
-    <div id="question-{{ $lessonIndex }}-2" class="question" x-show="activeQuestion === 2">
+    <div id="question-2" class="question" x-show="activeQuestion === 2">
         <div class="course-field mb--20">
-            @foreach($quiz['assessments_questions'] as $questionKey => $question)
+            @foreach($quiz['assessments_questions'] ?? [] as $questionKey => $question)
                 <div x-data="{ open: false }" class="rbt-course-wrape mb-4">
                     <div class="d-flex justify-content-between" style="cursor: auto;">
                         <div class="inner d-flex align-items-center gap-2">
@@ -145,34 +147,78 @@
 
         </div>
     </div>
-
     <div class="d-flex pt--30 justify-content-between">
         <div class="content">
             <button type="button"
                     wire:click="removeQuiz"
-                    class="rbt-btn btn-border btn-md radius-round-10"
+                    class="awe-btn bg-danger"
                     @click="activeTab = null">
                 Cancel
             </button>
         </div>
         <div class="content">
             <button type="button"
-                    class="rbt-btn btn-border btn-md radius-round-10 mr--10"
+                    class="awe-btn bg-info"
                     id="prev-btn"
                     @click="if (activeQuestion > 1) activeQuestion--">Back
             </button>
-            <button type="button"
-                    class="rbt-btn btn-md radius-round-10 d-inline-block"
-                    @click="
-            if (activeQuestion < 2) {
-                activeQuestion++;
-            } else {
-                $wire.saveQuiz();
-            }
-        ">
-                <span x-text="activeQuestion <= 1 ? 'Save & Next' : 'Save'"></span>
-            </button>
 
+            <button
+                type="button"
+                @class([
+                    'awe-btn',
+                    'disabled' => $isErrors
+                ])
+                class="awe-btn"
+                @click="
+                if (activeQuestion < 2) {
+                    activeQuestion++;
+                } else {
+                  $wire.saveQuiz();
+                }
+              "
+            >
+                <span x-text="activeQuestion <= 1 ? 'Save \& Next' : 'Save'"></span>
+            </button>
         </div>
     </div>
 </div>
+@script
+<script>
+    const assignmentDescriptionEditor = document.getElementById('quiz-description-editor');
+    const assignmentDescriptionInput = document.getElementById('quiz-description-input');
+    new EditorView(
+        {
+            extensions: [
+                lineNumbers(),
+                markdown(),
+                highlightActiveLineGutter(),
+                highlightActiveLine(),
+                highlightSpecialChars(),
+                EditorView.lineWrapping,
+                EditorView.updateListener.of(update => {
+                    if (update.docChanged) {
+                        assignmentDescriptionInput.value = update.state.doc.toString();
+                        assignmentDescriptionInput.dispatchEvent(new Event('input'));
+                    }
+                }),
+                EditorView.theme({
+                    "&": {
+                        height: "200px",
+                        width: "100%",
+                        border: "1px solid #ddd",
+                        borderRadius: "4px",
+                        padding: "10px",
+                        fontSize: "13px",
+                    },
+                    ".cm-content": {
+                        caretColor: "#000",
+                    },
+                }),
+            ],
+            doc: assignmentDescriptionInput.value,
+            parent: assignmentDescriptionEditor,
+        }
+    )
+</script>
+@endscript

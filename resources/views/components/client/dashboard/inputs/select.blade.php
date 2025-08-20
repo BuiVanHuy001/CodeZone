@@ -6,12 +6,10 @@
                 'id' => $name,
                 'name' => $name,
                 'class' => 'form-select',
-                'wire:model' => 'model',
-                'placeholder' => $placeholder,
                 'class' => ($isError ? 'mb-0 border-danger ' : '') . 'w-100'
             ]) }}
         >
-            <option value="">{{ $placeholder }}</option>
+            <option>{{ $placeholder }}</option>
             @if($name === 'category')
                 @foreach ($options as $category)
                     @foreach ($category->getChildren($category->id) as $children)
@@ -21,7 +19,6 @@
                     @endforeach
                 @endforeach
             @else
-                <option value="">{{ $placeholder }}</option>
                 @foreach ($options as $option)
                     <option value="{{ $option }}">
                         {{ ucfirst($option) }}

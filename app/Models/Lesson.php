@@ -19,20 +19,16 @@ class Lesson extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    public static array $TYPES = [
-        'video' => 'Video',
-        'document' => 'Document',
-        'assessment' => 'Assessment',
-    ];
+    public static array $TYPES = ['video', 'document', 'assessment'];
 
     public function module(): BelongsTo
     {
         return $this->belongsTo(Module::class);
     }
 
-    public function assessments(): HasMany
+    public function assessment(): HasOne
     {
-        return $this->hasMany(Assessment::class);
+        return $this->hasOne(Assessment::class);
     }
 
     public function trackingProgresses(): HasMany
@@ -45,14 +41,14 @@ class Lesson extends Model
         return $this->title;
     }
 
-    public function getIcon(string $type): string
+    public function getIcon(): string
     {
-        if ($type === 'video' && $this->video_file_name !== '') {
+        if ($this->type === 'video' && $this->video_url !== '') {
             return 'video';
         } elseif ($this->type === 'assessment') {
-            if ($type === 'quiz') {
+            if ($this->assessment->type === 'quiz') {
                 return 'help-circle';
-            } elseif ($type === 'assignment') {
+            } elseif ($this->assessment->type === 'assignment') {
                 return 'book-open';
             } else {
                 return 'code';

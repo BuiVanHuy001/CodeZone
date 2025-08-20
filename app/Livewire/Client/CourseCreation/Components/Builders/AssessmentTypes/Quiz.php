@@ -1,32 +1,77 @@
 <?php
 
-namespace App\Livewire\Client\CourseCreation\Components\Builders;
+namespace App\Livewire\Client\CourseCreation\Components\Builders\AssessmentTypes;
 
-use App\Imports\QuizzesImport;
+use App\Models\AssessmentQuestion;
 use App\Services\CourseCreation\Builders\AssessmentTypes\QuizImportService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+use Livewire\Attributes\Modelable;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Maatwebsite\Excel\Facades\Excel;
 
-class Quiz extends Component
-{
+class Quiz extends Component {
     use WithFileUploads;
 
-    public int $moduleIndex;
-    public int $lessonIndex;
     public $excelFile;
+    public bool $isErrors = true;
 
+    #[Modelable]
     public $quiz;
+
+    public function rules(): array
+    {
+        return [
+            'quiz.title' => 'required|string|min:3|max:255',
+            'quiz.description' => 'nullable|string',
+            'quiz.type' => 'required|in:quiz',
+            'quiz.assessments_questions' => 'required|array|min:1',
+            'quiz.assessments_questions.*.content' => 'required|string',
+            'quiz.assessments_questions.*.type' => ['required', Rule::in(AssessmentQuestion::$TYPES)],
+            'quiz.assessments_questions.*.question_options' => 'required|array|min:2',
+            'quiz.assessments_questions.*.question_options.*.content' => 'required|string',
+            'quiz.assessments_questions.*.question_options.*.is_correct' => 'required|boolean',
+            'quiz.assessments_questions.*.question_options.*.explanation' => 'nullable|string'
+        ];
+    }
+
+    public array $messages = [
+        'quiz.title.required' => 'Quiz title is required to identify this assessment.',
+        'quiz.title.min' => 'Quiz title must be at least :min characters for clarity.',
+        'quiz.title.max' => 'Quiz title cannot exceed :max characters to ensure proper display.',
+        'quiz.description.max' => 'Quiz description cannot exceed :max characters.',
+        'quiz.assessments_questions.required' => 'At least one question must be added to create a valid quiz.',
+        'quiz.assessments_questions.*.content.required' => 'Question content is required for each quiz question.',
+        'quiz.assessments_questions.*.type.required' => 'Question type must be selected for each question.',
+        'quiz.assessments_questions.*.question_options.required' => 'At least two answer options are required for each question.',
+        'quiz.assessments_questions.*.question_options.*.content.required' => 'Answer option content cannot be empty.',
+        'quiz.assessments_questions.*.question_options.*.is_correct.required' => 'Each answer option must be marked as correct or incorrect.',
+    ];
+
+    public function updated($propertyName): void
+    {
+        try {
+            $this->validateOnly($propertyName);
+            $this->isErrors = false;
+        } catch (ValidationException $e) {
+            $this->isErrors = true;
+            throw $e;
+        }
+    }
+
+    public function mount(): void
+    {
+        $this->quiz['assessments_questions'] = [];
+    }
 
     public function removeQuiz(): void
     {
-        $this->dispatch('assessment-builders-removed',
-            moduleIndex: $this->moduleIndex,
-            lessonIndex: $this->lessonIndex
-        );
+        $this->reset('quiz');
+
+        $this->dispatch('assessment-builders-removed');
     }
 
     public function addOption(int $index): void
@@ -42,12 +87,12 @@ class Quiz extends Component
             ]);
             return;
         }
-	    $this->quiz['assessments_questions'][$index]['question_options'][] = [
-		    'content' => '',
-		    'is_correct' => false,
-		    'position' => count($this->quiz['assessments_questions'][$index]['question_options']) + 1,
-		    'explanation' => ''
-	    ];
+        $this->quiz['assessments_questions'][$index]['question_options'][] = [
+            'content' => '',
+            'is_correct' => false,
+            'position' => count($this->quiz['assessments_questions'][$index]['question_options']) + 1,
+            'explanation' => ''
+        ];
     }
 
     public function removeOption(int $index, int $optionIndex): void
@@ -68,18 +113,18 @@ class Quiz extends Component
 
     public function addQuestion(): void
     {
-	    $this->quiz['assessments_questions'][] = [
-		    'content' => '',
-		    'type' => '',
-		    'question_options' => [
-			    [
-				    'content' => '',
-				    'is_correct' => false,
-				    'explanation' => '',
-				    'position' => 1
-			    ]
-		    ]
-	    ];
+        $this->quiz['assessments_questions'][] = [
+            'content' => '',
+            'type' => '',
+            'question_options' => [
+                [
+                    'content' => '',
+                    'is_correct' => false,
+                    'explanation' => '',
+                    'position' => 1
+                ]
+            ]
+        ];
     }
 
     public function removeQuestion(int $index): void
@@ -137,6 +182,6 @@ class Quiz extends Component
 
     public function render(): View|Application|Factory
     {
-        return view('livewire.client.course-creation.components.builders.quiz');
+        return view('livewire.client.course-creation.components.builders.assessment-types.quiz');
     }
 }
