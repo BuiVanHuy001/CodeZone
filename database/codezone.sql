@@ -55,10 +55,10 @@ VALUES (9, 'Rylee John', 'rylee-john', 'berge.thurman@zalo.com', '2025-07-16 07:
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
                             avatar_url, created_at, updated_at)
-VALUES (10, 'Zalo', 'zalo', 'hi@zalo.com', '2025-07-16 07:57:22',
+VALUES (10, 'Cao Đẳng Việt Mỹ', 'cao-dang-viet-my', 'caodang@vietmy.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '3H6eUsprpP', 'organization', 'active',
-        'https://s120-ava-talk.zadn.vn/e/6/2/5/36/120/16782d311b12da6d28daa13e343986b8.jpg', '2025-07-16 07:57:22',
-        '2025-07-16 07:57:22');
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4wRHjRQ3yRY15tizUO350Rw4oBjdTzhUsg&s',
+        '2025-07-16 07:57:22', '2025-07-16 07:57:22');
 INSERT INTO codezone.instructor_profiles (user_id, bio, about_me, socials_links, course_count, student_count, rating,
                                           review_count, created_at, updated_at)
 VALUES (1, '# Bui Van Huy - Programming Instructor Profile
@@ -101,42 +101,61 @@ I believe the best way to learn programming is through hands-on projects and rea
     "linkedin": "in/bùi-văn-huy-huy-610619309"
 }', 0, 0, 0.00, 0, '2025-08-09 15:10:24', '2025-08-09 16:04:01');
 INSERT INTO codezone.organization_profiles (user_id, bio, about_me, socials_links, course_count, created_at, updated_at)
-VALUES (10, '# Zalo – Vietnam\'s Leading Connection and Innovation Platform
+VALUES (10, '# 🎓 **TRƯỜNG CAO ĐẲNG VIỆT MỸ (APC)**
+*Tiên phong đào tạo nguồn nhân lực chất lượng cao theo chuẩn quốc tế*
 
-## Introduction
-**Zalo** is one of Vietnam\'s most popular messaging and social networking apps, developed by **VNG Corporation** (VinaGame). Launched in 2012, Zalo quickly became Vietnam\'s national app with over **100 million users**, evolving from a simple messaging platform to a comprehensive multi-service digital ecosystem.
+---
 
-## Key Features
-- **Messaging & Calls**: Supports multimedia messages, group video calls, and security encryption
-- **ZaloPay**: Integrated e-wallet for payments, money transfers, and online shopping
-- **Zalo OA (Official Account)**: Organization solution for advertising and customer care
-- **Mini Apps**: Platform for mini applications accessible directly within Zalo
-- **Zalo AI**: AI-powered features including voice recognition and support chatbots
+## 🌟 **GIỚI THIỆU CHUNG**
+Trực thuộc Tập đoàn giáo dục Quốc tế Á Châu, **Cao đẳng Việt Mỹ (APC)** là một trong những trường cao đẳng uy tín nhất tại Việt Nam với hơn **15 năm kinh nghiệm** đào tạo đa ngành. Trường áp dụng mô hình giáo dục **"Học đi đôi với hành"**, kết hợp giữa lý thuyết chuyên sâu và thực tiễn doanh nghiệp, giúp sinh viên tự tin làm việc ngay sau tốt nghiệp.
 
-## Mission & Vision
-Zalo aims to become Vietnam\'s **"Super App"**, integrating all utilities from communication and entertainment to finance. Guided by the philosophy **"Connecting Value - Simplifying Life"**, Zalo continuously innovates to deliver personalized, secure, and convenient experiences.
+---
 
-## Achievements
-- **#1 most downloaded** app on both App Store & Google Play in Vietnam
-- Strategic partner with major corporations like **Vietcombank, Vinamilk, and Shopee**
-- Recipient of **"Excellent Vietnamese App"** award by MIC
+## 🏆 **THẾ MẠNH NỔI BẬT**
 
-## Contact
-- Website: [https://zalo.me](https://zalo.me)
-- Headquarters: VNG Building, District 7, Ho Chi Minh City, Vietnam
+### 👨‍🏫 **Đội ngũ giảng viên ưu tú**
+- **100% giảng viên có bằng Thạc sĩ trở lên**, nhiều thầy cô là tiến sĩ, chuyên gia đầu ngành với **hơn 10 năm kinh nghiệm** giảng dạy và làm việc thực tế.
+- **Giảng viên doanh nghiệp**: Hơn 30% giờ học được giảng dạy bởi các CEO, quản lý cấp cao từ tập đoàn như FPT, Samsung, Unilever...
+- **Phương pháp sư phạm hiện đại**: Áp dụng mô hình **Blended Learning** (kết hợp online-offline) và **Project-based Learning** (học qua dự án thực tế).
 
-> *"Zalo - More than messaging, it\'s a world of connections!"*  ', 'Zalo is Vietnam\'s leading communication and connectivity platform, developed by VNG Corporation. Launched in 2012, Zalo has become an indispensable part of digital life for over 100 million users, offering diverse features including messaging, video calls, digital payments (ZaloPay), and business solutions (Zalo OA).
+### 🖥️ **Cơ sở vật chất đẳng cấp**
+- **Phòng lab công nghệ cao**: Máy tính cấu hình mạnh, phòng mô phỏng ngành Du lịch - Khách sạn, studio Thiết kế đồ họa...
+- **Thư viện số**: Hơn 50.000 tài liệu điện tử, học liệu mở (MOOC) từ các đại học Mỹ, Anh.
+- **Hệ thống E-learning APC 4.0**: Nền tảng học trực tuyến tích hợp AI, cho phép sinh viên học mọi lúc mọi nơi.
 
-More than just a messaging app, Zalo aims to become a comprehensive digital ecosystem, integrating AI technology and continuously innovating to deliver convenient, secure, and personalized experiences for users.
+### 🤝 **Hợp tác doanh nghiệp sâu rộng**
+- **500+ đối tác tuyển dụng**: Các tập đoàn đa quốc gia (Microsoft, Nestlé), doanh nghiệp Việt (Viettel, VinGroup)... cam kết tiếp nhận thực tập và tuyển dụng.
+- **Chương trình "Một sinh viên - Một việc làm"**: 95% sinh viên APC có việc làm đúng ngành với mức lương **8-25 triệu đồng/tháng** ngay năm đầu tiên.
 
-Our mission is to connect people, empower businesses, and contribute to building the future digital society.
+---
 
-"Zalo – Connecting millions of possibilities!"', '{
-    "github": null,
-    "website": "chat.zalo.me",
-    "facebook": "zaloapp",
-    "linkedin": "company/zalocareers"
-}', 0, '2025-08-09 14:49:51', '2025-08-09 15:40:25');
+## 📊 **CÁC NGÀNH ĐÀO TẠO TIÊU BIỂU**
+
+| Ngành học                  | Thời gian đào tạo | Học phí (VNĐ/năm) | Điểm nổi bật                     |
+|----------------------------|-------------------|-------------------|-----------------------------------|
+| **Công nghệ thông tin**    | 2.5 năm          | 22–25 triệu       | Chuyên sâu AI, Blockchain, DevOps |
+| **Digital Marketing**      | 2 năm            | 20–22 triệu       | Được Google Certificated          |
+| **Thiết kế đa phương tiện**| 2.5 năm          | 23–25 triệu       | Học với Adobe Creative Cloud      |
+| **Quản trị Khách sạn 5*** | 2 năm            | 24–26 triệu       | Thực tập tại InterContinental, Marriott |
+
+---
+
+## 💰 **CHÍNH SÁCH HỖ TRỢ**
+- **Học bổng "Tài năng APC"**: Giảm **30–100%** học phí cho thí sinh đạt IELTS 6.5+ hoặc có thành tích xuất sắc.
+- **Trả góp 0% lãi**: Hỗ trợ qua ngân hàng VPBank, Vietcombank.
+- **Ưu đãi nhóm**: Giảm thêm 5% khi đăng ký theo nhóm 3 người.
+
+> *"APC không chỉ đào tạo chuyên môn mà còn rèn luyện tư duy khởi nghiệp, ngoại ngữ và kỹ năng toàn cầu để sinh viên thích ứng với mọi môi trường làm việc."*  ', 'Trường Cao đẳng Việt Mỹ (American Polytechnic College – APC) là một trong những cơ sở giáo dục uy tín tại Việt Nam, chuyên đào tạo đa ngành từ Quản trị kinh doanh, Công nghệ thông tin đến Dược, Điều dưỡng và Ngôn ngữ. Với cơ sở vật chất hiện đại, chương trình đào tạo chuẩn quốc tế và đội ngũ giảng viên giàu kinh nghiệm, trường mang đến môi trường học tập năng động, gắn liền với thực tiễn doanh nghiệp. Học phí tại đây được đánh giá hợp lý, đi kèm nhiều chính sách hỗ trợ như học bổng (10–50%) và chương trình vay ưu đãi, giúp sinh viên giảm bớt gánh nặng tài chính.
+APC nổi bật với mô hình "thực học – thực hành", liên kết với hơn 500 doanh nghiệp để đảm bảo sinh viên có cơ hội thực tập và việc làm ngay sau tốt nghiệp. Các ngành "hot" như Công nghệ thông tin (điểm chuẩn 2025: 23.0), Marketing (22.5 điểm), và Thiết kế đồ họa (21.5 điểm) thu hút đông đảo thí sinh nhờ triển vọng nghề nghiệp rộng mở và thu nhập hấp dẫn (từ 10–20 triệu đồng/tháng sau 1–2 năm kinh nghiệm). Trường cũng đào tạo hệ 9+, liên thông đại học, phù hợp với nhiều đối tượng học viên.
+Với các cơ sở tại Hà Nội, TP.HCM và Cần Thơ, APC tạo điều kiện thuận lợi cho sinh viên cả nước. Phương thức xét tuyển linh hoạt (học bạ) và nhiều đợt tuyển sinh trong năm giúp thí sinh dễ dàng tiếp cận.',
+        '{
+            "github": null,
+            "website": "https://www.caodangvietmy.edu.vn",
+            "youtube": "@caodangvietmyhochiminh",
+            "facebook": "americanpolytechnic",
+            "linkedin": "company/caodangvietmy"
+        }', 0, '2025-08-09 14:49:51', '2025-08-11 09:24:57');
+
 INSERT INTO codezone.organization_users (user_id, organization_id, status, created_at, updated_at)
 VALUES (2, 10, 'active', '2025-07-31 10:32:10', '2025-07-31 10:32:10');
 INSERT INTO codezone.organization_users (user_id, organization_id, status, created_at, updated_at)
@@ -345,45 +364,45 @@ This **comprehensive course** is designed to help you master **Data Structures a
             "name": "Boost your developer skills to excel in technical interviews confidently."
         }
     ]', 10, '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', 'Dynamic Programming', 'dynamic-programming', 6, 4, 1821,
+INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', 'Dynamic Programming', 6, 4, 1821,
         'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('1bd186cc-4bde-44b2-9d81-339df37a11ab', 'Final ', 'final', 1, 6, 0, 'cc916e6f-c8d3-4184-805f-c52d7ff0573b',
+INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('1bd186cc-4bde-44b2-9d81-339df37a11ab', 'Final ', 1, 6, 0, 'cc916e6f-c8d3-4184-805f-c52d7ff0573b',
         '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('556c749e-6f40-44f2-97d1-ce38071414b7', 'Introduction', 'introduction', 3, 0, 956,
+INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('556c749e-6f40-44f2-97d1-ce38071414b7', 'Introduction', 3, 0, 956,
         'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('9a7ec28c-498e-4190-bf20-4f402c827ebd', 'LinkedList', 'linkedlist', 3, 3, 2033,
+INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('9a7ec28c-498e-4190-bf20-4f402c827ebd', 'LinkedList', 3, 3, 2033,
         'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('b4b107fc-ac88-432b-9735-a0b395252662', 'Array', 'array', 5, 1, 2908, 'cc916e6f-c8d3-4184-805f-c52d7ff0573b',
+INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('b4b107fc-ac88-432b-9735-a0b395252662', 'Array', 5, 1, 2908, 'cc916e6f-c8d3-4184-805f-c52d7ff0573b',
         '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('c94c5850-027f-4802-b843-64551ce117eb', 'Leetcode practice', 'leetcode-practice', 4, 5, 1868,
+INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('c94c5850-027f-4802-b843-64551ce117eb', 'Leetcode practice', 4, 5, 1868,
         'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.modules (id, title, slug, lesson_count, position, duration, course_id, created_at, updated_at)
-VALUES ('e1c1e032-44f8-4218-8c1d-3759b8b2feab', 'Binary Search', 'binary-search', 6, 2, 1727,
+INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
+VALUES ('e1c1e032-44f8-4218-8c1d-3759b8b2feab', 'Binary Search', 6, 2, 1727,
         'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('0be846bb-9749-4b88-b75b-ac91aaffc2fc', 'Big O notation', 'big-o-notation', '',
-        '/storage/course/videos/y6QK38eX8mgPh75NboYdfqw1O5l6DeqACyr6rNG9.mp4', 4, 1183, false, 'video', null,
+VALUES ('0be846bb-9749-4b88-b75b-ac91aaffc2fc', 'Big O notation', '',
+        'y6QK38eX8mgPh75NboYdfqw1O5l6DeqACyr6rNG9.mp4', 4, 1183, false, 'video', null,
         '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('0ec2fde8-929d-445b-b7a7-a433d0de6701', 'Implement Binary Search by Loop', 'implement-binary-search-by-loop',
-        '', '/storage/course/videos/eSfYd64Co2lf6S9b090JHO2HvOT5oA6jbrbzFvtj.mp4', 1, 604, false, 'video', null,
+VALUES ('0ec2fde8-929d-445b-b7a7-a433d0de6701', 'Implement Binary Search by Loop', '',
+        'eSfYd64Co2lf6S9b090JHO2HvOT5oA6jbrbzFvtj.mp4', 1, 604, false, 'video', null,
         'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('19a17557-cfda-452d-ad1b-e11484ad7e16', 'Leetcode 26: Remove Duplicates from Sorted Array',
-        'leetcode-26-remove-duplicates-from-sorted-array', '', '', 0, 0, false, 'assessment', null,
+VALUES ('19a17557-cfda-452d-ad1b-e11484ad7e16', 'Leetcode 26: Remove Duplicates from Sorted Array', '', '', 0, 0, false,
+        'assessment', null,
         'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('351e8cdd-3e4e-47db-b978-50b6415b7555', 'Binary Search Document', 'binary-search-document', '# **Binary Search: Comprehensive Documentation**
+VALUES ('351e8cdd-3e4e-47db-b978-50b6415b7555', 'Binary Search Document', '# **Binary Search: Comprehensive Documentation**
 
 ## **1. Introduction to Binary Search**
 Binary search is an **efficient search algorithm** that finds the position of a target value within a **sorted array**. It works by repeatedly dividing the search interval in half, drastically reducing the search space with each step.
@@ -501,48 +520,47 @@ target = 7
 ✔ Can be implemented **iteratively (preferred)** or **recursively**.
 ✔ Always verify the **array is sorted** before applying binary search.  ', '', 5, 0, false, 'document', null,
         'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('37a1c2f7-06a7-4b59-ba06-07520228d9c7', 'About instructor', 'about-instructor', '',
-        '/storage/course/videos/Pc3Ms9LNpj5tf3dVophT1SNhdlA486Sjy33Vwrbx.mp4', 0, 617, true, 'video', null,
+VALUES ('37a1c2f7-06a7-4b59-ba06-07520228d9c7', 'About instructor', '',
+        'Pc3Ms9LNpj5tf3dVophT1SNhdlA486Sjy33Vwrbx.mp4', 0, 617, true, 'video', null,
         '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('40c120bd-6b57-436c-baf7-ddbe300e8dc0', 'Final Exam', 'final-exam', '', '', 0, 0, false, 'assessment', null,
+VALUES ('40c120bd-6b57-436c-baf7-ddbe300e8dc0', 'Final Exam', '', '', 0, 0, false, 'assessment', null,
         '1bd186cc-4bde-44b2-9d81-339df37a11ab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('41d66766-11f3-4272-9eee-5a0046d9cc95', 'Implement Binary Search by Recursion',
-        'implement-binary-search-by-recursion', '',
-        '/storage/course/videos/OKbEzFoRDOWd9hsvDI5G48SKmCIFUDvPnqrhNsIr.mp4', 2, 444, false, 'video', null,
+VALUES ('41d66766-11f3-4272-9eee-5a0046d9cc95', 'Implement Binary Search by Recursion', '',
+        'OKbEzFoRDOWd9hsvDI5G48SKmCIFUDvPnqrhNsIr.mp4', 2, 444, false, 'video', null,
         'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('4ba5f1fc-80a2-4bc4-ae4b-1da3a7ed8c8a', 'What is array', 'what-is-array', '',
-        '/storage/course/videos/wLsgdD7dvb3o3PWvtCZtUat8xu5k0KBoy42JM5cy.mp4', 0, 1667, false, 'video', null,
+VALUES ('4ba5f1fc-80a2-4bc4-ae4b-1da3a7ed8c8a', 'What is array', '',
+        'wLsgdD7dvb3o3PWvtCZtUat8xu5k0KBoy42JM5cy.mp4', 0, 1667, false, 'video', null,
         'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('587e5ca3-68bf-4062-b9aa-4ddc933ff275', 'Introduction to Data Structures', 'introduction-to-data-structures',
-        '', '/storage/course/videos/vf0iEjHF2LvGPJFI5bbr3XKLKxWljuk5SxoDWitz.mp4', 1, 339, false, 'video', null,
+VALUES ('587e5ca3-68bf-4062-b9aa-4ddc933ff275', 'Introduction to Data Structures', '',
+        'vf0iEjHF2LvGPJFI5bbr3XKLKxWljuk5SxoDWitz.mp4', 1, 339, false, 'video', null,
         '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('59c9f55a-8525-4f7a-b325-1a893ca8ba9e', 'Leetcode 414: Solution', 'leetcode-414-solution', '',
-        '/storage/course/videos/nXFh28njdfqHzOX9WCNbNHaF7woJRSSW0oa8xsDW.mp4', 3, 1138, false, 'video', null,
+VALUES ('59c9f55a-8525-4f7a-b325-1a893ca8ba9e', 'Leetcode 414: Solution', '',
+        'nXFh28njdfqHzOX9WCNbNHaF7woJRSSW0oa8xsDW.mp4', 3, 1138, false, 'video', null,
         'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('5c7cf1d0-a121-49da-a057-f6591a85c45c', 'Quiz Check point', 'quiz-check-point', '', '', 3, 0, false,
+VALUES ('5c7cf1d0-a121-49da-a057-f6591a85c45c', 'Quiz Check point', '', '', 3, 0, false,
         'assessment', null, '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('5d851d4d-df65-4ce3-84f4-37a6bf72ed4a', 'Review those Algorithms', 'review-those-algorithms', '',
-        '/storage/course/videos/biJ9JeIoN46mCKock3uyZkDbhfQm548QKu2iSpki.mp4', 3, 217, false, 'video', null,
+VALUES ('5d851d4d-df65-4ce3-84f4-37a6bf72ed4a', 'Review those Algorithms', '',
+        'biJ9JeIoN46mCKock3uyZkDbhfQm548QKu2iSpki.mp4', 3, 217, false, 'video', null,
         'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('60341bee-6475-4c30-9baf-3bd6a68a00dc', 'Course outline', 'course-outline', '# Data Structures Mastery (53 Hours) - Detailed Curriculum
+VALUES ('60341bee-6475-4c30-9baf-3bd6a68a00dc', 'Course outline', '# Data Structures Mastery (53 Hours) - Detailed Curriculum
 
 ## Module 1: Foundations (5 Hours)
 1. **Introduction to Data Structures**
@@ -623,19 +641,19 @@ VALUES ('60341bee-6475-4c30-9baf-3bd6a68a00dc', 'Course outline', 'course-outlin
 - Problem Solving Sessions
 - Q&A Support', '', 2, 0, false, 'document', null, '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53',
         '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('78b15904-716e-4ef8-abe1-ec0e95a2e377', 'Remove element from array', 'remove-element-from-array', '',
-        '/storage/course/videos/HQQK0DVU1FVChGYOY2NTgQ5CsK3tUpFxyf6esIKQ.mp4', 2, 0, false, 'video', null,
+VALUES ('78b15904-716e-4ef8-abe1-ec0e95a2e377', 'Remove element from array', '',
+        'HQQK0DVU1FVChGYOY2NTgQ5CsK3tUpFxyf6esIKQ.mp4', 2, 0, false, 'video', null,
         'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('7dd41449-fe08-41ea-887f-54d621e293e4', 'Insert element from array', 'insert-element-from-array', '',
-        '/storage/course/videos/bdVhSmaZEvbUhmvB2TqZ06eaoWM2xr4MbSk7s2vR.mp4', 1, 1241, false, 'video', null,
+VALUES ('7dd41449-fe08-41ea-887f-54d621e293e4', 'Insert element from array', '',
+        'bdVhSmaZEvbUhmvB2TqZ06eaoWM2xr4MbSk7s2vR.mp4', 1, 1241, false, 'video', null,
         'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('819e7f7d-72eb-4291-a737-6c2d94a816be', 'Linked List document', 'linked-list-document', '# **Linked Lists - Comprehensive Documentation**
+VALUES ('819e7f7d-72eb-4291-a737-6c2d94a816be', 'Linked List document', '# **Linked Lists - Comprehensive Documentation**
 
 ## **1. Introduction to Linked Lists**
 A **Linked List** is a linear data structure consisting of nodes connected via pointers. Unlike arrays, linked list elements are **not stored in contiguous memory locations**.
@@ -839,14 +857,14 @@ public:
 - Prefer arrays when **random access** is critical.
 - **Doubly linked lists** simplify backward traversal but consume more memory.', '', 2, 0, false, 'document', null,
         '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('835138e6-c935-4464-9490-b591e7bb2d5e', 'Leetcode 26: Solution', 'leetcode-26-solution', '',
-        '/storage/course/videos/OiVwwvJwmmUCxI0BTVQVZ7hjUfTj9H299eP5pKGn.mp4', 1, 730, false, 'video', null,
+VALUES ('835138e6-c935-4464-9490-b591e7bb2d5e', 'Leetcode 26: Solution', '',
+        'OiVwwvJwmmUCxI0BTVQVZ7hjUfTj9H299eP5pKGn.mp4', 1, 730, false, 'video', null,
         'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('86ce3ac9-81d8-4c0d-9a08-82e62055b7d9', 'Array document', 'array-document', '# **Arrays: A Comprehensive Guide**
+VALUES ('86ce3ac9-81d8-4c0d-9a08-82e62055b7d9', 'Array document', '# **Arrays: A Comprehensive Guide**
 
 ## **1. What is an Array?**
 An **array** is a **data structure** that stores a **fixed-size** collection of elements of the **same type**. It provides an efficient way to store and access multiple values under a single variable name.
@@ -1004,19 +1022,19 @@ public int linearSearch(int[] arr, int target) {
 Arrays are **fundamental** in programming due to their **simplicity and efficiency** in accessing elements. While they have limitations (fixed size, slow insertions), they serve as the basis for more complex data structures like **ArrayLists, Hash Tables, and Dynamic Arrays**.',
         '', 4, 0, false, 'document', null, 'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53',
         '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('8e2d4e3b-693e-41ec-a9bc-71ebe6dba7e5', 'Leetcode 414: Third Maximum Number',
-        'leetcode-414-third-maximum-number', '', '', 2, 0, false, 'assessment', null,
+VALUES ('8e2d4e3b-693e-41ec-a9bc-71ebe6dba7e5', 'Leetcode 414: Third Maximum Number', '', '', 2, 0, false, 'assessment',
+        null,
         'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('a0f8388a-5e70-42d6-8a24-748231426a02', 'LinkedList part 2', 'linkedlist-part-2', '',
-        '/storage/course/videos/1GD3gY83SMQuiACN5DeQiMdJDmlEkdDXa07ESx4O.mp4', 1, 1217, false, 'video', null,
+VALUES ('a0f8388a-5e70-42d6-8a24-748231426a02', 'LinkedList part 2', '',
+        '1GD3gY83SMQuiACN5DeQiMdJDmlEkdDXa07ESx4O.mp4', 1, 1217, false, 'video', null,
         '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('a797bf9e-3a71-421a-ac9e-f1380cdfb87f', 'Big O notation document', 'big-o-notation-document', '# **Linked Lists - Comprehensive Documentation**
+VALUES ('a797bf9e-3a71-421a-ac9e-f1380cdfb87f', 'Big O notation document', '# **Linked Lists - Comprehensive Documentation**
 
 ## **1. Introduction to Linked Lists**
 A **Linked List** is a linear data structure consisting of nodes connected via pointers. Unlike arrays, linked list elements are **not stored in contiguous memory locations**.
@@ -1220,14 +1238,14 @@ public:
 - Prefer arrays when **random access** is critical.
 - **Doubly linked lists** simplify backward traversal but consume more memory.', '', 5, 0, false, 'document', null,
         '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('bed128e8-a4c2-4e87-87f5-10d5323b2047', 'Quiz about Binary Search', 'quiz-about-binary-search', '', '', 4, 0,
+VALUES ('bed128e8-a4c2-4e87-87f5-10d5323b2047', 'Quiz about Binary Search', '', '', 4, 0,
         false, 'assessment', null, 'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53',
         '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('d0366ee2-8e19-41a7-9b8d-ddd46cb290ad', 'Dynamic Programming document', 'dynamic-programming-document', '# **Dynamic Programming (DP) - Complete Guide**
+VALUES ('d0366ee2-8e19-41a7-9b8d-ddd46cb290ad', 'Dynamic Programming document', '# **Dynamic Programming (DP) - Complete Guide**
 
 ## **1. Introduction**
 Dynamic Programming is an optimization technique that breaks complex problems into simpler subproblems, stores their solutions (memoization/tabulation), and reuses them to avoid redundant calculations.
@@ -1382,30 +1400,30 @@ def climbStairs(n):
 This document covers **core DP concepts**, **implementation strategies**, and **classic problems**. Use it as a cheat sheet for interviews! 🚀',
         '', 2, 0, false, 'document', null, '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53',
         '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('d1f0c612-5008-4ba2-9354-befbc9ba665a', 'LinkedList part 1', 'linkedlist-part-1', '',
-        '/storage/course/videos/Nc4j3zuqWznD9vzZIpRto9BpddyIlZf4ni19RHSd.mp4', 0, 816, false, 'video', null,
+VALUES ('d1f0c612-5008-4ba2-9354-befbc9ba665a', 'LinkedList part 1', '',
+        'Nc4j3zuqWznD9vzZIpRto9BpddyIlZf4ni19RHSd.mp4', 0, 816, false, 'video', null,
         '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('e65c59a7-8fa5-4a94-ae93-d6a8e08e46b0', 'Dynamic Programming part 2', 'dynamic-programming-part-2', '',
-        '/storage/course/videos/yjsiKqHeF6bkI2p72usgYhPWwhKsjkIjdSBvAeRq.mp4', 1, 239, false, 'video', null,
+VALUES ('e65c59a7-8fa5-4a94-ae93-d6a8e08e46b0', 'Dynamic Programming part 2', '',
+        'yjsiKqHeF6bkI2p72usgYhPWwhKsjkIjdSBvAeRq.mp4', 1, 239, false, 'video', null,
         '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('eb93c554-343b-49f6-bae1-cac28b57fa7e', 'What is Binary Search', 'what-is-binary-search', '',
-        '/storage/course/videos/j1WaG8QluPemFBHAEgy4Yblocz9cgdbrLDonsShB.mp4', 0, 462, false, 'video', null,
+VALUES ('eb93c554-343b-49f6-bae1-cac28b57fa7e', 'What is Binary Search', '',
+        'j1WaG8QluPemFBHAEgy4Yblocz9cgdbrLDonsShB.mp4', 0, 462, false, 'video', null,
         'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('f4631405-8421-438a-be4b-dee58f2d3192', 'Dynamic Programming part 1', 'dynamic-programming-part-1', '',
-        '/storage/course/videos/RBFXf05qV03Egx286nkjJxjR34DBGavkr1Bmxeoi.mp4', 0, 399, false, 'video', null,
+VALUES ('f4631405-8421-438a-be4b-dee58f2d3192', 'Dynamic Programming part 1', '',
+        'RBFXf05qV03Egx286nkjJxjR34DBGavkr1Bmxeoi.mp4', 0, 399, false, 'video', null,
         '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, slug, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
-VALUES ('fac9d284-526d-48ae-8a21-136ca36182f2', 'Programming practice about array', 'programming-practice-about-array',
-        '', '', 3, 0, false, 'assessment', null, 'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53',
+VALUES ('fac9d284-526d-48ae-8a21-136ca36182f2', 'Programming practice about array', '', '', 3, 0, false, 'assessment',
+        null, 'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53',
         '2025-08-08 15:39:53');
 INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
 VALUES (1, 'Merge Sorted Array', '# **Merge Sorted Arrays (LeetCode Problem 88)**

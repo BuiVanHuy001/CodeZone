@@ -60,6 +60,10 @@ return [
 				'icon' => 'feather-book-open',
 				'route' => 'student.dashboard.courses',
 			],
+            'My Profile' => [
+                'icon' => 'feather-user',
+                'route' => 'student.dashboard.profile',
+            ],
 			'My Purchases' => [
 				'icon' => 'feather-shopping-bag',
 				'route' => 'student.dashboard.purchases',

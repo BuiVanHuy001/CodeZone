@@ -53,7 +53,7 @@ class Course extends Model
         if ($this->thumbnail_url) {
             return asset($this->thumbnail_url);
         }
-        return asset('images/course/default-thumbnail.webp');
+        return asset('images/others/thumbnail-placeholder.svg');
     }
 
     public function getIntroductionVideo(): string
@@ -62,7 +62,7 @@ class Course extends Model
         foreach ($this->modules as $module) {
             foreach ($module->lessons as $lesson) {
                 if ($lesson->preview) {
-                    $introductionVideoUrl = $lesson->video_url;
+                    $introductionVideoUrl = $lesson->video_file_name;
                     break 2;
                 }
             }

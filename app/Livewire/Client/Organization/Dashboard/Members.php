@@ -4,21 +4,33 @@ namespace App\Livewire\Client\Organization\Dashboard;
 
 use App\Models\OrganizationUser;
 use App\Models\User;
-use Illuminate\Contracts\View\Factory;
+use App\Services\Business\MemberImportService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Members extends Component
 {
+    use WithFileUploads;
+
     public string $activeTab = 'list';
 
-    #[Validate('string|max:255|required')]
-    public string $search = '';
+    public array $importedMembers = [];
+    public array $dbMembers = [];
 
+    public bool $hasImported = false;
+    public bool $showImportButton = false;
+    public string $search = '';
     public $userResults = null;
+
+    #[Validate('required|file|mimes:xlsx,xls,csv')]
+    public $importUsersFile;
 
     public function setTab(string $tab): void
     {
@@ -27,36 +39,191 @@ class Members extends Component
 
     public function searchUser(): void
     {
-        $this->validate();
-        if (!empty($this->search)) {
-	        $this->userResults = User::where('name', 'like', '%' . $this->search . '%')
-	                                 ->orWhere('email', 'like', '%' . $this->search . '%')
-	                                 ->get();
-            $this->activeTab = 'add';
+        $this->validate(['search' => 'string|max:255|required']);
+
+        $this->userResults = User::query()
+                                 ->whereKeyNot(auth()->id())
+                                 ->where('role', '!=', 'organization')
+                                 ->where(function ($q) {
+                                     $term = '%' . $this->search . '%';
+                                     $q
+                                         ->where('name', 'like', $term)
+                                         ->orWhere('email', 'like', $term);
+                                 })
+                                 ->get();
+
+        $this->activeTab = 'add';
+    }
+
+    public function updatedSearch(): void
+    {
+        if (empty($this->search)) {
+            $this->userResults = null;
         }
     }
 
-    public function addEmployee(User $user): void
+    public function addMember(User $user): void
     {
-	    if (!OrganizationUser::where('organization_id', auth()->user()->id)->where('user_id', $user->id)->exists()) {
-		    OrganizationUser::create(
-			    ['organization_id' => auth()->user()->id,
-				    'user_id' => $user->id
-			    ]);
+        if (!auth()->user()->isMemberOfOrganization($user->id, auth()->id())) {
+            OrganizationUser::create([
+                'organization_id' => auth()->id(),
+                'user_id' => $user->id
+            ]);
         }
     }
 
-    public function deleteEmployee(User $user): void
+    public function deleteMember(User $user): void
     {
-	    OrganizationUser::where('organization_id', auth()->user()->id)
-	                     ->where('user_id', $user->id)->delete();
+        OrganizationUser::where('organization_id', auth()->id())
+                        ->where('user_id', $user->id)
+                        ->delete();
     }
 
-	#[Layout('components.layouts.dashboard')]
-	public function render(): View|Application|Factory|\Illuminate\View\View
+    public function updatedImportUsersFile(MemberImportService $importService): void
     {
-	    $employees = OrganizationUser::where('organization_id', auth()->user()->id)->with('user')->get();
+        $result = $importService->importFile($this->importUsersFile->getRealPath());
+        $this->importedMembers = $result['displayMembers'];
+        $this->dbMembers = $result['dbMembers'];
+        if (!empty($result['failures'])) {
+            $html = $this->prepareForDisplayFailures($result['failures']);;
+            $this->dispatch('swal', [
+                'title' => 'Import Failed',
+                'html' => $html,
+                'icon' => 'error',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'OK',
+                'allowOutsideClick' => false,
+                'allowEscapeKey' => false,
+                'draggable' => true,
+            ]);
+        } else {
+            $this->dispatch('swal', [
+                'title' => 'Import Successful',
+                'text' => 'The import process has been completed successfully.',
+                'icon' => 'success',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'OK',
+            ]);
+        }
 
-        return view('livewire.client.organization.dashboard.members', ['employees' => $employees]);
+        $this->hasImported = !empty($this->importedMembers);
+        $this->dispatch('import-finished');
+    }
+
+    private function prepareForDisplayFailures(array|Collection $failures): string
+    {
+        $html = '<div>Some rows could not be imported due to validation errors. Please review the details below and try again.</div>';
+        foreach ($failures as $failure) {
+            $html .= '<div class="alert alert-danger" role="alert">';
+            $html .= '<strong>Row ' . $failure['row'] . ':</strong> ';
+            $html .= implode(' ', $failure['errors']);
+            $html .= '</div>';
+        }
+        return $html;
+    }
+
+    public function deleteImportedMember(int $rowIndex): void
+    {
+        if (isset($this->importedMembers[$rowIndex]) && isset($this->dbMembers[$rowIndex])) {
+            unset($this->importedMembers[$rowIndex]);
+            unset($this->dbMembers[$rowIndex]);
+            $this->importedMembers = array_values($this->importedMembers);
+            $this->dbMembers = array_values($this->dbMembers);
+            $this->dispatch('swal', [
+                'title' => 'Member Deleted',
+                'text' => 'The member has been successfully deleted.',
+                'icon' => 'success',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'OK',
+                'allowOutsideClick' => false,
+                'allowEscapeKey' => false,
+            ]);
+        }
+    }
+
+    public function importMembers(): void
+    {
+        DB::beginTransaction();
+        try {
+            foreach ($this->dbMembers as $member) {
+                ;
+                $user = User::createOrFirst([
+                    'email' => $member['mail'],
+                ], [
+                    'name' => $member['full_name'],
+                    'email' => $member['mail'],
+                    'password' => Hash::make($member['password']),
+                    'role' => 'student',
+                    'status' => 'active',
+                    'avatar_url' => $member['avatar_url'],
+                ]);
+                $user->studentProfile()->updateOrCreate([
+                    'user_id' => $user->id,
+                ], [
+                    'gender' => $member['gender'] === 'female',
+                    'dob' => $member['date_of_birth'],
+                    'addition_data' => json_encode($member['addition_data']),
+                ]);
+
+                OrganizationUser::create([
+                    'organization_id' => auth()->id(),
+                    'user_id' => $user->id
+                ]);
+            }
+            $this->reset([
+                'importedMembers',
+                'hasImported',
+                'showImportButton',
+                'importUsersFile'
+            ]);
+            $this->setTab('list');
+            $this->dispatch('swal', [
+                'title' => 'Import Successful',
+                'text' => 'The import process has been completed successfully.',
+                'icon' => 'success',
+                'showConfirmButton' => true,
+                'confirmButtonText' => 'OK',
+                'allowOutsideClick' => false,
+                'allowEscapeKey' => false,
+            ]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $this->dispatch('swal', [
+                'title' => 'Import Failed',
+                'text' => 'An error occurred while importing members: ' . $e->getMessage(),
+                'icon' => 'error',
+                'showConfirmButton' => true,
+            ]);
+        }
+    }
+
+    public function cancelImportMembers(): void
+    {
+        $this->reset([
+            'importedMembers',
+            'hasImported',
+            'showImportButton',
+            'importUsersFile'
+        ]);
+        $this->dispatch('swal', [
+            'title' => 'Import Cancelled',
+            'text' => 'The import process has been cancelled.',
+            'icon' => 'info',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'OK',
+            'allowOutsideClick' => false,
+            'allowEscapeKey' => false,
+        ]);
+    }
+
+    #[Layout('components.layouts.dashboard')]
+    public function render(): View|Application|\Illuminate\View\View
+    {
+        $members = OrganizationUser::where('organization_id', auth()->id())
+                                   ->with('user')
+                                   ->get();
+
+        return view('livewire.client.organization.dashboard.members', compact('members'));
     }
 }

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Lesson extends Model
 {
-    use HasSlug, HasUUID, HasDuration;
+    use HasUUID, HasDuration;
 
     protected $guarded = [];
 
@@ -41,9 +41,9 @@ class Lesson extends Model
         return $this->title;
     }
 
-    public function getIcon()
+    public function getIcon(): string
     {
-        if ($this->type === 'video' && $this->video_url !== '') {
+        if ($this->type === 'video' && $this->video_file_name !== '') {
             return 'video';
         } elseif ($this->type === 'assessment') {
             if ($this->assessment->type === 'quiz') {

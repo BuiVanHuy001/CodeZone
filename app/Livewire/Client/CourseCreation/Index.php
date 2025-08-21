@@ -4,8 +4,8 @@ namespace App\Livewire\Client\CourseCreation;
 
 use App\Models\Assessment;
 use App\Models\AssessmentQuestion;
-use App\Models\BatchEnrollments;
 use App\Models\Batch;
+use App\Models\BatchEnrollments;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Module;
@@ -13,64 +13,19 @@ use App\Models\ProgrammingAssignmentDetails;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 #[Title('Create New Course')]
-class Index extends Component
-{
+class Index extends Component {
     use WithFileUploads;
-
-    public function rules(): array
-    {
-        return [
-            'title' => 'required|min:3|max:255',
-            'slug' => 'required|min:3|max:255|unique:courses,slug',
-            'heading' => 'required|min:3|max:255',
-            'description' => 'nullable|max:1000',
-            'price' => 'required|numeric|min:0',
-            'category' => 'required|exists:categories,id',
-            'level' => 'required|in:beginner,intermediate,advanced',
-            'startDate' => 'required|date|after_or_equal:today',
-            'endDate' => 'required|date|after_or_equal:startDate',
-            'modules' => 'required|array|min:1',
-            'modules.*.title' => 'required|min:3|max:255',
-            'modules.*.lessons' => 'required|array|min:1',
-            'modules.*.lessons.*.title' => 'required|min:3|max:255',
-            'modules.*.lessons.*.type' => ['required', Rule::in(Lesson::$TYPES)],
-        ];
-    }
-
-    /**
-     * @throws ValidationException
-     */
-    public function updated($propertyName): void
-    {
-        $this->validateOnly($propertyName);
-    }
-
-    public array $openTabs = ['info'];
-
-    public function setTab(string $tab): void
-    {
-        $key = array_search($tab, $this->openTabs);
-        if ($key !== false) {
-            unset($this->openTabs[$key]);
-            $this->openTabs = array_values($this->openTabs);
-        } else {
-            $this->openTabs[] = $tab;
-        }
-    }
 
     public string $title = '';
     public string $slug = '';
@@ -78,6 +33,7 @@ class Index extends Component
     public string $description = '';
     public $image;
     public $imageUrl;
+    public ?string $previousImagePath = null;
     public string $price = '0';
     public string $category = '';
     public string $level = '';
@@ -90,23 +46,85 @@ class Index extends Component
     public $endDate = '';
     public array $modules = [
         [
-            'title' => '',
+            'title' => 'Bui Van Huy',
             'lesson_count' => 1,
-            'lessons' => [
-                [
-                    'title' => '',
-                    'type' => '',
-                    'description' => '',
-                    'video_url' => '',
-                    'content' => '',
-                    'preview' => false,
-                ]
-            ]
+            'lessons' => []
         ]
     ];
 
+    public function rules(): array
+    {
+        return [
+            'title' => 'required|min:3|max:255',
+            'slug' => 'required|min:3|max:255|unique:courses,slug',
+            'heading' => 'required|min:3|max:255',
+            'price' => 'required|numeric|min:0',
+            'category' => 'required|exists:categories,id',
+            'level' => ['required', Rule::in(Course::$LEVELS)],
+            'startDate' => 'required|date|after_or_equal:today',
+            'endDate' => 'required|date|after_or_equal:startDate',
+            'modules' => 'required|array|min:1',
+            'modules.*.title' => 'required|min:3|max:255',
+            'modules.*.lessons' => 'required|array|min:1',
+            'modules.*.lessons.*.title' => 'required|min:3|max:255',
+            'modules.*.lessons.*.type' => ['required', Rule::in(Lesson::$TYPES)],
+        ];
+    }
 
-    #[On('titleUpdated')]
+    public array $messages = [
+        'title.required' => 'Course title is required to identify this course.',
+        'title.min' => 'Course title must be at least :min characters for clarity.',
+        'title.max' => 'Course title cannot exceed :max characters to ensure proper display.',
+
+        'slug.required' => 'Course URL slug is required for web accessibility.',
+        'slug.min' => 'Course slug must be at least :min characters.',
+        'slug.max' => 'Course slug cannot exceed :max characters.',
+        'slug.unique' => 'This course URL already exists. Please choose a different slug.',
+
+        'heading.required' => 'Course heading is required for course presentation.',
+        'heading.min' => 'Course heading must be at least :min characters for clarity.',
+        'heading.max' => 'Course heading cannot exceed :max characters to ensure proper display.',
+
+        'description.max' => 'Course description cannot exceed :max characters.',
+
+        'price.required' => 'Course price must be specified.',
+        'price.numeric' => 'Course price must be a valid number.',
+        'price.min' => 'Course price cannot be negative.',
+
+        'category.required' => 'Course category must be selected.',
+        'category.exists' => 'Selected category does not exist. Please choose a valid category.',
+
+        'level.required' => 'Course difficulty level must be specified.',
+        'level.in' => 'Please select a valid course level from the available options.',
+
+        'startDate.required' => 'Course start date is required.',
+        'startDate.date' => 'Please enter a valid start date.',
+        'startDate.after_or_equal' => 'Course start date cannot be in the past.',
+
+        'endDate.required' => 'Course end date is required.',
+        'endDate.date' => 'Please enter a valid end date.',
+        'endDate.after_or_equal' => 'Course end date must be after or equal to the start date.',
+
+        'modules.required' => 'At least one module must be created for this course.',
+        'modules.min' => 'Course must contain at least :min module.',
+        'modules.*.title.required' => 'Module title is required for each learning section.',
+        'modules.*.title.min' => 'Module title must be at least :min characters for clarity.',
+        'modules.*.title.max' => 'Module title cannot exceed :max characters to ensure proper display.',
+
+        'modules.*.lessons.required' => 'Each module must contain at least one lesson.',
+        'modules.*.lessons.min' => 'Each module must have at least :min lesson.',
+        'modules.*.lessons.*.title.required' => 'Lesson title is required for each learning unit.',
+        'modules.*.lessons.*.title.min' => 'Lesson title must be at least :min characters for clarity.',
+        'modules.*.lessons.*.title.max' => 'Lesson title cannot exceed :max characters to ensure proper display.',
+        'modules.*.lessons.*.type.required' => 'Lesson type must be selected to define the content format.',
+        'modules.*.lessons.*.type.in' => 'Please select a valid lesson type from the available options.',
+    ];
+
+    public function updated($propertyName): void
+    {
+        $this->validateOnly($propertyName);
+    }
+
     public function updatedTitle(): void
     {
         $this->slug = Str::slug($this->title);
@@ -114,11 +132,10 @@ class Index extends Component
 
     private function updateJsonFromMultilineInput(string $field): void
     {
-        $lines = array_filter(
-	        array_map(
-		        'trim',
-		        explode("\n", $this->$field)
-	        )
+        $lines = array_filter(array_map(
+                'trim',
+                explode("\n", $this->$field)
+            )
         );
         if (empty($lines)) {
             $this->{$field . 'Json'} = null;
@@ -127,32 +144,44 @@ class Index extends Component
         }
     }
 
-
     public function updatedImage(): void
     {
-        $this->validate([
-            'image' => 'nullable|image|max:2048',
-        ]);
-        if ($this->image) {
-            $path = $this->image->storePublicly('tmp', 'public');
-            $this->imageUrl = Storage::url($path);
+        if ($this->image && $this->previousImagePath) {
+            File::delete($this->previousImagePath);
         }
-    }
 
-    public function deleteImage(): void
-    {
-        if ($this->imageUrl) {
-            $relativePath = str_replace('/storage/', '', $this->imageUrl);
-            Storage::disk('public')->delete($relativePath);
-            File::cleanDirectory(\storage_path('app/private/livewire-tmp'));
-            $this->reset(['image', 'imageUrl',]);
-        }
+        $this->previousImagePath = $this->image->getRealPath();
+
+        $this->imageUrl = $this->image->temporaryUrl();
     }
 
     public function save()
     {
+        if ($this->image) {
+            $this->image->storePublicly(path: 'course/thumbnails', options: 'public');
+            File::delete(storage_path('app/private/course/thumbnails/' . $this->image->getFileName()));
+            File::delete($this->image->getRealPath());
+        }
         $this->updateJsonFromMultilineInput('skills');
         $this->updateJsonFromMultilineInput('requirements');
+        //        $this->validateFields();
+
+        dd([
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'heading' => $this->heading,
+            'description' => $this->description,
+            'price' => $this->price,
+            'category' => $this->category,
+            'level' => $this->level,
+            'requirements' => $this->requirementsJson,
+            'skills' => $this->skillsJson,
+            'startDate' => $this->startDate,
+            'endDate' => $this->endDate,
+            'modules' => $this->modules,
+            'employeesAssigned' => $this->employeesAssigned,
+            'imageUrl' => $this->imageUrl,
+        ]);
         DB::beginTransaction();
         try {
             $courseDuration = 0;
@@ -171,7 +200,7 @@ class Index extends Component
                 'category_id' => $this->category,
                 'requirements' => $this->requirementsJson,
                 'skills' => $this->skillsJson,
-	            'user_id' => auth()->user()->id,
+                'user_id' => auth()->user()->id,
             ]);
             foreach ($this->modules as $moduleIndex => $moduleData) {
                 $moduleDuration = 0;
@@ -190,8 +219,8 @@ class Index extends Component
                         'title' => $lessonData['title'],
                         'type' => $lessonData['type'],
                         'duration' => $lessonData['duration'] ?? 0,
-                        'video_url' => $lessonData['video_url'],
-                        'document' => $lessonData['content'], // Fix: Use 'content' for document
+                        'video_file_name' => $lessonData['video_file_name'],
+                        'document' => $lessonData['content'], // Fix: Use 'content' for a document
                         'preview' => $lessonData['preview'] ?? false,
                         'position' => $lessonKey,
                         'module_id' => $module->id
@@ -242,7 +271,7 @@ class Index extends Component
             $course->duration = $courseDuration;
             $course->lesson_count = $lessonCount;
             if (auth()->user()->isOrganization()) {
-	            $batch = Batch::create([
+                $batch = Batch::create([
                     'start_at' => $this->startDate,
                     'end_at' => $this->endDate,
                     'course_id' => $course->id
@@ -278,7 +307,34 @@ class Index extends Component
         }
     }
 
-    #[Layout('components.layouts.dashboard')]
+    private function validateFields(): void
+    {
+        try {
+            $this->validate();
+        } catch (ValidationException $e) {
+            $this->dispatch('swal', [
+                'icon' => 'error',
+                'title' => 'Validation Failed',
+                'html' => 'Please fix the errors and try again. <br/>' .
+                    $this->prepareDisplayErrors($e->validator->errors()->toArray()),
+                'showConfirmButton' => true,
+            ]);
+
+            throw $e;
+        }
+    }
+
+    private function prepareDisplayErrors(array $errors): string
+    {
+        $html = '<ul>';
+        foreach ($errors as $field => $messages) {
+            $html .= '<li>' . $field . ': ' . implode(', ', $messages) . '</li>';
+        }
+        $html .= '</ul>';
+        return $html;
+    }
+
+    #[Layout('components.layouts.app')]
     public function render(): Factory|Application|View
     {
         return view('livewire.client.course-creation.index');

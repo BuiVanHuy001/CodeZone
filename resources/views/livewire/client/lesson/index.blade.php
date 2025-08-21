@@ -20,7 +20,7 @@
 
             <div class="inner">
                 @if($lesson->type === 'video')
-                    <livewire:client.lesson.components.lesson-types.video :videoUrl="$lesson->video_url" :key="'video-' . $lesson->id"/>
+                    <livewire:client.lesson.components.lesson-types.video :videoUrl="$lesson->video_file_name" :key="'video-' . $lesson->id"/>
                 @elseif($lesson->type === 'document')
                     <livewire:client.lesson.components.lesson-types.document :documentContent="$lesson->document" :key="'document-' . $lesson->id"/>
                 @elseif($lesson->type === 'assessment')

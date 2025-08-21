@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Course;
 use App\Models\Lesson;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,9 +16,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->string('title');
-            $table->string('slug')->unique();
 	        $table->text('document')->nullable();
-            $table->string('video_url')->nullable();
+            $table->string('video_file_name')->nullable();
             $table->unsignedTinyInteger('position');
 	        $table->unsignedSmallInteger('duration')->comment('Duration in seconds and max 65535 seconds (18 hours)');
 	        $table->boolean('preview')->default(false);
