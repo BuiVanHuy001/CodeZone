@@ -43,7 +43,7 @@ class Lesson extends Model
 
     public function getIcon(): string
     {
-        if ($this->type === 'video' && $this->video_url !== '') {
+        if ($this->type === 'video' && $this->video_file_name !== '') {
             return 'video';
         } elseif ($this->type === 'assessment') {
             if ($this->assessment->type === 'quiz') {

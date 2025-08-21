@@ -12,6 +12,11 @@ class StudentProfile extends Model {
         'user_id',
     ];
 
+    protected $casts = [
+        'addition_data' => 'array',
+        'dob' => 'date:d-m-Y',
+    ];
+
     public static array $DEFAULT_COLUMNS = [
         'MAIL' => 'mail',
         'FULL NAME' => 'full_name',
