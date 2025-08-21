@@ -1,11 +1,14 @@
 <div class="course-field mb--20">
     <h6>Upload video</h6>
-    @if($video && (isset($previewVideo) || isset($storedVideo)))
+    @if($video && (isset($previewVideo) || isset($storedVideoAbsPath)))
         <video width="100%" controls>
-            <source src="{{ $previewVideo ?? $storedVideo }}" type="video/mp4">
+            <source src="{{ $previewVideo ?? $storedVideoAbsPath }}" type="video/mp4">
         </video>
-        <button class="awe-btn bg-danger" wire:click="changeVideo">Choose different video</button>
-        <button class="awe-btn" wire:click="saveVideo">Save</button>
+        @if(isset($storedVideoAbsPath) && !isset($previewVideo))
+            <button wire:click="changeOrChangeVideo" class="awe-btn bg-danger">Delete/Change</button>
+        @elseif(isset($previewVideo) && !isset($storedVideoAbsPath))
+            <button wire:click="saveVideo" class="awe-btn">Save</button>
+        @endif
     @else
         <div x-data
              x-on:click="$refs.videoInput.click()"

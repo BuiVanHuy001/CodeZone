@@ -7,7 +7,10 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 class Video extends Component {
@@ -15,7 +18,8 @@ class Video extends Component {
 
     public $video;
     public ?string $previewVideo = null;
-    public ?string $storedVideo = null;
+    public ?string $storedVideoAbsPath = null;
+    public ?string $storedVideoRelPath = null;
     public int $duration = 0;
 
     public function updatedVideo(): void
@@ -31,41 +35,51 @@ class Video extends Component {
 
     public function saveVideo(VideoService $videoService): void
     {
-        $path = storage_path($this->video->storeAs(
+        $this->storedVideoRelPath = $this->video->storeAs(
             path: 'course/videos',
             options: 'public',
             name: $this->video->getFileName()
-        ));
+        );
 
+        $this->storedVideoAbsPath = Storage::disk('public')->path($this->storedVideoRelPath);
 
-        $this->duration = $videoService->getDuration($path);
-        $this->storedVideo = $path;
-        $this->reset('previewVideo');
+        $this->duration = $videoService->getDuration($this->storedVideoAbsPath);
 
         File::delete($this->video->getRealPath());
+        $this->reset('previewVideo');
 
         $this->dispatch('video-saved',
-            videoURL: $this->video->getFileName(),
+            videoFileName: $this->video->getFileName(),
             duration: $this->duration
         );
     }
 
-    public function changeVideo(): void
+    public function changeOrChangeVideo(): void
     {
         if ($this->video) {
             $this->deleteVideo();
         }
-        $this->reset('video', 'previewVideo', 'duration');
-        $this->dispatch('video-changed');
+
+        $this->reset('video', 'previewVideo', 'duration', 'storedVideoRelPath', 'storedVideoAbsPath');
+
+        $this->dispatch('video-changed-or-deleted');
     }
 
-    public function deleteVideo(): void
+    #[On('lesson-video-deleted')]
+    public function deletedVideo()
     {
-        if ($this->previewVideo) {
+        if ($this->video) {
+            $this->changeOrChangeVideo();
+        }
+    }
+
+    private function deleteVideo(): void
+    {
+        if ($this->video && is_object($this->video) && method_exists($this->video, 'getRealPath')) {
             File::delete($this->video->getRealPath());
         }
-        if ($this->storedVideo) {
-            \Storage::delete($this->storedVideo);
+        if ($this->storedVideoAbsPath) {
+            Storage::disk('public')->delete($this->storedVideoRelPath);
         }
     }
 
