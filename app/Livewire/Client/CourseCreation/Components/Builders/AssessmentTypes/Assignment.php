@@ -23,7 +23,7 @@ class Assignment extends Component
 
 	public function removeAssignment(): void
 	{
-        $this->dispatch('assessment-builders-removed', moduleIndex: $this->moduleIndex, lessonIndex: $this->lessonIndex);
+        $this->dispatch('assessment-builders-removed');
 	}
 
     public function saveAssignment(): void

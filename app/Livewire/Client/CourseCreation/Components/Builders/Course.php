@@ -24,20 +24,32 @@ class Course extends Component {
 
     public array $newLesson = [
         'title' => '',
-        'description' => '',
-        'video_url' => '',
-        'content' => '',
+        'video_file_name' => '',
+        'document' => '',
         'preview' => false,
         'duration' => 0,
         'type' => ''
     ];
 
     public array $selectedModule = ['index' => 0];
-    public array $activeTabs = [];
 
     public function updated($propertyName): void
     {
         $this->validateOnly($propertyName);
+    }
+
+    public function updatedNewLessonType(): void
+    {
+        if (!empty($this->newLesson['type'])) {
+            if ($this->newLesson['type'] !== 'video') {
+                $this->dispatch('lesson-video-deleted');
+
+                $this->newLesson['video_file_name'] = '';
+                $this->newLesson['duration'] = 0;
+            } elseif ($this->newLesson['type'] !== 'document' && !empty($this->newLesson['document'])) {
+                $this->newLesson['document'] = '';
+            }
+        }
     }
 
     public function editModule($index): void
@@ -54,8 +66,8 @@ class Course extends Component {
             'lessons' => [
                 [
                     'title' => '',
-                    'video_url' => '',
-                    'content' => '',
+                    'video_file_name' => '',
+                    'document' => '',
                     'preview' => false,
                     'type' => '',
                     'duration' => 0
@@ -84,7 +96,13 @@ class Course extends Component {
                 'icon' => 'success',
             ]);
         }
+    }
 
+    #[On('video-changed-or-deleted')]
+    public function changeOrDeletedVideo(): void
+    {
+        $this->newLesson['video_file_name'] = '';
+        $this->newLesson['duration'] = 0;
     }
 
     public function addAssessment(): void
@@ -96,181 +114,23 @@ class Course extends Component {
         ];
     }
 
-    #[On('quiz-questions-imported')]
-    public function importQuiz($assessment_questions, int $moduleIndex, int $lessonIndex): void
-    {
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['assessments_questions'] = $assessment_questions;
-        $this->dispatch('swal', [
-            'title' => 'Success',
-            'text' => 'Quiz questions imported successfully.',
-            'icon' => 'success',
-            'timer' => 3000,
-            'showConfirmButton' => false
-        ]);
-    }
-
-    #[On('quiz-saved')]
-    public function saveQuiz(int $moduleIndex, int $lessonIndex, $quiz): void
-    {
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['title'] = $quiz['title'];
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['description'] = $quiz['description'];
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['assessments_questions'] = $quiz['assessments_questions'];
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
-    }
-
-    #[On('builders-hided')]
-    public function hideAssessmentBuilder(int $moduleIndex, int $lessonIndex): void
-    {
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
-    }
-
-    #[On('assignment-saved')]
-    public function saveAssignment(int $moduleIndex, int $lessonIndex, array $assignment): void
-    {
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['title'] = $assignment['title'];
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['description'] = $assignment['description'];
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
-        $this->dispatch('swal', [
-            'title' => 'Success',
-            'text' => 'Assignment saved successfully.',
-            'icon' => 'success',
-            'timer' => 3000,
-            'showConfirmButton' => false
-        ]);
-    }
-
     #[On('assessment-builders-removed')]
-    public function removeAssessmentBuilder(int $moduleIndex, int $lessonIndex): void
+    public function removeAssessmentBuilder(): void
     {
         unset($this->newLesson['assessments']);
     }
 
-    public function addAssignment(int $moduleIndex, int $lessonIndex): void
+    #[On('document-changed')]
+    public function documentChange($document): void
     {
-        if (
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] !== 'assessment' ||
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] !== 'assignment'
-        ) {
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'assessment';
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = [
-                'title' => '',
-                'description' => '',
-                'type' => 'assignment'
-            ];
-        }
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = 'assignment';
-    }
-
-    #[On('assignment-removed')]
-    public function removeAssignment(int $moduleIndex, int $lessonIndex): void
-    {
-        if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'])) {
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = '';
-            unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']);
-        }
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
-    }
-
-    public function addDocument(int $moduleIndex, int $lessonIndex): void
-    {
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'document';
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = 'document';
-    }
-
-    #[On('document-saved')]
-    public function saveDocument(int $moduleIndex, int $lessonIndex, string $document): void
-    {
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['content'] = $document;
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
-    }
-
-    public function addVideo(int $moduleIndex, int $lessonIndex): void
-    {
-        if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'])) {
-            unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']);
-        }
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'video';
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = 'upload-video';
+        $this->newLesson['document'] = $document;
     }
 
     #[On('video-saved')]
-    public function saveVideo(string $videoURL, int $duration): void
+    public function saveVideo(string $videoFileName, int $duration): void
     {
-        $this->newLesson['video_url'] = $videoURL;
+        $this->newLesson['video_file_name'] = $videoFileName;
         $this->newLesson['duration'] = $duration;
-    }
-
-
-    #[On('video-deleted')]
-    public function deleteVideo(int $moduleIndex, int $lessonIndex): void
-    {
-        if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['video_url'])) {
-            unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['video_url']);
-        }
-        if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['duration'])) {
-            unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]['duration']);
-        }
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
-    }
-
-    public function addProgrammingPractice(int $moduleIndex, int $lessonIndex): void
-    {
-        if (
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] !== 'assessment' ||
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['type'] !== 'programming-practice'
-        ) {
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] = 'assessment';
-            $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments'] = [
-                'title' => '',
-                'type' => 'programming',
-                'description' => '',
-                'problem_details' => [
-                    'code_templates' => [],
-                    'test_cases' => []
-                ],
-            ];
-        }
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = 'programming-practice';
-    }
-
-    #[On('programming-practice-saved')]
-    public function saveProgrammingPractice(int $moduleIndex, int $lessonIndex, $programmingPractice, $testCases, $codeTemplates, $functionName): void
-    {
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['title'] = $programmingPractice['title'];
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['description'] = $programmingPractice['description'];
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['problem_details']['function_name'] = $functionName;
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['problem_details']['code_templates'] = $codeTemplates;
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex]['assessments']['problem_details']['test_cases'] = $testCases;
-        $this->activeTabs["$moduleIndex-$lessonIndex"] = '';
-        $this->dispatch('swal', [
-            'title' => 'Success',
-            'text' => 'Programming practice saved successfully.',
-            'icon' => 'success',
-            'timer' => 3000,
-            'showConfirmButton' => false
-        ]);
-    }
-
-    public function addLesson(int $moduleIndex): void
-    {
-        $this->modules[$moduleIndex]['lesson_count']++;
-        $this->modules[$moduleIndex]['lessons'][] = [
-            'title' => '',
-            'description' => '',
-            'video_url' => '',
-            'content' => '',
-            'preview' => false,
-            'duration' => 0,
-            'type' => ''
-        ];
-    }
-
-    public function removeLesson(int $moduleIndex, int $lessonIndex): void
-    {
-        if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex])) {
-            unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]);
-            $this->modules[$moduleIndex]['lessons'] = array_values($this->modules[$moduleIndex]['lessons']);
-        }
     }
 
     public function rules(): array

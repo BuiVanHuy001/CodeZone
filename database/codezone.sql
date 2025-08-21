@@ -385,22 +385,22 @@ VALUES ('c94c5850-027f-4802-b843-64551ce117eb', 'Leetcode practice', 4, 5, 1868,
 INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
 VALUES ('e1c1e032-44f8-4218-8c1d-3759b8b2feab', 'Binary Search', 6, 2, 1727,
         'cc916e6f-c8d3-4184-805f-c52d7ff0573b', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('0be846bb-9749-4b88-b75b-ac91aaffc2fc', 'Big O notation', '',
-        '/storage/course/videos/y6QK38eX8mgPh75NboYdfqw1O5l6DeqACyr6rNG9.mp4', 4, 1183, false, 'video', null,
+        'y6QK38eX8mgPh75NboYdfqw1O5l6DeqACyr6rNG9.mp4', 4, 1183, false, 'video', null,
         '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('0ec2fde8-929d-445b-b7a7-a433d0de6701', 'Implement Binary Search by Loop', '',
-        '/storage/course/videos/eSfYd64Co2lf6S9b090JHO2HvOT5oA6jbrbzFvtj.mp4', 1, 604, false, 'video', null,
+        'eSfYd64Co2lf6S9b090JHO2HvOT5oA6jbrbzFvtj.mp4', 1, 604, false, 'video', null,
         'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('19a17557-cfda-452d-ad1b-e11484ad7e16', 'Leetcode 26: Remove Duplicates from Sorted Array', '', '', 0, 0, false,
         'assessment', null,
         'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('351e8cdd-3e4e-47db-b978-50b6415b7555', 'Binary Search Document', '# **Binary Search: Comprehensive Documentation**
 
@@ -520,45 +520,45 @@ target = 7
 ✔ Can be implemented **iteratively (preferred)** or **recursively**.
 ✔ Always verify the **array is sorted** before applying binary search.  ', '', 5, 0, false, 'document', null,
         'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('37a1c2f7-06a7-4b59-ba06-07520228d9c7', 'About instructor', '',
-        '/storage/course/videos/Pc3Ms9LNpj5tf3dVophT1SNhdlA486Sjy33Vwrbx.mp4', 0, 617, true, 'video', null,
+        'Pc3Ms9LNpj5tf3dVophT1SNhdlA486Sjy33Vwrbx.mp4', 0, 617, true, 'video', null,
         '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('40c120bd-6b57-436c-baf7-ddbe300e8dc0', 'Final Exam', '', '', 0, 0, false, 'assessment', null,
         '1bd186cc-4bde-44b2-9d81-339df37a11ab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('41d66766-11f3-4272-9eee-5a0046d9cc95', 'Implement Binary Search by Recursion', '',
-        '/storage/course/videos/OKbEzFoRDOWd9hsvDI5G48SKmCIFUDvPnqrhNsIr.mp4', 2, 444, false, 'video', null,
+        'OKbEzFoRDOWd9hsvDI5G48SKmCIFUDvPnqrhNsIr.mp4', 2, 444, false, 'video', null,
         'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('4ba5f1fc-80a2-4bc4-ae4b-1da3a7ed8c8a', 'What is array', '',
-        '/storage/course/videos/wLsgdD7dvb3o3PWvtCZtUat8xu5k0KBoy42JM5cy.mp4', 0, 1667, false, 'video', null,
+        'wLsgdD7dvb3o3PWvtCZtUat8xu5k0KBoy42JM5cy.mp4', 0, 1667, false, 'video', null,
         'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('587e5ca3-68bf-4062-b9aa-4ddc933ff275', 'Introduction to Data Structures', '',
-        '/storage/course/videos/vf0iEjHF2LvGPJFI5bbr3XKLKxWljuk5SxoDWitz.mp4', 1, 339, false, 'video', null,
+        'vf0iEjHF2LvGPJFI5bbr3XKLKxWljuk5SxoDWitz.mp4', 1, 339, false, 'video', null,
         '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('59c9f55a-8525-4f7a-b325-1a893ca8ba9e', 'Leetcode 414: Solution', '',
-        '/storage/course/videos/nXFh28njdfqHzOX9WCNbNHaF7woJRSSW0oa8xsDW.mp4', 3, 1138, false, 'video', null,
+        'nXFh28njdfqHzOX9WCNbNHaF7woJRSSW0oa8xsDW.mp4', 3, 1138, false, 'video', null,
         'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('5c7cf1d0-a121-49da-a057-f6591a85c45c', 'Quiz Check point', '', '', 3, 0, false,
         'assessment', null, '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('5d851d4d-df65-4ce3-84f4-37a6bf72ed4a', 'Review those Algorithms', '',
-        '/storage/course/videos/biJ9JeIoN46mCKock3uyZkDbhfQm548QKu2iSpki.mp4', 3, 217, false, 'video', null,
+        'biJ9JeIoN46mCKock3uyZkDbhfQm548QKu2iSpki.mp4', 3, 217, false, 'video', null,
         'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('60341bee-6475-4c30-9baf-3bd6a68a00dc', 'Course outline', '# Data Structures Mastery (53 Hours) - Detailed Curriculum
 
@@ -641,17 +641,17 @@ VALUES ('60341bee-6475-4c30-9baf-3bd6a68a00dc', 'Course outline', '# Data Struct
 - Problem Solving Sessions
 - Q&A Support', '', 2, 0, false, 'document', null, '556c749e-6f40-44f2-97d1-ce38071414b7', '2025-08-08 15:39:53',
         '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('78b15904-716e-4ef8-abe1-ec0e95a2e377', 'Remove element from array', '',
-        '/storage/course/videos/HQQK0DVU1FVChGYOY2NTgQ5CsK3tUpFxyf6esIKQ.mp4', 2, 0, false, 'video', null,
+        'HQQK0DVU1FVChGYOY2NTgQ5CsK3tUpFxyf6esIKQ.mp4', 2, 0, false, 'video', null,
         'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('7dd41449-fe08-41ea-887f-54d621e293e4', 'Insert element from array', '',
-        '/storage/course/videos/bdVhSmaZEvbUhmvB2TqZ06eaoWM2xr4MbSk7s2vR.mp4', 1, 1241, false, 'video', null,
+        'bdVhSmaZEvbUhmvB2TqZ06eaoWM2xr4MbSk7s2vR.mp4', 1, 1241, false, 'video', null,
         'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('819e7f7d-72eb-4291-a737-6c2d94a816be', 'Linked List document', '# **Linked Lists - Comprehensive Documentation**
 
@@ -857,12 +857,12 @@ public:
 - Prefer arrays when **random access** is critical.
 - **Doubly linked lists** simplify backward traversal but consume more memory.', '', 2, 0, false, 'document', null,
         '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('835138e6-c935-4464-9490-b591e7bb2d5e', 'Leetcode 26: Solution', '',
-        '/storage/course/videos/OiVwwvJwmmUCxI0BTVQVZ7hjUfTj9H299eP5pKGn.mp4', 1, 730, false, 'video', null,
+        'OiVwwvJwmmUCxI0BTVQVZ7hjUfTj9H299eP5pKGn.mp4', 1, 730, false, 'video', null,
         'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('86ce3ac9-81d8-4c0d-9a08-82e62055b7d9', 'Array document', '# **Arrays: A Comprehensive Guide**
 
@@ -1022,17 +1022,17 @@ public int linearSearch(int[] arr, int target) {
 Arrays are **fundamental** in programming due to their **simplicity and efficiency** in accessing elements. While they have limitations (fixed size, slow insertions), they serve as the basis for more complex data structures like **ArrayLists, Hash Tables, and Dynamic Arrays**.',
         '', 4, 0, false, 'document', null, 'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53',
         '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('8e2d4e3b-693e-41ec-a9bc-71ebe6dba7e5', 'Leetcode 414: Third Maximum Number', '', '', 2, 0, false, 'assessment',
         null,
         'c94c5850-027f-4802-b843-64551ce117eb', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('a0f8388a-5e70-42d6-8a24-748231426a02', 'LinkedList part 2', '',
-        '/storage/course/videos/1GD3gY83SMQuiACN5DeQiMdJDmlEkdDXa07ESx4O.mp4', 1, 1217, false, 'video', null,
+        '1GD3gY83SMQuiACN5DeQiMdJDmlEkdDXa07ESx4O.mp4', 1, 1217, false, 'video', null,
         '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('a797bf9e-3a71-421a-ac9e-f1380cdfb87f', 'Big O notation document', '# **Linked Lists - Comprehensive Documentation**
 
@@ -1238,12 +1238,12 @@ public:
 - Prefer arrays when **random access** is critical.
 - **Doubly linked lists** simplify backward traversal but consume more memory.', '', 5, 0, false, 'document', null,
         '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('bed128e8-a4c2-4e87-87f5-10d5323b2047', 'Quiz about Binary Search', '', '', 4, 0,
         false, 'assessment', null, 'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53',
         '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('d0366ee2-8e19-41a7-9b8d-ddd46cb290ad', 'Dynamic Programming document', '# **Dynamic Programming (DP) - Complete Guide**
 
@@ -1400,27 +1400,27 @@ def climbStairs(n):
 This document covers **core DP concepts**, **implementation strategies**, and **classic problems**. Use it as a cheat sheet for interviews! 🚀',
         '', 2, 0, false, 'document', null, '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53',
         '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('d1f0c612-5008-4ba2-9354-befbc9ba665a', 'LinkedList part 1', '',
-        '/storage/course/videos/Nc4j3zuqWznD9vzZIpRto9BpddyIlZf4ni19RHSd.mp4', 0, 816, false, 'video', null,
+        'Nc4j3zuqWznD9vzZIpRto9BpddyIlZf4ni19RHSd.mp4', 0, 816, false, 'video', null,
         '9a7ec28c-498e-4190-bf20-4f402c827ebd', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('e65c59a7-8fa5-4a94-ae93-d6a8e08e46b0', 'Dynamic Programming part 2', '',
-        '/storage/course/videos/yjsiKqHeF6bkI2p72usgYhPWwhKsjkIjdSBvAeRq.mp4', 1, 239, false, 'video', null,
+        'yjsiKqHeF6bkI2p72usgYhPWwhKsjkIjdSBvAeRq.mp4', 1, 239, false, 'video', null,
         '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('eb93c554-343b-49f6-bae1-cac28b57fa7e', 'What is Binary Search', '',
-        '/storage/course/videos/j1WaG8QluPemFBHAEgy4Yblocz9cgdbrLDonsShB.mp4', 0, 462, false, 'video', null,
+        'j1WaG8QluPemFBHAEgy4Yblocz9cgdbrLDonsShB.mp4', 0, 462, false, 'video', null,
         'e1c1e032-44f8-4218-8c1d-3759b8b2feab', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('f4631405-8421-438a-be4b-dee58f2d3192', 'Dynamic Programming part 1', '',
-        '/storage/course/videos/RBFXf05qV03Egx286nkjJxjR34DBGavkr1Bmxeoi.mp4', 0, 399, false, 'video', null,
+        'RBFXf05qV03Egx286nkjJxjR34DBGavkr1Bmxeoi.mp4', 0, 399, false, 'video', null,
         '0fa22f97-54b5-41c0-ac11-ceb9db6ad39c', '2025-08-08 15:39:53', '2025-08-08 15:39:53');
-INSERT INTO codezone.lessons (id, title, document, video_url, position, duration, preview, type, resources,
+INSERT INTO codezone.lessons (id, title, document, video_file_name, position, duration, preview, type, resources,
                               module_id, created_at, updated_at)
 VALUES ('fac9d284-526d-48ae-8a21-136ca36182f2', 'Programming practice about array', '', '', 3, 0, false, 'assessment',
         null, 'b4b107fc-ac88-432b-9735-a0b395252662', '2025-08-08 15:39:53',

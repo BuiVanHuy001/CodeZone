@@ -48,8 +48,7 @@ class Index extends Component {
         [
             'title' => 'Bui Van Huy',
             'lesson_count' => 1,
-            'lessons' => [
-            ]
+            'lessons' => []
         ]
     ];
 
@@ -220,7 +219,7 @@ class Index extends Component {
                         'title' => $lessonData['title'],
                         'type' => $lessonData['type'],
                         'duration' => $lessonData['duration'] ?? 0,
-                        'video_url' => $lessonData['video_url'],
+                        'video_file_name' => $lessonData['video_file_name'],
                         'document' => $lessonData['content'], // Fix: Use 'content' for a document
                         'preview' => $lessonData['preview'] ?? false,
                         'position' => $lessonKey,

@@ -6,11 +6,11 @@ use App\Traits\HasSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
     use HasFactory, Notifiable, HasSlug;
 
     protected $fillable = ['name', 'email', 'password', 'slug', 'avatar_url'];
@@ -19,32 +19,32 @@ class User extends Authenticatable
 
     public static array $ROLES = ['student', 'admin', 'instructor', 'super_admin', 'organization'];
 
-	public static array $STATUSES = [
-		'active' => [
-			'label' => 'Active',
-			'class' => 'bg-color-success-opacity color-success'
-		],
-		'pending' => [
-			'label' => 'Pending',
-			'class' => 'bg-color-warning-opacity color-warning'
-		],
-		'banned' => [
-			'label' => 'Banned',
-			'class' => 'bg-color-danger-opacity color-danger'
-		],
-		'suspended' => [
-			'label' => 'Suspended',
-			'class' => 'bg-color-danger-opacity color-danger'
-		],
-		'rejected' => [
-			'label' => 'Rejected',
-			'class' => 'bg-color-secondary-opacity color-secondary'
-		],
-		'deleted' => [
-			'label' => 'Deleted',
-			'class' => 'bg-color-secondary-opacity color-secondary'
-		],
-	];
+    public static array $STATUSES = [
+        'active' => [
+            'label' => 'Active',
+            'class' => 'bg-color-success-opacity color-success'
+        ],
+        'pending' => [
+            'label' => 'Pending',
+            'class' => 'bg-color-warning-opacity color-warning'
+        ],
+        'banned' => [
+            'label' => 'Banned',
+            'class' => 'bg-color-danger-opacity color-danger'
+        ],
+        'suspended' => [
+            'label' => 'Suspended',
+            'class' => 'bg-color-danger-opacity color-danger'
+        ],
+        'rejected' => [
+            'label' => 'Rejected',
+            'class' => 'bg-color-secondary-opacity color-secondary'
+        ],
+        'deleted' => [
+            'label' => 'Deleted',
+            'class' => 'bg-color-secondary-opacity color-secondary'
+        ],
+    ];
 
     protected function casts(): array
     {
@@ -59,6 +59,11 @@ class User extends Authenticatable
         return $this->hasMany(Course::class);
     }
 
+    public function organizations(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'organization_users', 'user_id', 'organization_id');
+    }
+
     public function batchEnrollments(): hasMany
     {
         return $this->hasMany(BatchEnrollments::class);
@@ -69,15 +74,15 @@ class User extends Authenticatable
         return $this->hasMany(TrackingProgress::class);
     }
 
-	public function getStatusClassAttribute(): string
-	{
-		return self::$STATUSES[$this->status]['class'] ?? 'bg-color-secondary-opacity color-secondary';
-	}
+    public function getStatusClassAttribute(): string
+    {
+        return self::$STATUSES[$this->status]['class'] ?? 'bg-color-secondary-opacity color-secondary';
+    }
 
-	public function getStatusLabelAttribute(): string
-	{
-		return self::$STATUSES[$this->status]['label'] ?? 'Unknown';
-	}
+    public function getStatusLabelAttribute(): string
+    {
+        return self::$STATUSES[$this->status]['label'] ?? 'Unknown';
+    }
 
     public function calculateCourseProgress(Course $course): float|int
     {
@@ -98,14 +103,14 @@ class User extends Authenticatable
         return round(($completedLessons / $totalLessons) * 100, 2);
     }
 
-	public function organizationProfile(): HasOne
-	{
-		return $this->hasOne(OrganizationProfile::class, 'user_id');
-	}
-
-	public function instructorProfile(): HasOne
+    public function organizationProfile(): HasOne
     {
-	    return $this->hasOne(InstructorProfile::class, 'user_id');
+        return $this->hasOne(OrganizationProfile::class, 'user_id');
+    }
+
+    public function instructorProfile(): HasOne
+    {
+        return $this->hasOne(InstructorProfile::class, 'user_id');
     }
 
     public function studentProfile(): HasOne|User
@@ -113,18 +118,13 @@ class User extends Authenticatable
         return $this->hasOne(StudentProfile::class, 'user_id');
     }
 
-	public function getProfile(): HasOne
-	{
-        if ($this->isOrganization()) {
-			return $this->organizationProfile();
-		} else {
-			return $this->instructorProfile();
-		}
-    }
-
-    public function enrollments(): HasMany
+    public function getProfile(): HasOne
     {
-        return $this->hasMany(Enrollment::class, 'user_id');
+        if ($this->isOrganization()) {
+            return $this->organizationProfile();
+        } else {
+            return $this->instructorProfile();
+        }
     }
 
     public function orders(): HasMany
@@ -153,6 +153,7 @@ class User extends Authenticatable
                                ->where('user_id', $userId)
                                ->exists();
     }
+
     public function isEnrolledThisCourse(Course $course): bool
     {
         $isReviewable = false;
@@ -173,6 +174,19 @@ class User extends Authenticatable
     public function getDashboardMenu(): array
     {
         return config("menus.$this->role", []);
+    }
+
+    public function getOrganizationOfUser(): string
+    {
+        $organizations = $this->relationLoaded('organizations')
+            ? $this->organizations
+            : $this->organizations()->select('users.id', 'users.name')->get();
+
+        return $organizations
+            ->pluck('name')
+            ->filter()
+            ->unique()
+            ->implode(', ');
     }
 
     public function slugSourceField(): string
