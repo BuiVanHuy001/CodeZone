@@ -62,7 +62,7 @@ class Course extends Model
         foreach ($this->modules as $module) {
             foreach ($module->lessons as $lesson) {
                 if ($lesson->preview) {
-                    $introductionVideoUrl = $lesson->video_url;
+                    $introductionVideoUrl = $lesson->video_file_name;
                     break 2;
                 }
             }
