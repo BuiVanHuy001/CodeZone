@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Business;
+namespace App\Services\Organization;
 
 use App\Imports\MemberImport;
 use App\Models\StudentProfile;

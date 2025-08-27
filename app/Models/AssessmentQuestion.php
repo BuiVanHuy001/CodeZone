@@ -13,6 +13,27 @@ class AssessmentQuestion extends Model
 		'multiple_choice' => 'Multiple Choice',
 	];
 
+    public static array $EXPECTED_COLUMNS = [
+        'text_of_the_question' => ' Text of the question',
+        'question_type' => ' Question type',
+        'option_1' => ' Option 1',
+        'explanation_option_1' => ' Explanation option 1',
+        'option_2' => ' Option 2',
+        'explanation_option_2' => ' Explanation option 2',
+        'option_3' => ' Option 3',
+        'explanation_option_3' => ' Explanation option 3',
+        'option_4' => ' Option 4',
+        'explanation_option_4' => ' Explanation option 4',
+        'the_correct_option_choice' => 'The correct option choice',
+    ];
+
+    public static array $REQUIRED_COLUMNS = [
+        'text_of_the_question',
+        'the_correct_option_choice',
+        'option_1',
+        'option_2',
+    ];
+
     public function isMultipleAnswers(): bool
     {
         $answerCount = 0;

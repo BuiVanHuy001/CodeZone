@@ -7,6 +7,7 @@ use Illuminate\View\Component;
 
 class Text extends Component {
     public function __construct(
+        public string $model,
         public string $name,
         public string $label = '',
         public string $placeholder = '',

@@ -25,7 +25,7 @@
                                     <div class="accordion-body card-body">
                                         <div class="rbt-course-field-wrapper rbt-default-form">
                                             <x-client.dashboard.inputs.text
-                                                wire:model.lazy="title"
+                                                model="title"
                                                 name="title"
                                                 label="Course Title"
                                                 placeholder="Enter course title"
@@ -34,7 +34,7 @@
                                             />
 
                                             <x-client.dashboard.inputs.text
-                                                wire:model.live.lazy="heading"
+                                                model="heading"
                                                 name="heading"
                                                 label="Course heading"
                                                 placeholder="Enter your course heading"
@@ -42,17 +42,13 @@
                                                 info="A catchy, clear headline to attract learners."
                                             />
 
-                                            <div class="course-field mb--15" wire:ignore>
-                                                <label for="description">About Course</label>
-                                                <input type="hidden" id="description_input" wire:model="description">
-                                                <div id="toolbar-container"></div>
-                                                <div id="description"></div>
-                                                <small class="d-block mt-3">
-                                                    <i class="feather-info"></i>Markdown is supported. Use it to
-                                                    describe your course in
-                                                    detail.
-                                                </small>
-                                            </div>
+                                            <x-client.dashboard.inputs.markdown-area
+                                                id="description"
+                                                label="About course"
+                                                name="description"
+                                                :isError="$errors->has('description')"
+                                                info="Markdown is supported. Use it to describe your course in detail."
+                                            />
 
                                             <div class="course-field mb--15 edu-bg-gray">
                                                 <h6>Course Settings</h6>
@@ -141,7 +137,7 @@
                                                                          role="tabpanel" aria-labelledby="batch-tab">
                                                                         <div class="course-field mb--15">
                                                                             <x-client.dashboard.inputs.text
-                                                                                wire:model="startDate"
+                                                                                model="startDate"
                                                                                 type="date"
                                                                                 label="Start time"
                                                                                 name="start_time"
@@ -150,8 +146,9 @@
                                                                             />
 
                                                                             <x-client.dashboard.inputs.text
+                                                                                model="endDate"
                                                                                 label="End time"
-                                                                                type="date" wire:model="endDate"
+                                                                                type="date"
                                                                                 name="end_time"
                                                                                 info="End at 23:59"
                                                                                 :isError="$errors->has('endDate')"
@@ -260,7 +257,6 @@
 </main>
 @script
 <script>
-    const courseDescriptionInput = document.querySelector('#description_input');
     new EditorView(
         {
             extensions: [
@@ -270,8 +266,7 @@
                 EditorView.lineWrapping,
                 EditorView.updateListener.of(update => {
                     if (update.docChanged) {
-                        courseDescriptionInput.value = update.state.doc.toString();
-                        courseDescriptionInput.dispatchEvent(new Event('input'));
+                        $wire.description = update.state.doc.toString();
                     }
                 }),
                 EditorView.theme({
@@ -288,7 +283,7 @@
                     },
                 }),
             ],
-            parent: document.getElementById('description'),
+            parent: document.getElementById('description-editor'),
         }
     );
 </script>

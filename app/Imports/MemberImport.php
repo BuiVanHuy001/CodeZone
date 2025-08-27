@@ -49,6 +49,7 @@ class MemberImport implements ToCollection, SkipsOnError, SkipsOnFailure, WithHe
 
         return $row;
     }
+
     private function parseDob(string|int $dob): string
     {
         if (is_numeric($dob)) {
