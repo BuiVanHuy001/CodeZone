@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Client\CourseCreation\Components\Builders;
 
+use App\Models\Assessment;
 use App\Models\Lesson;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Validation\Rule;
 use Livewire\Attributes\Modelable;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
@@ -15,6 +15,7 @@ use Livewire\Component;
 class Course extends Component {
     #[Modelable]
     public array $modules;
+
     #[Validate(rule: ['required', 'min:3', 'max:255'], message: [
         'require' => 'Module title is required.',
         'min' => 'Module title must be at least 3 characters.',
@@ -31,6 +32,11 @@ class Course extends Component {
         'type' => ''
     ];
 
+    public array $newLessonAssessments = [
+        'title' => '',
+        'description' => '',
+    ];
+
     public array $selectedModule = ['index' => 0];
 
     public function updated($propertyName): void
@@ -40,16 +46,30 @@ class Course extends Component {
 
     public function updatedNewLessonType(): void
     {
-        if (!empty($this->newLesson['type'])) {
+        if (in_array($this->newLesson['type'], array_keys(Lesson::$TYPES))) {
             if ($this->newLesson['type'] !== 'video') {
                 $this->dispatch('lesson-video-deleted');
 
                 $this->newLesson['video_file_name'] = '';
                 $this->newLesson['duration'] = 0;
-            } elseif ($this->newLesson['type'] !== 'document' && !empty($this->newLesson['document'])) {
+            } elseif ($this->newLesson['type'] !== 'document') {
                 $this->newLesson['document'] = '';
             }
+        } else {
+            $this->newLesson['document'] = '';
+            $this->newLesson['preview'] = false;
+            $this->newLesson['duration'] = 0;
+            $this->newLesson['video_file_name'] = '';
+            $this->newLesson['type'] = '';
         }
+    }
+
+    public function updatedNewLessonAssessmentsType($value): void
+    {
+        $this->newLesson['assessments']['type'] = $value;
+        $this->newLesson['assessments']['title'] = '';
+        $this->newLesson['assessments']['description'] = '';
+        $this->newLesson['assessments']['assessments_questions'] = [];
     }
 
     public function editModule($index): void
@@ -117,7 +137,11 @@ class Course extends Component {
     #[On('assessment-builders-removed')]
     public function removeAssessmentBuilder(): void
     {
-        unset($this->newLesson['assessments']);
+        $this->newLesson['assessments'] = [
+            'title' => '',
+            'description' => '',
+            'type' => '',
+        ];
     }
 
     #[On('document-changed')]
@@ -145,9 +169,10 @@ class Course extends Component {
             ],
             'modules.*.lessons' => 'required|array|min:1',
             'modules.*.lessons.*.title' => 'required|min:3|max:255',
-            'modules.*.lessons.*.type' => ['required', Rule::in(Lesson::$TYPES)],
+            'modules.*.lessons.*.type' => 'required|in:' . implode(',', array_keys(Lesson::$TYPES)),
             'newLesson.title' => 'required|min:3|max:255',
-            'newLesson.type' => 'required|in:' . implode(',', Lesson::$TYPES),
+            'newLesson.type' => 'required|in:' . implode(',', array_keys(Lesson::$TYPES)),
+            'newLesson.assessments.type' => 'required|in:' . implode(',', array_keys(Assessment::$TYPES)),
         ];
     }
 

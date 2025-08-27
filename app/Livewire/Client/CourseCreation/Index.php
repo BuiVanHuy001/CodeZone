@@ -16,7 +16,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -60,14 +59,14 @@ class Index extends Component {
             'heading' => 'required|min:3|max:255',
             'price' => 'required|numeric|min:0',
             'category' => 'required|exists:categories,id',
-            'level' => ['required', Rule::in(Course::$LEVELS)],
+            'level' => 'required|in:' . implode(',', array_keys(Course::$LEVELS)),
             'startDate' => 'required|date|after_or_equal:today',
             'endDate' => 'required|date|after_or_equal:startDate',
             'modules' => 'required|array|min:1',
             'modules.*.title' => 'required|min:3|max:255',
             'modules.*.lessons' => 'required|array|min:1',
             'modules.*.lessons.*.title' => 'required|min:3|max:255',
-            'modules.*.lessons.*.type' => ['required', Rule::in(Lesson::$TYPES)],
+            'modules.*.lessons.*.type' => 'required|in:' . implode(',', array_keys(Lesson::$TYPES)),
         ];
     }
 

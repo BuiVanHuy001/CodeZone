@@ -33,6 +33,7 @@ class QuizzesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
         $missing = array_diff($required, $headers);
 
         if (!empty($missing)) {
+            // Đổi key thành label đẹp từ EXPECTED_COLUMNS
             $missingLabels = array_map(fn($key) => AssessmentQuestion::$EXPECTED_COLUMNS[$key] ?? $key, $missing);
 
             throw new \Exception("File Excel thiếu các cột: " . implode(', ', $missingLabels));

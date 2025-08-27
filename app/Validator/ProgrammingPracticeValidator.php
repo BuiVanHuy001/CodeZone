@@ -50,11 +50,10 @@ class ProgrammingPracticeValidator {
         'newTestCase.output.type.in' => 'Invalid output type.',
     ];
 
-    public static function rules($newTestCase, array $typeMap): array
+    public static function rules(string $allowedTypes, $newTestCase, array $typeMap): array
     {
-        $allowedTypes = implode(',', array_keys($typeMap));
         return [
-            'programming.title' => 'required|min:3|max:50',
+            'programming.title' => 'required|min:3|max:255',
             'programming.description' => 'required',
             'problem.function_name' => [
                 'required',
@@ -65,22 +64,49 @@ class ProgrammingPracticeValidator {
             ],
             'problem.return_type' => 'required|in:' . $allowedTypes,
             'problem.allowed_languages' => 'required|array|min:1|in:' . implode(',', array_keys(ProgrammingAssignmentDetails::$SUPPORTED_LANGUAGES)),
-
-            'problem.params' => [
-                function ($attribute, $value, $fail) {
-                    if (empty($value) || count(array_filter($value, fn($p) => !empty($p['name']) && !empty($p['type']))) === 0) {
-                        $fail('At least one parameter is required.');
-                    }
-                }
-            ],
-
-            'problem.params.*.name' => 'required_with:problem.params.*.type|min:1|max:20',
-            'problem.params.*.type' => 'required_with:problem.params.*.name|in:' . $allowedTypes,
-
+            'problem.params.*.name' => 'required|min:1|max:20',
+            'problem.params.*.type' => 'required|in:' . $allowedTypes,
             'problem.test_cases.*.inputs.*.value' => 'required',
             'problem.test_cases.*.output.value' => 'required',
             'problem.test_cases.*.inputs.*.type' => 'required|in:' . $allowedTypes,
             'problem.test_cases.*.output.type' => 'required|in:' . $allowedTypes,
+            'problem.code-template' => 'required|min:1',
+
+            'newParam.name' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    self::validateIdentifier('variable name', $value, $fail);
+                }
+            ],
+            'newParam.type' => 'required|in:' . $allowedTypes,
+
+            'newTestCase.inputs.*.value' => [
+                'required',
+                function ($attribute, $value, $fail) use ($typeMap, $newTestCase) {
+                    $segments = explode('.', $attribute);
+                    $index = $segments[2] ?? null;
+
+                    $type = $index !== null
+                        ? data_get($newTestCase, "inputs.$index.type")
+                        : null;
+
+                    if ($type) {
+                        self::validateValueByType($type, $value, $fail, $typeMap);
+                    }
+                }
+            ],
+            'newTestCase.inputs.*.type' => 'required|in:' . $allowedTypes,
+            'newTestCase.output.value' => [
+                'required',
+                function ($attribute, $value, $fail) use ($newTestCase) {
+                    $type = data_get($newTestCase, 'output.type');
+                    if ($type) {
+                        self::validateValueByType($type, $value, $fail);
+                    }
+                },
+            ],
+            'newTestCase.output.type' => 'required|in:' . $allowedTypes,
         ];
     }
 
@@ -102,80 +128,5 @@ class ProgrammingPracticeValidator {
         if (in_array(strtolower($value), $reserved, true)) {
             $fail("The {$attribute} cannot be a reserved keyword.");
         }
-    }
-
-    public static function getRulesNewParam(array $typeMap): array
-    {
-        return [
-            'newParam.name' => [
-                'required',
-                'min:1',
-                'max:20',
-                function ($attribute, $value, $fail) {
-                    ProgrammingPracticeValidator::validateIdentifier('parameter name', $value, $fail);
-                },
-            ],
-            'newParam.type' => 'required|in:' . implode(',', array_keys($typeMap)),
-        ];
-    }
-
-    public static function getRulesNewTestCase(array $typeMap, array $newTestCase, array $problem): array
-    {
-        $allowedTypes = implode(',', array_keys($typeMap));
-
-        return [
-            'newTestCase.inputs.*.name' => [
-                'required',
-                'min:1',
-                'max:20',
-                function ($attribute, $value, $fail) {
-                    ProgrammingPracticeValidator::validateIdentifier('input name', (string)$value, $fail);
-                },
-            ],
-            'newTestCase.inputs.*.type' => [
-                'required',
-                'in:' . $allowedTypes,
-                function ($attribute, $value, $fail) use ($problem) {
-                    $segments = explode('.', $attribute);
-                    $index = (int)($segments[2] ?? -1);
-
-                    $expectedType = data_get($problem, "params.$index.type");
-                    if ($expectedType && $value !== $expectedType) {
-                        $fail("Input type must match the parameter type '{$expectedType}'.");
-                    }
-                },
-            ],
-            'newTestCase.inputs.*.value' => [
-                'required',
-                function ($attribute, $value, $fail) use ($newTestCase, $typeMap) {
-                    $segments = explode('.', $attribute); // newTestCase, inputs, {index}, value
-                    $index = (int)($segments[2] ?? -1);
-
-                    $type = data_get($newTestCase, "inputs.$index.type");
-                    if ($type) {
-                        ProgrammingPracticeValidator::validateValueByType($type, (string)$value, $fail, $typeMap);
-                    }
-                },
-            ],
-            'newTestCase.output.type' => [
-                'required',
-                'in:' . $allowedTypes,
-                function ($attribute, $value, $fail) {
-                    $returnType = $problem['return_type'] ?? null;
-                    if ($returnType && $value !== $returnType) {
-                        $fail("Output type must match the return type '{$returnType}'.");
-                    }
-                },
-            ],
-            'newTestCase.output.value' => [
-                'required',
-                function ($attribute, $value, $fail) use ($newTestCase, $typeMap) {
-                    $type = data_get($newTestCase, 'output.type') ?: ($problem['return_type'] ?? null);
-                    if ($type) {
-                        ProgrammingPracticeValidator::validateValueByType($type, (string)$value, $fail, $typeMap);
-                    }
-                },
-            ],
-        ];
     }
 }

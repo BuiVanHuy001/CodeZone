@@ -1,192 +1,261 @@
-<div x-data="{ activeQuestion: 1 }" class="course-field mb--20 mt-3 rbt-course-wrape position-relative">
-    <h6>Quiz</h6>
-    <pre>{{ json_encode($quiz, JSON_PRETTY_PRINT) }}</pre>
+<div x-data="{ activeQuestion: 1 }"
+    @class([
+       'course-field mb--20 mt-3 position-relative border p-5 rounded',
+       'border-danger' => $errors->has('quiz.*'),
+   ])>
+    <h6>Quiz: <span wire:text="quiz.title"></span></h6>
     <div class="position-absolute" style="right: 10px; top: 10px; cursor: pointer;">
-        <i wire:click="removeQuiz" @click="activeTab = null" class="feather-trash me-auto"></i>
-    </div>
-    <div id="question-1" class="question" x-show="activeQuestion === 1">
-        <x-client.dashboard.inputs.text
-            wire:model.lazy="quiz.title"
-            name="quiz.title"
-            label="Quiz Title"
-            placeholder="Enter course title"
-            info="Provide a clear, descriptive title for this quiz assessment."
-            :isError="$errors->has('quiz.title')"
-        />
-        <div class="course-field mb--30">
-            <label>Quiz Description</label>
-            <div wire:ignore id="quiz-description-editor"></div>
-            <input type="hidden"
-                   id="quiz-description-input"
-                   value="{{ $quiz['description'] }}"
-                   wire:model="quiz.description"/>
+        <div class="inner">
+            <ul class="rbt-list-style-1 rbt-course-list d-flex gap-3 align-items-center">
+                <li>
+                    <button type="button" class="btn quiz-modal__edit-btn dropdown-toggle me-2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="feather-more-horizontal"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a wire:click="toggleShowDetail" class="dropdown-item" href="#" type="button">
+                                @if($showDetail)
+                                    <i class="feather-eye-off"></i>
+                                    Hide detail
+                                @else
+                                    <i class="feather-edit-2"></i>
+                                    Show detail
+                                @endif
+                            </a>
+                        </li>
+                        <li>
+                            <a wire:click.prevent="removeQuiz" class="dropdown-item delete-item" href="#">
+                                <i class="feather-trash"></i>
+                                Delete
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
-    <div id="question-2" class="question" x-show="activeQuestion === 2">
-        <div class="course-field mb--20">
-            @foreach($quiz['assessments_questions'] ?? [] as $questionKey => $question)
-                <div x-data="{ open: false }" class="rbt-course-wrape mb-4">
-                    <div class="d-flex justify-content-between" style="cursor: auto;">
-                        <div class="inner d-flex align-items-center gap-2">
-                            <h6 class="rbt-title mb-0"><strong>Question No.{{ $questionKey + 1 }}
-                                    : </strong> {{ $question['content'] }}</h6>
-                        </div>
-                        <div class="inner">
-                            <ul class="rbt-list-style-1 rbt-course-list d-flex gap-3 align-items-center">
-                                <li>
-                                    <button type="button" class="btn quiz-modal__edit-btn dropdown-toggle me-2" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="feather-edit"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a @click.prevent="open = true" class="dropdown-item" href="#" type="button">
-                                                <i class="feather-edit-2"></i>
-                                                Edit
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a wire:click.prevent="removeQuestion({{$questionKey}})" class="dropdown-item delete-item" href="#">
-                                                <i class="feather-trash"></i>
-                                                Delete
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+    @if($showDetail)
+        <div id="question-1" class="question" x-show="activeQuestion === 1">
+            <x-client.dashboard.inputs.text
+                model="quiz.title"
+                name="quiz.title"
+                label="Quiz Title"
+                placeholder="Enter quiz title"
+                info="Provide a clear, descriptive title for this quiz assessment."
+                :isError="$errors->has('quiz.title')"
+            />
 
-                    <div x-show="open">
-                        <div class="course-field mb--20 mt-3">
-                            <label for="">Write your question here</label>
-                            <input id="" wire:model="quiz.assessments_questions.{{ $questionKey }}.content" type="text" placeholder="Type question here">
-                        </div>
-                        <div class="course-field mb--20">
-                            <h6>Select your question type</h6>
-                            <div class="rbt-modern-select bg-transparent height-45 w-100 mb--10">
-                                <select id="questionType" wire:model="quiz.assessments_questions.{{ $questionKey }}.type" class="w-100">
-                                    <option value="" disabled selected>Select Question Type</option>
-                                    @foreach(\App\Models\AssessmentQuestion::$TYPES as $value => $label)
-                                        <option value="{{ $value }}">{{ $label }}</option>
-                                    @endforeach
-                                </select>
+            <x-client.dashboard.inputs.markdown-area
+                id="quiz-description"
+                label="Quiz Description"
+                info="Markdown is supported"
+            />
+        </div>
+        <div id="question-2" class="question" x-show="activeQuestion === 2">
+            @error('quiz.assessments_questions')
+            <small class="text-danger">
+                <i class="feather-alert-triangle"></i> {{ $message }}
+            </small>
+            @enderror
+            <div class="course-field mb--20">
+                @foreach($quiz['assessments_questions'] ?? [] as $questionIndex => $question)
+                    <div x-data="{ open: false }"
+                         class="rbt-course-wrape mb-4"
+                         @style([
+                             'border-color: red !important' => $errors->has("quiz.assessments_questions.$questionIndex.*"),
+                         ])
+                         wire:key="question-{{ $questionIndex }}"
+                    >
+                        <div class="d-flex justify-content-between">
+                            <div class="inner d-flex align-items-center gap-2">
+                                <h6 class="rbt-title mb-0">
+                                    <strong>Question No.{{ $loop->iteration }}: </strong>{{ $question['content'] }}
+                                </h6>
+                            </div>
+                            <div class="inner">
+                                <ul class="rbt-list-style-1 rbt-course-list d-flex gap-3 align-items-center">
+                                    <li>
+                                        <button type="button" class="btn quiz-modal__edit-btn dropdown-toggle me-2" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="feather-edit"></i>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a @click.prevent="open = true" class="dropdown-item" href="#" type="button">
+                                                    <i class="feather-edit-2"></i>
+                                                    Edit
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a wire:click.prevent="deleteQuestion({{ $questionIndex }})" class="dropdown-item delete-item" href="#">
+                                                    <i class="feather-trash"></i>
+                                                    Delete
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="course-field mb--20">
-                            <h6>Options </h6>
-                            <div class="course-field rbt-lesson-rightsidebar d-block mt--20">
-                                @foreach($question['question_options'] as $optionIndex => $option)
-                                    <div class="row mb-5 rbt-course-wrape">
-                                        <div class="d-flex justify-content-between mb-2">
-                                            <label for="">Option {{ $optionIndex + 1 }}</label>
-                                            <a href="#" wire:click.prevent="removeOption({{ $loop->parent->index }}, {{ $optionIndex }})"><i class="feather-trash me-auto"></i></a>
-                                        </div>
-                                        <div class="col-lg-9">
-                                            <input type="text" wire:model="quiz.assessments_questions.{{ $questionKey }}.question_options.{{ $optionIndex }}.content" placeholder="Type answer option here">
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="rbt-form-check">
-                                                <input class="form-check-input" wire:model="quiz.assessments_questions.{{ $questionKey }}.question_options.{{ $optionIndex }}.is_correct" type="checkbox" name="rbt-radio" id="question-{{ $questionKey }}-option-{{ $optionIndex }}">
-                                                <label class="form-check-label" for="question-{{ $questionKey }}-option-{{ $optionIndex }}">Mark
-                                                    as correct answer</label>
+
+                        <div x-show="open">
+                            <x-client.dashboard.inputs.text
+                                model="quiz.assessments_questions.{{ $questionIndex }}.content"
+                                name="quiz.assessments_questions.{{ $questionIndex }}.content"
+                                label="Write your question here"
+                                placeholder="Enter course title"
+                                info="Provide a clear, descriptive title for this quiz assessment."
+                                :isError="$errors->has('quiz.assessments_questions.'.$questionIndex.'.title')"
+                            />
+
+                            <x-client.dashboard.inputs.select
+                                name="quiz.assessments_questions.{{ $questionIndex }}.type"
+                                label="Select your question type"
+                                placeholder="Select Question Type"
+                                :options="\App\Models\AssessmentQuestion::$TYPES"
+                                info="Select the type of question you want to create."
+                                wire:model.lazy="quiz.assessments_questions.{{ $questionIndex }}.type"
+                                :isError="$errors->has('quiz.assessments_questions.'.$questionIndex.'.type')"
+                            />
+
+                            <div class="course-field mb--20">
+                                <h6>Options </h6>
+                                @error("quiz.assessments_questions.$questionIndex.question_options")
+                                <small class="text-danger d-block">
+                                    <i class="feather-alert-triangle"></i> {{ $message }}
+                                </small>
+                                @enderror
+                                <div class="course-field rbt-lesson-rightsidebar d-block mt--20">
+                                    @foreach($question['question_options'] as $optionIndex => $option)
+                                        <div wire:key="question-{{ $questionIndex }}-{{ $optionIndex }}"
+                                             class="row mb-5 rbt-course-wrape"
+                                             wire:ignore.self
+                                            @style([
+                                               'border-color: red !important' => $errors->has("quiz.assessments_questions.$questionIndex.question_options.$optionIndex.*"),
+                                           ])
+                                        >
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <h6>Option {{ $loop->iteration }}</h6>
+                                                <a wire:click.prevent="deleteOption({{ $loop->parent->index }}, {{ $optionIndex }})">
+                                                    <i class="feather-trash me-auto"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-9  mb--20">
+                                                <label class="form-label">Answer Content</label>
+                                                <input class="mb-0"
+                                                       type="text"
+                                                       wire:model="quiz.assessments_questions.{{ $questionIndex }}.question_options.{{ $optionIndex }}.content"
+                                                       placeholder="Type answer option here">
+                                                @error("quiz.assessments_questions.$questionIndex.question_options.$optionIndex.content")
+                                                <small class="text-danger">
+                                                    <i class="feather-alert-triangle"></i> {{ $message }}
+                                                </small>
+                                                @enderror
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="rbt-form-check">
+                                                    <input class="form-check-input"
+                                                           wire:model="quiz.assessments_questions.{{ $questionIndex }}.question_options.{{ $optionIndex }}.is_correct"
+                                                           type="checkbox" name="rbt-radio"
+                                                           id="question-{{ $questionIndex }}-option-{{ $optionIndex }}.is_correct"
+                                                    >
+                                                    <label class="form-check-label"
+                                                           for="question-{{ $questionIndex }}-option-{{ $optionIndex }}.is_correct">
+                                                        Mark as correct answer
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="course-field">
+                                                <h6 class="mb-3">Answer explanation</h6>
+                                                <textarea wire:model="quiz.assessments_questions.{{ $questionIndex }}.question_options.{{ $optionIndex }}.explanation"></textarea>
                                             </div>
                                         </div>
-                                        <div class="course-field">
-                                            <h6 class="mb-3">Add answer explanation</h6>
-                                            <textarea wire:model="quiz.assessments_questions.{{ $questionKey }}.question_options.{{ $optionIndex }}.explanation"></textarea>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <button wire:click="addOption({{ $loop->index }})" type="button" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
-                                <span class="icon-reverse-wrapper">
-                                    <span class="btn-text">Option</span>
-                                    <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                                    <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                                </span>
-                            </button>
+                                    @endforeach
+                                </div>
+                                <button wire:click="addOption({{ $loop->index }})" type="button" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
+                                    <span class="icon-reverse-wrapper">
+                                        <span class="btn-text">Option</span>
+                                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                    </span>
+                                </button>
 
-                            <button @click="open = false" type="button" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
-                                <span class="icon-reverse-wrapper">
-                                    <span class="btn-text">Save Question</span>
-                                    <span class="btn-icon"><i class="feather-save"></i></span>
-                                    <span class="btn-icon"><i class="feather-save"></i></span>
-                                </span>
-                            </button>
+                                @unless($errors->has("quiz.assessments_questions.$questionIndex.*"))
+                                    <button @click="open = false" type="button" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
+                                        <span class="icon-reverse-wrapper">
+                                            <span class="btn-text">Save Question</span>
+                                            <span class="btn-icon"><i class="feather-save"></i></span>
+                                            <span class="btn-icon"><i class="feather-save"></i></span>
+                                        </span>
+                                    </button>
+                                @endunless
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
+            <div class="course-field" x-data>
+                <button wire:click="addQuestion" class="rbt-btn btn-active hover-icon-reverse rbt-sm-btn-2 btn-1" type="button" id="next-btn-2">
+                    <span class="icon-reverse-wrapper">
+                        <span class="btn-text">Add Question</span>
+                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                    </span>
+                </button>
+
+                <input wire:model="excelFile" type="file" accept=".xlsx,.csv,.xls,.json" style="display: none;" x-ref="fileInput">
+
+                <button type="button" @click="$refs.fileInput.click()" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
+                    <span class="icon-reverse-wrapper">
+                        <span class="btn-text">Import form File</span>
+                        <span class="btn-icon"><i class="feather-download"></i></span>
+                        <span class="btn-icon"><i class="feather-download"></i></span>
+                    </span>
+                </button>
+
+                <a href="{{ asset('excel_file/SampleImportQuiz.xlsx') }}" download class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
+                    <span class="icon-reverse-wrapper">
+                        <span class="btn-text">Download Sample File</span>
+                        <span class="btn-icon"><i class="feather-download"></i></span>
+                        <span class="btn-icon"><i class="feather-download"></i></span>
+                    </span>
+                </a>
+
+            </div>
         </div>
-        <div class="course-field" x-data>
-            <button wire:click="addQuestion" class="rbt-btn btn-active hover-icon-reverse rbt-sm-btn-2 btn-1" type="button" id="next-btn-2">
-                <span class="icon-reverse-wrapper">
-                    <span class="btn-text">Add Question</span>
-                    <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                    <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                </span>
-            </button>
+        <div class="d-flex pt--30 justify-content-between">
+            <div class="content">
+                <button type="button"
+                        class="awe-btn bg-danger"
+                        wire:click="cancelQuizCreation">
+                    Cancel
+                </button>
+            </div>
+            <div class="content">
+                <button type="button" class="awe-btn bg-info"
+                        @click="if (activeQuestion > 1) activeQuestion--">
+                    Back
+                </button>
 
-            <input wire:model="excelFile" type="file" accept=".xlsx,.csv,.xls,.json" style="display: none;" x-ref="fileInput">
-
-            <button type="button" @click="$refs.fileInput.click()" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
-                <span class="icon-reverse-wrapper">
-                    <span class="btn-text">Import form File</span>
-                    <span class="btn-icon"><i class="feather-download"></i></span>
-                    <span class="btn-icon"><i class="feather-download"></i></span>
-                </span>
-            </button>
-
-            <a href="{{ asset('excel_file/SampleImportQuiz.xlsx') }}" download class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
-                <span class="icon-reverse-wrapper">
-                    <span class="btn-text">Download Sample File</span>
-                    <span class="btn-icon"><i class="feather-download"></i></span>
-                    <span class="btn-icon"><i class="feather-download"></i></span>
-                </span>
-            </a>
-
+                <button
+                    type="button"
+                    class="awe-btn"
+                    @disabled($errors->has('quiz.title'))
+                    @click="
+                    if (activeQuestion < 2) {
+                        activeQuestion++;
+                    } else
+                    {
+                        $wire.saveQuiz();
+                    }">
+                    <span x-text="activeQuestion <= 1 ? 'Save & Next' : 'Save'"></span>
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="d-flex pt--30 justify-content-between">
-        <div class="content">
-            <button type="button"
-                    wire:click="removeQuiz"
-                    class="awe-btn bg-danger"
-                    @click="activeTab = null">
-                Cancel
-            </button>
-        </div>
-        <div class="content">
-            <button type="button"
-                    class="awe-btn bg-info"
-                    id="prev-btn"
-                    @click="if (activeQuestion > 1) activeQuestion--">Back
-            </button>
-
-            <button
-                type="button"
-                @class([
-                    'awe-btn',
-                    'disabled' => $isErrors
-                ])
-                class="awe-btn"
-                @click="
-                if (activeQuestion < 2) {
-                    activeQuestion++;
-                } else {
-                  $wire.saveQuiz();
-                }
-              "
-            >
-                <span x-text="activeQuestion <= 1 ? 'Save \& Next' : 'Save'"></span>
-            </button>
-        </div>
-    </div>
+    @endif
 </div>
 @script
 <script>
     const assignmentDescriptionEditor = document.getElementById('quiz-description-editor');
-    const assignmentDescriptionInput = document.getElementById('quiz-description-input');
     new EditorView(
         {
             extensions: [
@@ -196,10 +265,9 @@
                 highlightActiveLine(),
                 highlightSpecialChars(),
                 EditorView.lineWrapping,
-                EditorView.updateListener.of(update => {
-                    if (update.docChanged) {
-                        assignmentDescriptionInput.value = update.state.doc.toString();
-                        assignmentDescriptionInput.dispatchEvent(new Event('input'));
+                EditorView.domEventHandlers({
+                    blur: (event, view) => {
+                        $wire.set('quiz.description', view.state.doc.toString());
                     }
                 }),
                 EditorView.theme({
@@ -216,7 +284,7 @@
                     },
                 }),
             ],
-            doc: assignmentDescriptionInput.value,
+            doc: '',
             parent: assignmentDescriptionEditor,
         }
     )

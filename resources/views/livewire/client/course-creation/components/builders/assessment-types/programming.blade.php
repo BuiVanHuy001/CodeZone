@@ -1,276 +1,306 @@
-<div class="course-field mb--20 mt-3 rbt-course-wrape position-relative">
-    <h6>Programming Assessment</h6>
+<div @class([
+        'course-field mb--20 mt-3 position-relative border p-5 rounded',
+        'border-danger' => $errors->has('programming.*'),
+    ])
+     x-data="{ step: 1 }"
+>
+    <h6>Programing: <span wire:text="programming.title"></span></h6>
     <div class="position-absolute" style="right: 10px; top: 10px; cursor: pointer;">
-        <i wire:click="removeQuiz" @click="activeTab = null" class="feather-trash me-auto"></i>
-    </div>
-    <div class="course-field mb--20">
-        <label for="{{ "assessment-title-$moduleIndex-$lessonIndex" }}">Title</label>
-        <input id="{{ "assessment-title-$moduleIndex-$lessonIndex" }}" wire:model="programmingPractice.title" type="text" placeholder="Type your assignments title">
-    </div>
-
-    <div class="course-field mb--30" wire:ignore>
-        <label>Description</label>
-        <div id="programming-practice-description-{{ $moduleIndex }}-{{ $lessonIndex }}-editor"></div>
-        <input wire:model="programmingPractice.description" type="hidden" id="programming-practice-description-{{ $moduleIndex }}-{{ $lessonIndex }}-input"/>
-        <small>Markdown is supported.</small>
-    </div>
-
-    <div class="course-field mb--20 col-lg-6">
-        <label>Function name</label>
-        <input type="text"
-               wire:model.blur="problemDetails.functionName"
-               placeholder="Type the function name">
-    </div>
-
-    <div class="course-field mb--20 col-lg-6">
-        <label>Function return type</label>
-        <select wire:model="problemDetails.returnType" class="h-auto">
-            @foreach($typeMap as $label => $type)
-                <option value="{{ $label }}">{{ $label }}</option>
-            @endforeach
-        </select>
-    </div>
-
-    <div x-data="{ addParameterButton: true, parameterForm: false }" class="course-field mb--20 col-lg-6">
-        <label>Parameter List</label>
-        <div class="row">
-            @forelse($problemDetails['params'] as $index => $param)
-                <div class="col-9">
-                    <p class="mb-0"><code>{{ $param['type'] }}</code> {{ $param['name'] }}</p>
-                </div>
-                <div class="col-3">
-                    <i class="feather-trash" wire:click="removeParameter({{ $index }})"></i>
-                </div>
-            @empty
-                <div class="col-12">
-                    <small class="mb-0">No parameters added yet.</small>
-                </div>
-            @endforelse
+        <div class="inner">
+            <ul class="rbt-list-style-1 rbt-course-list d-flex gap-3 align-items-center">
+                <li>
+                    <button type="button" class="btn quiz-modal__edit-btn dropdown-toggle me-2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="feather-more-horizontal"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a wire:click="toggleShowDetail" class="dropdown-item" href="#" type="button">
+                                @if($showDetail)
+                                    <i class="feather-eye-off"></i>
+                                    Hide detail
+                                @else
+                                    <i class="feather-edit-2"></i>
+                                    Show detail
+                                @endif
+                            </a>
+                        </li>
+                        <li>
+                            <a wire:click.prevent="removeAssignment" class="dropdown-item delete-item" href="#">
+                                <i class="feather-trash"></i>
+                                Delete
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </div>
+    </div>
 
-        <template x-if="parameterForm">
-            <div class="d-flex justify-center flex-wrap mt-2" x-data="{ type: '', name: '' }">
-                <div class="w-50">
-                    <select class="h-auto" x-model="type">
-                        <option value="" disabled selected>Data type</option>
-                        @foreach($typeMap as $label => $type)
-                            <option value="{{ $label }}">{{ $label }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="w-50">
-                    <input class="mb-0" type="text" placeholder="paramName" x-model="name">
-                </div>
-                <div class="w-100 mt-2">
-                    <button type="button"
-                            class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
-                            @click="parameterForm = false; addParameterButton = true;">
-                    <span class="icon-reverse-wrapper">
-                        <span class="btn-text">Cancel</span>
-                        <span class="btn-icon"><i class="feather-x-square"></i></span>
-                        <span class="btn-icon"><i class="feather-x-square"></i></span>
-                    </span>
+    @if($showDetail)
+        <div class="tab-1" x-show="step === 1">
+            <x-client.dashboard.inputs.text
+                model="programming.title"
+                name="programming.title"
+                label="Problem Title"
+                placeholder="e.g., Two Sum, Valid Parentheses, Longest Substring"
+                info="Enter a concise, descriptive title for your coding problem."
+                :isError="$errors->has('programming.title')"
+            />
+
+            <x-client.dashboard.inputs.markdown-area
+                id="programming-description"
+                name="programming.description"
+                label="Problem Description"
+                info="Describe the problem statement, constraints, and examples. Markdown formatting is supported."
+                :isError="$errors->has('programming.description')"
+            />
+
+            <div class="d-flex pt--30 justify-content-between">
+                <div class="content">
+                    <button type="button" class="awe-btn bg-danger">
+                        Cancel
                     </button>
-                    <button type="button"
-                            class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
-                            @click="parameterForm = false; addParameterButton = true;
-                                    $wire.addParameter(type, name); type = ''; name = ''">
-                    <span class="icon-reverse-wrapper">
-                        <span class="btn-text">Add</span>
-                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                    </span>
-                    </button>
+                </div>
+                <div class="content">
+                    <button class="awe-btn" @click="$wire.validateStep1().then(ok => ok && (step = 2))">Next</button>
                 </div>
             </div>
-        </template>
-
-        <template x-if="addParameterButton">
-            <button @click="parameterForm = true; addParameterButton = false"
-                    type="button"
-                    class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2 w-100 mt-3">
-                    <span class="icon-reverse-wrapper">
-                        <span class="btn-text">Add Parameter</span>
-                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                    </span>
-            </button>
-        </template>
-    </div>
-
-    <div class="course-field mb--20 col-lg-6" x-data="{testCaseForm: false, addTestCaseButton: true}">
-        <label>TestCase list</label>
-        <div>
-            @forelse($testCases as $index => $testCase)
-                <ul>
-                    <li x-data="{ open: false }" wire:key="testcase-list-{{ $index }}" class="mb-2">
-                        <div @click="open = !open" class="d-flex justify-content-between align-items-center" style="cursor: pointer;">
-                            <strong>TestCase {{ $index + 1 }}</strong>
-                            <div>
-                                <i class="feather-trash me-2" wire:click.stop="removeTestCase({{ $index }})"></i>
-                                <i :class="open ? 'feather-chevron-up' : 'feather-chevron-down'"></i>
-                            </div>
-                        </div>
-                        <ul x-show="open" style="display: none;" class="mt-2 ps-4">
-                            <li>
-                                <strong>Input:</strong>
-                                <ul class="ps-4">
-                                    @foreach($testCase['input'] as $paramName => $paramDetails)
-                                        <li>
-                                            <code>{{ $paramDetails['type'] }}</code>
-                                            {{ $paramName }} =
-                                            <code>{{ is_array($paramDetails['value']) ? json_encode($paramDetails['value']) : $paramDetails['value'] }}</code>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                            <li class="mt-1">
-                                <strong>Output:</strong>
-                                <code>{{ $this->problemDetails['returnType'] }}</code> =
-                                <code>{{ is_array($testCase['output']['value']) ? json_encode($testCase['output']['value']) : $testCase['output']['value'] }}</code>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            @empty
-                <small class="mb-0">No test cases added yet.</small>
-            @endforelse
         </div>
 
-        @if(!empty($this->problemDetails['params']))
-            <div x-show="testCaseForm">
-                <h6 class="mt-3 mb-0 text-center">Add a new TestCase</h6>
-                <ul>
-                    <li>
-                        <strong>Input</strong>
-                        @foreach($this->problemDetails['params'] as $index => $param)
-                            <div class="mb-2" wire:key="new-testcase-param-{{ $index }}-{{ $param['name'] }}">
-                                <p class="m-0"><code>{{ $param['type'] }}</code> {{ $param['name'] }}
-                                    <small>(<strong>Example:</strong>
-                                        <code style="color: #d63384">{{ $typeMap[$param['type']]['example'] }}</code>)</small>
-                                </p>
-                                <input id="param-value-{{ $param['name'] }}"
-                                       type="text"
-                                       class="h-auto"
-                                       wire:model="newTestCase.input.{{ $param['name'] }}.value"
-                                       placeholder="Enter value for {{ $param['name'] }}">
-                            </div>
-                        @endforeach
-                    </li>
-                    <li>
-                        <strong>Output</strong>
-                        <p class="m-0"><code>{{ $problemDetails['returnType'] }}</code>
-                            <small>(<strong>Example:</strong>
-                                <code style="color: #d63384">{{ $typeMap[$problemDetails['returnType']]['example'] }}</code>)</small>
-                        </p>
-                        <input type="text"
-                               class="h-auto"
-                               wire:model="newTestCase.output.value"
-                               placeholder="Type the expected output">
-                    </li>
+        <div class="tab-2 row" x-show="step === 2">
+            <x-client.dashboard.inputs.text
+                model="problem.function_name"
+                class="col-lg-6"
+                name="problem.function_name"
+                label="Method Signature"
+                placeholder="e.g., twoSum, findMedian, longestSubstring"
+                info="Enter the main method name in camelCase format (e.g., twoSum, reverseList)."
+                :isError="$errors->has('problem.function_name')"
+            />
+
+            <x-client.dashboard.inputs.select
+                wire:model.lazy="problem.return_type"
+                class="col-lg-6"
+                name="problem.return_type"
+                label="Return Type"
+                :options="$typeMap"
+                placeholder="Select a data type"
+                info="Select the expected return type of the method."
+                :isError="$errors->has('problem.return_type')"
+            />
+
+            <div class="course-field mb--20 col-lg-6">
+                <label>Parameter List</label>
+                <ul class="list-group list-group-flush">
+                    @forelse($problem['params'] as $index => $param)
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <code>{{ $typeMap[$param['type']]['label'] }}</code> {{ $param['name'] }}
+                            <button
+                                type="button"
+                                class="btn btn-md btn-danger"
+                                wire:click="removeParameter({{ $index }})"
+                            >
+                                <i class="feather-trash-2"></i>
+                            </button>
+                        </li>
+                    @empty
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            No parameters added yet.
+                        </li>
+                    @endforelse
                 </ul>
                 <div class="row">
-                    <button @click="testCaseForm = false; addTestCaseButton = true;"
-                            type="button"
-                            class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2 mt-3 col-4">
-                    <span class="icon-reverse-wrapper">
-                        <span class="btn-text">Cancel</span>
-                        <span class="btn-icon"><i class="feather-x-square"></i></span>
-                        <span class="btn-icon"><i class="feather-x-square"></i></span>
-                    </span>
-                    </button>
-                    <button @click="testCaseForm = false; addTestCaseButton = true; $wire.addTestCase()"
-                            type="button"
-                            class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2 mt-3 col-8">
-                    <span class="icon-reverse-wrapper">
-                        <span class="btn-text">Save</span>
-                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                    </span>
-                    </button>
+                    <div class="col-12 row">
+                        @error('newParam.*')
+                        <small class="text-danger d-block mb-2">
+                            <i class="feather-alert-triangle"></i> {{ $message }}
+                        </small>
+                        @enderror
+                        <div class="col-3 p-0">
+                            <label>
+                                <select
+                                    style="height: 50px"
+                                    wire:model.lazy="newParam.type"
+                                    @class([
+                                        'border-danger' => $errors->has('newParam.type')
+                                    ])
+                                >
+                                    <option value="">Select a data type</option>
+                                    @foreach($typeMap as $key => $type)
+                                        <option value="{{ $key }}">{{ $type['label'] }}</option>
+                                    @endforeach
+                                </select>
+                            </label>
+                        </div>
+                        <div class="col-7 p-0">
+                            <input
+                                wire:model.lazy="newParam.name"
+                                type="text"
+                                placeholder="Param name"
+                                @class([
+                                        'form-control',
+                                        'border-danger' => $errors->has('newParam.name')
+                                ])/>
+                        </div>
+                        <div class="col-2 p-0">
+                            <button class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
+                                    type="button"
+                                    wire:click="addParameter"
+                                    style="height: 50px"
+                            >
+                                <span class="icon-reverse-wrapper">
+                                    <span class="btn-text">Add</span>
+                                    <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                    <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <template x-if="addTestCaseButton">
-                <button @click="testCaseForm = true; addTestCaseButton = false"
-                        type="button"
-                        class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2 w-100 mt-3">
-            <span class="icon-reverse-wrapper">
-                <span class="btn-text">Add a TestCase</span>
-                <span class="btn-icon"><i class="feather-plus-square"></i></span>
-                <span class="btn-icon"><i class="feather-plus-square"></i></span>
-            </span>
-                </button>
-            </template>
-        @endif
-    </div>
+            <div class="course-field mb--20 col-lg-6">
+                <label>Testcases List</label>
+                @error('newTestCase.output.*')
+                <small class="text-danger d-block mb-2">
+                    <i class="feather-alert-triangle"></i> {{ $message }}
+                </small>
+                @enderror
+                <ul class="list-group list-group-flush">
+                    @forelse($problem['test_cases'] as $index => $testCase)
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Inputs:
+                            <ul>
+                                @foreach($testCase['inputs'] as $i => $input)
+                                    <li class="list-group-item">
+                                        <code>{{ $typeMap[$testCase['inputs'][$i]['type']]['label'] }}</code> {{ $testCase['inputs'][$i]['name'] }}
+                                        =
+                                        <code>{{ $testCase['inputs'][$i]['value'] }}</code>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <ul>
+                                Output:
+                                <li class="list-group-item">
+                                    @if(isset($testCase['output']))
+                                        <code>{{ $typeMap[$problem['return_type']]['label'] }}</code> expected =
+                                        <code>{{ $testCase['output']['value'] }}</code>
+                                    @endif
+                                </li>
+                            </ul>
+                            <button
+                                type="button"
+                                class="btn btn-md btn-danger"
+                                wire:click="removeTestCase({{ $index }})"
+                            >
+                                <i class="feather-trash-2"></i>
+                            </button>
+                        </li>
+                    @empty
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            You need to add at least one parameter to create a test case.
+                        </li>
+                    @endforelse
+                </ul>
 
-    <div class="course-field mb--20 col-lg-6">
-        <label>Allowed Programming Languages</label>
-        <div wire:ignore x-data x-init="$nextTick(() => $('select[data-live-search]').selectpicker('render'))"
-             x-show="true"
-             class="rbt-modern-select b-g-transparent height-45 w-100">
-            <select class="w-100" data-live-search="true"
-                    wire:model.live.debounce.250ms="languages"
-                    title="Select Language"
-                    multiple data-size="7"
-                    data-actions-box="true"
-                    data-selected-text-format="count > 2">
-                @foreach(\App\Models\ProgrammingAssignmentDetails::$SUPPORTED_LANGUAGES as $value => $label)
-                    <option value="{{ $value }}">{{ $label }}</option>
-                @endforeach
-            </select>
+                @if($problem['params'])
+                    <div class="row">
+                        <div class="col-12 row">
+                            @foreach($this->newTestCase['inputs'] as $index => $param)
+                                <x-client.dashboard.inputs.text
+                                    model="newTestCase.inputs.{{ $index }}.value"
+                                    name="newTestCase.inputs.{{ $index }}.value"
+                                    label="{{ $param['name'] }}"
+                                    info="Enter the input value for parameter '{{ $param['name'] }}' as {{ $typeMap[$param['type']]['label'] }} format (e.g: {{ $typeMap[$param['type']]['example'] }})."
+                                    :isError="$errors->has('newTestCase.inputs.' . $index . '.value')"
+                                />
+
+                            @endforeach
+                            @if(isset($newTestCase['output']))
+                                <x-client.dashboard.inputs.text
+                                    model="newTestCase.output.value"
+                                    name="newTestCase.output.value"
+                                    label="Expected Output"
+                                    info="Enter the expected output value as {{ $typeMap[$problem['return_type']]['label'] }} format (e.g: {{ $typeMap[$problem['return_type']]['example'] }})."
+                                    :isError="$errors->has('newTestCase.output.value')"
+                                />
+                            @endif
+                            <div class="col-2 p-0">
+                                <button class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2"
+                                        type="button"
+                                        wire:click="addTestCase"
+                                        style="height: 50px"
+                                >
+                                    <span class="icon-reverse-wrapper">
+                                        <span class="btn-text">Add</span>
+                                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                        <span class="btn-icon"><i class="feather-plus-square"></i></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
+
+            @if($this->canSelectLanguages)
+                <x-client.dashboard.inputs.live-search-select
+                    model="problem.allowed_languages"
+                    title="Allowed Languages"
+                    class="col-lg-6"
+                    name="problem.allowed_languages"
+                    label="Allowed Languages"
+                    placeholder="e.g., int, string"
+                    info="Select the allowed programming languages for this problem."
+                    :options="\App\Models\ProgrammingAssignmentDetails::$SUPPORTED_LANGUAGES"
+                />
+            @endif
+
+            <div class="d-flex pt--30 justify-content-between">
+                <div class="content">
+                    <button type="button" class="awe-btn bg-danger">Cancel</button>
+                </div>
+                <div class="content">
+                    <button type="button" class="awe-btn bg-info" @click="step = 1">Back</button>
+
+                    <button type="button" class="awe-btn">Save</button>
+                </div>
+            </div>
         </div>
-    </div>
-
-    @foreach($languages as  $language)
-        <div class="col-12">
-            <label class="mt-3" for="code-editor-{{ $language }}">Code template
-                for {{ \App\Models\ProgrammingAssignmentDetails::$SUPPORTED_LANGUAGES[$language] }}</label>
-            <div id="code-editor-{{ $language }}"></div>
-            <input type="hidden" id="input-code-editor-{{ $language }}"/>
-        </div>
-    @endforeach
-
-    <div class="d-flex pt--30 justify-content-between">
-        <button type="button" class="awe-btn bg-danger">Cancel</button>
-    </div>
+    @endif
 </div>
+
 @script
 <script>
-    const programmingPracticeDescriptionEditor = document.getElementById('programming-practice-description-{{ $moduleIndex }}-{{ $lessonIndex }}-editor');
-    const programmingPracticeDescriptionInput = document.getElementById('programming-practice-description-{{ $moduleIndex }}-{{ $lessonIndex }}-input');
-    new EditorView(
-        {
-            extensions: [
-                lineNumbers(),
-                markdown(),
-                highlightActiveLineGutter(),
-                highlightActiveLine(),
-                highlightSpecialChars(),
-                EditorView.lineWrapping,
-                EditorView.updateListener.of(update => {
-                    if (update.docChanged) {
-                        programmingPracticeDescriptionInput.value = update.state.doc.toString();
-                        programmingPracticeDescriptionInput.dispatchEvent(new Event('input'));
-                    }
-                }),
-                EditorView.theme({
-                    "&": {
-                        height: "200px",
-                        width: "100%",
-                        border: "1px solid #ddd",
-                        borderRadius: "4px",
-                        padding: "10px",
-                        fontSize: "13px",
-                    },
-                    ".cm-content": {
-                        caretColor: "#000",
-                    },
-                }),
-            ],
-            doc: programmingPracticeDescriptionInput.value,
-            parent: programmingPracticeDescriptionEditor,
-        });
+    new EditorView({
+        extensions: [
+            lineNumbers(),
+            markdown(),
+            highlightActiveLineGutter(),
+            highlightActiveLine(),
+            highlightSpecialChars(),
+            EditorView.lineWrapping,
+            EditorView.domEventHandlers({
+                blur: (event, view) => {
+                    $wire.set('programming.description', view.state.doc.toString());
+                }
+            }),
+            EditorView.theme({
+                "&": {
+                    height: "200px",
+                    width: "100%",
+                    border: "1px solid #ddd",
+                    borderRadius: "4px",
+                    padding: "10px",
+                    fontSize: "13px",
+                },
+                ".cm-content": {
+                    caretColor: "#000",
+                },
+            }),
+        ],
+        doc: '',
+        parent: document.getElementById('programming-description-editor')
+    });
 </script>
 @endscript
