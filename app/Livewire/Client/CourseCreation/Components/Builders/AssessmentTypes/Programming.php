@@ -2,38 +2,45 @@
 
 namespace App\Livewire\Client\CourseCreation\Components\Builders\AssessmentTypes;
 
+use App\Services\CourseCreation\Builders\AssessmentTypes\ProgrammingService;
+use App\Validator\ProgrammingPracticeValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Modelable;
 use Livewire\Component;
 
 class Programming extends Component
 {
-    public int $moduleIndex;
-    public int $lessonIndex;
-    public array $newTestCase = ['input' => [], 'output' => []];
-    public array $languages = [];
-    public array $inputErrors = [];
-    public string|null $outputError = null;
-    public array $typeMap = [
+    #[Modelable]
+    public array $programming;
+
+    public bool $showDetail = true;
+
+    public array $messages;
+
+    public string $allowedTypes;
+    public static array $typeMap = [
         'int' => [
             'python' => 'int',
             'php' => 'int',
             'java' => 'int',
             'js' => 'number',
             'cpp' => 'int',
+            'label' => 'Integer',
             'example' => '123',
-            'regex' => '/^\d+$/'
+            'regex' => '/^(0|-?[1-9]\d*)$/',
         ],
         'float' => [
             'python' => 'float',
             'php' => 'float',
-            'java' => 'float',
+            'java' => 'double',
             'js' => 'number',
-            'cpp' => 'float',
+            'cpp' => 'double',
+            'label' => 'Float',
             'example' => '123.45',
-            'regex' => '/^\d+(\.\d+)?$/'
+            'regex' => '/^-?(?:\d+([.,]\d+)?|\d*[.,]\d+)$/',
         ],
         'string' => [
             'python' => 'str',
@@ -41,8 +48,9 @@ class Programming extends Component
             'java' => 'String',
             'js' => 'string',
             'cpp' => 'string',
+            'label' => 'String',
             'example' => '"Hello, World!"',
-            'regex' => '/^".*"$/'
+            'regex' => null,
         ],
         'bool' => [
             'python' => 'bool',
@@ -50,347 +58,258 @@ class Programming extends Component
             'java' => 'boolean',
             'js' => 'boolean',
             'cpp' => 'bool',
+            'label' => 'Boolean',
             'example' => 'true',
-            'regex' => '/^(true|false)$/'
+            'regex' => '/^(true|false)$/i',
         ],
-        'array<int>' => [
+        'int[]' => [
             'python' => 'List[int]',
             'php' => 'array',
             'java' => 'int[]',
             'js' => 'number[]',
             'cpp' => 'vector<int>',
-            'example' => '[1, 2, 3]',
-            'regex' => '/^\[\d+(,\s*\d+)*\]$/'
+            'label' => 'Integer Array',
+            'example' => '[1, -2, 3]',
+            'regex' => '/^\[\s*((0|-?[1-9]\d*)(\s*,\s*(0|-?[1-9]\d*))*)?\s*\]$/',
         ],
-        'array<float>' => [
+        'float[]' => [
             'python' => 'List[float]',
             'php' => 'array',
-            'java' => 'float[]',
+            'java' => 'double[]',
             'js' => 'number[]',
-            'cpp' => 'vector<float>',
-            'example' => '[1.1, 2.2, 3.3]',
-            'regex' => '/^\[\d+(\.\d+)?(,\s*\d+(\.\d+)?)*\]$/'
+            'cpp' => 'vector<double>',
+            'label' => 'Float Array',
+            'example' => '[1.1, 2, .5, -3.3]',
+            'regex' => '/^\[\s*(-?(?:\d+([.,]\d+)?|\d*[.,]\d+)(\s*,\s*-?(?:\d+([.,]\d+)?|\d*[.,]\d+))*)?\s*\]$/',
         ],
-        'array<string>' => [
+        'string[]' => [
             'python' => 'List[str]',
             'php' => 'array',
             'java' => 'String[]',
             'js' => 'string[]',
             'cpp' => 'vector<string>',
+            'label' => 'String Array',
             'example' => '["apple", "banana", "cherry"]',
-            'regex' => '/^\["[^"]*"(,\s*"[^"]*")*\]$/',],
-        'array<bool>' => [
+            'regex' => '/^\[\s*("(?:[^"\\\\]|\\\\.)*"(?:\s*,\s*"(?:[^"\\\\]|\\\\.)*")*)?\s*\]$/',
+        ],
+        'bool[]' => [
             'python' => 'List[bool]',
             'php' => 'array',
             'java' => 'boolean[]',
             'js' => 'boolean[]',
             'cpp' => 'vector<bool>',
+            'label' => 'Boolean Array',
             'example' => '[true, false, true]',
-            'regex' => '/^\[(true|false)(,\s*(true|false))*\]$/'
-        ]
+            'regex' => '/^\[\s*(true|false)(\s*,\s*(true|false))*\s*\]$/i',
+        ],
     ];
-    public $programmingPractice;
-    public array $codeTemplates = [];
-    public array $testCases = [];
-    public array $problemDetails = [
-        'functionName' => '',
-        'returnType' => 'int',
+
+    public array $newTestCase = [];
+
+    public array $newParam = [
+        'name' => '',
+        'type' => ''
+    ];
+
+    public array $problem = [
+        'function_name' => '',
+        'return_type' => '',
         'params' => [],
+        'test_cases' => [],
+        'code_templates' => [],
+        'allowed_languages' => [],
     ];
 
-    public function updatedLanguages(): void
+    public function rules(): array
     {
-        if ($this->languages) {
-            $this->makeCodeTemplate();
+        return ProgrammingPracticeValidator::rules($this->allowedTypes, $this->newTestCase, self::$typeMap);
+    }
+
+    public function mount(): void
+    {
+        $this->messages = ProgrammingPracticeValidator::$MESSAGES;
+        $this->allowedTypes = implode(',', array_keys(self::$typeMap));
+    }
+
+    public function updated($propertyName): void
+    {
+        if ($propertyName === 'problem.function_name') {
+            $this->problem['function_name'] = $this->normalizeIdentifier($this->problem['function_name']);
         }
-        $this->dispatch('assignment-programming-updated',
-            moduleIndex: $this->moduleIndex,
-            lessonIndex: $this->lessonIndex,
-            programmingPractice: $this->programmingPractice,
-            problemDetails: $this->problemDetails,
-            codeTemplate: json_encode($this->codeTemplates),
 
+        if ($propertyName === 'newParam.name') {
+            $this->newParam['name'] = $this->normalizeIdentifier($this->newParam['name']);
+        }
 
+        if ($propertyName === 'problem.return_type') {
+            $this->newTestCase['output']['type'] = $this->problem['return_type'];
+            if (count($this->problem['test_cases']) !== 0) {
+                $this->problem['test_cases'] = [];
+            }
+        }
+
+        $this->validateOnly($propertyName);
+    }
+
+    public function updatedProblemAllowedLanguages(ProgrammingService $programmingService): void
+    {
+        $this->validateOnly('problem.allowed_languages');
+        $this->validateOnly('problem.function_name');
+        $this->validateOnly('problem.return_type');
+        $this->validateOnly('problem.params.*');
+
+        $this->problem['code_template'] = $programmingService->makeCodeTemplate(
+            $this->problem['allowed_languages'],
+            $this->problem
         );
     }
 
-    private function makeCodeTemplate(): void
+    public function getCanSelectLanguagesProperty(): bool
     {
-        $functionName = $this->problemDetails['functionName'];
-        $returnType = $this->problemDetails['returnType'];
-        $params = $this->problemDetails['params'];
-
-        foreach ($this->languages as $language) {
-            $langParams = [];
-            foreach ($params as $param) {
-                $paramType = $this->typeMap[$param['type']][$language];
-                $langParams[] = match ($language) {
-                    'python' => "{$param['name']}: {$paramType}",
-                    'php' => "{$paramType} \${$param['name']}",
-                    'java' => "{$paramType} {$param['name']}",
-                    'js' => $param['name'],
-                    'cpp' => "{$paramType} {$param['name']}",
-                    default => '',
-                };
-            }
-            $paramString = implode(', ', $langParams);
-
-            $template = match ($language) {
-                'python' => $this->generatePythonTemplate($functionName, $returnType, $paramString),
-                'php' => $this->generatePhpTemplate($functionName, $returnType, $paramString),
-                'java' => $this->generateJavaTemplate($functionName, $returnType, $paramString),
-                'js' => $this->generateJavaScriptTemplate($functionName, $returnType, $paramString, $params),
-                'cpp' => $this->generateCppTemplate($functionName, $returnType, $paramString),
-                default => '',
-            };
-            $this->codeTemplates[$language] = $template;
-        }
+        return $this->getErrorBag()->isEmpty()
+            && !empty($this->problem['function_name'])
+            && !empty($this->problem['return_type'])
+            && !empty($this->problem['params']);
     }
 
-    private function generatePythonTemplate(string $functionName, string $returnType, string $paramString): string
+
+    private function normalizeIdentifier(?string $functionName): ?string
     {
-        return "class Solution:\n   def {$functionName}(self, {$paramString}) -> {$this->typeMap[$returnType]['python']}:\n        pass";
-    }
-
-    private function generatePhpTemplate(string $functionName, string $returnType, string $paramString): string
-    {
-        return "<?php\nclass Solution {\n    /**\n" . $this->generatePhpDoc($this->problemDetails['params'], $returnType) . "     */\n    function {$functionName}({$paramString}) {\n        // your code here\n    }\n}";
-    }
-
-    private function generatePhpDoc(array $params, string $returnType): string
-    {
-        $doc = '';
-        foreach ($params as $param) {
-            $doc .= "     * @param {$this->typeMap[$param['type']]['php']} \${$param['name']}\n";
-        }
-        $doc .= "     * @return {$this->typeMap[$returnType]['php']}\n";
-        return $doc;
-    }
-
-    private function generateJavaTemplate(string $functionName, string $returnType, string $paramString): string
-    {
-        return "class Solution {\n    public {$returnType} {$functionName}({$paramString}) {\n        // your code here\n    }\n}";
-    }
-
-    private function generateJavaScriptTemplate(string $functionName, string $returnType, string $paramString, array $params): string
-    {
-        return "/**\n" . $this->generateJsDoc($params, $returnType) . " */\nvar {$functionName} = function({$paramString}) {\n    // your code here\n};";
-    }
-
-    private function generateJsDoc(array $params, string $returnType): string
-    {
-        $doc = '';
-        foreach ($params as $param) {
-            $doc .= " * @param {" . $param['type'] . "} " . $param['name'] . "\n";
-        }
-        $doc .= " * @return {" . $returnType . "}\n";
-        return $doc;
-    }
-
-    private function generateCppTemplate(string $functionName, string $returnType, string $paramString): string
-    {
-        return "#include <vector>\n#include <string>\n\nclass Solution {\npublic:\n    {$returnType} {$functionName}({$paramString}) {\n        // your code here\n    }\n};";
-    }
-
-    public function updatedProblemDetailsFunctionName(): void
-    {
-        $functionName = trim($this->problemDetails['functionName']);
-
-        if (preg_match('/^[0-9]/', $functionName)) {
-            $this->dispatch('swal', [
-                'icon' => 'warning',
-                'title' => 'Invalid Input',
-                'text' => 'Function name cannot start with a number. Leading numbers have been removed.',
-            ]);
-            $sanitizedName = preg_replace('/^[0-9]+/', '', $functionName);
-        }
-        $this->problemDetails['functionName'] = Str::camel($sanitizedName ?? $functionName);
-    }
-
-    public function addParameter(string $dataType, string $name): void
-    {
-        if ($this->isValidParameter($dataType, $name)) {
-            $this->problemDetails['params'][] = [
-                'name' => Str::camel(trim($name)),
-                'type' => $dataType
-            ];
-
-            $this->dispatch('swal', [
-                'icon' => 'success',
-                'title' => 'Parameter Added',
-                'text' => 'The parameter has been successfully added.',
-                'toast' => true,
-                'position' => 'top-end',
-                'showConfirmButton' => false,
-                'timer' => 1000
-            ]);
-        }
-    }
-
-    private function isValidParameter(string $dataType, string $name): bool
-    {
-        if (empty($dataType) || empty($name) || !preg_match('/^[a-zA-Z][a-zA-Z0-9_ -]*$/', $name)) {
-            $message = 'Data type and parameter name cannot be empty or contains special character.';
-            $title = 'Invalid Parameter';
-        }
-        if (in_array($dataType, array_column($this->problemDetails['params'], 'type')) &&
-            in_array(Str::camel(trim($name)), array_column($this->problemDetails['params'], 'name'))) {
-            $message = 'This parameter already exists.';
-            $title = 'Duplicate Parameter';
+        if (preg_match('/[^a-zA-Z0-9\s]/u', $functionName) || preg_match('/^\d/', $functionName)) {
+            return $functionName;
         }
 
-        if (isset($message) && isset($title)) {
-            $this->dispatch('swal', ['icon' => 'error', 'title' => $title, 'text' => $message,]);
-            return false;
-        }
+        return Str::camel($functionName);
+    }
 
+    public function validateStep1(): bool
+    {
+        $this->validateOnly('programming.title');
+        $this->validateOnly('programming.description');
         return true;
     }
 
-    public function removeParameter(int $index): void
+    public function addParameter(): void
     {
-        if (isset($this->problemDetails['params'][$index])) {
-            unset($this->problemDetails['params'][$index]);
-            $this->problemDetails['params'] = array_values($this->problemDetails['params']);
-            $this->dispatch('swal', [
-                'icon' => 'success',
-                'title' => 'Parameter Removed',
-                'text' => 'The parameter has been successfully removed.',
-                'toast' => true,
-                'position' => 'top-end',
-                'showConfirmButton' => false,
-                'timer' => 1000
-            ]);
+        $this->validateOnly('newParam.name');
+        $this->validateOnly('newParam.type');
+
+        foreach ($this->problem['params'] as $param) {
+            if (
+                strtolower($param['name']) === strtolower($this->newParam['name']) &&
+                $param['type'] === $this->newParam['type']
+            ) {
+                $this->addError('newParam.name', 'This parameter name and type already exists.');
+                return;
+            }
         }
+
+        $this->problem['params'][] = $this->newParam;
+
+        $this->newTestCase['inputs'][] = [
+            'name' => $this->newParam['name'],
+            'type' => $this->newParam['type'],
+            'value' => ''
+        ];
+
+        if (count($this->problem['test_cases']) !== 0) {
+            $this->problem['test_cases'] = [];
+        }
+
+        $this->newParam = [
+            'name' => '',
+            'type' => ''
+        ];
+
+        $this->dispatch('swal', [
+            'title' => 'Parameter Added',
+            'text' => 'The parameter has been added successfully.',
+            'icon' => 'success',
+            'toast' => true,
+            'timer' => 2000,
+            'showConfirmButton' => false,
+            'position' => 'top-end',
+        ]);
+    }
+
+    public function removeParameter(string|int $index): void
+    {
+        unset($this->problem['params'][$index]);
+        $this->problem['params'] = array_values($this->problem['params']);
+        if (count($this->problem['test_cases']) !== 0) {
+            $this->problem['test_cases'] = [];
+        }
+        $this->dispatch('swal', [
+            'title' => 'Parameter Deleted',
+            'text' => 'The parameter has been deleted successfully.',
+            'icon' => 'success',
+            'toast' => true,
+            'timer' => 3000,
+            'showConfirmButton' => false,
+            'position' => 'top-end',
+        ]);
     }
 
     public function addTestCase(): void
     {
-        if ($this->isValidTestCase()) {
-            $inputData = [];
-            foreach ($this->problemDetails['params'] as $param) {
-                $paramName = $param['name'];
-                $value = $this->newTestCase['input'][$paramName]['value'] ?? null;
+        $this->validateOnly('newTestCase.inputs.*.value');
+        $this->validateOnly('problem.return_type');
+        $this->validateOnly('newTestCase.output.value');
+        $this->validateOnly('newTestCase.inputs.*.type');
+        $this->validateOnly('newTestCase.output.type');
 
-                if (is_null($value)) {
-                    return;
-                }
+        $this->problem['test_cases'][] = $this->newTestCase;
 
-                $inputData[$paramName] = ['type' => $param['type'], 'value' => $value,];
-            }
+        $this->resetNewTestCase();
 
-            $outputValue = $this->newTestCase['output']['value'] ?? null;
-            if (is_null($outputValue)) {
-                return;
-            }
+        $this->dispatch('swal', [
+            'title' => 'Test Case Added',
+            'text' => 'The test case has been added successfully.',
+            'icon' => 'success',
+            'toast' => true,
+            'timer' => 2000,
+            'showConfirmButton' => false,
+            'position' => 'top-end',
+        ]);
+    }
 
-            $this->testCases[] = [
-                'input' => $inputData,
-                'output' => [
-                    'type' => $this->problemDetails['returnType'],
-                    'value' => $outputValue
-                ]
+    private function resetNewTestCase(): void
+    {
+        $inputs = [];
+        foreach ($this->problem['params'] as $param) {
+            $inputs[] = [
+                'name' => $param['name'],
+                'type' => $param['type'],
+                'value' => ''
             ];
+        }
 
-            $this->dispatch('swal', [
-                'icon' => 'success',
-                'title' => 'Test Case Added',
-                'text' => 'The test case has been successfully added.',
-                'toast' => true,
-                'position' => 'top-end',
-                'showConfirmButton' => false,
-                'timer' => 1000
-            ]);
-            $this->reset('newTestCase');
+        $this->newTestCase['inputs'] = $inputs;
+
+        if (isset($this->problem['return_type'])) {
+            $this->newTestCase['output']['type'] = $this->problem['return_type'];
+            $this->newTestCase['output']['value'] = '';
         }
     }
 
-    private function isValidTestCase(): bool
+    public function removeTestCase(string|int $index): void
     {
-        $this->inputErrors = [];
-        $this->outputError = null;
-        if (empty($this->newTestCase['input']) || empty($this->newTestCase['output'])) {
-            $this->dispatch('swal', [
-                'icon' => 'error',
-                'title' => 'Invalid Test Case',
-                'text' => 'Input and output cannot be empty.',
-            ]);
-            return false;
-        }
-        foreach ($this->newTestCase['input'] as $paramName => $value) {
-            $expectedType = null;
-            foreach ($this->problemDetails['params'] as $param) {
-                if ($param['name'] === $paramName) {
-                    $expectedType = $param['type'];
-                    break;
-                }
-            }
-
-            $regex = $this->typeMap[$expectedType]['regex'];
-
-            if (!preg_match($regex, $value['value'])) {
-                $this->inputErrors[$paramName] = "Invalid input for '{$paramName}'. Expected format example: " . $this->typeMap[$expectedType]['example'];
-            }
-        }
-
-        if (isset($this->newTestCase['output']['value'])) {
-            $expectedReturnType = $this->problemDetails['returnType'] ?? null;
-            $regex = $this->typeMap[$expectedReturnType]['regex'] ?? null;
-
-            if ($regex && !preg_match($regex, $this->newTestCase['output']['value'])) {
-                $this->outputError = "Invalid output value. Expected format example: " . $this->typeMap[$expectedReturnType]['example'];
-            }
-        }
-        if (!empty($this->inputErrors) || !is_null($this->outputError)) {
-            $errorMessages = array_values($this->inputErrors);
-            if ($this->outputError) {
-                $errorMessages[] = $this->outputError;
-            }
-
-            $this->dispatch('swal', [
-                'icon' => 'error',
-                'title' => 'Invalid Test Case',
-                'html' => '<div class="text-start">Please fix the following errors:<ul><li>' . implode('</li><li>', $errorMessages) . '</li></ul></div>',
-                'showConfirmButton' => true,
-            ]);
-            return false;
-        }
-
-        return true;
-    }
-
-    public function removeTestCase(int $index): void
-    {
-        if (isset($this->testCases[$index])) {
-            unset($this->testCases[$index]);
-            $this->testCases = array_values($this->testCases);
-            $this->dispatch('swal', [
-                'icon' => 'success',
-                'title' => 'Test Case Removed',
-                'text' => 'The test case has been successfully removed.',
-                'toast' => true,
-                'position' => 'top-end',
-                'showConfirmButton' => false,
-                'timer' => 1000
-            ]);
-        }
-    }
-
-    public function saveProblemDetails(): void
-    {
-        $this->dispatch('programming-practice-saved',
-            moduleIndex: $this->moduleIndex,
-            lessonIndex: $this->lessonIndex,
-            programmingPractice: $this->programmingPractice,
-            problemDetails: $this->problemDetails,
-            codeTemplates: json_encode($this->codeTemplates),
-            testCases: json_encode($this->testCases),
-            functionName: $this->problemDetails['functionName'],
-        );
+        unset($this->problem['test_cases'][$index]);
+        $this->dispatch('swal', [
+            'title' => 'Test Case Deleted',
+            'text' => 'The test case has been deleted successfully.',
+            'icon' => 'success',
+            'toast' => true,
+            'timer' => 3000,
+            'showConfirmButton' => false,
+            'position' => 'top-end',
+        ]);
     }
 
     public function render(): Factory|Application|View
     {
-        return view('livewire.client.course-creation.components.builders.assessment-types.programming');
+        return view('livewire.client.course-creation.components.builders.assessment-types.programming', [
+            'typeMap' => self::$typeMap,
+        ]);
     }
 }

@@ -1,15 +1,13 @@
-<div class="course-field mb--20">
-    <h6>Document</h6>
-    <div id="new-lesson-document-editor" wire:ignore></div>
-    <input type="hidden" id="new-lesson-document-input">
-</div>
+<x-client.dashboard.inputs.markdown-area
+    id="new-lesson-document"
+    label="Document"
+    info="Markdown is supported. This is the document that will be displayed to the student."
+/>
+
 
 @script
 <script>
-    const documentEditor = document.getElementById('new-lesson-document-editor');
-    const documentInput = document.getElementById('new-lesson-document-input');
-
-    const editor = new EditorView({
+    new EditorView({
         extensions: [
             lineNumbers(),
             markdown(),
@@ -19,9 +17,7 @@
             EditorView.lineWrapping,
             EditorView.domEventHandlers({
                 blur: (event, view) => {
-                    const content = view.state.doc.toString();
-                    console.log('Content:', content);
-                    Livewire.dispatch('document-changed', {document: content});
+                    $wire.set('document', view.state.doc.toString());
                 }
             }),
             EditorView.theme({
@@ -36,7 +32,7 @@
                 ".cm-content": {caretColor: "#000"},
             }),
         ],
-        parent: documentEditor,
+        parent: document.getElementById('new-lesson-document-editor'),
     });
 </script>
 @endscript

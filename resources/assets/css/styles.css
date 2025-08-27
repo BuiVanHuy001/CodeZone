@@ -24085,7 +24085,7 @@ body.modal-open {
 
 .rbt-team-modal,
 .rbt-default-modal {
-    z-index: 99999999;
+    z-index: 99999998;
     background: var(--color-white);
     padding: 60px 15px !important;
 }
@@ -24098,7 +24098,6 @@ body.modal-open {
 .rbt-team-modal .modal-dialog,
 .rbt-default-modal .modal-dialog {
     width: 100%;
-    max-width: 900px;
 }
 
 .rbt-team-modal .modal-dialog .modal-content,

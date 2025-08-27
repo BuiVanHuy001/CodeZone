@@ -5,42 +5,46 @@ namespace App\Livewire\Client\CourseCreation\Components\Builders\AssessmentTypes
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Livewire\Attributes\Modelable;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-class Assignment extends Component
-{
-	public int $moduleIndex;
-	public int $lessonIndex;
-	public array $assignment;
+class Assignment extends Component {
+    #[Modelable]
+    public array $assignment;
 
-    public function mount()
+    public bool $showDetail = true;
+
+    public function rules(): array
     {
-        $this->assignment = [
-            'description' => '',
-            'title' => ''
+        return [
+            'assignment.title' => 'required|min:3|max:255',
         ];
     }
 
-	public function removeAssignment(): void
-	{
+    public function updated($propertyName): void
+    {
+        $this->validateOnly($propertyName);
+    }
+
+    public function removeAssignment(): void
+    {
         $this->dispatch('assessment-builders-removed');
-	}
+    }
 
     public function saveAssignment(): void
     {
-        if (empty($this->assignment['title']) || empty($this->assignment['description'])) {
-            $this->removeAssignment();
-        } else {
-	        $this->dispatch('assignment-saved',
-		        moduleIndex: $this->moduleIndex,
-		        lessonIndex: $this->lessonIndex,
-		        assignment: $this->assignment
-	        );
-        }
-	}
+        $this->validate();
+        $this->showDetail = false;
+    }
 
-	public function render(): View|Application|Factory
-	{
+    public function toggleShowDetail(): void
+    {
+        $this->showDetail = !$this->showDetail;
+    }
+
+    public function render(): View|Application|Factory
+    {
         return view('livewire.client.course-creation.components.builders.assessment-types.assignment');
-	}
+    }
 }

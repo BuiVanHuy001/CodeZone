@@ -1,14 +1,12 @@
 <div class="course-field mb--30">
     <label>{{ $label }}</label>
-    <div @class(['border border-danger' => $errors->has($name)])
-         style="border-radius: 4px;">
-        <div wire:ignore id="{{ $id }}-editor"
-        ></div>
-    </div>
+    <div wire:ignore id="{{ $id }}-editor"
+        @class(['border-danger border' => $isError])
+    ></div>
+    <small><i class="feather-info"></i> {{ $info }}</small>
     @error($name)
     <small class="text-danger d-block">
-        <i class="feather-alert-triangle"></i> {{ $errors->first($name) }}
+        <i class="feather-alert-triangle"></i> {{ $message }}
     </small>
     @enderror
-    <small><i class="feather-info"></i> {{ $info }}</small>
 </div>
