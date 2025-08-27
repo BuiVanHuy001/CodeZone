@@ -19,7 +19,11 @@ class Lesson extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    public static array $TYPES = ['video', 'document', 'assessment'];
+    public static array $TYPES = [
+        'video' => 'Video',
+        'document' => 'Document',
+        'assessment' => 'Assessment',
+    ];
 
     public function module(): BelongsTo
     {

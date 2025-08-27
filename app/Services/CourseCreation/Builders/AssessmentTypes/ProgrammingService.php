@@ -2,7 +2,7 @@
 
 namespace App\Services\CourseCreation\Builders\AssessmentTypes;
 
-use App\Livewire\Client\CourseCreation\Components\Builders\Lesson\LessonTypes\AssessmentTypes\Programming;
+use App\Livewire\Client\CourseCreation\Components\Builders\AssessmentTypes\Programming;
 
 class ProgrammingService {
     protected array $typeMap;

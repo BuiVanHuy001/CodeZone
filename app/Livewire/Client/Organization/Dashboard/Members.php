@@ -4,7 +4,7 @@ namespace App\Livewire\Client\Organization\Dashboard;
 
 use App\Models\OrganizationUser;
 use App\Models\User;
-use App\Services\Business\MemberImportService;
+use App\Services\Organization\MemberImportService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;

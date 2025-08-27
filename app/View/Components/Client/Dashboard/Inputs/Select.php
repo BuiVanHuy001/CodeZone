@@ -18,6 +18,7 @@ class Select extends Component {
         public array|Collection $options,
         public string $info,
         public bool             $isError = false,
+        public string $model = '',
     ) {}
 
     /**

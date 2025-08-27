@@ -1,28 +1,78 @@
-<div class="course-field mb--20 mt-3 rbt-course-wrape position-relative">
-    <h6>Assignment</h6>
+<div @class([
+        'course-field mb--20 mt-3 position-relative border p-5 rounded',
+        'border-danger' => $errors->has('assignment.*'),
+    ])>
+    <h6>Assignment: <span wire:text="assignment.title"></span></h6>
     <div class="position-absolute" style="right: 10px; top: 10px; cursor: pointer;">
-        <i wire:click="removeQuiz" @click="activeTab = null" class="feather-trash me-auto"></i>
+        <div class="inner">
+            <ul class="rbt-list-style-1 rbt-course-list d-flex gap-3 align-items-center">
+                <li>
+                    <button type="button" class="btn quiz-modal__edit-btn dropdown-toggle me-2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="feather-more-horizontal"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a disabled wire:click="toggleShowDetail" class="dropdown-item" href="#" type="button">
+                                @if($showDetail)
+                                    <i class="feather-eye-off"></i>
+                                    Hide detail
+                                @else
+                                    <i class="feather-edit-2"></i>
+                                    Show detail
+                                @endif
+                            </a>
+                        </li>
+                        <li>
+                            <a wire:click.prevent="removeAssignment" class="dropdown-item delete-item" href="#">
+                                <i class="feather-trash"></i>
+                                Delete
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 
-    <div class="course-field mb--20">
-        <label>Assignment Title</label>
-        <input type="text"
-               placeholder="Type your assignments title"
-               wire:model="assignment.title">
-    </div>
-    <div class="course-field mb--30">
-        <label>Assignment Description</label>
-        <div id="assignment-description-{{ $moduleIndex }}-{{ $lessonIndex }}-editor"></div>
-        <input type="hidden"
-               id="assignment-description-{{ $moduleIndex }}-{{ $lessonIndex }}-input"
-               value="{{ $assignment['description'] }}"
-               wire:model="assignment.description"/>
-    </div>
+    @if($showDetail)
+        <x-client.dashboard.inputs.text
+            model="assignment.title"
+            name="assignment.title"
+            label="Assignment Title"
+            placeholder="Enter assignment title"
+            info="Provide a clear, descriptive title for this assignment."
+            :isError="$errors->has('assignment.title')"
+        />
+
+        <x-client.dashboard.inputs.markdown-area
+            id="assignment-description"
+            label="Assignment Description"
+            info="Markdown is supported."
+        />
+
+        <div class="d-flex pt--30 justify-content-between">
+            <div class="content">
+                <button type="button"
+                        class="awe-btn bg-danger"
+                        wire:click="removeAssignment">
+                    Cancel
+                </button>
+            </div>
+
+            <div class="content">
+                <button
+                    type="button"
+                    class="awe-btn"
+                    wire:click="saveAssignment"
+                    @disabled($errors->has('assignment.*'))>
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+    @endif
 </div>
 @script
 <script>
-    const assignmentDescriptionEditor = document.getElementById('assignment-description-{{ $moduleIndex }}-{{ $lessonIndex }}-editor');
-    const assignmentDescriptionInput = document.getElementById('assignment-description-{{ $moduleIndex }}-{{ $lessonIndex }}-input');
     new EditorView(
         {
             extensions: [
@@ -32,10 +82,9 @@
                 highlightActiveLine(),
                 highlightSpecialChars(),
                 EditorView.lineWrapping,
-                EditorView.updateListener.of(update => {
-                    if (update.docChanged) {
-                        assignmentDescriptionInput.value = update.state.doc.toString();
-                        assignmentDescriptionInput.dispatchEvent(new Event('input'));
+                EditorView.domEventHandlers({
+                    blur: (event, view) => {
+                        $wire.set('assignment.description', view.state.doc.toString());
                     }
                 }),
                 EditorView.theme({
@@ -52,8 +101,8 @@
                     },
                 }),
             ],
-            doc: assignmentDescriptionInput.value,
-            parent: assignmentDescriptionEditor,
+            doc: '',
+            parent: document.getElementById('assignment-description-editor'),
         }
     )
 </script>
