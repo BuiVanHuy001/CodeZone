@@ -25,6 +25,7 @@ class Video extends Component {
     public function updatedVideo(): void
     {
         $this->previewVideo = $this->video->temporaryUrl();
+        $this->dispatch('tmp-video-uploaded', tmpVideoFileName: $this->video->getFileName());
         $this->validate([
             'video' => 'required|mimes:mp4,mov,ogg,qt,webm,flv,avi,wmv,mpg|max:256000',
         ], [
@@ -66,7 +67,7 @@ class Video extends Component {
     }
 
     #[On('lesson-video-deleted')]
-    public function deletedVideo()
+    public function deletedVideo(): void
     {
         if ($this->video) {
             $this->changeOrChangeVideo();

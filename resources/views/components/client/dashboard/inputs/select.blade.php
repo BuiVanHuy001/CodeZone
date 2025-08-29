@@ -5,22 +5,26 @@
         class="rbt-modern-select bg-transparent height-45 w-100 mb--10"
         x-data
         x-init="
-            $nextTick(() => {
-                let select = $refs.select;
-                $(select).selectpicker();
-                $(select).on('changed.bs.select', function (e) {
-                    @this.set('{{ $name }}', e.target.value);
-                });
-                Livewire.hook('message.processed', () => {
-                    $(select).val(@this.get('{{ $name }}')).selectpicker('refresh');
-                });
+        $nextTick(() => {
+            let select = $refs.select;
+            $(select).selectpicker();
+            $(select).on('changed.bs.select', function (e) {
+                @this.set('{{ $name }}', e.target.value);
             });
-        "
+            Livewire.hook('message.processed', () => {
+                $(select).val(@this.get('newLesson.type')).selectpicker('refresh');
+            });
+        });
+    "
     >
         <select
+            wire:model="{{ $name }}"
             x-ref="select"
             id="{{ $name }}"
-            class="w-100 {{ $isError ? 'border-danger' : '' }}"
+            @class([
+                'w-100',
+                'border-danger' => $isError,
+            ])
         >
             <option value="">{{ $placeholder }}</option>
 
@@ -38,7 +42,7 @@
                 @endforeach
             @else
                 @foreach ($options as $key => $label)
-                    <option value="{{ $key }}">{{ $label }}</option>
+                    <option value="{{ $key }}">{{ ucfirst($label) }}</option>
                 @endforeach
             @endif
         </select>
