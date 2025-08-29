@@ -1,8 +1,9 @@
-<div x-data="{ activeQuestion: 1 }"
-    @class([
+<div @class([
        'course-field mb--20 mt-3 position-relative border p-5 rounded',
        'border-danger' => $errors->has('quiz.*'),
-   ])>
+   ])
+     x-data="{ step: 1 }"
+>
     <h6>Quiz: <span wire:text="quiz.title"></span></h6>
     <div class="position-absolute" style="right: 10px; top: 10px; cursor: pointer;">
         <div class="inner">
@@ -35,7 +36,7 @@
         </div>
     </div>
     @if($showDetail)
-        <div id="question-1" class="question" x-show="activeQuestion === 1">
+        <div class="tab-1 question" x-show="step === 1">
             <x-client.dashboard.inputs.text
                 model="quiz.title"
                 name="quiz.title"
@@ -50,8 +51,18 @@
                 label="Quiz Description"
                 info="Markdown is supported"
             />
+            <div class="d-flex pt--30 justify-content-between">
+                <div class="content">
+                    <button type="button" class="awe-btn bg-danger">
+                        Cancel
+                    </button>
+                </div>
+                <div class="content">
+                    <button class="awe-btn" @click="$wire.validateStep1().then(ok => ok && (step = 2))">Next</button>
+                </div>
+            </div>
         </div>
-        <div id="question-2" class="question" x-show="activeQuestion === 2">
+        <div class="question tab-2" x-show="step === 2">
             @error('quiz.assessments_questions')
             <small class="text-danger">
                 <i class="feather-alert-triangle"></i> {{ $message }}
@@ -219,36 +230,29 @@
                         <span class="btn-icon"><i class="feather-download"></i></span>
                     </span>
                 </a>
-
             </div>
-        </div>
-        <div class="d-flex pt--30 justify-content-between">
-            <div class="content">
-                <button type="button"
-                        class="awe-btn bg-danger"
-                        wire:click="cancelQuizCreation">
-                    Cancel
-                </button>
-            </div>
-            <div class="content">
-                <button type="button" class="awe-btn bg-info"
-                        @click="if (activeQuestion > 1) activeQuestion--">
-                    Back
-                </button>
+            <div class="d-flex pt--30 justify-content-between">
+                <div class="content">
+                    <button type="button"
+                            class="awe-btn bg-danger"
+                            wire:click="cancelQuizCreation">
+                        Cancel
+                    </button>
+                </div>
+                <div class="content">
+                    <button type="button" class="awe-btn bg-info"
+                            @click="step = 1">
+                        Back
+                    </button>
 
-                <button
-                    type="button"
-                    class="awe-btn"
-                    @disabled($errors->has('quiz.title'))
-                    @click="
-                    if (activeQuestion < 2) {
-                        activeQuestion++;
-                    } else
-                    {
-                        $wire.saveQuiz();
-                    }">
-                    <span x-text="activeQuestion <= 1 ? 'Save & Next' : 'Save'"></span>
-                </button>
+                    <button
+                        type="button"
+                        class="awe-btn"
+                        @disabled($errors->has('quiz.title'))
+                        wire:click="saveQuiz">
+                        Save
+                    </button>
+                </div>
             </div>
         </div>
     @endif

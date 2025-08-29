@@ -19,11 +19,7 @@ class Quiz extends Component {
     public $excelFile;
     public bool $showDetail = true;
     #[Modelable]
-    public $quiz = [
-        'title' => '',
-        'description' => '',
-        'assessments_questions' => []
-    ];
+    public $quiz;
 
     public function rules(): array
     {
@@ -202,6 +198,13 @@ class Quiz extends Component {
     public function toggleShowDetail(): void
     {
         $this->showDetail = !$this->showDetail;
+    }
+
+    public function validateStep1(): bool
+    {
+        $this->validateOnly('quiz.title');
+        $this->validateOnly('quiz.description');
+        return true;
     }
 
     public function render(): View|Application|Factory

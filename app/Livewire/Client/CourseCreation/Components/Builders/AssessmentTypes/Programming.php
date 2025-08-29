@@ -158,7 +158,7 @@ class Programming extends Component
         $this->validateOnly('problem.return_type');
         $this->validateOnly('problem.params.*');
 
-        $this->problem['code_template'] = $programmingService->makeCodeTemplate(
+        $this->problem['code_templates'] = $programmingService->makeCodeTemplate(
             $this->problem['allowed_languages'],
             $this->problem
         );
@@ -171,7 +171,6 @@ class Programming extends Component
             && !empty($this->problem['return_type'])
             && !empty($this->problem['params']);
     }
-
 
     private function normalizeIdentifier(?string $functionName): ?string
     {
@@ -304,6 +303,11 @@ class Programming extends Component
             'showConfirmButton' => false,
             'position' => 'top-end',
         ]);
+    }
+
+    public function save(): void
+    {
+        $this->programming['problem_details'] = $this->problem;
     }
 
     public function render(): Factory|Application|View

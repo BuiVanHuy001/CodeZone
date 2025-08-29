@@ -4,9 +4,11 @@ namespace App\Livewire\Client\CourseCreation\Components\Builders;
 
 use App\Models\Assessment;
 use App\Models\Lesson;
+use App\Validator\ModulesBuilderValidate;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Modelable;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
@@ -39,6 +41,19 @@ class Course extends Component {
 
     public array $selectedModule = ['index' => 0];
 
+    public function rules(): array
+    {
+        return ModulesBuilderValidate::rules();
+    }
+
+    public array $messages;
+
+
+    public function mount(): void
+    {
+        $this->messages = ModulesBuilderValidate::$MESSAGES;
+    }
+
     public function updated($propertyName): void
     {
         $this->validateOnly($propertyName);
@@ -46,31 +61,83 @@ class Course extends Component {
 
     public function updatedNewLessonType(): void
     {
-        if (in_array($this->newLesson['type'], array_keys(Lesson::$TYPES))) {
-            if ($this->newLesson['type'] !== 'video') {
-                $this->dispatch('lesson-video-deleted');
-
-                $this->newLesson['video_file_name'] = '';
-                $this->newLesson['duration'] = 0;
-            } elseif ($this->newLesson['type'] !== 'document') {
-                $this->newLesson['document'] = '';
-            }
-        } else {
+        switch ($this->newLesson['type']) {
+        case 'video':
             $this->newLesson['document'] = '';
-            $this->newLesson['preview'] = false;
-            $this->newLesson['duration'] = 0;
+            $this->newLesson['assessment'] = null;
+            break;
+
+        case 'document':
+            $this->deleteLessonVideo();
             $this->newLesson['video_file_name'] = '';
-            $this->newLesson['type'] = '';
+            $this->newLesson['duration'] = 0;
+            $this->newLesson['assessment'] = null;
+            break;
+
+        case 'assessment':
+            $this->deleteLessonVideo();
+            $this->newLesson['video_file_name'] = '';
+            $this->newLesson['duration'] = 0;
+            $this->newLesson['document'] = '';
+
+            $this->newLesson['assessment'] = [
+                'title' => '',
+                'description' => '',
+                'type' => '',
+            ];
+            break;
+
+        default:
+            $this->dispatch('lesson-video-deleted');
+            $this->newLesson['video_file_name'] = '';
+            unset($this->newLesson['tmp_video_file_name']);
+            $this->newLesson['duration'] = 0;
+            $this->newLesson['document'] = '';
+            $this->newLesson['assessments'] = [];
+            $this->newLesson['assessment'] = null;
+            break;
         }
     }
 
-    public function updatedNewLessonAssessmentsType($value): void
+    private function deleteLessonVideo(): void
     {
-        $this->newLesson['assessments']['type'] = $value;
-        $this->newLesson['assessments']['title'] = '';
-        $this->newLesson['assessments']['description'] = '';
-        $this->newLesson['assessments']['assessments_questions'] = [];
+        if (empty($this->newLesson['video_file_name']) && empty($this->newLesson['tmp_video_file_name'])) {
+            return;
+        } else {
+            if (empty($this->newLesson['video_file_name'])) {
+                $file = storage_path('app/private/livewire-tmp/' . $this->newLesson['tmp_video_file_name']);
+            } else {
+                $file = storage_path('app/public/course/videos/' . $this->newLesson['video_file_name']);
+            }
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
     }
+
+    #[On('video-saved')]
+    public function saveVideo(string $videoFileName, int $duration): void
+    {
+        $this->newLesson['video_file_name'] = $videoFileName;
+        $this->newLesson['duration'] = $duration;
+        if (isset($this->newLesson['tmp_video_file_name'])) {
+            unset($this->newLesson['tmp_video_file_name']);
+        }
+    }
+
+    #[On('tmp-video-uploaded')]
+    public function tmpVideoUpload(string $tmpVideoFileName): void
+    {
+        $this->newLesson['tmp_video_file_name'] = $tmpVideoFileName;
+    }
+
+    //    public function updatedNewLessonAssessmentsType($value): void
+    //    {
+    //        $this->newLesson['assessments']['type'] = $value;
+    //        $this->newLesson['assessments']['title'] = '';
+    //        $this->newLesson['assessments']['description'] = '';
+    //        $this->newLesson['assessments']['assessments_questions'] = [];
+    //    }
 
     public function editModule($index): void
     {
@@ -127,10 +194,11 @@ class Course extends Component {
 
     public function addAssessment(): void
     {
-        $this->newLesson['assessments'] = [
+        $this->newLesson['assessments'][] = [
             'title' => '',
             'description' => '',
-            'type' => '',
+            'type' => null,
+            'assessments' => []
         ];
     }
 
@@ -150,50 +218,21 @@ class Course extends Component {
         $this->newLesson['document'] = $document;
     }
 
-    #[On('video-saved')]
-    public function saveVideo(string $videoFileName, int $duration): void
+    public function addLesson(): void
     {
-        $this->newLesson['video_file_name'] = $videoFileName;
-        $this->newLesson['duration'] = $duration;
+        dd($this->newLesson);
+        $this->modules[$this->selectedModule['index']]['lessons'][] = $this->newLesson;
+        $this->reset('newLesson');
     }
 
-    public function rules(): array
+    public function cancelNewLesson(): void
     {
-        return [
-            'modules' => 'required|array|min:1',
-            'modules.*.title' => [
-                'required',
-                'min:3',
-                'max:255',
-                'distinct',
-            ],
-            'modules.*.lessons' => 'required|array|min:1',
-            'modules.*.lessons.*.title' => 'required|min:3|max:255',
-            'modules.*.lessons.*.type' => 'required|in:' . implode(',', array_keys(Lesson::$TYPES)),
-            'newLesson.title' => 'required|min:3|max:255',
-            'newLesson.type' => 'required|in:' . implode(',', array_keys(Lesson::$TYPES)),
-            'newLesson.assessments.type' => 'required|in:' . implode(',', array_keys(Assessment::$TYPES)),
-        ];
+        if ($this->newLesson['type'] === 'video' && $this->newLesson['video_file_name'] !== '') {
+            Storage::disk('public')->delete('course/videos/' . $this->newLesson['video_file_name']);
+        }
+        $this->reset('newLesson');
+        $this->dispatch('lesson-reset');
     }
-
-    public array $messages = [
-        'modules.required' => 'At least one module must be created for this course.',
-        'modules.*.title.required' => 'Module title is required to identify each learning section.',
-        'modules.*.title.distinct' => 'Each module title must be unique within the course.',
-        'modules.*.title.min' => 'Module title must be at least :min characters for clarity.',
-        'modules.*.title.max' => 'Module title cannot exceed :max characters to ensure proper display.',
-        'modules.*.lessons.required' => 'Each module must contain at least one lesson.',
-        'modules.*.lessons.*.title.required' => 'Lesson title is required for each learning unit.',
-        'modules.*.lessons.*.title.min' => 'Lesson title must be at least :min characters for clarity.',
-        'modules.*.lessons.*.title.max' => 'Lesson title cannot exceed :max characters to ensure proper display.',
-        'modules.*.lessons.*.type.required' => 'Lesson type must be selected to define the content format.',
-        'modules.*.lessons.*.type.in' => 'Please select a valid lesson type from the available options.',
-        'newLesson.title.required' => 'Lesson title is required to create a new lesson.',
-        'newLesson.title.min' => 'Lesson title must be at least :min characters for clarity.',
-        'newLesson.title.max' => 'Lesson title cannot exceed :max characters to ensure proper display.',
-        'newLesson.type.required' => 'Lesson type must be selected to define the content format.',
-        'newLesson.type.in' => 'Please select a valid lesson type from the available options.',
-    ];
 
     public function render(): Factory|Application|View
     {

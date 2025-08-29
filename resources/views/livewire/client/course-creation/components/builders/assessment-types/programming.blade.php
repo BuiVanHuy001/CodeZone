@@ -4,6 +4,7 @@
     ])
      x-data="{ step: 1 }"
 >
+    <pre>{{ json_encode($programming, JSON_PRETTY_PRINT) }}</pre>
     <h6>Programing: <span wire:text="programming.title"></span></h6>
     <div class="position-absolute" style="right: 10px; top: 10px; cursor: pointer;">
         <div class="inner">
@@ -263,7 +264,7 @@
                 <div class="content">
                     <button type="button" class="awe-btn bg-info" @click="step = 1">Back</button>
 
-                    <button type="button" class="awe-btn">Save</button>
+                    <button wire:click="save" type="button" class="awe-btn">Save</button>
                 </div>
             </div>
         </div>
