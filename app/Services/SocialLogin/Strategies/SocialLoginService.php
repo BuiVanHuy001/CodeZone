@@ -7,7 +7,7 @@ use App\Services\SocialLogin\Contracts\SocialLoginStrategyInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
-use SweetAlert2\Laravel\Swal;
+use SweetAlert\Swal;
 
 abstract class SocialLoginService implements SocialLoginStrategyInterface
 {

@@ -48,6 +48,9 @@
             id="assignment-description"
             label="Assignment Description"
             info="Markdown is supported."
+            name="assignment.description"
+            placeholder="Enter assignment description"
+            :isError="$errors->has('assignment.description')"
         />
 
         <div class="d-flex pt--30 justify-content-between">

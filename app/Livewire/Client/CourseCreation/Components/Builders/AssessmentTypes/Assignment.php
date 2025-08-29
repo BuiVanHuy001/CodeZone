@@ -19,6 +19,7 @@ class Assignment extends Component {
     {
         return [
             'assignment.title' => 'required|min:3|max:255',
+            'assignment.description' => 'required',
         ];
     }
 

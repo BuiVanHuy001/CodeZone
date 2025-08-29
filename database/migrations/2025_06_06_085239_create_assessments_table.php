@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->string('title');
             $table->text('description')->nullable();
-            $table->enum('type', array_keys(Assessment::$TYPES))->default('quiz');
+            $table->enum('type', array_keys(Assessment::$ASSESSMENT_PRACTICE_TYPES))->default('quiz');
             $table->unsignedTinyInteger('questions_count')->default(1);
 
 	        $table->foreignUuid('lesson_id')->constrained('lessons');

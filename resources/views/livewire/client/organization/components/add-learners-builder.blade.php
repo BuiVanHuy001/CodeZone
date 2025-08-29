@@ -17,7 +17,7 @@
                     <th>#{{ $loop->iteration}}</th>
                     <td class="d-flex align-items-center">
                         <div class="rbt-avatars size-sm">
-                            <img src="{{ $employee->user->getAvatarPath() }}" alt="Author Images">
+                            <img src="{{ $employee->user->getAvatarPath() }}" loading="lazy" alt="Author Images">
                         </div>
                         {{ $employee->user->name }}
                     </td>
