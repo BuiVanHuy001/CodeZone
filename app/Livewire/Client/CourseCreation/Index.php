@@ -163,7 +163,6 @@ class Index extends Component {
         }
         $this->updateJsonFromMultilineInput('skills');
         $this->updateJsonFromMultilineInput('requirements');
-        //        $this->validateFields();
 
         dd([
             'title' => $this->title,

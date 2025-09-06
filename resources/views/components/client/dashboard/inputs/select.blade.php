@@ -1,52 +1,61 @@
 <div {{ $attributes->class(['course-field mb--20']) }}>
     <label for="{{ $name }}">{{ $label }}</label>
-    <div
-        wire:ignore
-        class="rbt-modern-select bg-transparent height-45 w-100 mb--10"
-        x-data
-        x-init="
-        $nextTick(() => {
-            let select = $refs.select;
-            $(select).selectpicker();
-            $(select).on('changed.bs.select', function (e) {
-                @this.set('{{ $name }}', e.target.value);
-            });
-            Livewire.hook('message.processed', () => {
-                $(select).val(@this.get('newLesson.type')).selectpicker('refresh');
-            });
-        });
-    "
-    >
-        <select
-            wire:model="{{ $name }}"
-            x-ref="select"
-            id="{{ $name }}"
+    @if($isBoostrapSelect)
+        <div wire:ignore
+             class="rbt-modern-select bg-transparent height-45 w-100 mb--10"
+             x-data
+             x-init="
+         $nextTick(() => {
+         let select = $refs.select;
+         $(select).selectpicker();
+         $(select).on('changed.bs.select', function (e) {
+            @this.set('{{ $name }}', e.target.value);
+             });
+         });"
+        >
+            <select
+                wire:model="{{ $name }}"
+                x-ref="select"
+                id="{{ $name }}"
+                @class([
+                    'w-100',
+                    'border-danger' => $isError,
+                ])
+            >
+                <option value="">{{ $placeholder }}</option>
+
+                @if($name === 'category')
+                    @foreach ($options as $category)
+                        @foreach ($category->getChildren($category->id) as $children)
+                            <option value="{{ $children->id }}">
+                                {{ $category->name . '->' . $children->name }}
+                            </option>
+                        @endforeach
+                    @endforeach
+                @elseif($name === 'problem.return_type')
+                    @foreach($options as $key => $type)
+                        <option value="{{ $key }}">{{ $type['label'] }}</option>
+                    @endforeach
+                @else
+                    @foreach ($options as $key => $label)
+                        <option value="{{ $key }}">{{ ucfirst($label) }}</option>
+                    @endforeach
+                @endif
+            </select>
+        </div>
+    @else
+        <select wire:model.lazy="{{ $name }}"
             @class([
                 'w-100',
-                'border-danger' => $isError,
+                'border-danger' => $errors->has($name),
             ])
         >
-            <option value="">{{ $placeholder }}</option>
-
-            @if($name === 'category')
-                @foreach ($options as $category)
-                    @foreach ($category->getChildren($category->id) as $children)
-                        <option value="{{ $children->id }}">
-                            {{ $category->name . '->' . $children->name }}
-                        </option>
-                    @endforeach
-                @endforeach
-            @elseif($name === 'problem.return_type')
-                @foreach($options as $key => $type)
-                    <option value="{{ $key }}">{{ $type['label'] }}</option>
-                @endforeach
-            @else
-                @foreach ($options as $key => $label)
-                    <option value="{{ $key }}">{{ ucfirst($label) }}</option>
-                @endforeach
-            @endif
+            <option value="">Select lesson type</option>
+            @foreach($options  as $key => $type)
+                <option value="{{ $key }}">{{ ucfirst($type) }}</option>
+            @endforeach
         </select>
-    </div>
+    @endif
 
     @error($name)
     <small class="text-danger d-block">

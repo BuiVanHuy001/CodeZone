@@ -1,17 +1,13 @@
 <div class="course-field mb--20">
     <h6>Upload video</h6>
-    @if(!empty($previewVideo) || !empty($storedVideoAbsPath))
-        <video controls preload="metadata" style="width:100%;">
-            @if($storedVideoAbsPath)
-                <source src="{{ $storedVideoAbsPath }}" type="video/mp4">
-            @elseif($previewVideo)
-                <source src="{{ $previewVideo }}" type="video/mp4">
-            @endif
+    @if($video && (!empty($previewVideo) || !empty($storedVideoAbsPath)))
+        <video width="100%" controls>
+            <source src="{{ $previewVideo ?? $storedVideoAbsPath }}" type="video/mp4">
         </video>
         @if(!empty($storedVideoAbsPath) && empty($previewVideo))
-            <button wire:click.prevent="changeOrChangeVideo" class="awe-btn bg-danger">Delete/Change</button>
+            <button wire:click="changeOrChangeVideo" class="awe-btn bg-danger">Delete/Change</button>
         @elseif(!empty($previewVideo) && empty($storedVideoAbsPath))
-            <button wire:click.prevent="saveVideo" class="awe-btn">Save</button>
+            <button wire:click="saveVideo" class="awe-btn">Save</button>
         @endif
     @else
         <div x-data

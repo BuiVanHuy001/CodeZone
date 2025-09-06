@@ -2,50 +2,115 @@
 
 namespace App\Livewire\Client\CourseCreation\Components\Builders;
 
+use App\Validator\NewLessonValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Modelable;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CourseBuilder extends Component {
     #[Modelable]
     public array $modules;
 
-    public string|int $selectedModule;
+    #[Validate(rule: ['required', 'min:3', 'max:255'], message: [
+        'require' => 'Module title is required.',
+        'min' => 'Module title must be at least 3 characters.',
+        'max' => 'Module title may not be greater than 255 characters.'
+    ])]
+    public string $newModuleTitle;
 
-    public function createModule(): void
+    public array $selectedModule = ['index' => 0];
+
+    public function rules(): array
     {
-        $this->dispatch('open-modal', id: 'addModule');
+        return NewLessonValidator::rules();
+    }
+
+    public array $messages;
+
+    public function mount(): void
+    {
+        $this->messages = NewLessonValidator::$MESSAGES;
+    }
+
+    public function updated($propertyName): void
+    {
+        $this->validateOnly($propertyName);
+    }
+
+    public function updatedNewLessonType(): void
+    {
+        switch ($this->newLesson['type']) {
+        case 'video':
+            $this->newLesson['document'] = '';
+            $this->newLesson['assessment'] = null;
+            break;
+
+        case 'document':
+            $this->deleteLessonVideo();
+            $this->newLesson['video_file_name'] = '';
+            $this->newLesson['duration'] = 0;
+            $this->newLesson['assessment'] = null;
+            break;
+
+        case 'assessment':
+            $this->deleteLessonVideo();
+            $this->newLesson['video_file_name'] = '';
+            $this->newLesson['duration'] = 0;
+            $this->newLesson['document'] = '';
+            $this->newLesson['assessment'] = [];
+            unset($this->newLesson['practice_assessments']);
+            break;
+
+        default:
+            $this->dispatch('lesson-video-deleted');
+            $this->newLesson['video_file_name'] = '';
+            unset($this->newLesson['tmp_video_file_name']);
+            $this->newLesson['duration'] = 0;
+            $this->newLesson['document'] = '';
+            $this->newLesson['practice_assessments'] = [];
+            unset($this->newLesson['assessment']);
+            break;
+        }
+    }
+
+    private function deleteLessonVideo(): void
+    {
+        if (empty($this->newLesson['video_file_name']) && empty($this->newLesson['tmp_video_file_name'])) {
+            return;
+        } else {
+            if (empty($this->newLesson['video_file_name'])) {
+                $file = storage_path('app/private/livewire-tmp/' . $this->newLesson['tmp_video_file_name']);
+            } else {
+                $file = storage_path('app/public/course/videos/' . $this->newLesson['video_file_name']);
+            }
+            if (file_exists($file)) {
+                unlink($file);
+            }
+        }
     }
 
     public function editModule($index): void
     {
-        $this->dispatch('open-modal', id: 'updateModule');
-        $this->dispatch('edit-module', index: $index, title: $this->modules[$index]['title']);
+        $this->selectedModule = $this->modules[$index];
+        $this->selectedModule['index'] = $index;
     }
 
-    #[On('module-created')]
-    public function storeModule(string $title): void
+    public function addModule(): void
     {
         $this->modules[] = [
-            'title' => $title,
+            'title' => $this->newModuleTitle,
             'lesson_count' => 0,
             'lessons' => []
         ];
+        $this->reset('newModuleTitle');
     }
 
-    #[On('module-updated')]
-    public function updateModuleTitle(string|int $index, string $title): void
-    {
-        if (isset($this->modules[$index])) {
-            $this->modules[$index]['title'] = $title;
-        }
-    }
-
-    public function destroyModule(string|int $index): void
+    public function removeModule(string|int $index): void
     {
         if (count($this->modules) <= 1) {
             $this->dispatch('swal', [
@@ -53,51 +118,29 @@ class CourseBuilder extends Component {
                 'text' => 'You must have at least one module in your course.',
                 'icon' => 'warning',
             ]);
-        } else {
-            if (isset($this->modules[$index])) {
-                unset($this->modules[$index]);
-                $this->modules = array_values($this->modules);
-                $this->dispatch('swal', [
-                    'title' => 'Module Removed',
-                    'text' => 'The module has been successfully removed.',
-                    'icon' => 'success',
-                ]);
-            }
+            return;
+        }
+        if (isset($this->modules[$index])) {
+            unset($this->modules[$index]);
+            $this->modules = array_values($this->modules);
+            $this->dispatch('swal', [
+                'title' => 'Module Removed',
+                'text' => 'The module has been successfully removed.',
+                'icon' => 'success',
+            ]);
         }
     }
 
-    public function createLesson(string|int $moduleIndex): void
+    #[On('document-changed')]
+    public function documentChange($document): void
     {
-        $this->dispatch('open-modal', id: 'addLesson');
-        $this->dispatch('create-lesson', moduleIndex: $moduleIndex);
-    }
-
-    public function editLesson(string|int $moduleIndex, string|int $lessonIndex): void
-    {
-        $this->dispatch('open-modal', id: 'updateLesson');
-
-        $this->dispatch('edit-lesson',
-            lesson: $this->modules[$moduleIndex]['lessons'][$lessonIndex],
-            moduleIndex: $moduleIndex,
-            lessonIndex: $lessonIndex
-        );
-    }
-
-    #[On('lesson-updated')]
-    public function updateLesson(array $lesson, string|int $moduleIndex, string|int $lessonIndex): void
-    {
-        $this->modules[$moduleIndex]['lessons'][$lessonIndex] = $lesson;
-        $this->dispatch('swal', [
-            'title' => 'Lesson Updated',
-            'text' => 'The lesson has been successfully updated.',
-            'icon' => 'success',
-        ]);
-        $this->dispatch('close-modal', id: 'updateLesson');
+        $this->newLesson['document'] = $document;
     }
 
     #[On('lesson-added')]
-    public function storeLesson(array $newLesson, string|int $moduleIndex): void
+    public function addLessonFromChild(array $newLesson): void
     {
+        $moduleIndex = $this->selectedModule['index'] ?? 0;
         $this->modules[$moduleIndex]['lessons'][] = $newLesson;
 
         $this->dispatch('swal', [
@@ -107,36 +150,12 @@ class CourseBuilder extends Component {
         ]);
     }
 
-    public function destroyLesson(string|int $moduleIndex, string|int $lessonIndex): void
+    public function cancelNewLesson(): void
     {
-        if (count($this->modules[$moduleIndex]['lessons']) <= 1) {
-            $this->dispatch('swal', [
-                'title' => 'Minimum Lessons Required',
-                'text' => 'You must have at least one lesson in your module.',
-                'icon' => 'warning',
-            ]);
-        } else {
-            if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex])) {
-                if ($this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] === 'video') {
-                    Storage::disk('public')->delete('course/videos/' . $this->modules[$moduleIndex]['lessons'][$lessonIndex]['video_file_name']);
-                }
-
-                unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]);
-
-                $this->modules[$moduleIndex]['lessons'] = array_values($this->modules[$moduleIndex]['lessons']);
-                $this->dispatch('swal', [
-                    'title' => 'Lesson Removed',
-                    'text' => 'The lesson has been successfully removed.',
-                    'icon' => 'success',
-                ]);
-            }
+        if ($this->newLesson['type'] === 'video' && $this->newLesson['video_file_name'] !== '') {
+            Storage::disk('public')->delete('course/videos/' . $this->newLesson['video_file_name']);
         }
-    }
-
-    #[On('document-changed')]
-    public function documentChange($document): void
-    {
-        $this->newLesson['document'] = $document;
+        $this->reset('newLesson');
     }
 
     public function render(): Factory|Application|View
