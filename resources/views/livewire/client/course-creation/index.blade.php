@@ -212,7 +212,7 @@
                                 </div>
                             </div>
 
-                            <livewire:client.course-creation.components.builders.course wire:model="modules"/>
+                            <livewire:client.course-creation.components.builders.course-builder wire:model="modules"/>
 
                             @if (auth()->user()->isOrganization())
                                 <div class="accordion-item card">

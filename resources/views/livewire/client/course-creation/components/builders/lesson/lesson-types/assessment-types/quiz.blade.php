@@ -9,6 +9,7 @@
                 label="Quiz Title"
                 placeholder="Enter quiz title"
                 info="Provide a clear, descriptive title for this quiz assessment."
+                :isError="$errors->has('quiz.title')"
             />
 
             <x-client.dashboard.inputs.markdown-area
@@ -23,8 +24,7 @@
                     </button>
                 </div>
                 <div class="content">
-                    <button class="awe-btn" @click.prevent="$wire.validateStep1().then(ok => ok && (step = 2))">Next
-                    </button>
+                    <button class="awe-btn" @click="$wire.validateStep1().then(ok => ok && (step = 2))">Next</button>
                 </div>
             </div>
         </div>
@@ -81,6 +81,7 @@
                                 label="Write your question here"
                                 placeholder="Enter question content"
                                 info="Provide a clear, descriptive content for this quiz question."
+                                :isError="$errors->has('quiz.assessments_questions.'.$questionIndex.'.content')"
                             />
 
                             <x-client.dashboard.inputs.select
@@ -90,6 +91,7 @@
                                 :options="\App\Models\AssessmentQuestion::$TYPES"
                                 info="Select the type of question you want to create."
                                 wire:model.lazy="quiz.assessments_questions.{{ $questionIndex }}.type"
+                                :isError="$errors->has('quiz.assessments_questions.'.$questionIndex.'.type')"
                                 :isBoostrapSelect="false"
                             />
 
@@ -121,6 +123,7 @@
                                                 label="Answer Content"
                                                 placeholder="Type answer option here"
                                                 info="Provide a brief title for this answer option."
+                                                :isError="$errors->has('quiz.assessments_questions.'.$questionIndex.'.question_options.'.$optionIndex.'.content')"
                                                 class="col-lg-9"
                                             />
 
@@ -250,7 +253,7 @@
                     },
                 }),
             ],
-            doc: @json($quiz['description'] ?? ''),
+            doc: '',
             parent: document.getElementById('quiz-description{{ !empty($unique) ? '-' . $unique : '' }}-editor'),
         }
     )
