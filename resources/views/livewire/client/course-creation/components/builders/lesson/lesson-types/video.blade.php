@@ -1,12 +1,12 @@
 <div class="course-field mb--20">
     <h6>Upload video</h6>
-    @if($video && (isset($previewVideo) || isset($storedVideoAbsPath)))
+    @if($video && (!empty($previewVideo) || !empty($storedVideoAbsPath)))
         <video width="100%" controls>
             <source src="{{ $previewVideo ?? $storedVideoAbsPath }}" type="video/mp4">
         </video>
-        @if(isset($storedVideoAbsPath) && !isset($previewVideo))
+        @if(!empty($storedVideoAbsPath) && empty($previewVideo))
             <button wire:click="changeOrChangeVideo" class="awe-btn bg-danger">Delete/Change</button>
-        @elseif(isset($previewVideo) && !isset($storedVideoAbsPath))
+        @elseif(!empty($previewVideo) && empty($storedVideoAbsPath))
             <button wire:click="saveVideo" class="awe-btn">Save</button>
         @endif
     @else
@@ -23,7 +23,7 @@
                 <input type="file"
                        id="video-upload"
                        wire:model="video"
-                       accept="video/mp4,video/mov"
+                       accept="video/mp4,video/webm,video/mov"
                        style="display: none;"
                        x-ref="videoInput">
 
@@ -38,4 +38,9 @@
             </div>
         </div>
     @endif
+    @error('video')
+    <small class="text-danger d-block">
+        <i class="feather-alert-triangle"></i> {{ $message }}
+    </small>
+    @enderror
 </div>

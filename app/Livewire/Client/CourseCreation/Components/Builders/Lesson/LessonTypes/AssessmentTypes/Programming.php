@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Livewire\Client\CourseCreation\Components\Builders\AssessmentTypes;
+namespace App\Livewire\Client\CourseCreation\Components\Builders\Lesson\LessonTypes\AssessmentTypes;
 
 use App\Services\CourseCreation\Builders\AssessmentTypes\ProgrammingService;
+use App\Traits\HasErrors;
 use App\Validator\ProgrammingPracticeValidator;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -11,16 +13,17 @@ use Illuminate\Support\Str;
 use Livewire\Attributes\Modelable;
 use Livewire\Component;
 
-class Programming extends Component
-{
+class Programming extends Component {
+    use HasErrors;
+
     #[Modelable]
     public array $programming;
 
-    public bool $showDetail = true;
+    public bool $showDetails = true;
+    public string $unique = '';
 
     public array $messages;
 
-    public string $allowedTypes;
     public static array $typeMap = [
         'int' => [
             'python' => 'int',
@@ -122,33 +125,41 @@ class Programming extends Component
 
     public function rules(): array
     {
-        return ProgrammingPracticeValidator::rules($this->allowedTypes, $this->newTestCase, self::$typeMap);
+        return ProgrammingPracticeValidator::rules($this->newTestCase, self::$typeMap);
     }
 
     public function mount(): void
     {
         $this->messages = ProgrammingPracticeValidator::$MESSAGES;
-        $this->allowedTypes = implode(',', array_keys(self::$typeMap));
     }
 
+    /**
+     * @throws Exception
+     */
     public function updated($propertyName): void
     {
-        if ($propertyName === 'problem.function_name') {
-            $this->problem['function_name'] = $this->normalizeIdentifier($this->problem['function_name']);
-        }
-
-        if ($propertyName === 'newParam.name') {
-            $this->newParam['name'] = $this->normalizeIdentifier($this->newParam['name']);
-        }
-
-        if ($propertyName === 'problem.return_type') {
-            $this->newTestCase['output']['type'] = $this->problem['return_type'];
-            if (count($this->problem['test_cases']) !== 0) {
-                $this->problem['test_cases'] = [];
+        try {
+            if ($propertyName === 'problem.function_name') {
+                $this->problem['function_name'] = $this->normalizeIdentifier($this->problem['function_name']);
             }
-        }
 
-        $this->validateOnly($propertyName);
+            if ($propertyName === 'newParam.name') {
+                $this->newParam['name'] = $this->normalizeIdentifier($this->newParam['name']);
+            }
+
+            if ($propertyName === 'problem.return_type') {
+                $this->newTestCase['output']['type'] = $this->problem['return_type'];
+                if (count($this->problem['test_cases']) !== 0) {
+                    $this->problem['test_cases'] = [];
+                }
+            }
+
+            $this->validateOnly($propertyName);
+            $this->dispatch('assessment-updated', isValid: true);
+        } catch (Exception $e) {
+            $this->dispatch('assessment-updated', isValid: false);
+            throw $e;
+        }
     }
 
     public function updatedProblemAllowedLanguages(ProgrammingService $programmingService): void
@@ -166,10 +177,12 @@ class Programming extends Component
 
     public function getCanSelectLanguagesProperty(): bool
     {
-        return $this->getErrorBag()->isEmpty()
-            && !empty($this->problem['function_name'])
-            && !empty($this->problem['return_type'])
-            && !empty($this->problem['params']);
+        $problem = $this->problem ?? [];
+
+        return filled($problem['function_name'] ?? null)
+            && filled($problem['return_type'] ?? null)
+            && !empty($problem['params'] ?? [])
+            && !empty($problem['test_cases'] ?? []);
     }
 
     private function normalizeIdentifier(?string $functionName): ?string
@@ -190,9 +203,7 @@ class Programming extends Component
 
     public function addParameter(): void
     {
-        $this->validateOnly('newParam.name');
-        $this->validateOnly('newParam.type');
-
+        $this->validate(ProgrammingPracticeValidator::getRulesNewParam(self::$typeMap));
         foreach ($this->problem['params'] as $param) {
             if (
                 strtolower($param['name']) === strtolower($this->newParam['name']) &&
@@ -251,11 +262,7 @@ class Programming extends Component
 
     public function addTestCase(): void
     {
-        $this->validateOnly('newTestCase.inputs.*.value');
-        $this->validateOnly('problem.return_type');
-        $this->validateOnly('newTestCase.output.value');
-        $this->validateOnly('newTestCase.inputs.*.type');
-        $this->validateOnly('newTestCase.output.type');
+        $this->validate(ProgrammingPracticeValidator::getRulesNewTestCase(self::$typeMap, $this->newTestCase, $this->problem));;;
 
         $this->problem['test_cases'][] = $this->newTestCase;
 
@@ -305,14 +312,38 @@ class Programming extends Component
         ]);
     }
 
-    public function save(): void
+    /**
+     * @throws Exception
+     */
+    public function saveProgramming(): void
     {
-        $this->programming['problem_details'] = $this->problem;
+        try {
+            $this->validate();
+            $this->programming['problem_details'] = $this->problem;
+            $this->showDetails = false;
+            $this->dispatch('assessment-saved', id: $this->programming['title']);
+            $this->dispatch('assessment-updated', isValid: true);
+        } catch (Exception $e) {
+            $this->dispatch('swal', [
+                'title' => 'Error',
+                'html' => 'There was an error saving the programming assessment: <br>' . $this->prepareRenderErrors($e),
+                'icon' => 'error',
+            ]);
+            throw $e;
+        }
+    }
+
+    public function remove(): void
+    {
+        if (isset($this->programming['title'])) {
+            $this->dispatch('assessment-deleted', title: $this->programming['title']);
+            $this->reset('programming', 'problem');
+        }
     }
 
     public function render(): Factory|Application|View
     {
-        return view('livewire.client.course-creation.components.builders.assessment-types.programming', [
+        return view('livewire.client.course-creation.components.builders.lesson.lesson-types.assessment-types.programming', [
             'typeMap' => self::$typeMap,
         ]);
     }

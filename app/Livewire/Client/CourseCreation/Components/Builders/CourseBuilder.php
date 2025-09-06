@@ -2,9 +2,7 @@
 
 namespace App\Livewire\Client\CourseCreation\Components\Builders;
 
-use App\Models\Assessment;
-use App\Models\Lesson;
-use App\Validator\ModulesBuilderValidate;
+use App\Validator\NewLessonValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -14,7 +12,7 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-class Course extends Component {
+class CourseBuilder extends Component {
     #[Modelable]
     public array $modules;
 
@@ -25,33 +23,18 @@ class Course extends Component {
     ])]
     public string $newModuleTitle;
 
-    public array $newLesson = [
-        'title' => '',
-        'video_file_name' => '',
-        'document' => '',
-        'preview' => false,
-        'duration' => 0,
-        'type' => ''
-    ];
-
-    public array $newLessonAssessments = [
-        'title' => '',
-        'description' => '',
-    ];
-
     public array $selectedModule = ['index' => 0];
 
     public function rules(): array
     {
-        return ModulesBuilderValidate::rules();
+        return NewLessonValidator::rules();
     }
 
     public array $messages;
 
-
     public function mount(): void
     {
-        $this->messages = ModulesBuilderValidate::$MESSAGES;
+        $this->messages = NewLessonValidator::$MESSAGES;
     }
 
     public function updated($propertyName): void
@@ -79,12 +62,8 @@ class Course extends Component {
             $this->newLesson['video_file_name'] = '';
             $this->newLesson['duration'] = 0;
             $this->newLesson['document'] = '';
-
-            $this->newLesson['assessment'] = [
-                'title' => '',
-                'description' => '',
-                'type' => '',
-            ];
+            $this->newLesson['assessment'] = [];
+            unset($this->newLesson['practice_assessments']);
             break;
 
         default:
@@ -93,8 +72,8 @@ class Course extends Component {
             unset($this->newLesson['tmp_video_file_name']);
             $this->newLesson['duration'] = 0;
             $this->newLesson['document'] = '';
-            $this->newLesson['assessments'] = [];
-            $this->newLesson['assessment'] = null;
+            $this->newLesson['practice_assessments'] = [];
+            unset($this->newLesson['assessment']);
             break;
         }
     }
@@ -115,30 +94,6 @@ class Course extends Component {
         }
     }
 
-    #[On('video-saved')]
-    public function saveVideo(string $videoFileName, int $duration): void
-    {
-        $this->newLesson['video_file_name'] = $videoFileName;
-        $this->newLesson['duration'] = $duration;
-        if (isset($this->newLesson['tmp_video_file_name'])) {
-            unset($this->newLesson['tmp_video_file_name']);
-        }
-    }
-
-    #[On('tmp-video-uploaded')]
-    public function tmpVideoUpload(string $tmpVideoFileName): void
-    {
-        $this->newLesson['tmp_video_file_name'] = $tmpVideoFileName;
-    }
-
-    //    public function updatedNewLessonAssessmentsType($value): void
-    //    {
-    //        $this->newLesson['assessments']['type'] = $value;
-    //        $this->newLesson['assessments']['title'] = '';
-    //        $this->newLesson['assessments']['description'] = '';
-    //        $this->newLesson['assessments']['assessments_questions'] = [];
-    //    }
-
     public function editModule($index): void
     {
         $this->selectedModule = $this->modules[$index];
@@ -149,17 +104,8 @@ class Course extends Component {
     {
         $this->modules[] = [
             'title' => $this->newModuleTitle,
-            'lesson_count' => 1,
-            'lessons' => [
-                [
-                    'title' => '',
-                    'video_file_name' => '',
-                    'document' => '',
-                    'preview' => false,
-                    'type' => '',
-                    'duration' => 0
-                ]
-            ]
+            'lesson_count' => 0,
+            'lessons' => []
         ];
         $this->reset('newModuleTitle');
     }
@@ -185,44 +131,23 @@ class Course extends Component {
         }
     }
 
-    #[On('video-changed-or-deleted')]
-    public function changeOrDeletedVideo(): void
-    {
-        $this->newLesson['video_file_name'] = '';
-        $this->newLesson['duration'] = 0;
-    }
-
-    public function addAssessment(): void
-    {
-        $this->newLesson['assessments'][] = [
-            'title' => '',
-            'description' => '',
-            'type' => null,
-            'assessments' => []
-        ];
-    }
-
-    #[On('assessment-builders-removed')]
-    public function removeAssessmentBuilder(): void
-    {
-        $this->newLesson['assessments'] = [
-            'title' => '',
-            'description' => '',
-            'type' => '',
-        ];
-    }
-
     #[On('document-changed')]
     public function documentChange($document): void
     {
         $this->newLesson['document'] = $document;
     }
 
-    public function addLesson(): void
+    #[On('lesson-added')]
+    public function addLessonFromChild(array $newLesson): void
     {
-        dd($this->newLesson);
-        $this->modules[$this->selectedModule['index']]['lessons'][] = $this->newLesson;
-        $this->reset('newLesson');
+        $moduleIndex = $this->selectedModule['index'] ?? 0;
+        $this->modules[$moduleIndex]['lessons'][] = $newLesson;
+
+        $this->dispatch('swal', [
+            'title' => 'Lesson Added',
+            'text' => 'The lesson has been successfully added.',
+            'icon' => 'success',
+        ]);
     }
 
     public function cancelNewLesson(): void
@@ -231,11 +156,10 @@ class Course extends Component {
             Storage::disk('public')->delete('course/videos/' . $this->newLesson['video_file_name']);
         }
         $this->reset('newLesson');
-        $this->dispatch('lesson-reset');
     }
 
     public function render(): Factory|Application|View
     {
-        return view('livewire.client.course-creation.components.builders.course');
+        return view('livewire.client.course-creation.components.builders.course-builder');
     }
 }

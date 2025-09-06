@@ -1,43 +1,7 @@
-<div @class([
-        'course-field mb--20 mt-3 position-relative border p-5 rounded',
-        'border-danger' => $errors->has('programming.*'),
-    ])
-     x-data="{ step: 1 }"
->
-    <pre>{{ json_encode($programming, JSON_PRETTY_PRINT) }}</pre>
-    <h6>Programing: <span wire:text="programming.title"></span></h6>
-    <div class="position-absolute" style="right: 10px; top: 10px; cursor: pointer;">
-        <div class="inner">
-            <ul class="rbt-list-style-1 rbt-course-list d-flex gap-3 align-items-center">
-                <li>
-                    <button type="button" class="btn quiz-modal__edit-btn dropdown-toggle me-2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="feather-more-horizontal"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a wire:click="toggleShowDetail" class="dropdown-item" href="#" type="button">
-                                @if($showDetail)
-                                    <i class="feather-eye-off"></i>
-                                    Hide detail
-                                @else
-                                    <i class="feather-edit-2"></i>
-                                    Show detail
-                                @endif
-                            </a>
-                        </li>
-                        <li>
-                            <a wire:click.prevent="removeAssignment" class="dropdown-item delete-item" href="#">
-                                <i class="feather-trash"></i>
-                                Delete
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    @if($showDetail)
+<x-client.dashboard.course-creation.builders.assessment-types.base
+    title="Programming"
+    name="programming">
+    <div x-show="showDetail">
         <div class="tab-1" x-show="step === 1">
             <x-client.dashboard.inputs.text
                 model="programming.title"
@@ -49,7 +13,7 @@
             />
 
             <x-client.dashboard.inputs.markdown-area
-                id="programming-description"
+                id="programming-description{{ !empty($unique) ? '-' . $unique : '' }}"
                 name="programming.description"
                 label="Problem Description"
                 info="Describe the problem statement, constraints, and examples. Markdown formatting is supported."
@@ -58,7 +22,7 @@
 
             <div class="d-flex pt--30 justify-content-between">
                 <div class="content">
-                    <button type="button" class="awe-btn bg-danger">
+                    <button wire:click="remove" type="button" class="awe-btn bg-danger">
                         Cancel
                     </button>
                 </div>
@@ -67,7 +31,6 @@
                 </div>
             </div>
         </div>
-
         <div class="tab-2 row" x-show="step === 2">
             <x-client.dashboard.inputs.text
                 model="problem.function_name"
@@ -113,6 +76,11 @@
                 <div class="row">
                     <div class="col-12 row">
                         @error('newParam.*')
+                        <small class="text-danger d-block mb-2">
+                            <i class="feather-alert-triangle"></i> {{ $message }}
+                        </small>
+                        @enderror
+                        @error('problem.params')
                         <small class="text-danger d-block mb-2">
                             <i class="feather-alert-triangle"></i> {{ $message }}
                         </small>
@@ -180,8 +148,8 @@
                                     </li>
                                 @endforeach
                             </ul>
+                            Output:
                             <ul>
-                                Output:
                                 <li class="list-group-item">
                                     @if(isset($testCase['output']))
                                         <code>{{ $typeMap[$problem['return_type']]['label'] }}</code> expected =
@@ -259,17 +227,17 @@
 
             <div class="d-flex pt--30 justify-content-between">
                 <div class="content">
-                    <button type="button" class="awe-btn bg-danger">Cancel</button>
+                    <button wire:click="remove" type="button" class="awe-btn bg-danger">Cancel</button>
                 </div>
                 <div class="content">
                     <button type="button" class="awe-btn bg-info" @click="step = 1">Back</button>
 
-                    <button wire:click="save" type="button" class="awe-btn">Save</button>
+                    <button wire:click="saveProgramming" type="button" class="awe-btn">Save</button>
                 </div>
             </div>
         </div>
-    @endif
-</div>
+    </div>
+</x-client.dashboard.course-creation.builders.assessment-types.base>
 
 @script
 <script>
@@ -301,7 +269,7 @@
             }),
         ],
         doc: '',
-        parent: document.getElementById('programming-description-editor')
+        parent: document.getElementById('programming-description{{ !empty($unique) ? '-' . $unique : '' }}-editor')
     });
 </script>
 @endscript

@@ -1,10 +1,10 @@
 <x-client.dashboard.inputs.markdown-area
     id="new-lesson-document"
     label="Document"
+    :isError="$errors->has('document')"
     info="Markdown is supported. This is the document that will be displayed to the student."
     name="document"
 />
-
 
 @script
 <script>

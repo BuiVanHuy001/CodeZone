@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Livewire\Client\CourseCreation\Components\Builders\AssessmentTypes;
+namespace App\Livewire\Client\CourseCreation\Components\Builders\Lesson\LessonTypes\AssessmentTypes;
 
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Attributes\Modelable;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class Assignment extends Component {
     #[Modelable]
     public array $assignment;
 
-    public bool $showDetail = true;
+    public bool $showDetails = true;
+    public string $unique = '';
 
     public function rules(): array
     {
@@ -28,24 +28,23 @@ class Assignment extends Component {
         $this->validateOnly($propertyName);
     }
 
-    public function removeAssignment(): void
+    public function remove(): void
     {
-        $this->dispatch('assessment-builders-removed');
+        if (isset($this->assignment['title'])) {
+            $this->dispatch('assessment-deleted', title: $this->assignment['title']);
+            $this->reset('assignment');
+        }
     }
 
-    public function saveAssignment(): void
+    public function save(): void
     {
         $this->validate();
-        $this->showDetail = false;
-    }
-
-    public function toggleShowDetail(): void
-    {
-        $this->showDetail = !$this->showDetail;
+        $this->showDetails = false;
+        $this->dispatch('assessment-saved');
     }
 
     public function render(): View|Application|Factory
     {
-        return view('livewire.client.course-creation.components.builders.assessment-types.assignment');
+        return view('livewire.client.course-creation.components.builders.lesson.lesson-types.assessment-types.assignment');
     }
 }

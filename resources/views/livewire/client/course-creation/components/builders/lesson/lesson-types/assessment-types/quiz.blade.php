@@ -1,41 +1,7 @@
-<div @class([
-       'course-field mb--20 mt-3 position-relative border p-5 rounded',
-       'border-danger' => $errors->has('quiz.*'),
-   ])
-     x-data="{ step: 1 }"
->
-    <h6>Quiz: <span wire:text="quiz.title"></span></h6>
-    <div class="position-absolute" style="right: 10px; top: 10px; cursor: pointer;">
-        <div class="inner">
-            <ul class="rbt-list-style-1 rbt-course-list d-flex gap-3 align-items-center">
-                <li>
-                    <button type="button" class="btn quiz-modal__edit-btn dropdown-toggle me-2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="feather-more-horizontal"></i>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a wire:click="toggleShowDetail" class="dropdown-item" href="#" type="button">
-                                @if($showDetail)
-                                    <i class="feather-eye-off"></i>
-                                    Hide detail
-                                @else
-                                    <i class="feather-edit-2"></i>
-                                    Show detail
-                                @endif
-                            </a>
-                        </li>
-                        <li>
-                            <a wire:click.prevent="removeQuiz" class="dropdown-item delete-item" href="#">
-                                <i class="feather-trash"></i>
-                                Delete
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-    @if($showDetail)
+<x-client.dashboard.course-creation.builders.assessment-types.base
+    title="Quiz"
+    name="quiz">
+    <div x-show="showDetail">
         <div class="tab-1 question" x-show="step === 1">
             <x-client.dashboard.inputs.text
                 model="quiz.title"
@@ -47,13 +13,13 @@
             />
 
             <x-client.dashboard.inputs.markdown-area
-                id="quiz-description"
+                id="quiz-description{{ !empty($unique) ? '-' . $unique : '' }}"
                 label="Quiz Description"
                 info="Markdown is supported"
             />
             <div class="d-flex pt--30 justify-content-between">
                 <div class="content">
-                    <button type="button" class="awe-btn bg-danger">
+                    <button wire:click="remove" type="button" class="awe-btn bg-danger">
                         Cancel
                     </button>
                 </div>
@@ -113,9 +79,9 @@
                                 model="quiz.assessments_questions.{{ $questionIndex }}.content"
                                 name="quiz.assessments_questions.{{ $questionIndex }}.content"
                                 label="Write your question here"
-                                placeholder="Enter course title"
-                                info="Provide a clear, descriptive title for this quiz assessment."
-                                :isError="$errors->has('quiz.assessments_questions.'.$questionIndex.'.title')"
+                                placeholder="Enter question content"
+                                info="Provide a clear, descriptive content for this quiz question."
+                                :isError="$errors->has('quiz.assessments_questions.'.$questionIndex.'.content')"
                             />
 
                             <x-client.dashboard.inputs.select
@@ -126,6 +92,7 @@
                                 info="Select the type of question you want to create."
                                 wire:model.lazy="quiz.assessments_questions.{{ $questionIndex }}.type"
                                 :isError="$errors->has('quiz.assessments_questions.'.$questionIndex.'.type')"
+                                :isBoostrapSelect="false"
                             />
 
                             <div class="course-field mb--20">
@@ -150,18 +117,16 @@
                                                     <i class="feather-trash me-auto"></i>
                                                 </a>
                                             </div>
-                                            <div class="col-lg-9  mb--20">
-                                                <label class="form-label">Answer Content</label>
-                                                <input class="mb-0"
-                                                       type="text"
-                                                       wire:model="quiz.assessments_questions.{{ $questionIndex }}.question_options.{{ $optionIndex }}.content"
-                                                       placeholder="Type answer option here">
-                                                @error("quiz.assessments_questions.$questionIndex.question_options.$optionIndex.content")
-                                                <small class="text-danger">
-                                                    <i class="feather-alert-triangle"></i> {{ $message }}
-                                                </small>
-                                                @enderror
-                                            </div>
+                                            <x-client.dashboard.inputs.text
+                                                model="quiz.assessments_questions.{{ $questionIndex }}.question_options.{{ $optionIndex }}.content"
+                                                name="quiz.assessments_questions.{{ $questionIndex }}.question_options.{{ $optionIndex }}.content"
+                                                label="Answer Content"
+                                                placeholder="Type answer option here"
+                                                info="Provide a brief title for this answer option."
+                                                :isError="$errors->has('quiz.assessments_questions.'.$questionIndex.'.question_options.'.$optionIndex.'.content')"
+                                                class="col-lg-9"
+                                            />
+
                                             <div class="col-lg-3">
                                                 <div class="rbt-form-check">
                                                     <input class="form-check-input"
@@ -182,6 +147,7 @@
                                         </div>
                                     @endforeach
                                 </div>
+
                                 <button wire:click="addOption({{ $loop->index }})" type="button" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
                                     <span class="icon-reverse-wrapper">
                                         <span class="btn-text">Option</span>
@@ -190,7 +156,7 @@
                                     </span>
                                 </button>
 
-                                @unless($errors->has("quiz.assessments_questions.$questionIndex.*"))
+                                @if(!$errors->has("quiz.assessments_questions.$questionIndex.*"))
                                     <button @click="open = false" type="button" class="rbt-btn btn-border hover-icon-reverse rbt-sm-btn-2">
                                         <span class="icon-reverse-wrapper">
                                             <span class="btn-text">Save Question</span>
@@ -235,7 +201,7 @@
                 <div class="content">
                     <button type="button"
                             class="awe-btn bg-danger"
-                            wire:click="cancelQuizCreation">
+                            wire:click="remove">
                         Cancel
                     </button>
                 </div>
@@ -255,11 +221,10 @@
                 </div>
             </div>
         </div>
-    @endif
-</div>
+    </div>
+</x-client.dashboard.course-creation.builders.assessment-types.base>
 @script
 <script>
-    const assignmentDescriptionEditor = document.getElementById('quiz-description-editor');
     new EditorView(
         {
             extensions: [
@@ -289,7 +254,7 @@
                 }),
             ],
             doc: '',
-            parent: assignmentDescriptionEditor,
+            parent: document.getElementById('quiz-description{{ !empty($unique) ? '-' . $unique : '' }}-editor'),
         }
     )
 </script>
