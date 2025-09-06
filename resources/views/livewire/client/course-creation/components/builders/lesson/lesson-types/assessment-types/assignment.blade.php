@@ -8,6 +8,7 @@
             label="Assignment Title"
             placeholder="Enter assignment title"
             info="Provide a clear, descriptive title for this assignment."
+            :isError="$errors->has('assignment.title')"
         />
 
         <x-client.dashboard.inputs.markdown-area
@@ -71,7 +72,7 @@
                     },
                 }),
             ],
-            doc: @json($assignment['description'] ?? ''),
+            doc: '',
             parent: document.getElementById('assignment-description{{ !empty($unique) ? '-' . $unique : '' }}-editor'),
         }
     )

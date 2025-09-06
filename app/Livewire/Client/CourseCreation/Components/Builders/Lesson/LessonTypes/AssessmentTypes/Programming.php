@@ -319,9 +319,7 @@ class Programming extends Component {
     {
         try {
             $this->validate();
-            $this->programming['problem_details']['function_name'] = $this->problem['function_name'];
-            $this->programming['problem_details']['code_templates'] = json_encode($this->problem['code_templates']);
-            $this->programming['problem_details']['test_cases'] = json_encode($this->problem['test_cases']);
+            $this->programming['problem_details'] = $this->problem;
             $this->showDetails = false;
             $this->dispatch('assessment-saved', id: $this->programming['title']);
             $this->dispatch('assessment-updated', isValid: true);
