@@ -2,6 +2,7 @@
 
 namespace App\Validator;
 
+
 use App\Models\Course;
 use App\Models\Lesson;
 
@@ -40,8 +41,6 @@ class CourseInfoValidator {
         'endDate.date' => 'Please enter a valid end date.',
         'endDate.after_or_equal' => 'Course end date must be after or equal to the start date.',
 
-        'thumbnail.string' => 'Please enter a valid image URL.',
-
         'modules.required' => 'At least one module must be created for this course.',
         'modules.min' => 'Course must contain at least :min module.',
         'modules.*.title.required' => 'Module title is required for each learning section.',
@@ -68,7 +67,6 @@ class CourseInfoValidator {
             'level' => 'required|in:' . implode(',', array_keys(Course::$LEVELS)),
             'startDate' => 'required|date|after_or_equal:today',
             'endDate' => 'required|date|after_or_equal:startDate',
-            'thumbnail' => 'nullable|string',
             'modules' => 'required|array|min:1',
             'modules.*.title' => 'required|min:3|max:255',
             'modules.*.lessons' => 'required|array|min:1',
