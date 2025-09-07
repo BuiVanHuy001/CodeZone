@@ -6,41 +6,27 @@ use App\Validator\ModulesBuilderValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Livewire\Attributes\On;
+use Livewire\Attributes\Modelable;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class ModuleUpdate extends Component {
+    #[Modelable]
     #[Validate]
-    public string $moduleTitle = '';
-    public string|int $moduleIndex;
+    public string $moduleTitle;
 
     public array $rules;
-    public array $message;
+    public array $messages;
 
     public function mount(): void
     {
         $this->rules = ModulesBuilderValidator::rules();
-        $this->message = ModulesBuilderValidator::$MESSAGES;
-    }
-
-    #[On('edit-module')]
-    public function receiveDataFormParent($index, $title): void
-    {
-        $this->moduleIndex = $index;
-        $this->moduleTitle = $title;
+        $this->messages = ModulesBuilderValidator::$MESSAGES;
     }
 
     public function update(): void
     {
         $this->validate();
-        $this->dispatch('module-updated', index: $this->moduleIndex, title: $this->moduleTitle);
-        $this->dispatch('close-modal', id: 'updateModule');
-    }
-
-    public function cancel(): void
-    {
-        $this->resetErrorBag();
         $this->dispatch('close-modal', id: 'updateModule');
     }
 

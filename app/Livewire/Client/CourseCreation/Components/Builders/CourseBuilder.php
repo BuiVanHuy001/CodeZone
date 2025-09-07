@@ -9,21 +9,13 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Modelable;
 use Livewire\Attributes\On;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CourseBuilder extends Component {
     #[Modelable]
     public array $modules;
 
-    #[Validate(rule: ['required', 'min:3', 'max:255'], message: [
-        'require' => 'Module title is required.',
-        'min' => 'Module title must be at least 3 characters.',
-        'max' => 'Module title may not be greater than 255 characters.'
-    ])]
-    public string $newModuleTitle;
-
-    public array $selectedModule = ['index' => 0];
+    public string|int $selectedModule;
 
     public function rules(): array
     {
@@ -35,6 +27,7 @@ class CourseBuilder extends Component {
     public function mount(): void
     {
         $this->messages = NewLessonValidator::$MESSAGES;
+        $this->selectedModule = 0;
     }
 
     public function updated($propertyName): void
@@ -96,18 +89,23 @@ class CourseBuilder extends Component {
 
     public function editModule($index): void
     {
-        $this->selectedModule = $this->modules[$index];
-        $this->selectedModule['index'] = $index;
+        $this->selectedModule = $index;
+        $this->dispatch('open-modal', id: 'updateModule');
     }
 
-    public function addModule(): void
+    #[On('module-created')]
+    public function storeModule(string $title): void
     {
         $this->modules[] = [
-            'title' => $this->newModuleTitle,
+            'title' => $title,
             'lesson_count' => 0,
             'lessons' => []
         ];
-        $this->reset('newModuleTitle');
+    }
+
+    public function createModule(): void
+    {
+        $this->dispatch('open-modal', id: 'addModule');
     }
 
     public function removeModule(string|int $index): void
@@ -140,7 +138,7 @@ class CourseBuilder extends Component {
     #[On('lesson-added')]
     public function addLessonFromChild(array $newLesson): void
     {
-        $moduleIndex = $this->selectedModule['index'] ?? 0;
+        $moduleIndex = $this->selectedModule ?? 0;
         $this->modules[$moduleIndex]['lessons'][] = $newLesson;
 
         $this->dispatch('swal', [

@@ -15,6 +15,7 @@ class Text extends Component {
         public bool   $isError = false,
         public string $info = '',
         public string $slug = '',
+        public string $value = '',
     ) {}
 
     public function render(): View|string
