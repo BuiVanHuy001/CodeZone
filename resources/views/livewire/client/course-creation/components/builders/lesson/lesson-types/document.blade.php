@@ -1,10 +1,8 @@
 <x-client.dashboard.inputs.markdown-area
-    id="new-lesson-document"
+    id="lesson-document"
     label="Document"
-    :isError="$errors->has('document')"
     info="Markdown is supported. This is the document that will be displayed to the student."
-    name="document"
-/>
+    name="document"/>
 
 @script
 <script>
@@ -30,10 +28,13 @@
                     padding: "10px",
                     fontSize: "13px",
                 },
-                ".cm-content": {caretColor: "#000"},
+                ".cm-content": {
+                    caretColor: "#000"
+                },
             }),
         ],
-        parent: document.getElementById('new-lesson-document-editor'),
+        doc: @json($document),
+        parent: document.getElementById('lesson-document-editor'),
     });
 </script>
 @endscript

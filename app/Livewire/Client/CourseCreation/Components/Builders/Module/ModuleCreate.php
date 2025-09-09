@@ -22,7 +22,7 @@ class ModuleCreate extends Component {
         $this->message = ModulesBuilderValidator::$MESSAGES;
     }
 
-    public function save(): void
+    public function store(): void
     {
         $this->validate();
         $this->dispatch('module-created', title: $this->moduleTitle);

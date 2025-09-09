@@ -18,9 +18,9 @@ class Video extends Component {
     use WithFileUploads;
 
     public $video;
-    public ?string $previewVideo = '';
-    public ?string $storedVideoAbsPath = '';
-    public ?string $storedVideoRelPath = '';
+    public ?string $previewVideo;
+    public ?string $storedVideoAbsPath;
+    public ?string $storedVideoRelPath;
     public int $duration = 0;
     public array $rules;
     public array $messages;
@@ -31,13 +31,17 @@ class Video extends Component {
         $this->rules['video'] = 'mimes:mp4,mov,webm';
         $this->messages = NewLessonValidator::messagesForAs('video_file_name', 'video');
         $this->messages['video.mimes'] = 'The video file must be in MP4, MOV, or WEBM format.';
-        $this->validate();
+        if (!empty($this->storedVideoRelPath)) {
+            $this->storedVideoAbsPath = Storage::url('course/videos/' . $this->storedVideoRelPath);
+        } else {
+            $this->validate();
+        }
     }
 
     public function updatedVideo(): void
     {
         try {
-            $this->validate($this->rules, $this->messages);
+            $this->validate();
 
             $this->previewVideo = $this->video->temporaryUrl();
             $this->dispatch('tmp-video-uploaded', tmpVideoFileName: $this->video->getFilename());
@@ -50,56 +54,29 @@ class Video extends Component {
         }
     }
 
-
     public function saveVideo(VideoService $videoService): void
     {
-        $this->storedVideoRelPath = $this->video->storeAs(
-            path: 'course/videos',
-            options: 'public',
-            name: $this->video->getFileName()
-        );
-
-        $this->storedVideoAbsPath = Storage::disk('public')->path($this->storedVideoRelPath);
-
-        $this->duration = $videoService->getDuration($this->storedVideoAbsPath);
-
-        File::delete($this->video->getRealPath());
+        $storedVideoResults = $videoService->storeVideo($this->video);
         $this->reset('previewVideo');
 
-        $savedFileName = basename($this->storedVideoRelPath);
+        $this->storedVideoAbsPath = $storedVideoResults['storedVideoAbsPath'];
+        $this->storedVideoRelPath = $storedVideoResults['videoFileName'];
+
         $this->dispatch('video-saved',
-            videoFileName: $savedFileName,
-            duration: $this->duration
+            videoFileName: $storedVideoResults['videoFileName'],
+            duration: $storedVideoResults['duration'],
         );
     }
 
-    public function changeOrChangeVideo(): void
+    public function changeOrChangeVideo(VideoService $videoService): void
     {
-        if ($this->video) {
-            $this->deleteVideo();
+        if ($this->storedVideoRelPath) {
+            $videoService->destroyVideo($this->storedVideoRelPath);
         }
 
         $this->reset('video', 'previewVideo', 'duration', 'storedVideoRelPath', 'storedVideoAbsPath');
 
         $this->dispatch('video-changed-or-deleted');
-    }
-
-    #[On('lesson-video-deleted')]
-    public function deletedVideo(): void
-    {
-        if ($this->video) {
-            $this->changeOrChangeVideo();
-        }
-    }
-
-    private function deleteVideo(): void
-    {
-        if ($this->video && is_object($this->video) && method_exists($this->video, 'getRealPath')) {
-            File::delete($this->video->getRealPath());
-        }
-        if ($this->storedVideoAbsPath) {
-            Storage::disk('public')->delete($this->storedVideoRelPath);
-        }
     }
 
     public function render(): View|Application|Factory

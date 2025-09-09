@@ -72,7 +72,7 @@
                     },
                 }),
             ],
-            doc: '',
+            doc: @json($assignment['description'] ?? ''),
             parent: document.getElementById('assignment-description{{ !empty($unique) ? '-' . $unique : '' }}-editor'),
         }
     )

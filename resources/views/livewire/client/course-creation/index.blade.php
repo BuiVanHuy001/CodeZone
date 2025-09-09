@@ -2,7 +2,7 @@
     <div class="rbt-create-course-area bg-color-white rbt-section-gap">
         <div class="container">
             <div class="row">
-                <form wire:submit="save">
+                <form>
                     <div class="rbt-accordion-style rbt-accordion-01 rbt-accordion-06 accordion">
                         <div class="accordion" id="courseCreation">
                             <div
@@ -264,7 +264,7 @@
                                          class="accordion-collapse collapse"
                                          aria-labelledby="accMembers"
                                          data-bs-parent="#courseCreation">
-                                        <livewire:client.organization.components.add-learners-builder wire:model="employeesAssigned"/>
+                                        <livewire:client.course-creation.components.builders.members.add-learners wire:model="membersAssigned"/>
                                     </div>
                                 </div>
                             @endif
@@ -274,7 +274,7 @@
                         <div class="col-lg-4">
                         </div>
                         <div class="col-lg-8">
-                            <button type="submit" class="rbt-btn btn-gradient hover-icon-reverse w-100 text-center">
+                            <button type="button" wire:click="save" class="rbt-btn btn-gradient hover-icon-reverse w-100 text-center">
                                 <span class="icon-reverse-wrapper">
                                     <span class="btn-text">Create Course</span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
