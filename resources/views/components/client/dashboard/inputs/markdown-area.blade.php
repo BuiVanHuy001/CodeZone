@@ -1,6 +1,6 @@
 <div class="course-field mb--30">
     <label>{{ $label }}</label>
-    <div @class(['border border-danger' => $isError])
+    <div @class(['border border-danger' => $errors->has($name)])
          style="border-radius: 4px;">
         <div wire:ignore id="{{ $id }}-editor"
         ></div>

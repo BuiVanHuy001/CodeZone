@@ -54,7 +54,7 @@ class ProgrammingPracticeValidator {
     {
         $allowedTypes = implode(',', array_keys($typeMap));
         return [
-            'programming.title' => 'required|min:3|max:255',
+            'programming.title' => 'required|min:3|max:50',
             'programming.description' => 'required',
             'problem.function_name' => [
                 'required',

@@ -1,18 +1,9 @@
-<div wire:ignore.self
-     class="rbt-default-modal modal fade"
-     id="updateModule" tabindex="-1" aria-labelledby="updateModuleLabel"
-     aria-hidden="true" data-bs-backdrop="static"
->
+<div wire:ignore.self class="rbt-default-modal modal fade" id="updateModule" tabindex="-1"
+     aria-labelledby="updateModuleLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button"
-                        @class([
-                            'rbt-round-btn',
-                            'disabled' => $errors->has("module.title")
-                        ])
-                        data-bs-dismiss="modal"
-                        aria-label="Close">
+                <button wire:click="cancel" type="button" class="rbt-round-btn">
                     <i class="feather-x"></i>
                 </button>
             </div>
@@ -25,23 +16,16 @@
                                 model="moduleTitle"
                                 label="Module Title"
                                 name="moduleTitle"
-                                value="{{ $moduleTitle }}"
                                 placeholder="Enter module title"
-                                :error="$errors->has('moduleTitle')"
-                                info='Enter a descriptive name for this module. E.g: "Introduction to Web Development" or "Advanced Data Analysis Techniques".'
-                            />
+                                info='Enter a descriptive name for this module. E.g: "Introduction to Web Development" or "Advanced Data Analysis Techniques".'/>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="top-circle-shape"></div>
             <div class="modal-footer pt--30">
-                <button type="button"
-                        wire:click="update"
-                    @class([
-                        'rbt-btn btn-border btn-md radius-round-10',
-                        'disabled' => $errors->has("moduleTitle")
-                    ])>
+                <button type="button" wire:click="update"
+                        class="rbt-btn btn-border btn-md radius-round-10">
                     Save
                 </button>
             </div>

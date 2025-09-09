@@ -44,14 +44,24 @@ class Index extends Component {
     public $requirementsJson = null;
     public string $skills = '';
     private $skillsJson = null;
-    public array $employeesAssigned = [];
+    public array $membersAssigned = [];
     public $startDate = '';
     public $endDate = '';
     public array $modules = [
         [
-            'title' => 'Bui Van Huy',
-            'lesson_count' => 1,
-            'lessons' => []
+            'title' => 'Module 1',
+            'lessons' => [
+                [
+                    'title' => 'Lesson 1',
+                    'type' => 'document',
+                    'document' => 'This is a lesson content',
+                    'preview' => false,
+                    'duration' => 0,
+                    'video_file_name' => '',
+                    'assessment' => [],
+                    'practice_assessments' => [],
+                ]
+            ]
         ]
     ];
     public string $activeCourseSettingTab = 'general';
@@ -60,7 +70,6 @@ class Index extends Component {
     {
         $this->activeCourseSettingTab = $tab;
     }
-
 
     public function rules(): array
     {
@@ -81,6 +90,7 @@ class Index extends Component {
 
     public function updatedTitle(): void
     {
+        $this->validateOnly('title');
         $this->slug = Str::slug($this->title);
     }
 
@@ -122,6 +132,7 @@ class Index extends Component {
      */
     public function save(): RedirectResponse
     {
+        dd($this->membersAssigned);
         if ($this->image) {
             $this->image->storePublicly(path: 'course/thumbnails', options: 'public');
             File::delete($this->image->getRealPath());
@@ -153,6 +164,7 @@ class Index extends Component {
                 $moduleDuration = 0;
                 $moduleLessonCount = count($moduleData['lessons']);
                 $lessonCount += $moduleLessonCount;
+
                 $module = Module::create([
                     'title' => $moduleData['title'],
                     'lesson_count' => $moduleLessonCount,
@@ -160,6 +172,7 @@ class Index extends Component {
                     'duration' => 0,
                     'course_id' => $course->id,
                 ]);
+
                 foreach ($moduleData['lessons'] as $lessonKey => $lessonData) {
                     $moduleDuration += $lessonData['duration'] ?? 0;
                     $lesson = Lesson::create([
@@ -167,47 +180,17 @@ class Index extends Component {
                         'type' => $lessonData['type'],
                         'duration' => $lessonData['duration'] ?? 0,
                         'video_file_name' => $lessonData['video_file_name'],
-                        'document' => $lessonData['content'], // Fix: Use 'content' for a document
-                        'preview' => $lessonData['preview'] ?? false,
-                        'position' => $lessonKey,
+                        'document' => $lessonData['document'],
+                        'preview' => $lessonData['preview'],
+                        'position' => $lessonKey + 1,
                         'module_id' => $module->id
                     ]);
 
-                    if (isset($lessonData['assessments'])) {
-                        $assessmentData = $lessonData['assessments'];
-                        $assessment = Assessment::create([
-                            'title' => $assessmentData['title'],
-                            'description' => $assessmentData['description'],
-                            'type' => $assessmentData['type'],
-                            'lesson_id' => $lesson->id
-                        ]);
-                        if ($assessmentData['type'] === 'quiz') {
-                            $assessment->questions_count = count($assessmentData['assessments_questions']);
-                            $assessment->save();
-                            foreach ($assessmentData['assessments_questions'] as $questionKey => $question) {
-                                $assessmentQuestion = AssessmentQuestion::create([
-                                    'content' => $question['content'],
-                                    'type' => $question['type'],
-                                    'position' => $questionKey + 1,
-                                    'assessment_id' => $assessment->id
-                                ]);
-                                foreach ($question['question_options'] as $optionKey => $option) {
-                                    $assessmentQuestion->options()->create([
-                                        'content' => $option['content'],
-                                        'is_correct' => $option['is_correct'] ?? false,
-                                        'explanation' => $option['explanation'] ?? '',
-                                        'position' => $optionKey
-                                    ]);
-                                }
-                            }
-                        }
-                        if ($assessmentData['type'] === 'programming') {
-                            ProgrammingAssignmentDetails::create([
-                                'assessment_id' => $assessment->id,
-                                'function_name' => $assessmentData['problem_details']['function_name'],
-                                'code_templates' => $assessmentData['problem_details']['code_templates'],
-                                'test_cases' => $assessmentData['problem_details']['test_cases']
-                            ]);
+                    if (isset($lessonData['assessment'])) {
+                        $this->storeAssessment($lessonData['assessment'], $lesson->id);
+                    } elseif (isset($lessonData['practice_assessments'])) {
+                        foreach ($lessonData['practice_assessments'] as $practiceAssessment) {
+                            $this->storeAssessment($practiceAssessment, $lesson->id);
                         }
                     }
                 }
@@ -217,14 +200,15 @@ class Index extends Component {
             }
             $course->duration = $courseDuration;
             $course->lesson_count = $lessonCount;
+
             if (auth()->user()->isOrganization()) {
                 $batch = Batch::create([
                     'start_at' => $this->startDate,
                     'end_at' => $this->endDate,
                     'course_id' => $course->id
                 ]);
-                $course->enrollment_count = count($this->employeesAssigned);
-                foreach ($this->employeesAssigned as $employeeId) {
+                $course->enrollment_count = count($this->membersAssigned);
+                foreach ($this->membersAssigned as $employeeId) {
                     BatchEnrollments::create([
                         'batch_id' => $batch->id,
                         'user_id' => $employeeId,
@@ -234,23 +218,93 @@ class Index extends Component {
             }
             $course->save();
             DB::commit();
+            $this->dispatch('swal', [
+                'icon' => 'success',
+                'title' => 'Success',
+                'text' => 'Course created successfully',
+                'showConfirmButton' => true,
+            ]);
             if (auth()->user()->isOrganization()) {
                 return redirect()
                     ->route('organization.dashboard.overview')
-                    ->with('swal', 'Course created successfully!');
+                    ->with('swal', [
+                        'title' => 'Course Created',
+                        'text' => 'Your course has been created successfully.',
+                        'icon' => 'success',
+                        'timer' => 3000,
+                    ]);
             }
             return redirect()
                 ->route('instructor.dashboard.index')
-                ->with('swal', 'Course created successfully!');
+                ->with('swal', [
+                    'title' => 'Course Created',
+                    'text' => 'Your course has been created successfully.',
+                    'icon' => 'success',
+                    'timer' => 3000,
+                ]);
         } catch (\Exception $e) {
             DB::rollBack();
+            \Log::error('Error creating course: ' . $e->getMessage());
             $this->dispatch('swal', [
                 'icon' => 'error',
                 'title' => 'Error',
                 'text' => 'Something went wrong while creating the builders: ' . $e->getMessage(),
                 'showConfirmButton' => true,
             ]);
-            return redirect()->back()->with('swal', 'Something went wrong while creating the builders');
+            return redirect()->back();
+        }
+    }
+
+    private function storeAssessment(array $assessmentData, string|int $lessonId): void
+    {
+        if ($assessmentData['type'] === 'quiz') {
+            $questionCount = count($assessmentData['assessments_questions']);
+        }
+
+        $assessment = Assessment::create([
+            'title' => $assessmentData['title'],
+            'description' => $assessmentData['description'],
+            'type' => $assessmentData['type'],
+            'lesson_id' => $lessonId,
+            'questions_count' => $questionCount ?? 1,
+        ]);
+        $assessment->save();
+
+        match ($assessmentData['type']) {
+            'quiz' => $this->storeQuiz($assessmentData['assessments_questions'], $assessment->id),
+            'programming' => $this->storeProgrammingPractice($assessmentData, $lessonId),
+            default => null,
+        };
+    }
+
+    private function storeProgrammingPractice(array $programmingPracticeData, string|int $lessonId): void
+    {
+        ProgrammingAssignmentDetails::create([
+            'assessment_id' => $lessonId,
+            'function_name' => $programmingPracticeData['problem_details']['function_name'],
+            'code_templates' => $programmingPracticeData['problem_details']['code_templates'],
+            'test_cases' => $programmingPracticeData['problem_details']['test_cases']
+        ]);
+    }
+
+    private function storeQuiz(array $questions, string|int $assessmentId): void
+    {
+        foreach ($questions as $index => $question) {
+            $assessmentQuestion = AssessmentQuestion::create([
+                'content' => $question['content'],
+                'type' => $question['type'],
+                'position' => $index + 1,
+                'assessment_id' => $assessmentId
+            ]);
+            foreach ($question['question_options'] as $optionIndex => $option) {
+                $assessmentQuestion->options()->create([
+                    'assessment_question_id' => $assessmentQuestion->id,
+                    'content' => $option['content'],
+                    'is_correct' => $option['is_correct'] ?? false,
+                    'explanation' => $option['explanation'] ?? '',
+                    'position' => $optionIndex + 1
+                ]);
+            }
         }
     }
 

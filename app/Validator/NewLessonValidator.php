@@ -3,91 +3,111 @@
 namespace App\Validator;
 
 use App\Models\Assessment;
-use App\Models\AssessmentQuestion;
 use App\Models\Lesson;
 
 class NewLessonValidator {
     public static array $MESSAGES = [
         // ---- Title ----
-        'newLesson.title.required' => 'Please enter a lesson title.',
-        'newLesson.title.min' => 'The lesson title must be at least :min characters.',
-        'newLesson.title.max' => 'The lesson title may not exceed :max characters.',
+        'lesson.title.required' => 'Please enter a lesson title.',
+        'lesson.title.min' => 'The lesson title must be at least :min characters.',
+        'lesson.title.max' => 'The lesson title may not exceed :max characters.',
 
         // ---- Type ----
-        'newLesson.type.required' => 'Please select a lesson type.',
-        'newLesson.type.in' => 'Invalid lesson type selected. Please choose a valid option.',
+        'lesson.type.required' => 'Please select a lesson type.',
+        'lesson.type.in' => 'Invalid lesson type selected. Please choose a valid option.',
 
         // ---- Document ----
-        'newLesson.document.required_if' => 'A document is required when the lesson type is set to Document.',
-        'newLesson.document.min' => 'The document content must be at least :min characters long.',
+        'lesson.document.required_if' => 'A document is required when the lesson type is set to Document.',
+        'lesson.document.min' => 'The document content must be at least :min characters long.',
 
         // ---- Assessment (container) ----
-        'newLesson.assessment.required_if' => 'Assessment data is required when the lesson type is set to Assessment.',
+        'lesson.assessment.required_if' => 'Assessment data is required when the lesson type is set to Assessment.',
 
         // ---- Assessment Title ----
-        'newLesson.assessment.title.required_if' => 'Please enter a title for the assessment.',
-        'newLesson.assessment.title.min' => 'The assessment title must be at least :min characters.',
-        'newLesson.assessment.title.max' => 'The assessment title may not exceed :max characters.',
+        'lesson.assessment.title.required_if' => 'Please enter a title for the assessment.',
+        'lesson.assessment.title.min' => 'The assessment title must be at least :min characters.',
+        'lesson.assessment.title.max' => 'The assessment title may not exceed :max characters.',
 
         // ---- Assessment Description ----
-        'newLesson.assessment.description.required_if' => 'An assessment description is required when the lesson type is Assessment.',
-        'newLesson.assessment.description.min' => 'The assessment description must be at least :min characters.',
-        'newLesson.assessment.description.in' => 'The assessment description must be one of the allowed types: assignment or programming.',
+        'lesson.assessment.description.required_if' => 'An assessment description is required when the lesson type is Assessment.',
+        'lesson.assessment.description.min' => 'The assessment description must be at least :min characters.',
+        'lesson.assessment.description.in' => 'The assessment description must be one of the allowed types: assignment or programming.',
 
         // ---- Assessment Type ----
-        'newLesson.assessment.type.required_if' => 'Please select an assessment type when the lesson type is Assessment.',
-        'newLesson.assessment.type.in' => 'Invalid assessment type selected. Please choose a valid option.',
+        'lesson.assessment.type.required_if' => 'Please select an assessment type when the lesson type is Assessment.',
+        'lesson.assessment.type.in' => 'Invalid assessment type selected. Please choose a valid option.',
 
         // ---- Quiz Questions ----
-        'newLesson.assessment.assessments_questions.required_if' => 'At least one question is required when the assessment type is Quiz.',
-        'newLesson.assessment.assessments_questions.array' => 'The questions must be provided as a valid list.',
-        'newLesson.assessment.assessments_questions.min' => 'The quiz must contain at least :min question.',
+        'lesson.assessment.assessments_questions.required_if' => 'At least one question is required when the assessment type is Quiz.',
+        'lesson.assessment.assessments_questions.array' => 'The questions must be provided as a valid list.',
+        'lesson.assessment.assessments_questions.min' => 'The quiz must contain at least :min question.',
         // ---- Video File ----
-        'newLesson.video_file_name.required_if' => 'A video file is required when the lesson type is set to Video.',
-        'newLesson.video_file_name.max' => 'The video file size must not exceed 250 MB.',
-        'newLesson.video_file_name.mimes' => 'The video file must be in one of the following formats: MP4, MOV, or WEBM.',
+        'lesson.video_file_name.required_if' => 'A video file is required when the lesson type is set to Video.',
+        'lesson.video_file_name.max' => 'The video file size must not exceed 250 MB.',
+        'lesson.video_file_name.mimes' => 'The video file must be in one of the following formats: MP4, MOV, or WEBM.',
 
-        'newLesson.duration.required_if' => 'A video duration is required when the lesson type is set to Video.',
-        'newLesson.duration.numeric' => 'The video duration must be a valid number (in seconds).',
-        'newLesson.duration.min' => 'The video duration must be at least :min seconds.',
+        'lesson.duration.required_if' => 'A video duration is required when the lesson type is set to Video.',
+        'lesson.duration.numeric' => 'The video duration must be a valid number (in seconds).',
+        'lesson.duration.min' => 'The video duration must be at least :min seconds.',
 
-        'newLesson.preview.required' => 'Please specify whether this lesson should be available as a preview.',
-        'newLesson.preview.boolean' => 'The preview value must be true or false.',
+        'lesson.preview.required' => 'Please specify whether this lesson should be available as a preview.',
+        'lesson.preview.boolean' => 'The preview value must be true or false.',
     ];
 
-    public static function rules(): array
+    public static function rules(array $existingLessonTitles = []): array
     {
         $lessonType = implode(',', array_keys(Lesson::$TYPES));
         $assessmentType = implode(',', array_keys(Assessment::$ASSESSMENT_PRACTICE_TYPES));
 
-        return [
-            'newLesson.title' => 'required|min:3|max:255',
-            'newLesson.type' => 'required|in:' . $lessonType,
+        $rules = [
+            'lesson.title' => 'required|min:3|max:255',
+            'lesson.type' => 'required|in:' . $lessonType,
 
-            'newLesson.document' => 'required_if:newLesson.type,document|min:3',
+            'lesson.document' => 'required_if:lesson.type,document|min:3',
 
-            'newLesson.assessment' => 'required_if:newLesson.type,assessment',
-            'newLesson.assessment.title' => 'required_if:newLesson.type,assessment|min:3|max:255',
-            'newLesson.assessment.description' => 'required_if:newLesson.assessment.type,assignment,programming|min:3',
-            'newLesson.assessment.type' => 'required_if:newLesson.type,assessment|in:' . $assessmentType,
+            'lesson.assessment' => 'required_if:lesson.type,assessment',
+            'lesson.assessment.title' => 'required_if:lesson.type,assessment|min:3|max:255',
+            'lesson.assessment.description' => 'required_if:lesson.assessment.type,assignment,programming|min:3',
+            'lesson.assessment.type' => 'required_if:lesson.type,assessment|in:' . $assessmentType,
 
-            'newLesson.assessment.programming' => 'nullable|array',
+            'lesson.assessment.programming' => 'nullable|array',
 
-            'newLesson.video_file_name' => 'required_if:newLesson.type,video|max:250000',
-            'newLesson.duration' => 'required_if:newLesson.type,video|numeric|min:0',
+            'lesson.video_file_name' => 'required_if:lesson.type,video|max:250000',
+            'lesson.duration' => 'required_if:lesson.type,video|numeric|min:0',
 
-            'newLesson.preview' => 'required|boolean',
+            'lesson.preview' => 'required|boolean',
         ];
+
+        if (is_string($rules['lesson.title'])) {
+            $rules['lesson.title'] = explode('|', $rules['lesson.title']);
+        }
+
+        $rules['lesson.title'][] = function ($attribute, $value, $fail) use ($existingLessonTitles) {
+            $incomingTitle = mb_strtolower(trim((string)$value));
+
+            if ($incomingTitle !== '') {
+                $normalizedExisting = array_map(
+                    fn($t) => mb_strtolower(trim((string)$t)),
+                    $existingLessonTitles ?? []
+                );
+
+                if (in_array($incomingTitle, $normalizedExisting, true)) {
+                    $fail('Lesson title must be unique within the module.');
+                }
+            }
+        };
+
+        return $rules;
     }
 
     public static function rulesFor(string $field): array
     {
         $rules = [];
 
-        foreach (self::rules() as $key => $rule) {
-            if ($key === "newLesson.$field" || str_starts_with($key, "newLesson.$field.")) {
-                $shortKey = str_starts_with($key, 'newLesson.')
-                    ? substr($key, strlen('newLesson.'))
+        foreach (self::rules([]) as $key => $rule) {
+            if ($key === "lesson.$field" || str_starts_with($key, "lesson.$field.")) {
+                $shortKey = str_starts_with($key, 'lesson.')
+                    ? substr($key, strlen('lesson.'))
                     : $key;
 
                 $ruleParts = is_string($rule) ? explode('|', $rule) : (array)$rule;
@@ -111,9 +131,9 @@ class NewLessonValidator {
         $messages = [];
 
         foreach (self::$MESSAGES as $key => $message) {
-            if ($key === "newLesson.$field" || str_starts_with($key, "newLesson.$field.")) {
-                $shortKey = str_starts_with($key, 'newLesson.')
-                    ? substr($key, strlen('newLesson.'))
+            if ($key === "lesson.$field" || str_starts_with($key, "lesson.$field.")) {
+                $shortKey = str_starts_with($key, 'lesson.')
+                    ? substr($key, strlen('lesson.'))
                     : $key;
 
                 if (str_ends_with($shortKey, '.required_if')) {
@@ -151,9 +171,9 @@ class NewLessonValidator {
         $messages = [];
 
         foreach (self::$MESSAGES as $key => $message) {
-            if ($key === "newLesson.$fromField" || str_starts_with($key, "newLesson.$fromField.")) {
-                $shortKey = str_starts_with($key, 'newLesson.')
-                    ? substr($key, strlen('newLesson.'))
+            if ($key === "lesson.$fromField" || str_starts_with($key, "lesson.$fromField.")) {
+                $shortKey = str_starts_with($key, 'lesson.')
+                    ? substr($key, strlen('lesson.'))
                     : $key;
 
                 if (str_ends_with($shortKey, '.required_if')) {
