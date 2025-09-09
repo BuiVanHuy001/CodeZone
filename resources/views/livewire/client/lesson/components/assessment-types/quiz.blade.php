@@ -89,7 +89,15 @@
                     <h5>{{ $quiz->title }}</h5>
                 </div>
                 <p class="b3 mb--30">You have <strong>{{ $quiz->questions_count }}</strong> questions to answer.</p>
-                <p>{{ $quiz->description }}</p>
+
+                <div id="course-document" class="markdown-body has-show-more">
+                    <div class="has-show-more-inner-content">
+                        @markdown($quiz->description)
+                    </div>
+                    <div class="rbt-show-more-btn">Show More</div>
+                </div>
+
+
             </div>
             @foreach($quiz->questions as $questionKey => $question)
                 <div id="question-{{ $questionKey + 1 }}" x-show="currentQuestion === {{ $questionKey + 1 }}">

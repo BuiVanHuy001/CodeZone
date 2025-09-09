@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\Organization\Components;
+namespace App\Livewire\Client\CourseCreation\Components\Builders\Members;
 
 use App\Models\OrganizationUser;
 use App\Models\User;
@@ -12,7 +12,7 @@ use LaravelIdea\Helper\App\Models\_IH_OrganizationUser_C;
 use Livewire\Attributes\Modelable;
 use Livewire\Component;
 
-class AddLearnersBuilder extends Component {
+class AddLearners extends Component {
     #[Modelable]
     public array $learners = [];
 
@@ -27,8 +27,7 @@ class AddLearnersBuilder extends Component {
 
     public function addEmployeeAssign(string $userId): void
     {
-        $user = User::find($userId);
-        if (auth()->user()->isMemberOfOrganization($user, auth()->user()->id)) {
+        if (auth()->user()->isMemberOfOrganization($userId, auth()->user()->id)) {
             if (auth()->user()->isOrganization()) {
                 if (!in_array($userId, $this->learners)) {
                     $this->learners[] = $userId;
@@ -47,6 +46,8 @@ class AddLearnersBuilder extends Component {
     public function render(): View|Application|Factory
     {
         $employees = $this->getEmployees();
-        return view('livewire.client.organization.components.add-learners-builder', ['employees' => $employees,]);
+        return view('livewire.client.course-creation.components.builders.members.add-learners', [
+            'employees' => $employees
+        ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Livewire\Client\Lesson\Components\LessonTypes;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class Video extends Component
@@ -13,6 +14,7 @@ class Video extends Component
 
     public function mount(): void
     {
+        $this->videoUrl = Storage::url('course/videos/' . $this->videoUrl);
         $this->dispatch('video-changed');
     }
 

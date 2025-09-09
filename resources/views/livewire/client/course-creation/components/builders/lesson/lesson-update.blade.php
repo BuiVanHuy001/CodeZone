@@ -1,4 +1,4 @@
-<div wire:ignore.self class="rbt-default-modal modal fade" id="addLesson" tabindex="-1" aria-labelledby="LessonLabel"
+<div wire:ignore.self class="rbt-default-modal modal fade" id="updateLesson" tabindex="-1" aria-labelledby="LessonLabel"
      data-bs-backdrop="static">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div @class([
@@ -6,25 +6,34 @@
             'border border-danger' => $errors->has('lesson.*'),
         ])>
             <div class="modal-header">
-                <button wire:click="cancel" type="button" class="rbt-round-btn">
-                    <i class="feather-x"></i>
-                </button>
+                <button type="button"
+                        class="rbt-round-btn"
+                        wire:click="cancel"
+                        aria-label="Close">
+                    <i class="feather-x"></i></button>
             </div>
             <div class="modal-body">
                 <div class="inner rbt-default-form">
                     <div class="row">
                         <div class="col-lg-12">
-                            <pre>
-                                {{ json_encode($lesson, JSON_PRETTY_PRINT) }}
-                            </pre>
-                            <h5 class="modal-title mb--20" id="LessonLabel">Add Lesson</h5>
-                            <x-client.dashboard.inputs.text model="lesson.title" name="lesson.title"
-                                                            label="Lesson Title" placeholder="Enter lesson title" :isError="$errors->has('lesson.title')"
-                                                            info="Enter a descriptive lesson title (visible publicly to students)."/>
+                            <h5 class="modal-title mb--20" id="LessonLabel">Update Lesson</h5>
+                            <x-client.dashboard.inputs.text
+                                model="lesson.title"
+                                name="lesson.title"
+                                label="Lesson Title"
+                                placeholder="Enter lesson title"
+                                :isError="$errors->has('lesson.title')"
+                                info="Enter a descriptive lesson title (visible publicly to students)."/>
 
-                            <x-client.dashboard.inputs.select model="lesson.type" name="lesson.type"
-                                                              label="Lesson Type" placeholder="Select lesson type" :options="\App\Models\Lesson::$TYPES" :isBoostrapSelect="false"
-                                                              :isError="$errors->has('lesson.type')" info="Select the module this lesson belongs to."/>
+                            <x-client.dashboard.inputs.select
+                                model="lesson.type"
+                                name="lesson.type"
+                                label="Lesson Type"
+                                placeholder="Select lesson type"
+                                :options="\App\Models\Lesson::$TYPES"
+                                :isBoostrapSelect="false"
+                                :isError="$errors->has('lesson.type')"
+                                info="Select the module this lesson belongs to."/>
 
                             @if (!empty($lesson['type']))
                                 <div @class([
@@ -37,7 +46,9 @@
                                 ])>
                                     @switch($lesson['type'])
                                         @case('video')
-                                            <livewire:client.course-creation.components.builders.lesson.lesson-types.video/>
+                                            <livewire:client.course-creation.components.builders.lesson.lesson-types.video
+                                                :storedVideoRelPath="$lesson['video_file_name']"
+                                            />
                                             @break
 
                                         @case('document')
@@ -78,8 +89,7 @@
             <div class="top-circle-shape"></div>
             <div class="modal-footer pt--30 justify-content-between">
                 <div class="content">
-                    <button type="button" class="rbt-btn btn-md" wire:click="addLesson">Add Lesson
-                    </button>
+                    <button type="button" class="rbt-btn btn-md" wire:click="updateLesson">Update Lesson</button>
                 </div>
             </div>
         </div>
