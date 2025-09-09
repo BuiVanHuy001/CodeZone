@@ -27,7 +27,8 @@
                     </button>
                 </div>
                 <div class="content">
-                    <button class="awe-btn" @click="$wire.validateStep1().then(ok => ok && (step = 2))">Next</button>
+                    <button class="awe-btn" @click.prevent="$wire.validateStep1().then(ok => ok && (step = 2))">Next
+                    </button>
                 </div>
             </div>
         </div>
@@ -268,7 +269,7 @@
                 },
             }),
         ],
-        doc: '',
+        doc: @json($programming['description'] ?? ''),
         parent: document.getElementById('programming-description{{ !empty($unique) ? '-' . $unique : '' }}-editor')
     });
 </script>

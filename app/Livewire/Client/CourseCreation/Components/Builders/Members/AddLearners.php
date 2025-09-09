@@ -3,54 +3,40 @@
 namespace App\Livewire\Client\CourseCreation\Components\Builders\Members;
 
 use App\Models\OrganizationUser;
+use App\Models\User;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
-use Illuminate\Pagination\LengthAwarePaginator;
+use LaravelIdea\Helper\App\Models\_IH_OrganizationUser_C;
 use Livewire\Attributes\Modelable;
 use Livewire\Component;
-use Livewire\WithoutUrlPagination;
-use Livewire\WithPagination;
 
 class AddLearners extends Component {
-    use WithPagination, WithoutUrlPagination;
-
     #[Modelable]
     public array $learners = [];
-    public string $search = '';
 
-    private function getAllMembers(): LengthAwarePaginator
+
+    private function getEmployees(): Collection|_IH_OrganizationUser_C|array
     {
-        return OrganizationUser::where('organization_id', auth()->user()->id)
-                               ->with('user')
-                               ->when($this->search, function ($query, $search) {
-                                   $query->whereHas('user', function ($userQuery) use ($search) {
-                                       $userQuery
-                                           ->withName($search)
-                                           ->withEmail($search);
-                                   });
-                               })
-                               ->orderBy('created_at')
-                               ->paginate(15);
+        if (!auth()->user()->isOrganization()) {
+            return [];
+        }
+	    return OrganizationUser::where('organization_id', auth()->user()->id)->with('user')->get();
     }
 
-    public function updatingSearch(): void
+    public function addEmployeeAssign(string $userId): void
     {
-        $this->resetPage();
-    }
-
-
-    public function addMemberAssign(string $userId): void
-    {
-        if (
-            auth()->user()->isMemberOfOrganization($userId, auth()->user()->id) &&
-            !in_array($userId, $this->learners)
-        ) {
-            $this->learners[] = $userId;
+        if (auth()->user()->isMemberOfOrganization($userId, auth()->user()->id)) {
+            if (auth()->user()->isOrganization()) {
+                if (!in_array($userId, $this->learners)) {
+                    $this->learners[] = $userId;
+                }
+            }
         }
     }
 
-    public function removeMemberAssign(string $userId): void
+    public function removeEmployeeAssign(string $userId): void
     {
         if (($key = array_search($userId, $this->learners)) !== false) {
             unset($this->learners[$key]);
@@ -59,8 +45,9 @@ class AddLearners extends Component {
 
     public function render(): View|Application|Factory
     {
+        $employees = $this->getEmployees();
         return view('livewire.client.course-creation.components.builders.members.add-learners', [
-            'members' => $this->getAllMembers(),
+            'employees' => $employees
         ]);
     }
 }
