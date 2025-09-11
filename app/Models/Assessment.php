@@ -11,10 +11,10 @@ class Assessment extends Model
 {
 	protected $guarded = [];
 
-	public static array $TYPES = [
+    public static array $ASSESSMENT_PRACTICE_TYPES = [
 		'quiz' => 'Quiz',
         'assignment' => 'Assignment',
-        'programming' => 'Programming Assignment',
+        'programming' => 'Programming'
 	];
 
     public function questions(): HasMany

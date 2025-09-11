@@ -13,6 +13,7 @@
 @import "../assets/css/plugins/magnigy-popup.min.css";
 @import "../assets/css/plugins/plyr.css";
 @import "../assets/css/plugins/jodit.min.css";
+@import "../assets/css/vendor/external-elements.css";
 @import "../assets/css/styles.css";
 @import "../assets/css/vendor/github-markdown.css";
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';

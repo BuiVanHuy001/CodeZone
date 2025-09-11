@@ -1,26 +1,26 @@
-import './bootstrap';
-import '../assets/js/vendor/modernizr.min.js';
-import '../assets/js/vendor/jquery.js';
-import '../assets/js/vendor/bootstrap.min.js';
-import '../assets/js/vendor/sal.js';
-import '../assets/js/vendor/js.cookie.js';
-import '../assets/js/vendor/jquery.style.switcher.js';
-import '../assets/js/vendor/swiper.js';
-import '../assets/js/vendor/jquery-appear.js';
-import '../assets/js/vendor/odometer.js';
-import '../assets/js/vendor/backtotop.js';
-import '../assets/js/vendor/text-type.js';
-import '../assets/js/vendor/jquery-one-page-nav.js';
-import '../assets/js/vendor/bootstrap-select.min.js';
-import '../assets/js/vendor/jquery-ui.js';
-import '../assets/js/vendor/magnify-popup.min.js';
-import '../assets/js/vendor/paralax-scroll.js';
-import '../assets/js/vendor/paralax.min.js';
-import '../assets/js/vendor/countdown.js';
-import '../assets/js/vendor/plyr.js';
-import '../assets/js/vendor/jodit.min.js';
-import '../assets/js/vendor/Sortable.min.js';
-import Plyr from 'plyr';
+import "./bootstrap";
+import "../assets/js/vendor/modernizr.min.js";
+import "../assets/js/vendor/jquery.js";
+import "../assets/js/vendor/bootstrap.min.js";
+import "../assets/js/vendor/sal.js";
+import "../assets/js/vendor/js.cookie.js";
+import "../assets/js/vendor/jquery.style.switcher.js";
+import "../assets/js/vendor/swiper.js";
+import "../assets/js/vendor/jquery-appear.js";
+import "../assets/js/vendor/odometer.js";
+import "../assets/js/vendor/backtotop.js";
+import "../assets/js/vendor/text-type.js";
+import "../assets/js/vendor/jquery-one-page-nav.js";
+import "../assets/js/vendor/bootstrap-select.min.js";
+import "../assets/js/vendor/jquery-ui.js";
+import "../assets/js/vendor/magnify-popup.min.js";
+import "../assets/js/vendor/paralax-scroll.js";
+import "../assets/js/vendor/paralax.min.js";
+import "../assets/js/vendor/countdown.js";
+import "../assets/js/vendor/plyr.js";
+import "../assets/js/vendor/jodit.min.js";
+import "../assets/js/vendor/Sortable.min.js";
+import Plyr from "plyr";
 import {
     EditorView,
     highlightActiveLine,
@@ -28,8 +28,8 @@ import {
     highlightSpecialChars,
     keymap,
     lineNumbers,
-} from "@codemirror/view"
-import {defaultKeymap, history, historyKeymap} from "@codemirror/commands"
+} from "@codemirror/view";
+import {defaultKeymap, history, historyKeymap} from "@codemirror/commands";
 import {python} from "@codemirror/lang-python";
 import {javascript} from "@codemirror/lang-javascript";
 import {java} from "@codemirror/lang-java";
@@ -61,4 +61,20 @@ window.foldGutter = foldGutter;
 window.autocompletion = autocompletion;
 window.markdown = markdown;
 
-import '../assets/js/main.js';
+import "../assets/js/main.js";
+
+document.addEventListener("livewire:init", () => {
+    Livewire.on("close-modal", ({id}) => {
+        let modalEl = document.getElementById(id);
+        if (modalEl) {
+            let modal =
+                bootstrap.Modal.getInstance(modalEl) ||
+                new bootstrap.Modal(modalEl);
+            modal.hide();
+        }
+    });
+    Livewire.on("open-modal", ({id}) => {
+        const modal = new bootstrap.Modal(document.getElementById(id));
+        modal.show();
+    });
+});

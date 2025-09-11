@@ -1,11 +1,25 @@
 <main class="rbt-main-wrapper">
-    <div class="rbt-create-course-area bg-color-white rbt-section-gap">
+    <div class="rbt-create-course-area bg-color-white rbt-section-gap position-relative">
+        <a class="rbt-btn btn-gradient btn-sm hover-icon-reverse position-absolute"
+           style="top: 10px; right: 10px"
+           href="javascript:void(0);"
+           onclick="window.history.back();"
+        >
+            <span class="icon-reverse-wrapper">
+                <span class="btn-text">Go back</span>
+                <span class="btn-icon"><i class="feather-corner-down-left"></i></span>
+                <span class="btn-icon"><i class="feather-corner-down-left"></i></span>
+            </span>
+        </a>
         <div class="container">
             <div class="row">
-                <form wire:submit="save">
+                <form>
                     <div class="rbt-accordion-style rbt-accordion-01 rbt-accordion-06 accordion">
                         <div class="accordion" id="courseCreation">
-                            <div class="accordion-item card">
+                            <div @class([
+                                   'accordion-item card',
+                                   'border border-danger' => $errors->hasAny(['title', 'heading', 'description', 'category', 'level', 'price', 'startDate', 'endDate', 'image']),
+                                ]) >
                                 <h2 class="accordion-header card-header" id="accInfo">
                                     <button
                                         class="accordion-button"
@@ -25,34 +39,28 @@
                                     <div class="accordion-body card-body">
                                         <div class="rbt-course-field-wrapper rbt-default-form">
                                             <x-client.dashboard.inputs.text
-                                                wire:model.lazy="title"
+                                                model="title"
                                                 name="title"
                                                 label="Course Title"
                                                 placeholder="Enter course title"
-                                                :isError="$errors->has('title')"
                                                 :$slug
                                             />
 
                                             <x-client.dashboard.inputs.text
-                                                wire:model.live.lazy="heading"
+                                                model="heading"
                                                 name="heading"
                                                 label="Course heading"
                                                 placeholder="Enter your course heading"
-                                                :isError="$errors->has('heading')"
                                                 info="A catchy, clear headline to attract learners."
                                             />
 
-                                            <div class="course-field mb--15" wire:ignore>
-                                                <label for="description">About Course</label>
-                                                <input type="hidden" id="description_input" wire:model="description">
-                                                <div id="toolbar-container"></div>
-                                                <div id="description"></div>
-                                                <small class="d-block mt-3">
-                                                    <i class="feather-info"></i>Markdown is supported. Use it to
-                                                    describe your course in
-                                                    detail.
-                                                </small>
-                                            </div>
+                                            <x-client.dashboard.inputs.markdown-area
+                                                id="description"
+                                                label="About course"
+                                                name="description"
+                                                :isError="$errors->has('description')"
+                                                info="Markdown is supported. Use it to describe your course in detail."
+                                            />
 
                                             <div class="course-field mb--15 edu-bg-gray">
                                                 <h6>Course Settings</h6>
@@ -63,7 +71,10 @@
                                                                 <ul class="rbt-default-tab-button nav nav-tabs" id="courseSetting"
                                                                     role="tablist">
                                                                     <li class="nav-item w-100" role="presentation">
-                                                                        <a href="#" class="active" id="general-tab"
+                                                                        <a href="#"
+                                                                           @class(['active' => $activeCourseSettingTab === 'general'])
+                                                                           wire:click.prevent="setTab('general')"
+                                                                           id="general-tab"
                                                                            data-bs-toggle="tab" data-bs-target="#general"
                                                                            role="tab" aria-controls="general" aria-selected="true">
                                                                             <span>General</span>
@@ -71,8 +82,12 @@
                                                                     </li>
                                                                     @if (auth()->user()->isInstructor())
                                                                         <li class="nav-item w-100" role="presentation">
-                                                                            <a href="#" id="price-tab" data-bs-toggle="tab"
-                                                                               data-bs-target="#price" role="tab"
+                                                                            <a href="#" id="price-tab"
+                                                                               @class(['active' => $activeCourseSettingTab === 'price'])
+                                                                               wire:click.prevent="setTab('price')"
+                                                                               data-bs-toggle="tab"
+                                                                               data-bs-target="#price"
+                                                                               role="tab"
                                                                                aria-controls="price" aria-selected="true">
                                                                                 <span>Price</span>
                                                                             </a>
@@ -80,6 +95,8 @@
                                                                     @else
                                                                         <li class="nav-item w-100" role="presentation">
                                                                             <a href="#" id="batch-tab" data-bs-toggle="tab"
+                                                                               @class(['active' => $activeCourseSettingTab === 'batch'])
+                                                                               wire:click.prevent="setTab('batch')"
                                                                                data-bs-target="#batch" role="tab"
                                                                                aria-controls="batch" aria-selected="true">
                                                                                 <span>Batch time</span>
@@ -89,6 +106,8 @@
                                                                     <li class="nav-item w-100" role="presentation">
                                                                         <a href="#" id="information-tab" data-bs-toggle="tab"
                                                                            data-bs-target="#information" role="tab"
+                                                                           @class(['active' => $activeCourseSettingTab === 'additional'])
+                                                                           wire:click.prevent="setTab('additional')"
                                                                            aria-controls="information" aria-selected="true">
                                                                             <span>Additional Information</span>
                                                                         </a>
@@ -98,7 +117,10 @@
                                                         </div>
                                                         <div class="col-lg-8">
                                                             <div class="tab-content">
-                                                                <div class="tab-pane fade advance-tab-content-1 active show"
+                                                                <div @class([
+                                                                        'tab-pane fade advance-tab-content-1',
+                                                                        'active show' => $activeCourseSettingTab === 'general',
+                                                                    ])
                                                                      id="general" role="tabpanel" aria-labelledby="general-tab">
                                                                     <x-client.dashboard.inputs.select
                                                                         wire:model="category"
@@ -106,7 +128,6 @@
                                                                         label="Course Categories"
                                                                         name="category"
                                                                         info="Select the category of your course."
-                                                                        :isError="$errors->has('category')"
                                                                         :options="App\Models\Category::all()"
                                                                     />
 
@@ -116,13 +137,16 @@
                                                                         label="Course Levels"
                                                                         name="level"
                                                                         info="Select the level of your course."
-                                                                        :isError="$errors->has('level')"
                                                                         :options="App\Models\Course::$LEVELS"
                                                                     />
                                                                 </div>
 
                                                                 @if (auth()->user()->isInstructor())
-                                                                    <div class="tab-pane fade advance-tab-content-1" id="price"
+                                                                    <div @class([
+                                                                            'tab-pane fade advance-tab-content-1',
+                                                                            'active show' => $activeCourseSettingTab === 'price',
+                                                                        ])
+                                                                         id="price"
                                                                          role="tabpanel" aria-labelledby="price-tab">
                                                                         <div class="course-field mb--15">
                                                                             <x-client.dashboard.inputs.text
@@ -131,36 +155,41 @@
                                                                                 name="price"
                                                                                 placeholder="₫ Regular Price"
                                                                                 type="number"
-                                                                                :isError="$errors->has('price')"
                                                                                 info="The Course Price Includes Your Author Fee."
                                                                             />
                                                                         </div>
                                                                     </div>
                                                                 @else
-                                                                    <div class="tab-pane fade advance-tab-content-1" id="batch"
+                                                                    <div @class([
+                                                                            'tab-pane fade advance-tab-content-1',
+                                                                            'active show' => $activeCourseSettingTab === 'batch',
+                                                                        ])
+                                                                         id="batch"
                                                                          role="tabpanel" aria-labelledby="batch-tab">
                                                                         <div class="course-field mb--15">
                                                                             <x-client.dashboard.inputs.text
-                                                                                wire:model="startDate"
-                                                                                type="date"
+                                                                                model="startDate"
                                                                                 label="Start time"
-                                                                                name="start_time"
+                                                                                name="startDate"
                                                                                 info="Start at 00:00"
-                                                                                :isError="$errors->has('startDate')"
+                                                                                type="date"
                                                                             />
 
                                                                             <x-client.dashboard.inputs.text
+                                                                                model="endDate"
                                                                                 label="End time"
-                                                                                type="date" wire:model="endDate"
-                                                                                name="end_time"
+                                                                                name="endDate"
                                                                                 info="End at 23:59"
-                                                                                :isError="$errors->has('endDate')"
+                                                                                type="date"
                                                                             />
                                                                         </div>
                                                                     </div>
                                                                 @endif
 
-                                                                <div class="tab-pane fade advance-tab-content-1" id="information"
+                                                                <div @class([
+                                                                            'tab-pane fade advance-tab-content-1',
+                                                                            'active show' => $activeCourseSettingTab === 'information',
+                                                                        ]) id="information"
                                                                      role="tabpanel" aria-labelledby="information-tab">
                                                                     <x-client.dashboard.inputs.text-area
                                                                         wire:model="skills"
@@ -176,46 +205,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="course-field mb--20">
-                                                <h6>Course Thumbnail</h6>
-                                                <div class="rbt-create-course-thumbnail upload-area">
-                                                    <div class="upload-area">
-                                                        <div class="brows-file-wrapper" data-black-overlay="9">
-                                                            @if ($imageUrl)
-                                                                <img src="{{ $imageUrl }}" alt="preview">
-                                                                <button style="z-index: 999" type="button" wire:click="deleteImage">
-                                                                    Cancel Button
-                                                                </button>
-                                                            @else
-                                                                <img src="{{ asset('images/others/thumbnail-placeholder.svg') }}"
-                                                                     alt="placeholder">
-                                                            @endif
 
-                                                            <input wire:model="image" id="createinputfile" name="thumbnail_url"
-                                                                   type="file" class="inputfile"
-                                                                   accept="image/png,image/jpeg,image/webp,image/jpg"/>
-                                                            <label class="d-flex" for="createinputfile" title="No File Chosen">
-                                                                <i class="feather-upload"></i>
-                                                                <span class="text-center">Choose your course thumbnail</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <small><i class="feather-info"></i> <b>Size:</b> 700x430 pixels, <b>File
-                                                            Support:</b>
-                                                        JPG, JPEG, PNG, WEBP</small>
-                                                </div>
-                                            </div>
-                                            @error('image')
-                                            <small class="d-block mb-3 text-danger" style="margin-top: -20px">
-                                                <i class="feather-alert-triangle"></i> {{ $message }}
-                                            </small>
-                                            @enderror
+                                            <livewire:client.course-creation.components.course-thumbnail wire:model="thumbnail"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <livewire:client.course-creation.components.builders.course wire:model="modules"/>
+                            <livewire:client.course-creation.components.builders.course-builder wire:model="modules"/>
 
                             @if (auth()->user()->isOrganization())
                                 <div class="accordion-item card">
@@ -234,7 +231,7 @@
                                          class="accordion-collapse collapse"
                                          aria-labelledby="accMembers"
                                          data-bs-parent="#courseCreation">
-                                        <livewire:client.organization.components.add-learners-builder wire:model="employeesAssigned"/>
+                                        <livewire:client.course-creation.components.builders.members.add-learners wire:model="membersAssigned"/>
                                     </div>
                                 </div>
                             @endif
@@ -244,12 +241,12 @@
                         <div class="col-lg-4">
                         </div>
                         <div class="col-lg-8">
-                            <button type="submit" class="rbt-btn btn-gradient hover-icon-reverse w-100 text-center">
-                <span class="icon-reverse-wrapper">
-                    <span class="btn-text">Create Course</span>
-                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                </span>
+                            <button type="button" wire:click="store" class="rbt-btn btn-gradient hover-icon-reverse w-100 text-center">
+                                <span class="icon-reverse-wrapper">
+                                    <span class="btn-text">Create Course</span>
+                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -260,7 +257,6 @@
 </main>
 @script
 <script>
-    const courseDescriptionInput = document.querySelector('#description_input');
     new EditorView(
         {
             extensions: [
@@ -270,8 +266,7 @@
                 EditorView.lineWrapping,
                 EditorView.updateListener.of(update => {
                     if (update.docChanged) {
-                        courseDescriptionInput.value = update.state.doc.toString();
-                        courseDescriptionInput.dispatchEvent(new Event('input'));
+                        $wire.description = update.state.doc.toString();
                     }
                 }),
                 EditorView.theme({
@@ -288,7 +283,7 @@
                     },
                 }),
             ],
-            parent: document.getElementById('description'),
+            parent: document.getElementById('description-editor'),
         }
     );
 </script>

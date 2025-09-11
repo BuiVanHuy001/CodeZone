@@ -1,6 +1,6 @@
 <div class="rbt-lesson-area bg-color-white">
     <div class="rbt-lesson-content-wrapper">
-        <livewire:client.lesson.components.sidebar :modules="$course->modules" :courseSlug="$course->slug"/>
+        <livewire:client.lesson.components.sidebar :modules="$course->modules" :courseSlug="$course->slug" :currentLesson="$lesson->id"/>
 
         <div class="rbt-lesson-rightsidebar overflow-hidden lesson-video">
             <div class="lesson-top-bar">

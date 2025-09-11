@@ -44,9 +44,10 @@
                                         <a href="{{ route('page.course_detail', $course->slug) }}">{{ $course->title }}</a>
                                     </h4>
                                     <ul class="rbt-meta">
-                                        <li><i class="feather-book"></i>{{ $course->lesson_count }} Lessons</li>
-                                        <li><i class="feather-clock"></i>{{ $course->convertDurationToString() }} mins
+                                        <li>
+                                            <i class="feather-book"></i>{{ $course->lesson_count }} {{ \Illuminate\Support\Str::plural('Lesson', $course->lesson_count) }}
                                         </li>
+                                        <li><i class="feather-clock"></i>{{ $course->convertDurationToString() }}</li>
                                     </ul>
                                 </div>
                             </div>

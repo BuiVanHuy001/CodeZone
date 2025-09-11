@@ -1,6 +1,8 @@
 
 # CodeZone - Online Programming Learning Platform
 
+<img src="https://hackatime-badge.hackclub.com/U098ESP1YH5/CodeZone" />
+
 **CodeZone** is a web-based learning platform designed to support students and instructors in teaching and learning
 programming more effectively.  
 Built with **Laravel 12** and **Livewire 3**, CodeZone offers modern features like interactive lessons, auto-graded

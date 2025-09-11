@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Storage;
 
 class Course extends Model
 {
@@ -51,7 +52,7 @@ class Course extends Model
     public function getThumbnailPath(): string
     {
         if ($this->thumbnail_url) {
-            return asset($this->thumbnail_url);
+            return Storage::url('course/thumbnails/' . $this->thumbnail_url);
         }
         return asset('images/others/thumbnail-placeholder.svg');
     }
@@ -67,7 +68,7 @@ class Course extends Model
                 }
             }
         }
-        return $introductionVideoUrl;
+        return Storage::url('course/videos/' . $introductionVideoUrl);
     }
 
     public function getQuizCount(): int
