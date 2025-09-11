@@ -1,6 +1,5 @@
 <video id="player" playsinline controls class="w-100">
     <source src="{{  $videoUrl }}" type="video/mp4"/>
-    {{--    <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default />--}}
 </video>
 @push('scripts')
     <script>

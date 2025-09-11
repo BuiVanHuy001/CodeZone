@@ -1,4 +1,8 @@
-<div class="accordion-item card">
+<div @class([
+    'accordion-item card',
+    'border border-danger' => $errors->has('modules.required')
+])
+     class="accordion-item card">
     <h2 class="accordion-header card-header" id="accBuilder">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accCollapseBuilder"
                 aria-expanded="true" aria-controls="accCollapseBuilder">

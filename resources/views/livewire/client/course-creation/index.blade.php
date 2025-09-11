@@ -1,16 +1,25 @@
 <main class="rbt-main-wrapper">
-    <div class="rbt-create-course-area bg-color-white rbt-section-gap">
+    <div class="rbt-create-course-area bg-color-white rbt-section-gap position-relative">
+        <a class="rbt-btn btn-gradient btn-sm hover-icon-reverse position-absolute"
+           style="top: 10px; right: 10px"
+           href="javascript:void(0);"
+           onclick="window.history.back();"
+        >
+            <span class="icon-reverse-wrapper">
+                <span class="btn-text">Go back</span>
+                <span class="btn-icon"><i class="feather-corner-down-left"></i></span>
+                <span class="btn-icon"><i class="feather-corner-down-left"></i></span>
+            </span>
+        </a>
         <div class="container">
             <div class="row">
                 <form>
                     <div class="rbt-accordion-style rbt-accordion-01 rbt-accordion-06 accordion">
                         <div class="accordion" id="courseCreation">
-                            <div
-                                @class([
+                            <div @class([
                                    'accordion-item card',
                                    'border border-danger' => $errors->hasAny(['title', 'heading', 'description', 'category', 'level', 'price', 'startDate', 'endDate', 'image']),
-                                ])
-                            >
+                                ]) >
                                 <h2 class="accordion-header card-header" id="accInfo">
                                     <button
                                         class="accordion-button"
@@ -34,7 +43,6 @@
                                                 name="title"
                                                 label="Course Title"
                                                 placeholder="Enter course title"
-                                                :isError="$errors->has('title')"
                                                 :$slug
                                             />
 
@@ -43,7 +51,6 @@
                                                 name="heading"
                                                 label="Course heading"
                                                 placeholder="Enter your course heading"
-                                                :isError="$errors->has('heading')"
                                                 info="A catchy, clear headline to attract learners."
                                             />
 
@@ -121,7 +128,6 @@
                                                                         label="Course Categories"
                                                                         name="category"
                                                                         info="Select the category of your course."
-                                                                        :isError="$errors->has('category')"
                                                                         :options="App\Models\Category::all()"
                                                                     />
 
@@ -131,7 +137,6 @@
                                                                         label="Course Levels"
                                                                         name="level"
                                                                         info="Select the level of your course."
-                                                                        :isError="$errors->has('level')"
                                                                         :options="App\Models\Course::$LEVELS"
                                                                     />
                                                                 </div>
@@ -150,7 +155,6 @@
                                                                                 name="price"
                                                                                 placeholder="₫ Regular Price"
                                                                                 type="number"
-                                                                                :isError="$errors->has('price')"
                                                                                 info="The Course Price Includes Your Author Fee."
                                                                             />
                                                                         </div>
@@ -166,19 +170,17 @@
                                                                             <x-client.dashboard.inputs.text
                                                                                 model="startDate"
                                                                                 label="Start time"
-                                                                                name="start_time"
+                                                                                name="startDate"
                                                                                 info="Start at 00:00"
                                                                                 type="date"
-                                                                                :isError="$errors->has('startDate')"
                                                                             />
 
                                                                             <x-client.dashboard.inputs.text
                                                                                 model="endDate"
                                                                                 label="End time"
-                                                                                name="end_time"
+                                                                                name="endDate"
                                                                                 info="End at 23:59"
                                                                                 type="date"
-                                                                                :isError="$errors->has('endDate')"
                                                                             />
                                                                         </div>
                                                                     </div>
@@ -203,43 +205,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="course-field mb--20">
-                                                <h6>Course Thumbnail</h6>
-                                                <div class="rbt-create-course-thumbnail upload-area">
-                                                    <div class="upload-area">
-                                                        <div class="brows-file-wrapper" data-black-overlay="9">
-                                                            @if ($imageUrl)
-                                                                <img src="{{ $imageUrl }}" alt="preview">
-                                                            @else
-                                                                <img src="{{ asset('images/others/thumbnail-placeholder.svg') }}"
-                                                                     loading="lazy"
-                                                                     alt="placeholder">
-                                                            @endif
 
-                                                            <input wire:model="image" id="createinputfile" name="thumbnail_url"
-                                                                   type="file" class="inputfile"
-                                                                   accept="image/png,image/jpeg,image/webp,image/jpg"/>
-                                                            <label class="d-flex" for="createinputfile" title="No File Chosen">
-                                                                <i class="feather-upload"></i>
-                                                                <span class="text-center">Choose your course thumbnail</span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <small><i class="feather-info"></i> <b>Size:</b> 700x430 pixels, <b>File
-                                                            Support:</b>
-                                                        JPG, JPEG, PNG, WEBP</small>
-                                                    @if($imageUrl)
-                                                        <button class="awe-btn bg-danger float-end" wire:click.prevent="deleteImage">
-                                                            <span>Delete</span>
-                                                        </button>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            @error('image')
-                                            <small class="d-block mb-3 text-danger" style="margin-top: -20px">
-                                                <i class="feather-alert-triangle"></i> {{ $message }}
-                                            </small>
-                                            @enderror
+                                            <livewire:client.course-creation.components.course-thumbnail wire:model="thumbnail"/>
                                         </div>
                                     </div>
                                 </div>
@@ -274,7 +241,7 @@
                         <div class="col-lg-4">
                         </div>
                         <div class="col-lg-8">
-                            <button type="button" wire:click="save" class="rbt-btn btn-gradient hover-icon-reverse w-100 text-center">
+                            <button type="button" wire:click="store" class="rbt-btn btn-gradient hover-icon-reverse w-100 text-center">
                                 <span class="icon-reverse-wrapper">
                                     <span class="btn-text">Create Course</span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>

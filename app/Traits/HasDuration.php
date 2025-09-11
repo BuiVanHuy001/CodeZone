@@ -23,9 +23,9 @@ trait HasDuration
 			if ($result !== '') {
 				$result .= ' ';
 			}
-			$result .= $minutes . Str::plural('min', $minutes);
+            $result .= $minutes . Str::plural(' min', $minutes);
 		}
-		return $result ?: '0min';
+        return $result ?: '0 min';
 	}
 
 	public function convertDurationToTime(): string

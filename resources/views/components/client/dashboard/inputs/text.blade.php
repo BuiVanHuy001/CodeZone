@@ -7,6 +7,9 @@
     <input
         wire:model.lazy="{{ $model }}"
         type="{{ $type }}"
+        @if($type === 'date')
+            min="{{ now()->format('Y-m-d') }}"
+        @endif
         placeholder="{{ $placeholder }}"
         value="{{ $value }}"
         @class([

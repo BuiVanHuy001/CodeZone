@@ -9,7 +9,6 @@ use App\Models\TrackingProgress;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Index extends Component {
@@ -61,6 +60,7 @@ class Index extends Component {
         $this->isDisabledPrevious = $this->isFirstLesson();
         $this->isDisabledNext = false;
 
+        $this->dispatch('lesson-changed', currentLesson: $this->lesson->id);
         $this->dispatch('lessonChanged', route('course.learn', [$this->course->slug, $this->module->id, $this->lesson->id]));
     }
 
@@ -88,6 +88,7 @@ class Index extends Component {
         $this->isDisabledNext = $this->isLastLesson();
         $this->isDisabledPrevious = false;
 
+        $this->dispatch('lesson-changed', currentLesson: $this->lesson->id);
         $this->dispatch('lessonChanged', route('course.learn', [$this->course->slug, $this->module->id, $this->lesson->id]));
     }
 

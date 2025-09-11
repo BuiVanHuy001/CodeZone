@@ -12,7 +12,6 @@ class Text extends Component {
         public string $label = '',
         public string $placeholder = '',
         public string $type = 'text',
-        public bool   $isError = false,
         public string $info = '',
         public string $slug = '',
         public string $value = '',

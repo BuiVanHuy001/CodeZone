@@ -22,13 +22,20 @@
                                 <span class="rbt-badge-5 ml--10">{{ "$module->lesson_count | " . $module->convertDurationToString() }}</span>
                             </button>
                         </h2>
-                        <div id="collapseTwo{{ $key }}" class="accordion-collapse collapse show" aria-labelledby="headingTwo{{ $key }}">
+                        <div id="collapseTwo{{ $key }}"
+                             @class([
+                                'accordion-collapse collapse',
+                                'show' => $module->lessons->pluck('id')->contains($currentLesson)
+                            ])
+                             aria-labelledby="headingTwo{{ $key }}">
                             <div class="accordion-body card-body">
                                 <ul class="rbt-course-main-content liststyle">
                                     @foreach($module->lessons->sortBy('position') as $lesson)
                                         <li class="d-flex justify-content-between align-items-center">
                                             <div class="course-content-left">
-                                                <a wire:current="active" href="{{ route('course.learn', [$courseSlug, $module->id, $lesson->id]) }}" wire:navigate>
+                                                <a @class(['active' => $currentLesson == $lesson->id])
+                                                   href="{{ route('course.learn', [$courseSlug, $module->id, $lesson->id]) }}"
+                                                   wire:navigate>
                                                     <i class="feather-{{ $lesson->getIcon() }}"></i>
                                                     <span class="text">{{ $lesson->title }}</span>
                                                 </a>
