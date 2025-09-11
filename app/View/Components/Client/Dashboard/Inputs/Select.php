@@ -14,7 +14,6 @@ class Select extends Component {
         public string           $placeholder,
         public array|Collection $options,
         public string $info,
-        public bool             $isError = false,
         public string $model = '',
         public bool   $isBoostrapSelect = true,
     ) {}

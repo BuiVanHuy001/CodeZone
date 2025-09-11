@@ -10,7 +10,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
-use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -31,6 +30,7 @@ class Video extends Component {
         $this->rules['video'] = 'mimes:mp4,mov,webm';
         $this->messages = NewLessonValidator::messagesForAs('video_file_name', 'video');
         $this->messages['video.mimes'] = 'The video file must be in MP4, MOV, or WEBM format.';
+
         if (!empty($this->storedVideoRelPath)) {
             $this->storedVideoAbsPath = Storage::url('course/videos/' . $this->storedVideoRelPath);
         } else {

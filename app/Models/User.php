@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -192,6 +194,16 @@ class User extends Authenticatable {
     public function slugSourceField(): string
     {
         return $this->name;
+    }
+
+    public function scopeWithName($query, $name): Builder|QueryBuilder
+    {
+        return $query->where('name', 'like', "%$name%");
+    }
+
+    public function scopeWithEmail($query, $email): Builder|QueryBuilder
+    {
+        return $query->where('email', 'like', "%$email%");
     }
 
     public function reviews(): hasMany

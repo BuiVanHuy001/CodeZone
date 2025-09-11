@@ -8,7 +8,6 @@
             label="Assignment Title"
             placeholder="Enter assignment title"
             info="Provide a clear, descriptive title for this assignment."
-            :isError="$errors->has('assignment.title')"
         />
 
         <x-client.dashboard.inputs.markdown-area
