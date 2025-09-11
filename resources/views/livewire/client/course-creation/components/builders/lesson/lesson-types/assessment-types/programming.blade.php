@@ -9,7 +9,6 @@
                 label="Problem Title"
                 placeholder="e.g., Two Sum, Valid Parentheses, Longest Substring"
                 info="Enter a concise, descriptive title for your coding problem."
-                :isError="$errors->has('programming.title')"
             />
 
             <x-client.dashboard.inputs.markdown-area
@@ -40,7 +39,6 @@
                 label="Method Signature"
                 placeholder="e.g., twoSum, findMedian, longestSubstring"
                 info="Enter the main method name in camelCase format (e.g., twoSum, reverseList)."
-                :isError="$errors->has('problem.function_name')"
             />
 
             <x-client.dashboard.inputs.select
@@ -51,7 +49,6 @@
                 :options="$typeMap"
                 placeholder="Select a data type"
                 info="Select the expected return type of the method."
-                :isError="$errors->has('problem.return_type')"
             />
 
             <div class="course-field mb--20 col-lg-6">
@@ -182,7 +179,6 @@
                                     name="newTestCase.inputs.{{ $index }}.value"
                                     label="{{ $param['name'] }}"
                                     info="Enter the input value for parameter '{{ $param['name'] }}' as {{ $typeMap[$param['type']]['label'] }} format (e.g: {{ $typeMap[$param['type']]['example'] }})."
-                                    :isError="$errors->has('newTestCase.inputs.' . $index . '.value')"
                                 />
 
                             @endforeach
@@ -192,7 +188,6 @@
                                     name="newTestCase.output.value"
                                     label="Expected Output"
                                     info="Enter the expected output value as {{ $typeMap[$problem['return_type']]['label'] }} format (e.g: {{ $typeMap[$problem['return_type']]['example'] }})."
-                                    :isError="$errors->has('newTestCase.output.value')"
                                 />
                             @endif
                             <div class="col-2 p-0">
