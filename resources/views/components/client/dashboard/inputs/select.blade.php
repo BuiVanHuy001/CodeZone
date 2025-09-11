@@ -19,10 +19,10 @@
                 id="{{ $name }}"
                 @class([
                     'w-100',
-                    'border-danger' => $isError,
+                    'border-danger' => $errors->has($name),
                 ])
             >
-                <option value="">{{ $placeholder }}</option>
+                <option value="" selected disabled>{{ $placeholder }}</option>
 
                 @if($name === 'category')
                     @foreach ($options as $category)

@@ -22,7 +22,6 @@
                                 name="lesson.title"
                                 label="Lesson Title"
                                 placeholder="Enter lesson title"
-                                :isError="$errors->has('lesson.title')"
                                 info="Enter a descriptive lesson title (visible publicly to students)."/>
 
                             <x-client.dashboard.inputs.select
@@ -32,7 +31,6 @@
                                 placeholder="Select lesson type"
                                 :options="\App\Models\Lesson::$TYPES"
                                 :isBoostrapSelect="false"
-                                :isError="$errors->has('lesson.type')"
                                 info="Select the module this lesson belongs to."/>
 
                             @if (!empty($lesson['type']))

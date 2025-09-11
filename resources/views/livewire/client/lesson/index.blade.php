@@ -1,19 +1,13 @@
 <div class="rbt-lesson-area bg-color-white">
     <div class="rbt-lesson-content-wrapper">
-        <livewire:client.lesson.components.sidebar
-            :modules="$course->modules"
-            :courseSlug="$course->slug"
-            :currentLesson="$lesson->id"
-        />
+        <livewire:client.lesson.components.sidebar :modules="$course->modules" :courseSlug="$course->slug" :currentLesson="$lesson->id"/>
 
         <div class="rbt-lesson-rightsidebar overflow-hidden lesson-video">
             <div class="lesson-top-bar">
                 <div class="lesson-top-left">
                     <div class="rbt-lesson-toggle">
-                        <button class="lesson-toggle-active btn-round-white-opacity"
-                                title="Toggle Sidebar">
-                            <i class="feather-arrow-left"></i>
-                        </button>
+                        <button class="lesson-toggle-active btn-round-white-opacity" title="Toggle Sidebar"><i
+                                class="feather-arrow-left"></i></button>
                     </div>
                     <h5>{{ $lesson->title }}</h5>
                 </div>
@@ -30,21 +24,15 @@
                 @elseif($lesson->type === 'document')
                     <livewire:client.lesson.components.lesson-types.document :documentContent="$lesson->document" :key="'document-' . $lesson->id"/>
                 @elseif($lesson->type === 'assessment')
-                    @if($lesson->assessments[0]->type === 'quiz')
-                        <livewire:client.lesson.components.assessment-types.quiz :quiz="$lesson->assessments[0]"/>
-                    @elseif($lesson->assessments[0]->type === 'assignment')
-                        <livewire:client.lesson.components.assessment-types.assignment :assignment="$lesson->assessments[0]"/>
-                    @elseif($lesson->assessments[0]->type === 'programming')
-                        <livewire:client.lesson.components.assessment-types.programming :programming-practice="$lesson->assessments[0]"/>
+                    @if($lesson->assessment->type === 'quiz')
+                        <livewire:client.lesson.components.assessment-types.quiz :quiz="$lesson->assessment"/>
+                    @elseif($lesson->assessment->type === 'assignment')
+                        <livewire:client.lesson.components.assessment-types.assignment :assignment="$lesson->assessment"/>
+                    @elseif($lesson->assessment->type === 'programming')
+                        <livewire:client.lesson.components.assessment-types.programming-practice :programming-practice="$lesson->assessment"/>
                     @endif
                 @endif
             </div>
-
-            @if(count($lesson->assessments ?? []) > 1 && $lesson->type !== 'assessment')
-                <livewire:client.lesson.components.practice-types.index
-                    :practiceExercises="$lesson->assessments"
-                />
-            @endif
 
             <div class="bg-color-extra2 ptb--15 overflow-hidden">
                 <div class="rbt-button-group">
@@ -62,7 +50,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 @push('scripts')

@@ -14,17 +14,22 @@
                 <div class="inner rbt-default-form">
                     <div class="row">
                         <div class="col-lg-12">
-                            <pre>
-                                {{ json_encode($lesson, JSON_PRETTY_PRINT) }}
-                            </pre>
                             <h5 class="modal-title mb--20" id="LessonLabel">Add Lesson</h5>
-                            <x-client.dashboard.inputs.text model="lesson.title" name="lesson.title"
-                                                            label="Lesson Title" placeholder="Enter lesson title" :isError="$errors->has('lesson.title')"
-                                                            info="Enter a descriptive lesson title (visible publicly to students)."/>
+                            <x-client.dashboard.inputs.text
+                                model="lesson.title"
+                                name="lesson.title"
+                                label="Lesson Title"
+                                placeholder="Enter lesson title"
+                                info="Enter a descriptive lesson title (visible publicly to students)."/>
 
-                            <x-client.dashboard.inputs.select model="lesson.type" name="lesson.type"
-                                                              label="Lesson Type" placeholder="Select lesson type" :options="\App\Models\Lesson::$TYPES" :isBoostrapSelect="false"
-                                                              :isError="$errors->has('lesson.type')" info="Select the module this lesson belongs to."/>
+                            <x-client.dashboard.inputs.select
+                                model="lesson.type"
+                                name="lesson.type"
+                                label="Lesson Type"
+                                placeholder="Select lesson type"
+                                :options="\App\Models\Lesson::$TYPES"
+                                :isBoostrapSelect="false"
+                                info="Select the module this lesson belongs to."/>
 
                             @if (!empty($lesson['type']))
                                 <div @class([
@@ -63,7 +68,7 @@
                                     <small><i class="feather-info"></i> Allow students to preview this lesson content
                                         before enrollment to help them make informed decisions about the course.</small>
                                 </div>
-                                @if (!$lesson['preview'])
+                                @if (!$lesson['preview'] && isset($lesson['practice_assessments']))
                                     <livewire:client.course-creation.components.builders.lesson.lesson-types.assessment-types.practice-assessment
                                         wire:model="lesson.practice_assessments"/>
                                 @else
