@@ -77,8 +77,10 @@ class Course extends Model
         foreach ($this->modules as $module) {
             foreach ($module->lessons as $lesson) {
                 if ($lesson->type === 'assessment') {
-                    if ($lesson->assessment->type === 'quiz') {
-                        $quiz_count++;
+                    foreach ($lesson->assessments as $assessment) {
+                        if ($assessment->type === 'quiz') {
+                            $quiz_count++;
+                        }
                     }
                 }
             }

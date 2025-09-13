@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Component;
 
-class ProgrammingPractice extends Component
+class Programming extends Component
 {
     public $programmingPractice;
     public $codeTemplates = [];
@@ -14,6 +14,7 @@ class ProgrammingPractice extends Component
     public string $languageSelected;
     public string $userCode;
     public array $submissionResults = [];
+    public string $template;
 
     public function mount(): void
     {
@@ -21,16 +22,13 @@ class ProgrammingPractice extends Component
         $this->codeTemplates = $decodedTemplates;
         $this->allowedLanguages = array_keys($decodedTemplates);
         $this->languageSelected = $this->allowedLanguages[0];
-        $this->dispatch('programming-practice-init', [
-            $this->languageSelected,
-            $this->codeTemplates[$this->languageSelected],
-        ]);
+        $this->template = $this->codeTemplates[$this->languageSelected];
     }
 
     public function updatedLanguageSelected(): void
     {
-        $this->userCode = $this->codeTemplates[$this->languageSelected];
-        $this->dispatch('language-selected-changed', language: $this->languageSelected);
+        $this->template = $this->codeTemplates[$this->languageSelected];
+        $this->dispatch('language-changed', templateCode: $this->template);
     }
 
     public function submitCode(): void
@@ -149,7 +147,6 @@ class ProgrammingPractice extends Component
             $value = $details['value'];
             switch ($language) {
                 case 'php':
-                    // For PHP, we can use var_export for a robust representation
                     $phpValue = eval('return ' . $value . ';');
                     $inputCode .= '$' . $name . ' = ' . var_export($phpValue, true) . ";\n";
                     break;
@@ -167,6 +164,6 @@ class ProgrammingPractice extends Component
 
     public function render(): View|Application|Factory
     {
-        return view('livewire.client.lesson.components.assessment-types.programming-practice');
+        return view('livewire.client.lesson.components.assessment-types.programming');
     }
 }

@@ -17,6 +17,7 @@ class Index extends Component {
     public ?Lesson $lesson = null;
     public bool $isDisabledNext = false;
     public bool $isDisabledPrevious = false;
+    public $practiceExercises;
 
     public function mount(): void
     {
@@ -60,6 +61,9 @@ class Index extends Component {
         $this->isDisabledPrevious = $this->isFirstLesson();
         $this->isDisabledNext = false;
 
+        if (count($this->lesson->assessments) > 1) {
+            $this->practiceExercises = $this->lesson->assessments;
+        }
         $this->dispatch('lesson-changed', currentLesson: $this->lesson->id);
         $this->dispatch('lessonChanged', route('course.learn', [$this->course->slug, $this->module->id, $this->lesson->id]));
     }
@@ -87,6 +91,10 @@ class Index extends Component {
 
         $this->isDisabledNext = $this->isLastLesson();
         $this->isDisabledPrevious = false;
+
+        if (count($this->lesson->assessments) > 1) {
+            $this->practiceExercises = $this->lesson->assessments;
+        }
 
         $this->dispatch('lesson-changed', currentLesson: $this->lesson->id);
         $this->dispatch('lessonChanged', route('course.learn', [$this->course->slug, $this->module->id, $this->lesson->id]));
