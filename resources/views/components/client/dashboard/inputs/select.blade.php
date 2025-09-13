@@ -1,5 +1,9 @@
 <div {{ $attributes->class(['course-field mb--20']) }}>
-    <label for="{{ $name }}">{{ $label }}</label>
+    @if($name !== 'languageSelected')
+        <label for="{{ $name }}">{{ $label }}</label>
+    @else
+        <h5>{{ $label }}</h5>
+    @endif
     @if($isBoostrapSelect)
         <div wire:ignore
              class="rbt-modern-select bg-transparent height-45 w-100 mb--10"
@@ -22,7 +26,7 @@
                     'border-danger' => $errors->has($name),
                 ])
             >
-                <option value="" selected disabled>{{ $placeholder }}</option>
+                <option value="" disabled>{{ $placeholder }}</option>
 
                 @if($name === 'category')
                     @foreach ($options as $category)
@@ -35,6 +39,11 @@
                 @elseif($name === 'problem.return_type')
                     @foreach($options as $key => $type)
                         <option value="{{ $key }}">{{ $type['label'] }}</option>
+                    @endforeach
+                @elseif($name === 'languageSelected')
+                    @foreach($options as $type)
+                        <option @checked(isset($default) && $default === $type)
+                                value="{{ $type }}">{{ \App\Models\ProgrammingAssignmentDetails::$SUPPORTED_LANGUAGES[$type] }}</option>
                     @endforeach
                 @else
                     @foreach ($options as $key => $label)

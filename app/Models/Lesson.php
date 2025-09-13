@@ -30,9 +30,9 @@ class Lesson extends Model
         return $this->belongsTo(Module::class);
     }
 
-    public function assessment(): HasOne
+    public function assessments(): HasMany
     {
-        return $this->hasOne(Assessment::class);
+        return $this->hasMany(Assessment::class);
     }
 
     public function trackingProgresses(): HasMany
@@ -45,14 +45,14 @@ class Lesson extends Model
         return $this->title;
     }
 
-    public function getIcon(): string
+    public function getIcon(string $type): string
     {
-        if ($this->type === 'video' && $this->video_file_name !== '') {
+        if ($type === 'video' && $this->video_file_name !== '') {
             return 'video';
         } elseif ($this->type === 'assessment') {
-            if ($this->assessment->type === 'quiz') {
+            if ($type === 'quiz') {
                 return 'help-circle';
-            } elseif ($this->assessment->type === 'assignment') {
+            } elseif ($type === 'assignment') {
                 return 'book-open';
             } else {
                 return 'code';
