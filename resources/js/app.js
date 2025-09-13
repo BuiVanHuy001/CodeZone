@@ -20,6 +20,8 @@ import "../assets/js/vendor/countdown.js";
 import "../assets/js/vendor/plyr.js";
 import "../assets/js/vendor/jodit.min.js";
 import "../assets/js/vendor/Sortable.min.js";
+import "../assets/js/vendor/code-editor.js";
+import "../assets/js/vendor/handle-modal.js";
 import Plyr from "plyr";
 import {
     EditorView,
@@ -62,19 +64,3 @@ window.autocompletion = autocompletion;
 window.markdown = markdown;
 
 import "../assets/js/main.js";
-
-document.addEventListener("livewire:init", () => {
-    Livewire.on("close-modal", ({id}) => {
-        let modalEl = document.getElementById(id);
-        if (modalEl) {
-            let modal =
-                bootstrap.Modal.getInstance(modalEl) ||
-                new bootstrap.Modal(modalEl);
-            modal.hide();
-        }
-    });
-    Livewire.on("open-modal", ({id}) => {
-        const modal = new bootstrap.Modal(document.getElementById(id));
-        modal.show();
-    });
-});
