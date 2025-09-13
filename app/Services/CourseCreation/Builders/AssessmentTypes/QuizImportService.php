@@ -41,7 +41,7 @@ class QuizImportService {
             foreach (['option_1', 'option_2', 'option_3', 'option_4'] as $index => $optionKey) {
                 if ($question[$optionKey] !== '') {
                     $options[] = [
-                        'content' => $question[$optionKey],
+                        'content' => (string)$question[$optionKey],
                         'is_correct' => in_array($index + 1, $question['correct_answer']),
                         'explanation' => $question['explanation_' . $optionKey] ?? ''
                     ];
