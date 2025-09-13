@@ -36,12 +36,12 @@
                                                 <a @class(['active' => $currentLesson == $lesson->id])
                                                    href="{{ route('course.learn', [$courseSlug, $module->id, $lesson->id]) }}"
                                                    wire:navigate>
-                                                    <i class="feather-{{ $lesson->getIcon() }}"></i>
+                                                    <i class="feather-{{ $lesson->getIcon($lesson->type) }}"></i>
                                                     <span class="text">{{ $lesson->title }}</span>
                                                 </a>
                                             </div>
                                             <div class="course-content-right">
-                                                <span class="min-lable">{{ $lesson->getIcon() === 'video' ? $lesson->convertDurationToString() : '' }}</span>
+                                                <span class="min-lable">{{ $lesson->getIcon($lesson->type) === 'video' ? $lesson->convertDurationToString() : '' }}</span>
                                                 <input
                                                     wire:click="checkLessonCompletion({{ $lesson }})"
                                                     type="checkbox"

@@ -67,9 +67,9 @@ php artisan key:generate
 php artisan migrate
 
 # (Optional) Import sample database
-# Execute the SQL script from `database/codezone.sql`
-# Replace the public folder in storage/app with the one from Google Drive:
-# https://drive.google.com/drive/folders/1owAxrNEtvWm9NyBgthAGN-gIZnMqCwx9?usp=drive_link
+# Execute SQL script from `database/codezone.sql`
+# Replace the public folder in storage/app with the one from Google Drive: 
+# https://drive.google.com/drive/folders/1XWXXeOEyQhFFiNq9L3uZWrGWRnVz2evV?usp=sharing
 
 # Start development servers
 php artisan serve & npm run dev

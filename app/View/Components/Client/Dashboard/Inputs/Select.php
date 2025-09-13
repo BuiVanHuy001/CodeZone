@@ -16,6 +16,7 @@ class Select extends Component {
         public string $info,
         public string $model = '',
         public bool   $isBoostrapSelect = true,
+        public string $default = '',
     ) {}
 
     public function render(): View|Closure|string
