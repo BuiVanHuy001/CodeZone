@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('assessment_questions', function (Blueprint $table) {
+        Schema::create('assessment_questions', static function (Blueprint $table) {
             $table->id();
             $table->text('content')->nullable();
             $table->enum('type', array_keys(AssessmentQuestion::$TYPES));
+            $table->json('options')->nullable();
+            $table->json('correct_answers')->nullable();
             $table->unsignedTinyInteger('position')->default(0);
 
 	        $table->foreignIdFor(Assessment::class)->constrained();

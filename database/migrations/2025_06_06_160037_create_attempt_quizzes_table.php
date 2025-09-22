@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attempt_quizzes', function (Blueprint $table) {
+        Schema::create('quiz_attempts', static function (Blueprint $table) {
             $table->foreignIdFor(AssessmentAttempt::class)->primary();
             $table->smallInteger('correct_answers_count')->default(0);
             $table->smallInteger('total_questions_count')->default(0);

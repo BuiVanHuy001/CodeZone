@@ -13,7 +13,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('courses', static function (Blueprint $table) {
             $table->uuid('id')->primary();
 
             $table->string('title');

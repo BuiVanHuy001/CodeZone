@@ -11,7 +11,7 @@ return new class extends Migration {
 	 */
 	public function up(): void
 	{
-		Schema::create('batches', function (Blueprint $table) {
+        Schema::create('batches', static function (Blueprint $table) {
 			$table->id();
 			$table->datetime('start_at');
 			$table->datetime('end_at')->nullable();

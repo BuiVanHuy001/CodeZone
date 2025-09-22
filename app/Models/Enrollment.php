@@ -6,16 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Enrollment extends Model {
-    public $guarded = [];
-    public $table = 'order_items';
+    protected $guarded = [];
+
+    public static array $STATUSES = [
+        'not_started' => 'Not Started',
+        'in_progress' => 'In Progress',
+        'completed' => 'Completed',
+    ];
 
     public function course(): BelongsTo
     {
-        return $this->belongsTo(Course::class, 'item_id');
+        return $this->belongsTo(Course::class);
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
+
 }
