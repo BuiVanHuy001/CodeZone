@@ -44,6 +44,11 @@ class Course extends Model
         return $this->hasMany(Batch::class);
     }
 
+    public function enrollments(): hasMany
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
     public function slugSourceField(): string
     {
         return $this->title;
@@ -55,6 +60,15 @@ class Course extends Model
             return Storage::url('course/thumbnails/' . $this->thumbnail_url);
         }
         return asset('images/others/thumbnail-placeholder.svg');
+    }
+
+    public function getFormattedPrice()
+    {
+        if ($this->price === 0) {
+            return 'Free';
+        } else {
+            return number_format($this->price) . '₫';
+        }
     }
 
     public function getIntroductionVideo(): string

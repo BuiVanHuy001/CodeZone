@@ -3,7 +3,7 @@
 namespace App\Livewire\Client\CourseCreation\Components\Builders\Lesson\LessonTypes\AssessmentTypes;
 
 use App\Services\CourseCreation\Builders\AssessmentTypes\ProgrammingService;
-use App\Traits\HasErrors;
+use App\Traits\WithSwal;
 use App\Validator\ProgrammingPracticeValidator;
 use Exception;
 use Illuminate\Contracts\View\Factory;
@@ -14,7 +14,7 @@ use Livewire\Attributes\Modelable;
 use Livewire\Component;
 
 class Programming extends Component {
-    use HasErrors;
+    use WithSwal;
 
     #[Modelable]
     public array $programming;
@@ -231,15 +231,14 @@ class Programming extends Component {
             'type' => ''
         ];
 
-        $this->dispatch('swal', [
-            'title' => 'Parameter Added',
-            'text' => 'The parameter has been added successfully.',
-            'icon' => 'success',
-            'toast' => true,
-            'timer' => 2000,
-            'showConfirmButton' => false,
-            'position' => 'top-end',
-        ]);
+        $this->swal(
+            title: 'Parameter Added',
+            text: 'The parameter has been added successfully.',
+            toast: true,
+            showConfirmButton: false,
+            position: 'top-end',
+            timer: 2000,
+        );
     }
 
     public function removeParameter(string|int $index): void
@@ -249,15 +248,15 @@ class Programming extends Component {
         if (count($this->problem['test_cases']) !== 0) {
             $this->problem['test_cases'] = [];
         }
-        $this->dispatch('swal', [
-            'title' => 'Parameter Deleted',
-            'text' => 'The parameter has been deleted successfully.',
-            'icon' => 'success',
-            'toast' => true,
-            'timer' => 3000,
-            'showConfirmButton' => false,
-            'position' => 'top-end',
-        ]);
+
+        $this->swal(
+            title: 'Parameter Deleted',
+            text: 'The parameter has been deleted successfully.',
+            toast: true,
+            showConfirmButton: false,
+            position: 'top-end',
+            timer: 2000,
+        );
     }
 
     public function addTestCase(): void
@@ -268,15 +267,14 @@ class Programming extends Component {
 
         $this->resetNewTestCase();
 
-        $this->dispatch('swal', [
-            'title' => 'Test Case Added',
-            'text' => 'The test case has been added successfully.',
-            'icon' => 'success',
-            'toast' => true,
-            'timer' => 2000,
-            'showConfirmButton' => false,
-            'position' => 'top-end',
-        ]);
+        $this->swal(
+            title: 'Test Case Added',
+            text: 'The test case has been added successfully.',
+            toast: true,
+            showConfirmButton: false,
+            position: 'top-end',
+            timer: 2000,
+        );
     }
 
     private function resetNewTestCase(): void
@@ -301,15 +299,14 @@ class Programming extends Component {
     public function removeTestCase(string|int $index): void
     {
         unset($this->problem['test_cases'][$index]);
-        $this->dispatch('swal', [
-            'title' => 'Test Case Deleted',
-            'text' => 'The test case has been deleted successfully.',
-            'icon' => 'success',
-            'toast' => true,
-            'timer' => 3000,
-            'showConfirmButton' => false,
-            'position' => 'top-end',
-        ]);
+        $this->swal(
+            title: 'Test Case Deleted',
+            text: 'The test case has been deleted successfully.',
+            toast: true,
+            showConfirmButton: false,
+            position: 'top-end',
+            timer: 2000,
+        );
     }
 
     /**
@@ -320,17 +317,13 @@ class Programming extends Component {
         try {
             $this->validate();
             $this->programming['problem_details']['function_name'] = $this->problem['function_name'];
-            $this->programming['problem_details']['code_templates'] = json_encode($this->problem['code_templates']);
-            $this->programming['problem_details']['test_cases'] = json_encode($this->problem['test_cases']);
+            $this->programming['problem_details']['code_templates'] = json_encode($this->problem['code_templates'], JSON_THROW_ON_ERROR);
+            $this->programming['problem_details']['test_cases'] = json_encode($this->problem['test_cases'], JSON_THROW_ON_ERROR);
             $this->showDetails = false;
             $this->dispatch('assessment-saved', id: $this->programming['title']);
             $this->dispatch('assessment-updated', isValid: true);
         } catch (Exception $e) {
-            $this->dispatch('swal', [
-                'title' => 'Error',
-                'html' => 'There was an error saving the programming assessment: <br>' . $this->prepareRenderErrors($e),
-                'icon' => 'error',
-            ]);
+            $this->swalError('Error', 'There was an error saving the programming assessment:', $e->getMessage());
             throw $e;
         }
     }

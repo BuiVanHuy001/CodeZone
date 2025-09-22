@@ -222,37 +222,13 @@
 </x-client.dashboard.course-creation.builders.assessment-types.base>
 @script
 <script>
-    new EditorView(
-        {
-            extensions: [
-                lineNumbers(),
-                markdown(),
-                highlightActiveLineGutter(),
-                highlightActiveLine(),
-                highlightSpecialChars(),
-                EditorView.lineWrapping,
-                EditorView.domEventHandlers({
-                    blur: (event, view) => {
-                        $wire.set('quiz.description', view.state.doc.toString());
-                    }
-                }),
-                EditorView.theme({
-                    "&": {
-                        height: "200px",
-                        width: "100%",
-                        border: "1px solid #ddd",
-                        borderRadius: "4px",
-                        padding: "10px",
-                        fontSize: "13px",
-                    },
-                    ".cm-content": {
-                        caretColor: "#000",
-                    },
-                }),
-            ],
-            doc: @json($quiz['description'] ?? ''),
-            parent: document.getElementById('quiz-description{{ !empty($unique) ? '-' . $unique : '' }}-editor'),
-        }
-    )
+    createCodeEditor(
+        'quiz-description{{ !empty($unique) ? '-' . $unique : '' }}-editor',
+        'markdown',
+        @json($quiz['description'] ?? '', JSON_THROW_ON_ERROR),
+        false,
+        @json($this->getId(), JSON_THROW_ON_ERROR),
+        'quiz.description'
+    );
 </script>
 @endscript

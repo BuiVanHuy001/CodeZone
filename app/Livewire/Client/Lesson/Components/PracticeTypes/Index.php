@@ -11,20 +11,17 @@ use Livewire\Component;
 
 class Index extends Component {
     public array|Collection $practiceExercises;
-    public array|Assessment $currentPracticeExercise;
+    public array|Assessment|null $currentPracticeExercise;
 
-    public function mount(): void
+    public function showPracticeModel(Assessment $assessment): void
     {
-        $this->currentPracticeExercise = $this->practiceExercises[0];
-    }
-
-    public function showPracticeModel(): void
-    {
+        $this->currentPracticeExercise = $assessment;
         $this->dispatch('open-modal', id: 'practiceExercisesModal');
     }
 
     public function hidePracticeModel(): void
     {
+        $this->currentPracticeExercise = null;
         $this->dispatch('close-modal', id: 'practiceExercisesModal');
     }
 

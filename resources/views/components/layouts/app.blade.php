@@ -18,10 +18,9 @@
         <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
     </svg>
 </div>
-@stack('scripts')
 <script src="{{ asset('js/vendor/isotop.js') }}"></script>
 <script src="{{ asset('js/vendor/imageloaded.js') }}"></script>
 <script src="{{ asset('js/vendor/wow.js') }}"></script>
-<script src="{{ asset('js/vendor/waypoint.min.js') }}"></script>
+@stack('scripts')
 </body>
 </html>

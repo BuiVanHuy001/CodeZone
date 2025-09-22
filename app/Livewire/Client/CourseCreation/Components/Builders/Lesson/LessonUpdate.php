@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Client\CourseCreation\Components\Builders\Lesson;
 
-use App\Traits\HasErrors;
 use App\Traits\WithLessonForm;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -12,7 +11,7 @@ use Illuminate\View\View;
 use Livewire\Attributes\On;
 
 class LessonUpdate extends Component {
-    use HasErrors, WithLessonForm;
+    use WithLessonForm;
 
     #[Validate]
     public array $lesson = [

@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use JsonException;
 use Livewire\Component;
 
 class Quiz extends Component
@@ -34,21 +35,24 @@ class Quiz extends Component
 				        ->values()
 				        ->toArray()
 		        ];
-	        } else {
-		        return [
-			        $question->id => $question->options
-				        ->where('is_correct', true)
-				        ->pluck('id')
-				        ->first()
-		        ];
-	        }
+            }
+
+            return [
+                $question->id => $question->options
+                    ->where('is_correct', true)
+                    ->pluck('id')
+                    ->first()
+            ];
         })->toArray();
     }
 
-	public function showAttemptDetail($attemptId): void
+    /**
+     * @throws JsonException
+     */
+    public function showAttemptDetail($attemptId): void
 	{
 		$this->selectedAttempt = AttemptQuiz::where('assessment_attempt_id', $attemptId)->first();
-		$rawAnswers = json_decode($this->selectedAttempt->user_answers, true);
+        $rawAnswers = json_decode($this->selectedAttempt->user_answers, true, 512, JSON_THROW_ON_ERROR);
 
 		$evaluatedAnswers = [];
 
@@ -64,11 +68,10 @@ class Quiz extends Component
 					'question' => $question->content,
 					'content' => $question->options->where('id', $ans)->first()->content,
 					'explanation' => $question->options->where('id', $ans)->first()->explanation ?? '',
-					'is_correct' => in_array($ans, $correct),
+                    'is_correct' => in_array($ans, $correct, true),
 				];
 			}
 
-			// Fix: Check both values and count for multiple answers
 			sort($correct);
 			sort($given);
 			$isCorrect = ($given === $correct);
@@ -99,7 +102,7 @@ class Quiz extends Component
 
             $currentAnswers = $this->userAnswers[$questionId];
 
-            if (in_array($answerId, $currentAnswers)) {
+            if (in_array($answerId, $currentAnswers, true)) {
                 $this->userAnswers[$questionId] = array_diff($currentAnswers, [$answerId]);
             } else {
                 $this->userAnswers[$questionId][] = $answerId;
@@ -108,6 +111,9 @@ class Quiz extends Component
         }
     }
 
+    /**
+     * @throws JsonException
+     */
     public function quizSubmit(): void
     {
 	    $correctAnswers = $this->countCorrectAnswers();
@@ -122,7 +128,7 @@ class Quiz extends Component
         ])->attemptQuiz()->create([
             'correct_answers_count' => $correctAnswers,
             'total_questions_count' => $totalQuestions,
-            'user_answers' => json_encode($this->userAnswers),
+            'user_answers' => json_encode($this->userAnswers, JSON_THROW_ON_ERROR),
         ]);
 
         $this->results = [

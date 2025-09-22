@@ -43,37 +43,13 @@
 </x-client.dashboard.course-creation.builders.assessment-types.base>
 @script
 <script>
-    new EditorView(
-        {
-            extensions: [
-                lineNumbers(),
-                markdown(),
-                highlightActiveLineGutter(),
-                highlightActiveLine(),
-                highlightSpecialChars(),
-                EditorView.lineWrapping,
-                EditorView.domEventHandlers({
-                    blur: (event, view) => {
-                        $wire.set('assignment.description', view.state.doc.toString());
-                    }
-                }),
-                EditorView.theme({
-                    "&": {
-                        height: "200px",
-                        width: "100%",
-                        border: "1px solid #ddd",
-                        borderRadius: "4px",
-                        padding: "10px",
-                        fontSize: "13px",
-                    },
-                    ".cm-content": {
-                        caretColor: "#000",
-                    },
-                }),
-            ],
-            doc: @json($assignment['description'] ?? ''),
-            parent: document.getElementById('assignment-description{{ !empty($unique) ? '-' . $unique : '' }}-editor'),
-        }
-    )
+    createCodeEditor(
+        'assignment-description{{ !empty($unique) ? '-' . $unique : '' }}-editor',
+        'markdown',
+        @json($assignment['description'] ?? '', JSON_THROW_ON_ERROR),
+        false,
+        @json($this->getId(), JSON_THROW_ON_ERROR),
+        'assignment.description'
+    );
 </script>
 @endscript

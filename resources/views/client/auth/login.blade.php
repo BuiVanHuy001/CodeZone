@@ -6,7 +6,7 @@
         <form class="max-width-auto" action="{{ route('client.login') }}" method="POST">
             @csrf
             <div @class(['form-group', 'focused' => old('email')])>
-                <input name="email" type="text" value="{{ request('email') ?? old('email') }}" @class(['border-danger' => $errors->has('email')])/>
+                <input name="email" type="text" value="{{ request('email') ?? old('email') ?? $email }}" @class(['border-danger' => $errors->has('email')])/>
                 <label>Email address *</label>
                 <span class="focus-border"></span>
                 @error('email')
@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="rbt-lost-password text-end">
-                        <a class="rbt-btn-link" href="#">Lost your password?</a>
+                        <a class="rbt-btn-link" href="{{ route('client.forgot-password') }}">Lost your password?</a>
                     </div>
                 </div>
             </div>

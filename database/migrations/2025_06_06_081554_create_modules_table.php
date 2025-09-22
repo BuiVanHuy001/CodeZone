@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('title');
 	        $table->unsignedTinyInteger('lesson_count');
             $table->unsignedTinyInteger('position');
-	        $table->unsignedSmallInteger('duration')->comment('Duration in seconds and max 65535 seconds (18 hours)');
+            $table->unsignedSmallInteger('duration')
+                ->comment('Duration in seconds and max 65535 seconds (18 hours)');
 
 	        $table->foreignUuid('course_id')->constrained('courses');
 

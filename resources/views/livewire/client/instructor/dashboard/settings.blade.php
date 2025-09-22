@@ -25,20 +25,16 @@
         <div class="tab-content">
             <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="rbt-dashboard-content-wrapper">
-                    <div class="tutor-bg-photo bg_image bg_image--14 height-245"></div>
-                    <div class="rbt-tutor-information">
-                        <div class="rbt-tutor-information-left">
-                            <div class="thumbnail rbt-avatars size-lg position-relative">
-                                <img src="{{ auth()->user()->getAvatarPath() }}" alt="Instructor">
-                                <div class="rbt-edit-photo-inner">
-                                    <button class="rbt-edit-photo" title="Upload Photo">
-                                        <i class="feather-camera"></i>
-                                    </button>
-                                </div>
+                    <div class="rbt-dashboard-content-wrapper">
+                        <div class="thumbnail rbt-avatars size-lg position-relative">
+                            <img src="{{ auth()->user()->getAvatarPath() }}" alt="Instructor">
+                            <div class="rbt-edit-photo-inner">
+                                <button class="rbt-edit-photo" title="Upload Photo">
+                                    <i class="feather-camera"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
-                </div>
 
                 <form class="rbt-profile-row rbt-default-form row row--15">
                     <div class="col-12 row mb-3">

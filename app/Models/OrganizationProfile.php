@@ -13,7 +13,7 @@ class OrganizationProfile extends Model
 	public $incrementing = false;
 	protected $guarded = [];
     protected $casts = [
-        'socials_links' => 'array',
+        'social_links' => 'array',
     ];
 
 }

@@ -19,7 +19,8 @@ return new class extends Migration
 	        $table->text('document')->nullable();
             $table->string('video_file_name')->nullable();
             $table->unsignedTinyInteger('position');
-	        $table->unsignedSmallInteger('duration')->comment('Duration in seconds and max 65535 seconds (18 hours)');
+            $table->unsignedSmallInteger('duration')
+                ->comment('Duration in seconds and max 65535 seconds (18 hours)');
 	        $table->boolean('preview')->default(false);
             $table->enum('type', array_keys(Lesson::$TYPES));
             $table->json('resources')->nullable();

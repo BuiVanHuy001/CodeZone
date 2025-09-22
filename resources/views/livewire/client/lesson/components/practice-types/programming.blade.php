@@ -18,8 +18,7 @@
                 name="languageSelected"
                 info="Select programming language to start coding"
                 placeholder="Select programming language"
-                :default="$this->languageSelected"
-            />
+                :default="$this->languageSelected"/>
 
             <div id="code-editor-{{ $programmingPractice->id }}" wire:ignore></div>
 
@@ -32,15 +31,3 @@
         </div>
     </div>
 </div>
-
-@push('scripts')
-    <script>
-        document.addEventListener('livewire:init', () => {
-            createCodeEditor("code-editor-{{ $programmingPractice->id }}", "{{ $this->languageSelected }}", @json($template))
-        })
-        document.addEventListener('language-changed', (e) => {
-            const {doc, language} = e.detail || {};
-            createCodeEditor("code-editor-{{ $programmingPractice->id }}", language, doc)
-        })
-    </script>
-@endpush

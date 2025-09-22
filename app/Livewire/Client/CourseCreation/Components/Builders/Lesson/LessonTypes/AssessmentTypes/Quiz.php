@@ -4,7 +4,7 @@ namespace App\Livewire\Client\CourseCreation\Components\Builders\Lesson\LessonTy
 
 use App\Models\AssessmentQuestion;
 use App\Services\CourseCreation\Builders\AssessmentTypes\QuizImportService;
-use App\Traits\HasErrors;
+use App\Traits\WithSwal;
 use App\Validator\QuizValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -16,7 +16,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Quiz extends Component {
-    use WithFileUploads, HasErrors;
+    use WithFileUploads, WithSwal;
 
     public $excelFile;
     #[Modelable]
@@ -57,13 +57,7 @@ class Quiz extends Component {
         }
         $optionCount = count($this->quiz['assessments_questions'][$index]['question_options']);
         if ($optionCount >= 4) {
-            $this->dispatch('swal', [
-                'title' => 'Maximum Options Reached',
-                'text' => 'You can only have a maximum of 4 options per question.',
-                'icon' => 'warning',
-                'timer' => 3000,
-                'showConfirmButton' => false
-            ]);
+            $this->swalWarning('Maximum Options Reached', 'You can only have a maximum of 4 options per question.');
             return;
         }
         $this->quiz['assessments_questions'][$index]['question_options'][] = [
@@ -77,13 +71,7 @@ class Quiz extends Component {
     public function deleteOption(int $index, int $optionIndex): void
     {
         if (count($this->quiz['assessments_questions'][$index]['question_options']) <= 2) {
-            $this->dispatch('swal', [
-                'title' => 'Minimum Options Required',
-                'text' => 'You must have at least 2 options for each question.',
-                'icon' => 'warning',
-                'timer' => 3000,
-                'showConfirmButton' => false
-            ]);
+            $this->swalWarning('Minimum Options Required', 'You must have at least 2 options for each question.');
             return;
         }
         unset($this->quiz['assessments_questions'][$index]['question_options'][$optionIndex]);
@@ -133,11 +121,7 @@ class Quiz extends Component {
             $this->dispatch('assessment-updated', isValid: true);
         } catch (ValidationException $e) {
             $this->dispatch('assessment-updated', isValid: false);
-            $this->dispatch('swal', [
-                'title' => 'Validation Error',
-                'html' => 'There was an error saving the quiz: <br>' . $this->prepareRenderErrors($e),
-                'icon' => 'error',
-            ]);
+            $this->swalError('Validation Error', 'There was an error saving the quiz:', $e->getMessage());
             throw $e;
         }
     }
@@ -151,11 +135,7 @@ class Quiz extends Component {
         if (empty($quizImportErrors)) {
             $this->importQuestions($importedQuestions);
         } else {
-            $this->dispatch('swal', [
-                'title' => 'Import Failed',
-                'text' => 'There was an error importing the quiz file: ' . implode(', ', (array)$quizImportErrors),
-                'icon' => 'error',
-            ]);
+            $this->swalError('Import Failed', 'There was an error importing the quiz file:', $quizImportErrors);
         }
     }
 
