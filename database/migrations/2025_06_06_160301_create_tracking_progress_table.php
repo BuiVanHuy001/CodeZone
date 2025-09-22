@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tracking_progresses', function (Blueprint $table) {
+        Schema::create('tracking_progresses', static function (Blueprint $table) {
             $table->id();
             $table->boolean('is_completed')->default(false);
 	        $table->foreignIdFor(User::class)->constrained();

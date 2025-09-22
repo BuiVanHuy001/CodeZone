@@ -68,6 +68,7 @@ php artisan migrate
 
 # (Optional) Import sample database
 # Execute SQL script from `database/codezone.sql`
+php artisan db:seed
 # Replace the public folder in storage/app with the one from Google Drive: 
 # https://drive.google.com/drive/folders/1XWXXeOEyQhFFiNq9L3uZWrGWRnVz2evV?usp=sharing
 

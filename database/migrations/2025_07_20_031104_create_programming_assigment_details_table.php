@@ -11,7 +11,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('programming_assignment_details', function (Blueprint $table) {
+        Schema::create('programming_assignment_details', static function (Blueprint $table) {
             $table->foreignIdFor(Assessment::class)->primary();
             $table->string('function_name', 50);
             $table->json('code_templates');

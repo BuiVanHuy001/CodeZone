@@ -11,7 +11,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('student_profiles', function (Blueprint $table) {
+        Schema::create('student_profiles', static function (Blueprint $table) {
             $table->foreignIdFor(User::class)->primary();
 
             $table->boolean('gender')

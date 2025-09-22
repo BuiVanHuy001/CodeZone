@@ -9,6 +9,7 @@ use App\Traits\WithSwal;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -30,7 +31,7 @@ class Cart extends Component
     {
         if (auth()->check()) {
             $this->cart = $this->cartService->getCart(auth()->user());
-            $this->totalPrice = $this->formatPrice($this->cart->total_price ?? 0);
+            $this->totalPrice = $this->cartService->formatPrice($this->cart->total_price ?? 0);
             $this->items = collect($this->cart?->items);
         }
     }
@@ -74,24 +75,15 @@ class Cart extends Component
         };
     }
 
-    public function checkOut(): void
+    public function checkOut(): Redirector
     {
-        $this->cartService->checkout($this->cart, 'vnpay');
-    }
-
-    private function formatPrice(int $price): string
-    {
-        if ($price === 0) {
-            return 'Free';
-        }
-
-        return number_format($price) . '₫';
+        return redirect(route('cart.index'));
     }
 
     private function refreshCart(Order $order): void
     {
         $this->cart = $order;
-        $this->totalPrice = $this->formatPrice($this->cart->total_price ?? 0);
+        $this->totalPrice = $this->cartService->formatPrice($this->cart->total_price ?? 0);
         $this->items = collect($this->cart?->items);
     }
 
@@ -105,7 +97,7 @@ class Cart extends Component
     {
         $this->cart = null;
         $this->items = collect();
-        $this->totalPrice = $this->formatPrice(0);
+        $this->reset('totalPrice');
         $this->swal(title: 'Course removed from cart');
     }
 

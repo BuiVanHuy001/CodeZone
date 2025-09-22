@@ -13,7 +13,7 @@ return new class extends Migration {
 	 */
 	public function up(): void
 	{
-		Schema::create('batch_enrollments', function (Blueprint $table) {
+        Schema::create('batch_enrollments', static function (Blueprint $table) {
 			$table->id();
             $table->foreignIdFor(Batch::class)->constrained();
 			$table->foreignIdFor(User::class)->constrained();

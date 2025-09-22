@@ -12,7 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        $sql = file_get_contents(database_path('codezone.sql'));
+        \DB::unprepared($sql);
     }
 
 }

@@ -11,7 +11,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('attempt_programmings', function (Blueprint $table) {
+        Schema::create('attempt_programmings', static function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(AssessmentAttempt::class);
             $table->text('user_code');

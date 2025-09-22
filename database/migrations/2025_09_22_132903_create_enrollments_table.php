@@ -1,24 +1,22 @@
 <?php
 
-use App\Models\Course;
-use App\Models\Order;
+use App\Models\Enrollment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('order_items', static function (Blueprint $table) {
-            $table->id();
-	        $table->decimal('current_price', 15, 3);
-
-            $table->foreignUuid('order_id')->constrained('orders');
+        Schema::create('enrollments', static function (Blueprint $table) {
             $table->foreignUuid('course_id')->constrained('courses');
+            $table->foreignId('user_id')->constrained('users');
+            $table->primary(['course_id', 'user_id']);
+
+            $table->enum('status', array_keys(Enrollment::$STATUSES))->default('not_started');
 
             $table->timestamps();
         });
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_items');
+        Schema::dropIfExists('enrollments');
     }
 };

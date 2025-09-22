@@ -40,6 +40,7 @@ class CartService
         ]);
 
         $order->increment('total_price', $course->price);
+        $order->refresh();
         return $this->makeResult($order, 'added_to_cart');
     }
 
@@ -73,7 +74,7 @@ class CartService
         ];
     }
 
-    public function checkout(Order $order, string $method = 'vnpay'): RedirectResponse|Redirector
+    public function checkout(Order $order, string $method = 'momo'): RedirectResponse|Redirector
     {
         if ($order->total_price === 0) {
             return $this->processFreeOrder($order);
@@ -98,5 +99,14 @@ class CartService
                 Str::plural('course', $order->items->count())
             ),
         ]);
+    }
+
+    public function formatPrice(int $price): string
+    {
+        if ($price === 0) {
+            return 'Free';
+        }
+
+        return number_format($price) . '₫';
     }
 }

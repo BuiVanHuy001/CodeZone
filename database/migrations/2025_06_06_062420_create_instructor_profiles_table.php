@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('instructor_profiles', function (Blueprint $table) {
+        Schema::create('instructor_profiles', static function (Blueprint $table) {
             $table->foreignIdFor(User::class)->primary();
 	        $table->text('bio')->nullable();
 	        $table->text('about_me')->nullable();
