@@ -9,6 +9,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('swal::index')
 
+    @stack('styles')
+
     <title>@yield('title' ?? 'Codezone - Online Learning platform')</title>
 </head>
 <body class="rbt-header-sticky">

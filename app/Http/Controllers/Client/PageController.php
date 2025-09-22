@@ -30,15 +30,4 @@ class PageController extends Controller
     {
         return view('client.errors.maintenance');
     }
-
-    public function courseDetail(Course $course): View|Application|Factory
-    {
-        $isReviewable = false;
-        $reviews = $course->reviews()->with('user')->latest()->get();
-
-        return view('client.pages.course-details', [
-            'course' => $course,
-            'reviews' => $reviews,
-        ]);
-    }
 }

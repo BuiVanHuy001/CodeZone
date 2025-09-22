@@ -10,7 +10,6 @@ use Illuminate\Http\RedirectResponse;
 
 class SocialiteController extends Controller
 {
-
     public function redirect(string $provider): RedirectResponse
     {
         return (new SocialLoginContext($provider))->redirectToProvider();

@@ -30,6 +30,7 @@ class CreateCourseService {
             'category_id' => $courseData['category'],
             'requirements' => $this->normalizeJsonField($courseData['requirements']),
             'skills' => $this->normalizeJsonField($courseData['skills']),
+            'target_audiences' => $this->normalizeJsonField($courseData['targetAudiences']),
             'user_id' => auth()->user()->id,
         ]);
         foreach ($courseData['modules'] as $moduleIndex => $moduleData) {
@@ -88,6 +89,7 @@ class CreateCourseService {
                 ]);
             }
         }
+        auth()->user()->getProfile->increment('course_count');
         $course->save();
     }
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Client\Instructor;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Base\BaseCourseController;
 use Illuminate\Http\Request;
 
-class CourseController extends Controller
+class CourseController extends BaseCourseController
 {
     /**
      * Display a listing of the resource.
@@ -26,14 +26,6 @@ class CourseController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
     {
         //
     }

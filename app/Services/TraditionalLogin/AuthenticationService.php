@@ -2,8 +2,12 @@
 
 namespace App\Services\TraditionalLogin;
 
+use App\Mail\PasswordResetMail;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Random\RandomException;
 
 class AuthenticationService
 {
@@ -39,29 +43,49 @@ class AuthenticationService
             ]);
     }
 
-	public function login(): RedirectResponse
-	{
+    public function login(): RedirectResponse
+    {
         $data = request()->all();
 
-		if (isset($data['email']) && !str_contains($data['email'], '@')) {
-			$data['email'] .= '@codezone.com';
+        if (isset($data['email']) && !str_contains($data['email'], '@')) {
+            $data['email'] .= '@codezone.com';
             request()->merge(['email' => $data['email']]);
-		}
+        }
 
         $credentials = request()->validate([
             'email' => ['required', 'email'],
             'password' => 'required|min:8'
         ]);
 
-		if (auth()->attempt($credentials)) {
+        if (auth()->attempt($credentials)) {
             return redirect()->intended()->with('swal', [
                 'title' => 'Login Successful',
-                'text' => 'Welcome back to CodeZone!',
+                'text' => 'Welcome back!',
                 'icon' => 'success',
             ]);
-		}
+        }
 
         return back()->withErrors(['email' => 'Your credential is incorrect.'])
             ->withInput();
-	}
+    }
+
+    public function resetPassword(User $user): void
+    {
+        $newPassword = substr(str_shuffle(
+            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{};:,.<>?'
+        ), 0, 12);
+
+        $user->update([
+            'password' => Hash::make($newPassword),
+        ]);
+
+        Mail::to($user->email)->send(new PasswordResetMail($user, $newPassword));
+    }
+
+    public function changePassword(string $newPassword): bool
+    {
+        return auth()->user()->update([
+            'password' => Hash::make($newPassword),
+        ]);
+    }
 }

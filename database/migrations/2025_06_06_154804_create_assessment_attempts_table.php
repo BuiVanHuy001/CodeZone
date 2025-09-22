@@ -15,10 +15,13 @@ return new class extends Migration
     {
         Schema::create('assessment_attempts', function (Blueprint $table) {
             $table->id();
-            $table->decimal('total_score', 5, 2)->default(0);
+            $table->decimal('total_score', 5)->default(0);
             $table->boolean('is_passed')->default(false);
 
-	        $table->foreignIdFor(Assessment::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Assessment::class)
+                ->constrained()
+                ->cascadeOnDelete();
+
 	        $table->foreignIdFor(User::class)->constrained();
 
             $table->timestamps();

@@ -3,7 +3,6 @@
 namespace App\Livewire\Client\CourseCreation;
 
 use App\Services\CourseCreation\CreateCourseService;
-use App\Traits\HasErrors;
 use App\Validator\CourseInfoValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -22,21 +21,19 @@ use Throwable;
 
 #[Title('Create New Course')]
 class Index extends Component {
-    use WithFileUploads, HasErrors;
+    use WithFileUploads;
 
     public string $title = '';
     public string $slug = '';
     public string $heading = '';
     public string $description = '';
     public $thumbnail;
-    public ?string $previousImagePath = null;
     public string $price = '0';
     public string $category = '';
     public string $level = '';
     public string $requirements = '';
-    public $requirementsJson = null;
     public string $skills = '';
-    private $skillsJson = null;
+    public string $targetAudiences;
     public array $membersAssigned = [];
     public $startDate = '';
     public $endDate = '';
@@ -86,6 +83,7 @@ class Index extends Component {
                 'category' => $this->category,
                 'level' => $this->level,
                 'requirements' => $this->requirements,
+                'targetAudiences' => $this->targetAudiences,
                 'skills' => $this->skills,
                 'modules' => $this->modules,
                 'startDate' => $this->startDate,
@@ -94,23 +92,14 @@ class Index extends Component {
             ]);
             DB::commit();
 
-            $this->dispatch('swal', [
-                'icon' => 'success',
-                'title' => 'Success',
-                'text' => 'Course created successfully',
-                'showConfirmButton' => true,
-            ]);
+            $this->swal('Course Created', 'Your course has been created successfully.');
 
             $this->dispatch('course-creation-submitted');
             $this->handleRedirect(true);
         } catch (\Exception $e) {
             DB::rollBack();
-            $this->dispatch('swal', [
-                'icon' => 'error',
-                'title' => 'Error',
-                'text' => 'Something went wrong while creating the builders: ' . $e->getMessage(),
-                'showConfirmButton' => true,
-            ]);
+            $this->swalError('Error', 'Something went wrong while creating the builders:', $e->getMessage());
+
             $this->handleRedirect(false);
         }
     }
@@ -120,12 +109,7 @@ class Index extends Component {
         try {
             $this->validate();
         } catch (ValidationException $e) {
-            $this->dispatch('swal', [
-                'icon' => 'error',
-                'title' => 'Validation Failed',
-                'html' => 'Please fix the errors and try again. <br/>' . $this->prepareRenderErrors($e),
-                'showConfirmButton' => true,
-            ]);
+            $this->swalError('Validation Failed', 'Please fix the errors and try again:', $e->getMessage());
 
             throw $e;
         }
@@ -149,16 +133,16 @@ class Index extends Component {
                         'icon' => 'success',
                         'timer' => 3000,
                     ]);
-            } else {
-                return redirect()
-                    ->route('instructor.dashboard.index')
-                    ->with('swal', [
-                        'title' => 'Course Created',
-                        'text' => 'Your course has been created successfully.',
-                        'icon' => 'success',
-                        'timer' => 3000,
-                    ]);
             }
+
+            return redirect()
+                ->route('instructor.dashboard.index')
+                ->with('swal', [
+                    'title' => 'Course Created',
+                    'text' => 'Your course has been created successfully.',
+                    'icon' => 'success',
+                    'timer' => 3000,
+                ]);
         }
         return redirect()->back();
     }

@@ -1,7 +1,7 @@
 <div @class([
-    'accordion-item card',
-    'border border-danger' => $errors->has('modules.required')
-])
+        'accordion-item card',
+        'border border-danger' => $errors->has('modules.required')
+    ])
      class="accordion-item card">
     <h2 class="accordion-header card-header" id="accBuilder">
         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accCollapseBuilder"
@@ -20,11 +20,9 @@
                             <span wire:text="modules[{{ $moduleIndex }}]['title']"></span>
                         </button>
 
-                        <span wire:click="editModule({{ $moduleIndex }})"
-                              class="rbt-course-icon rbt-course-edit"></span>
+                        <span wire:click="editModule({{ $moduleIndex }})" class="rbt-course-icon rbt-course-edit"></span>
 
-                        <span wire:click="destroyModule({{ $moduleIndex }})"
-                              class="rbt-course-icon rbt-course-del"></span>
+                        <span wire:click="destroyModule({{ $moduleIndex }})" class="rbt-course-icon rbt-course-del"></span>
                     </h2>
                     <div id="accCollapseModules{{ $moduleIndex }}" class="accordion-collapse collapse"
                          aria-labelledby="accModules{{ $moduleIndex }}" wire:ignore.self>
@@ -79,7 +77,6 @@
                 </span>
             </button>
         </div>
-
     </div>
 
     <livewire:client.course-creation.components.builders.module.module-create/>

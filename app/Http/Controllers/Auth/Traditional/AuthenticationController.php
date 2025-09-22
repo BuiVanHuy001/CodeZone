@@ -28,11 +28,10 @@ class AuthenticationController
         return $this->authService->login();
     }
 
-    public function showLoginForm(): Factory|Application|View
+    public function showLoginForm(?string $userEmail = null): Factory|Application|View
     {
-	    return view('client.auth.login');
+        return view('client.auth.login', ['email' => $userEmail]);
     }
-
 
     public function studentRegister(StudentRequest $request): RedirectResponse
     {
@@ -42,5 +41,10 @@ class AuthenticationController
     public function logout(): RedirectResponse
     {
         return $this->authService->logout();
+    }
+
+    public function showForgotPasswordForm(): Factory|Application|View
+    {
+        return view('client.auth.forgot-password');
     }
 }

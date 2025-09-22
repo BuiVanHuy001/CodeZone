@@ -32,7 +32,7 @@
                                     <div class="rbt-vertical-nav">
                                         <ul class="rbt-vertical-nav-list-wrapper vertical-nav-menu">
                                             <h3 class="rbt-short-title">Explore by Goal</h3>
-                                        @foreach($categories as $category)
+                                            @foreach($categories as $category)
                                                 <li class="vertical-nav-item active">
                                                     <a href="#tab{{ $loop->iteration }}">{{ $category->name }}</a>
                                                 </li>
@@ -48,7 +48,9 @@
                                                             <div class="vartical-nav-content-menu">
                                                                 <ul class="rbt-vertical-nav-list-wrapper">
                                                                     @forelse($category->children as $categoryChildren)
-                                                                        <li><a href="#">{{ $categoryChildren->name }}</a></li>
+                                                                        <li>
+                                                                            <a href="#">{{ $categoryChildren->name }}</a>
+                                                                        </li>
                                                                     @empty
                                                                         <li><a href="#">No Subcategories</a></li>
                                                                     @endforelse
@@ -99,38 +101,33 @@
                         </li>
 
                         @auth
-                        <li class="access-icon rbt-user-wrapper right-align-dropdown">
-                            <a class="rbt-round-btn" href="#">
-                                <i class="feather-user"></i>
-                            </a>
-                            <div class="rbt-user-menu-list-wrapper">
-                                <div class="inner">
-                                    <div class="rbt-admin-profile">
-                                        <div class="admin-thumbnail">
-                                            <img src="{{ auth()->user()->getAvatarPath() }}" alt="User Images" crossorigin="anonymous">
+                            <li class="access-icon rbt-user-wrapper right-align-dropdown">
+                                <a class="rbt-round-btn" href="#">
+                                    <i class="feather-user"></i>
+                                </a>
+                                <div class="rbt-user-menu-list-wrapper">
+                                    <div class="inner">
+                                        <div class="rbt-admin-profile">
+                                            <div class="admin-thumbnail">
+                                                <img src="{{ auth()->user()->getAvatarPath() }}" alt="User Images" crossorigin="anonymous">
+                                            </div>
+                                            <div class="admin-info">
+                                                <span class="name">{{ auth()->user()->name }}</span>
+                                            </div>
                                         </div>
-                                        <div class="admin-info">
-                                            <span class="name">{{ auth()->user()->name }}</span>
-                                        </div>
+                                        <x-client.header.menu/>
                                     </div>
-                                    <x-client.header.menu/>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
 
-                        <li class="access-icon rbt-mini-cart">
-                            <a class="rbt-cart-sidenav-activation rbt-round-btn" href="#">
-                                <i class="feather-shopping-cart"></i>
-                                <span class="rbt-cart-count">4</span>
-                            </a>
-                        </li>
+                            <livewire:client.shared.cart/>
                         @endauth
 
                         @guest
-                        <li class="access-icon rbt-user-wrapper right-align-dropdown gap-2">
-                            <a class="rbt-btn btn-sm btn-border" href="{{ route('client.login') }}">Login</a>
-                            <a class="rbt-btn btn-sm" href="{{ route('client.register') }}">Register</a>
-                        </li>
+                            <li class="access-icon rbt-user-wrapper right-align-dropdown gap-2">
+                                <a class="rbt-btn btn-sm btn-border" href="{{ route('client.login') }}">Login</a>
+                                <a class="rbt-btn btn-sm" href="{{ route('client.register') }}">Register</a>
+                            </li>
                         @endguest
 
                         <li>
@@ -312,7 +309,6 @@
             </div>
         </div>
     </div>
-
 </header>
+
 <x-client.popup-mobile-menu :$categories/>
-<x-client.cart-side-menu/>

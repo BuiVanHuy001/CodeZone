@@ -11,11 +11,18 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
-class User extends Authenticatable {
+class User extends Authenticatable
+{
     use HasFactory, Notifiable, HasSlug;
 
-    protected $fillable = ['name', 'email', 'password', 'slug', 'avatar_url'];
+    protected $fillable = ['name', 'email', 'password', 'slug', 'avatar_url',
+        'user_id',
+        'gender',
+        'dob',
+        'addition_data'
+    ];
 
     protected $hidden = ['password', 'remember_token',];
 
@@ -124,9 +131,12 @@ class User extends Authenticatable {
     {
         if ($this->isOrganization()) {
             return $this->organizationProfile();
+        } elseif ($this->isStudent()) {
+            return $this->studentProfile();
         } else {
             return $this->instructorProfile();
         }
+
     }
 
     public function orders(): HasMany
@@ -152,8 +162,8 @@ class User extends Authenticatable {
     public function isMemberOfOrganization(string $userId, string $organizationId): bool
     {
         return OrganizationUser::where('organization_id', $organizationId)
-                               ->where('user_id', $userId)
-                               ->exists();
+            ->where('user_id', $userId)
+            ->exists();
     }
 
     public function isEnrolledThisCourse(Course $course): bool
@@ -170,7 +180,17 @@ class User extends Authenticatable {
 
     public function getAvatarPath(): string
     {
-        return $this->avatar_url ?? asset('images/team/temp-avatar.webp');
+        $avatarFileName = $this->avatar_url;
+
+        if (filter_var($avatarFileName, FILTER_VALIDATE_URL)) {
+            return $avatarFileName;
+        }
+
+        if ($avatarFileName && Storage::disk('public')->exists('avatars/' . $avatarFileName)) {
+            return asset('storage/avatars/' . $avatarFileName);
+        }
+
+        return asset('images/team/temp-avatar.webp');
     }
 
     public function getDashboardMenu(): array

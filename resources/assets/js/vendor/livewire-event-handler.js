@@ -12,4 +12,12 @@ document.addEventListener("livewire:init", () => {
         const modal = new bootstrap.Modal(document.getElementById(id));
         modal.show();
     });
+
+    Livewire.on('code-editor-initialize', ({editorId, language, doc}) => {
+        createCodeEditor(editorId, language, doc);
+    })
+
+    Livewire.on('language-changed', ({editorId, language, doc}) => {
+        createCodeEditor(editorId, language, doc);
+    })
 });

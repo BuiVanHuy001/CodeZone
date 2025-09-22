@@ -14,6 +14,7 @@ class MarkdownArea extends Component {
         public string $placeholder = '',
         public string $info = '',
         public bool   $isError = false,
+        public ?string $livewireComponentId = null
     ) {}
 
     public function render(): View|Closure|string

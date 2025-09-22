@@ -45,20 +45,24 @@ class Lesson extends Model
         return $this->title;
     }
 
-    public function getIcon(string $type): string
+    public function getIcon(): string
     {
-        if ($type === 'video' && $this->video_file_name !== '') {
+        if ($this->type === 'video' && $this->video_file_name !== '') {
             return 'video';
-        } elseif ($this->type === 'assessment') {
-            if ($type === 'quiz') {
-                return 'help-circle';
-            } elseif ($type === 'assignment') {
-                return 'book-open';
-            } else {
-                return 'code';
-            }
-        } else {
-            return 'file-text';
         }
+
+        if ($this->type === 'assessment') {
+            if ($this->type === 'quiz') {
+                return 'help-circle';
+            }
+
+            if ($this->type === 'assignment') {
+                return 'book-open';
+            }
+
+            return 'code';
+        }
+
+        return 'file-text';
     }
 }

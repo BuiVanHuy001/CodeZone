@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Assessment;
+use App\Models\AssessmentAttempt;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,7 +12,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('attempt_programmings', function (Blueprint $table) {
-            $table->foreignIdFor(Assessment::class)->primary();
+            $table->id();
+            $table->foreignIdFor(AssessmentAttempt::class);
             $table->text('user_code');
             $table->string('language', 10);
             $table->timestamps();

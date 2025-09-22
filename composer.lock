@@ -68,16 +68,16 @@
         },
         {
             "name": "buivanhuy/sweetalert-laravel",
-            "version": "v1.0.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BuiVanHuy001/sweetalert-laravel.git",
-                "reference": "4dfcfbed31fbe249ee3c9a0f47701d47a8a8b3c0"
+                "reference": "499764fbae551d05320d40627a76fdafbde7897a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BuiVanHuy001/sweetalert-laravel/zipball/4dfcfbed31fbe249ee3c9a0f47701d47a8a8b3c0",
-                "reference": "4dfcfbed31fbe249ee3c9a0f47701d47a8a8b3c0",
+                "url": "https://api.github.com/repos/BuiVanHuy001/sweetalert-laravel/zipball/499764fbae551d05320d40627a76fdafbde7897a",
+                "reference": "499764fbae551d05320d40627a76fdafbde7897a",
                 "shasum": ""
             },
             "require": {
@@ -107,9 +107,9 @@
             "description": "SweetAlert2 integration for Laravel (supports Livewire, Blade)",
             "support": {
                 "issues": "https://github.com/BuiVanHuy001/sweetalert-laravel/issues",
-                "source": "https://github.com/BuiVanHuy001/sweetalert-laravel/tree/v1.0.1"
+                "source": "https://github.com/BuiVanHuy001/sweetalert-laravel/tree/v1.2.0"
             },
-            "time": "2025-08-03T08:59:09+00:00"
+            "time": "2025-09-18T06:46:12+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",

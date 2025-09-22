@@ -33,7 +33,6 @@
             eduJs.onePageNav();
             eduJs.transparentHeader();
             eduJs.categoryMenuHover();
-            eduJs.cartSidenav();
             eduJs.filterClickButton();
             eduJs.selectPicker();
             eduJs.headerTopActivation();
@@ -160,27 +159,6 @@
                     $("#btn_sideNavClose").on("click", function () {
                         $(".side-menus").removeClass("side-menu-active"),
                             $("body").removeClass("offcanvas-menu-active");
-                    });
-            }
-        },
-
-        cartSidenav: function (params) {
-            if ($(".rbt-cart-sidenav-activation").length) {
-                $(".rbt-cart-sidenav-activation").on("click", function () {
-                    $(".rbt-cart-side-menus").addClass("side-menu-active"),
-                        $("body").addClass("cart-sidenav-menu-active");
-                }),
-                    $(".minicart-close-button").on("click", function () {
-                        $(".rbt-cart-side-menus").removeClass("side-menu-active"),
-                            $("body").removeClass("cart-sidenav-menu-active");
-                    }),
-                    $(".side-menus .side-nav .navbar-nav li a").on("click", function () {
-                        $(".rbt-cart-side-menus").removeClass("side-menu-active"),
-                            $("body").removeClass("cart-sidenav-menu-active");
-                    }),
-                    $("#btn_sideNavClose, .close_side_menu").on("click", function () {
-                        $(".rbt-cart-side-menus").removeClass("side-menu-active"),
-                            $("body").removeClass("cart-sidenav-menu-active");
                     });
             }
         },
