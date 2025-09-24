@@ -14,4 +14,4 @@ Route::get('/', [PageController::class, 'homePage'])->name('page.home');
 Route::get('/not-found', [PageController::class, 'notFoundPage'])->name('page.not_found');
 Route::get('/forbidden', [PageController::class, 'forbidden'])->name('page.forbidden');
 Route::get('/maintenance', [PageController::class, 'maintenancePage'])->name('page.maintenance');
-Route::fallback(fn() => redirect()->route('page.not_found'));
+Route::fallback(static fn() => redirect()->route('page.not_found'));

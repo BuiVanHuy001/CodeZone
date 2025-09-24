@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('headline');
-            $table->string('thumbnail_url')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->text('content');
             $table->enum('status', Blog::$STATUSES)->default('pending');
 

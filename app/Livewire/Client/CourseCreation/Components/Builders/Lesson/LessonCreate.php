@@ -25,14 +25,9 @@ class LessonCreate extends Component {
         'duration' => 0,
         'type' => '',
         'assessment' => [],
-        'practice_assessments' => []
     ];
 
     public string|int $moduleIndex;
-
-    public array $existingLessonTitles = [];
-
-    public bool $assessmentValid = false;
 
     public function mount(): void
     {
@@ -66,11 +61,7 @@ class LessonCreate extends Component {
                 ($this->lesson['assessment']['type'] ?? null) === 'quiz' &&
                 $this->assessmentValid === false
             ) {
-                $this->swal(
-                    title: 'Invalid Assessment',
-                    text: 'Please fix assessment errors before adding the lesson.',
-                    icon: 'error',
-                );
+                $this->swalError('Invalid Assessment', 'Please fix assessment errors before adding the lesson.');
                 $this->addError('lesson.assessment', 'Please fix quiz errors before adding the lesson.');
                 return;
             }

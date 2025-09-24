@@ -27,7 +27,7 @@ abstract class SocialLoginService implements SocialLoginStrategyInterface
                 [
                     'name' => $user->getName(),
                     'password' => Hash::make($user->getId()),
-                    'avatar_url' => $user->getAvatar(),
+                    'avatar' => $user->getAvatar(),
                 ]
             );
 
@@ -37,7 +37,7 @@ abstract class SocialLoginService implements SocialLoginStrategyInterface
                     $filename = uniqid('', true) . '.jpg';
                     Storage::disk('public')->put('avatars/' . $filename, $imageContent);
 
-                    $authUser->update(['avatar_url' => $filename]);
+                    $authUser->update(['avatar' => $filename]);
                 }
             }
 

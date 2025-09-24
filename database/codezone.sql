@@ -1,60 +1,60 @@
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
-                            avatar_url, created_at, updated_at)
+                            avatar, created_at, updated_at)
 VALUES (1, 'Bùi Văn Huy', 'bui-van-huy', 'huy@codezone.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG',
         'YJZsNj3Mhl60z7MbKPQJOWq0BRTDolFjjtJmY3926xCW1K0PsO9VegIOFoiw', 'instructor', 'active',
         'https://s120-ava-talk.zadn.vn/e/8/1/7/114/120/3e68e079d838923a991b2084d83f84c7.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
-                            avatar_url, created_at, updated_at)
+                            avatar, created_at, updated_at)
 VALUES (2, 'Nguyễn Hoàng Bảo Quân', 'nguyen-hoang-bao-quan', 'baoquan@zalo.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'UhBpv0OLwa', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/e/b/c/4/14/120/46ccb5a6f617d44a0deb5b7c78cc57dd.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
-                            avatar_url, created_at, updated_at)
+                            avatar, created_at, updated_at)
 VALUES (3, 'Kim Oanh', 'kim-oanh', 'oanh@zalo.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '32ZwAnKIxo', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/f/7/3/9/16/120/cb49ec6773223cb8ec670fa5809cf03c.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
-                            avatar_url, created_at, updated_at)
+                            avatar, created_at, updated_at)
 VALUES (4, 'Nhã Linh', 'nha-linh', 'nhalinh@zalo.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'FFPlAw1Qus', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/c/9/f/9/7/120/38b60c8ee3e418225e8271febf7ca1c2.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
-                            avatar_url, created_at, updated_at)
+                            avatar, created_at, updated_at)
 VALUES (5, 'Bảo Anh', 'bao-anh', 'baoanh@zalo.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'zozbCI3VAl', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/5/5/f/c/9/120/52e2d7d39ba0a7df493334af72c494b4.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
-                            avatar_url, created_at, updated_at)
+                            avatar, created_at, updated_at)
 VALUES (6, 'Thanh Thúy', 'thanh-thuy', 'thanhthuy@zalo.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'JEnfFjxjIV', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/f/d/3/f/11/120/bf87c651c9479056f13f557e64a813e3.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
-                            avatar_url, created_at, updated_at)
+                            avatar, created_at, updated_at)
 VALUES (7, 'Lê Thị Mỹ Hằng', 'le-thi-my-hang', 'lethimyhang@zalo.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'bhyS6IuZDt', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/5/6/f/8/14/120/0c08f5c75cd695f3344a653c392efdf7.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
-                            avatar_url, created_at, updated_at)
+                            avatar, created_at, updated_at)
 VALUES (8, 'Tu Pham', 'tu-pham', 'tu@zalo.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'CBLQxl6CO0', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/f/5/c/e/9/120/02c783d24913b12cb949206f4bbafe31.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
-                            avatar_url, created_at, updated_at)
+                            avatar, created_at, updated_at)
 VALUES (9, 'Rylee John', 'rylee-john', 'berge.thurman@zalo.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '99xmuytpg1', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/a/e/d/7/143/120/c5546614ce8d2fe81cc02eda9fff2d40.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status,
-                            avatar_url, created_at, updated_at)
+                            avatar, created_at, updated_at)
 VALUES (10, 'Cao Đẳng Việt Mỹ', 'cao-dang-viet-my', 'huy423210063@caodangvietmy.edu.vn', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '3H6eUsprpP', 'organization', 'active',
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4wRHjRQ3yRY15tizUO350Rw4oBjdTzhUsg&s',
@@ -156,93 +156,93 @@ Với các cơ sở tại Hà Nội, TP.HCM và Cần Thơ, APC tạo điều ki
             "linkedin": "company/caodangvietmy"
         }', 0, '2025-08-09 14:49:51', '2025-08-11 09:24:57');
 
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (1, 'Web Development', 'web-development', null, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (2, 'Mobile Development', 'mobile-development', null, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (3, 'Data Science & Machine Learning', 'data-science-and-machine-learning', null, null, null, 0, null,
         '2025-06-13 16:15:33', '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (4, 'Game Development', 'game-development', null, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (5, 'DevOps & Cloud', 'devops-and-cloud', null, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (6, 'Frontend Frameworks', 'frontend-frameworks', 1, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (7, 'Backend Frameworks', 'backend-frameworks', 1, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (8, 'Full-Stack Development', 'full-stack-development', 1, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (9, 'Android', 'android', 2, null, null, 0, null, '2025-06-13 16:15:33', '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (10, 'iOS', 'ios', 2, null, null, 0, null, '2025-06-13 16:15:33', '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (11, 'Cross Platform', 'cross-platform', 2, null, null, 0, null, '2025-06-13 16:15:33', '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (12, 'Hybrid', 'hybrid', 2, null, null, 0, null, '2025-06-13 16:15:33', '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (13, 'Data Analysis', 'data-analysis', 3, null, null, 0, null, '2025-06-13 16:15:33', '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (14, 'Machine Learning', 'machine-learning', 3, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (15, 'Deep Learning', 'deep-learning', 3, null, null, 0, null, '2025-06-13 16:15:33', '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (16, 'Data Visualization', 'data-visualization', 3, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (17, 'Natural Language Processing', 'natural-language-processing', 3, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (18, 'Unity', 'unity', 4, null, null, 0, null, '2025-06-13 16:15:33', '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (19, 'Unreal Engine', 'unreal-engine', 4, null, null, 0, null, '2025-06-13 16:15:33', '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (20, '2D Game Development', '2d-game-development', 4, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (21, '3D Game Development', '3d-game-development', 4, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (22, 'Linux & Shell Scripting', 'linux-and-shell-scripting', 5, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (23, 'Docker & Kubernetes', 'docker-and-kubernetes', 5, null, null, 0, null, '2025-06-13 16:15:33',
         '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (24, 'CI/CD', 'cicd', 5, null, null, 0, null, '2025-06-13 16:15:33', '2025-06-13 16:15:33');
-INSERT INTO codezone.categories (id, name, slug, parent_id, icon_url, thumbnail_url, position, deleted_at, created_at,
+INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (25, 'Other', 'other', null, null, null, 0, null, '2025-06-14 20:39:39', '2025-06-14 20:39:41');

@@ -15,11 +15,11 @@ class PaymentController extends Controller
      */
     public function redirect(Order $order, string $method): RedirectResponse
     {
-        return (new PaymentContext('momo'))->createPaymentUrl(['order' => $order,]);
+        return (new PaymentContext($method))->createPaymentUrl(['order' => $order,]);
     }
 
-    public function callback()
+    public function callback(string $method)
     {
-        dd(request()->all());
+        return (new PaymentContext($method))->handleCallback(request()->all());
     }
 }

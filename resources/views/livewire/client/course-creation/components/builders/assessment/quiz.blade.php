@@ -12,7 +12,7 @@
             />
 
             <x-client.dashboard.inputs.markdown-area
-                id="quiz-description{{ !empty($unique) ? '-' . $unique : '' }}"
+                id="quiz-description"
                 label="Quiz Description"
                 info="Markdown is supported"
             />
@@ -223,7 +223,7 @@
 @script
 <script>
     createCodeEditor(
-        'quiz-description{{ !empty($unique) ? '-' . $unique : '' }}-editor',
+        'quiz-description-editor',
         'markdown',
         @json($quiz['description'] ?? '', JSON_THROW_ON_ERROR),
         false,

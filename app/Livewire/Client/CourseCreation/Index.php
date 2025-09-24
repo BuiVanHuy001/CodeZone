@@ -20,7 +20,8 @@ use Livewire\WithFileUploads;
 use Throwable;
 
 #[Title('Create New Course')]
-class Index extends Component {
+class Index extends Component
+{
     use WithFileUploads;
 
     public string $title = '';
@@ -28,6 +29,7 @@ class Index extends Component {
     public string $heading = '';
     public string $description = '';
     public $thumbnail;
+
     public string $price = '0';
     public string $category = '';
     public string $level = '';
@@ -35,20 +37,12 @@ class Index extends Component {
     public string $skills = '';
     public string $targetAudiences;
     public array $membersAssigned = [];
+
     public $startDate = '';
     public $endDate = '';
     public array $modules = [];
+
     public string $activeCourseSettingTab = 'general';
-
-    public function setTab(string $tab): void
-    {
-        $this->activeCourseSettingTab = $tab;
-    }
-
-    public function rules(): array
-    {
-        return CourseInfoValidator::rules();
-    }
 
     public array $messages;
 
@@ -57,50 +51,29 @@ class Index extends Component {
         $this->messages = CourseInfoValidator::$MESSAGES;
     }
 
+    #[Layout('components.layouts.app')]
+    public function render(): Factory|Application|View
+    {
+        return view('livewire.client.course-creation.index');
+    }
+
+    #[On('thumbnail-upload-error')]
+    public function handleThumbnailUploadError(string $message): void
+    {
+        $this->addError('thumbnail', $message);
+    }
+
+    public function rules(): array
+    {
+        return CourseInfoValidator::rules();
+    }
+
     public function updated($propertyName): void
     {
         $this->validateOnly($propertyName);
+
         if ($propertyName === 'title') {
             $this->slug = Str::slug($this->title);
-        }
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function store(CreateCourseService $createCourseService): void
-    {
-        $this->validateFields();
-        DB::beginTransaction();
-        try {
-            $createCourseService->storeCourse([
-                'title' => $this->title,
-                'slug' => $this->slug,
-                'heading' => $this->heading,
-                'description' => $this->description,
-                'thumbnail' => $this->thumbnail,
-                'price' => $this->price,
-                'category' => $this->category,
-                'level' => $this->level,
-                'requirements' => $this->requirements,
-                'targetAudiences' => $this->targetAudiences,
-                'skills' => $this->skills,
-                'modules' => $this->modules,
-                'startDate' => $this->startDate,
-                'endDate' => $this->endDate,
-                'membersAssigned' => $this->membersAssigned,
-            ]);
-            DB::commit();
-
-            $this->swal('Course Created', 'Your course has been created successfully.');
-
-            $this->dispatch('course-creation-submitted');
-            $this->handleRedirect(true);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            $this->swalError('Error', 'Something went wrong while creating the builders:', $e->getMessage());
-
-            $this->handleRedirect(false);
         }
     }
 
@@ -109,16 +82,60 @@ class Index extends Component {
         try {
             $this->validate();
         } catch (ValidationException $e) {
-            $this->swalError('Validation Failed', 'Please fix the errors and try again:', $e->getMessage());
-
+            $this->swalError(
+                'Validation Failed',
+                'Please fix the errors and try again:',
+                $e->getMessage()
+            );
             throw $e;
         }
     }
 
-    #[On('thumbnail-upload-error')]
-    public function handleThumbnailUploadError(string $message): void
+    public function setTab(string $tab): void
     {
-        $this->addError('thumbnail', $message);
+        $this->activeCourseSettingTab = $tab;
+    }
+
+    public function store(CreateCourseService $createCourseService): void
+    {
+        $this->validateFields();
+
+        DB::beginTransaction();
+        try {
+            $createCourseService->storeCourse(
+                auth()->user(),
+                [
+                    'title' => $this->title,
+                    'slug' => $this->slug,
+                    'heading' => $this->heading,
+                    'description' => $this->description,
+                    'thumbnail' => $this->thumbnail,
+                    'price' => $this->price,
+                    'category' => $this->category,
+                    'level' => $this->level,
+                    'requirements' => $this->requirements,
+                    'targetAudiences' => $this->targetAudiences,
+                    'skills' => $this->skills,
+                    'modules' => $this->modules,
+                    'startDate' => $this->startDate,
+                    'endDate' => $this->endDate,
+                    'membersAssigned' => $this->membersAssigned,
+                ]
+            );
+            DB::commit();
+
+            $this->dispatch('course-creation-submitted');
+            $this->handleRedirect(true);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $this->swalError(
+                'Error',
+                'Something went wrong while creating the builders:',
+                $e->getMessage()
+            );
+
+            $this->handleRedirect(false);
+        }
     }
 
     private function handleRedirect(bool $isSuccess): RedirectResponse|Redirector
@@ -144,12 +161,7 @@ class Index extends Component {
                     'timer' => 3000,
                 ]);
         }
-        return redirect()->back();
-    }
 
-    #[Layout('components.layouts.app')]
-    public function render(): Factory|Application|View
-    {
-        return view('livewire.client.course-creation.index');
+        return redirect()->back();
     }
 }

@@ -12,7 +12,7 @@
             />
 
             <x-client.dashboard.inputs.markdown-area
-                id="programming-description{{ !empty($unique) ? '-' . $unique : '' }}"
+                id="programming-description"
                 name="programming.description"
                 label="Problem Description"
                 info="Describe the problem statement, constraints, and examples. Markdown formatting is supported."
@@ -238,7 +238,7 @@
 @script
 <script>
     createCodeEditor(
-        'programming-description{{ !empty($unique) ? '-' . $unique : '' }}-editor',
+        'programming-description-editor',
         'markdown',
         @json($programming['description'] ?? '', JSON_THROW_ON_ERROR),
         false,

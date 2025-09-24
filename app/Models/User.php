@@ -17,11 +17,16 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasSlug;
 
-    protected $fillable = ['name', 'email', 'password', 'slug', 'avatar_url',
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'slug',
         'user_id',
         'gender',
         'dob',
-        'addition_data'
+        'addition_data',
+        'avatar'
     ];
 
     protected $hidden = ['password', 'remember_token',];
@@ -81,6 +86,11 @@ class User extends Authenticatable
     public function progressTracking(): HasMany
     {
         return $this->hasMany(TrackingProgress::class);
+    }
+
+    public function enrollments(): User|HasMany
+    {
+        return $this->hasMany(Enrollment::class, 'user_id');
     }
 
     public function getStatusClassAttribute(): string
@@ -180,7 +190,7 @@ class User extends Authenticatable
 
     public function getAvatarPath(): string
     {
-        $avatarFileName = $this->avatar_url;
+        $avatarFileName = $this->avatar;
 
         if (filter_var($avatarFileName, FILTER_VALIDATE_URL)) {
             return $avatarFileName;

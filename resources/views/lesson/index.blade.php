@@ -43,13 +43,9 @@
                 @elseif($lesson->type === 'document')
                     <x-client.course-learn.lesson-types.document :document-content="$lesson->document"/>
                 @elseif($lesson->type === 'assessment')
-                    <x-client.course-learn.assessment-types :assessment="$lesson->assessments[0]"/>
+                    <x-client.course-learn.assessment-types :assessment="$lesson->assessment"/>
                 @endif
             </div>
-
-            @if (count($lesson->assessments ?? []) > 1 && $lesson->type !== 'assessment')
-                <livewire:client.lesson.components.practice-types.index :practiceExercises="$lesson->assessments"/>
-            @endif
 
             <livewire:client.lesson.components.lesson-navigator :current-lesson="$lesson"/>
         </div>

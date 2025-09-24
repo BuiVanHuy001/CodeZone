@@ -13,6 +13,10 @@ class AssessmentQuestion extends Model
 		'multiple_choice' => 'Multiple Choice',
 	];
 
+    public $casts = [
+        'options' => 'array',
+    ];
+
     public static array $EXPECTED_COLUMNS = [
         'text_of_the_question' => ' Text of the question',
         'question_type' => ' Question type',
@@ -38,15 +42,10 @@ class AssessmentQuestion extends Model
     {
         $answerCount = 0;
         foreach ($this->options as $option) {
-            if ($option->is_correct) {
+            if ($option['is_correct']) {
                 $answerCount++;
             }
         }
         return $answerCount > 1;
     }
-
-	public function options(): hasMany
-	{
-		return $this->hasMany(AssessmentQuestionOptions::class);
-	}
 }

@@ -11,11 +11,11 @@ class OrderItem extends Model
 
     public function course(): BelongsTo
     {
-        return $this->belongsTo(Course::class, 'item_id');
+        return $this->belongsTo(Course::class);
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }

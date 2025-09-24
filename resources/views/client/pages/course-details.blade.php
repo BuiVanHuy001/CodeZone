@@ -327,7 +327,7 @@
                                                 class="feather-clock"></i> 3 days left!</span>
                                         </div>
                                     </div>
-                                    @if(auth()->check() && $course->author->id === auth()->user()->id)
+                                    @if($canAccess)
                                         <div class="buy-now-btn mt--15">
                                             <a class="rbt-btn btn-border icon-hover w-100 d-block text-center" href="{{ route('course.learn', $course->slug) }}">
                                                 <span class="btn-text">Go to course</span>
@@ -355,18 +355,18 @@
                                                 class="rbt-feature-value rbt-badge-5">{{ $course->enrollment_count }}</span>
                                         </li>
                                         <li>
-                                            <span>Lesson</span><span class="rbt-feature-value rbt-badge-5">{{ $course->lesson_count }}</span>
+                                            <span>Lesson: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->lesson_count }}</span>
                                         </li>
                                         <li>
-                                            <span>Level</span><span class="rbt-feature-value rbt-badge-5">{{ ucfirst($course->level) }}</span>
+                                            <span>Level: </span><span class="rbt-feature-value rbt-badge-5">{{ ucfirst($course->level) }}</span>
                                         </li>
                                         @if($course->getQuizCount() > 0)
                                             <li>
-                                                <span>Quiz</span><span class="rbt-feature-value rbt-badge-5">{{ $course->getQuizCount() }}</span>
+                                                <span>Quiz: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->getQuizCount() }}</span>
                                             </li>
                                         @endif
                                         <li>
-                                            <span>Certification</span><span
+                                            <span>Certification: </span><span
                                                 class="rbt-feature-value rbt-badge-5">Yes</span>
                                         </li>
                                     </ul>
@@ -397,8 +397,8 @@
                 <div class="col-lg-6 col-md-6 mt_sm--15">
                     <div class="course-action-bottom-right rbt-single-group">
                         <div class="rbt-single-list rbt-price large-size justify-content-center">
-                            <span class="current-price color-primary">18.750.000₫</span>
-                            <span class="off-price">37.500.000₫</span>
+                            <span class="current-price color-primary">{{ $course->getFormattedPrice() }}</span>
+                            {{--                            <span class="off-price">37.500.000₫</span>--}}
                         </div>
                         <div class="rbt-single-list action-btn">
                             <a class="rbt-btn btn-gradient hover-icon-reverse btn-md" href="#">

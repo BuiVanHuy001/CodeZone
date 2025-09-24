@@ -4,7 +4,7 @@
             <div class="container">
                 <h2 class="title">Shopping Cart</h2>
                 <div class="row">
-                    <p>You have <strong>3 courses</strong> in Cart</p>
+                    <p>You have <strong>{{ count($items) }} courses</strong> in Cart</p>
                     <div class="col-8">
                         <div class="cart-table table-responsive mb--60">
                             <table class="table">
@@ -13,60 +13,25 @@
                                     <th class="pro-thumbnail">Image</th>
                                     <th class="pro-title">Product</th>
                                     <th class="pro-price">Price</th>
-                                    <th class="pro-quantity">Quantity</th>
                                     <th class="pro-subtotal">Total</th>
                                     <th class="pro-remove">Remove</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td class="pro-thumbnail">
-                                        <a href="#"><img src="assets/images/product/1.jpg" alt="Product"></a></td>
-                                    <td class="pro-title"><a href="#">Miracle Morning</a></td>
-                                    <td class="pro-price"><span>$48.00</span></td>
-                                    <td class="pro-quantity">
-                                        <div class="pro-qty"><input type="text" value="1"></div>
-                                    </td>
-                                    <td class="pro-subtotal"><span>$100.00</span></td>
-                                    <td class="pro-remove"><a href="#"><i class="feather-x"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="pro-thumbnail">
-                                        <a href="#"><img src="assets/images/product/7.jpg" alt="Product"></a></td>
-                                    <td class="pro-title"><a href="#">Happy Strong</a></td>
-                                    <td class="pro-price"><span>$100.00</span></td>
-                                    <td class="pro-quantity">
-                                        <div class="pro-qty"><input type="text" value="2"></div>
-                                    </td>
-                                    <td class="pro-subtotal"><span>$120.00</span></td>
-                                    <td class="pro-remove"><a href="#"><i class="feather-x"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="pro-thumbnail">
-                                        <a href="#"><img src="assets/images/product/3.jpg" alt="Product"></a></td>
-                                    <td class="pro-title"><a href="#">Rich Dad Poor Dad</a></td>
-                                    <td class="pro-price"><span>$59.00</span></td>
-                                    <td class="pro-quantity">
-                                        <div class="pro-qty"><input type="text" value="1"></div>
-                                    </td>
-                                    <td class="pro-subtotal"><span>$150.00</span></td>
-                                    <td class="pro-remove"><a href="#"><i class="feather-x"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="pro-thumbnail">
-                                        <a href="#"><img src="assets/images/product/4.jpg" alt="Product"></a></td>
-                                    <td class="pro-title"><a href="#">Momentum Theorem</a></td>
-                                    <td class="pro-price"><span>$250.00</span></td>
-                                    <td class="pro-quantity">
-                                        <div class="pro-qty"><input type="text" value="1"></div>
-                                    </td>
-                                    <td class="pro-subtotal"><span>$270.00</span></td>
-                                    <td class="pro-remove"><a href="#"><i class="feather-x"></i></a>
-                                    </td>
-                                </tr>
+                                @foreach($items as $item)
+                                    <tr>
+                                        <td class="pro-thumbnail">
+                                            <a href="{{ route('page.course_detail', $item['slug']) }}"><img src="{{ $item['thumbnail'] }}" alt="Product"></a>
+                                        </td>
+                                        <td class="pro-title">
+                                            <a href="{{ route('page.course_detail', $item['slug']) }}">{{ $item['title'] }}</a>
+                                        </td>
+                                        <td class="pro-price"><span>{{ $item['price'] }}</span></td>
+                                        <td class="pro-subtotal"><span>{{ $item['price'] }}</span></td>
+                                        <td class="pro-remove"><a href="#"><i class="feather-x"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -80,7 +45,7 @@
                                     </div>
                                     <div class="d-flex justify-content-center gap-3">
                                         <label>
-                                            <input class="radio-input" type="radio" name="engine">
+                                            <input class="radio-input" type="radio" wire:model="paymentMethod" value="momo">
                                             <span class="radio-tile">
                                                 <span class="radio-icon p-2">
                                                     <img src="{{ asset('images/logo/momo.webp') }}" alt="Momo"/>
@@ -89,7 +54,7 @@
                                             </span>
                                         </label>
                                         <label>
-                                            <input checked="" class="radio-input" type="radio" name="engine">
+                                            <input class="radio-input" type="radio" wire:model="paymentMethod" value="vnpay">
                                             <span class="radio-tile">
                                                 <span class="radio-icon p-2">
                                                     <img src="{{ asset('images/logo/vnpay.webp') }}" alt="VNPay"/>
@@ -129,7 +94,7 @@
                                         <p>Discount <span>$00.00</span></p>
                                         <h2>Final Price <span>{{ $totalPrice }}</span></h2>
                                     </div>
-                                    <button class="rbt-btn btn-gradient icon-hover w-100 text-center">
+                                    <button wire:click="checkOut" class="rbt-btn btn-gradient icon-hover w-100 text-center">
                                         <span class="btn-text">Proceed to Checkout</span>
                                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                     </button>

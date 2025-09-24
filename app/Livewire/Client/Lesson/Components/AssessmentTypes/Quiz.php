@@ -24,7 +24,6 @@ class Quiz extends Component
 
     public function mount(): void
     {
-	    $this->quiz = $this->quiz->load('questions.options');
         $this->correctAnswersMap = $this->quiz->questions->mapWithKeys(function ($question) {
 	        if ($question->isMultipleAnswers()) {
 		        return [

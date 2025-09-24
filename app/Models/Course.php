@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Course extends Model
 {
@@ -23,6 +24,12 @@ class Course extends Model
     public static array $STATUSES = ['draft', 'published', 'pending', 'rejected', 'deleted'];
 
     public static array $LEVELS = ['beginner', 'intermediate', 'advanced'];
+
+    protected $casts = [
+        'requirements' => 'array',
+        'skills' => 'array',
+        'target_audiences' => 'array',
+    ];
 
     public function modules(): hasMany
     {
@@ -56,19 +63,19 @@ class Course extends Model
 
     public function getThumbnailPath(): string
     {
-        if ($this->thumbnail_url) {
-            return Storage::url('course/thumbnails/' . $this->thumbnail_url);
+        if ($this->thumbnail) {
+            return Storage::url('course/thumbnails/' . $this->thumbnail);
         }
         return asset('images/others/thumbnail-placeholder.svg');
     }
 
-    public function getFormattedPrice()
+    public function getFormattedPrice(): string
     {
         if ($this->price === 0) {
             return 'Free';
-        } else {
-            return number_format($this->price) . '₫';
         }
+
+        return number_format($this->price) . '₫';
     }
 
     public function getIntroductionVideo(): string
@@ -90,18 +97,30 @@ class Course extends Model
         $quiz_count = 0;
         foreach ($this->modules as $module) {
             foreach ($module->lessons as $lesson) {
-                if ($lesson->type === 'assessment') {
-                    foreach ($lesson->assessments as $assessment) {
-                        if ($assessment->type === 'quiz') {
-                            $quiz_count++;
-                        }
-                    }
+                if (($lesson->type === 'assessment') && $lesson->assessment->type === 'quiz') {
+                    $quiz_count++;
                 }
             }
         }
         return $quiz_count;
     }
-   public function reviews(): hasMany
+
+    public function getFormattedLesson(): string
+    {
+        return $this->lesson_count . ' ' . Str::plural('Lesson', $this->lesson_count);
+    }
+
+    public function getFormattedEnrollment(): string
+    {
+        return $this->enrollments()->count() . ' ' . Str::plural('student', $this->enrollments()->count());
+    }
+
+    public function getFormattedReview(): string
+    {
+        return $this->reviews()->count() . ' ' . Str::plural('review', $this->reviews()->count());
+    }
+
+    public function reviews(): hasMany
     {
         return $this->hasMany(Review::class, with("reviewable_id"));
     }

@@ -23,7 +23,6 @@ class LessonUpdate extends Component {
         'video_file_name' => '',
         'document' => '',
         'assessment' => [],
-        'practice_assessments' => [],
     ];
     public string|int $moduleIndex;
     public string|int $lessonIndex;

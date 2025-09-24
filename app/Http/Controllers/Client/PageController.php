@@ -13,7 +13,10 @@ class PageController extends Controller
 {
     public function homePage(): Factory|Application|View
     {
-        return view('client.pages.homepage');
+        $courses = Course::with('author')
+            ->where('status', 'published')
+            ->get();
+        return view('client.pages.homepage', compact('courses'));
     }
 
     public function notFoundPage(): Factory|Application|View

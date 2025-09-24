@@ -135,7 +135,7 @@ class Members extends Component
                     'password' => Hash::make($member['password']),
                     'role' => 'student',
                     'status' => 'active',
-                    'avatar_url' => $member['avatar_url'],
+                    'avatar' => $member['avatar_url'],
                 ]);
                 $user->studentProfile()->updateOrCreate([
                     'user_id' => $user->id,
