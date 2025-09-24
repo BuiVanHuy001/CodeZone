@@ -29,7 +29,9 @@ class Cart extends Component
 
     public function mount(): void
     {
-        if (auth()->check()) {
+        if (auth()->check() &&
+            auth()->user()->role === 'student'
+        ) {
             $this->cart = $this->cartService->getCart(auth()->user());
             $this->totalPrice = $this->cartService->formatPrice($this->cart->total_price ?? 0);
             $this->items = collect($this->cart?->items);
@@ -75,7 +77,7 @@ class Cart extends Component
         };
     }
 
-    public function checkOut(): Redirector
+    public function viewCart(): Redirector
     {
         return redirect(route('cart.index'));
     }

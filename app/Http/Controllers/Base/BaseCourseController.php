@@ -22,10 +22,8 @@ class BaseCourseController extends Controller
     public function show(Course $course): View|Application|Factory
     {
         $reviews = $course->reviews()->with('user')->latest()->get();
+        $canAccess = $this->courseService->canAccess($course);
 
-        return view('client.pages.course-details', [
-            'course' => $course,
-            'reviews' => $reviews,
-        ]);
+        return view('client.pages.course-details', compact('course', 'reviews', 'canAccess'));
     }
 }

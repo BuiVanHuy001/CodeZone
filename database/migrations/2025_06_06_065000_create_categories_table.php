@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->foreignId('parent_id')->nullable()->constrained('categories');
-            $table->string('icon_url')->nullable();
-            $table->text('thumbnail_url')->nullable();
+            $table->string('icon')->nullable();
+            $table->text('thumbnail')->nullable();
             $table->unsignedTinyInteger('position')->default(0);
 
             $table->softDeletes();

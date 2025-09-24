@@ -22,10 +22,9 @@ class CoursePolicy
         }
 
         if ($user->role === 'student') {
-            return $course->batches()->whereHas('enrollments', function ($q) use ($user) {
-                $q->where('user_id', $user->id);
-            })->exists();
+            return $course->enrollments()->where('user_id', $user->id)->exists();
         }
-        return true;
+
+        return false;
     }
 }

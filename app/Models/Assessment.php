@@ -13,7 +13,6 @@ class Assessment extends Model
 
     public static array $ASSESSMENT_PRACTICE_TYPES = [
 		'quiz' => 'Quiz',
-        'assignment' => 'Assignment',
         'programming' => 'Programming'
 	];
 

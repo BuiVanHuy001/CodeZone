@@ -13,21 +13,21 @@ class VNPayStrategy implements PaymentGateWayInterface
     public function createPaymentUrl(Order|array $order): RedirectResponse
     {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
-        $vnp_TmnCode = Env::get('VNP_TMN_CODE'); //Mã định danh merchant kết nối (Terminal Id)
-        $vnp_HashSecret = Env::get('VNP_HASH_SECRET'); //Secret key
+        $vnp_TmnCode = Env::get('VNP_TMN_CODE');
+        $vnp_HashSecret = Env::get('VNP_HASH_SECRET');
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost/vnpay_php/vnpay_return.php";
+        $vnp_Returnurl = ENV::get('VNPAY_RETURN_URL') . '/vnpay';
         $startTime = date("YmdHis");
         $expire = date('YmdHis', strtotime('+15 minutes', strtotime($startTime)));
 
-        $vnp_TxnRef = rand(1, 10000); //Mã giao dịch thanh toán tham chiếu của merchant
-        $amountVnd = (float)$order->total_price; // 1758000.000
-        $vnp_Amount = (int)round($amountVnd);     // chỉ còn 1758000
+        $vnp_TxnRef = rand(1, 10000);
+        $amountVnd = (float)$order->total_price;
+        $vnp_Amount = (int)round($amountVnd);
         $vnp_Amount *= 100;
-        $vnp_BankCode = 'NCB'; //Mã Ngân hàng thanh toán
+        $vnp_BankCode = 'NCB';
 
-        $vnp_Locale = 'vn'; //Ngôn ngữ chuyển hướng thanh toán
-        $vnp_IpAddr = $_SERVER['REMOTE_ADDR']; //IP Khách hàng thanh toán
+        $vnp_Locale = 'vn';
+        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
 
         $inputData = array(
             "vnp_Version" => "2.1.0",
@@ -73,6 +73,8 @@ class VNPayStrategy implements PaymentGateWayInterface
 
     public function handleCallback(array $data): mixed
     {
+        $resultCode = $data['vnp_ResponseCode'] ?? '';
+        dd($data);
         return $data;
     }
 

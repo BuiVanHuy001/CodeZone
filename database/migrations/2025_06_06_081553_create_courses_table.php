@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('slug')->unique();
             $table->string('heading');
             $table->text('description')->nullable();
-            $table->string('thumbnail_url')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->decimal('price', 13, 3)
                 ->default(0)
                 ->comment('Price in VND (Vietnamese Dong)');

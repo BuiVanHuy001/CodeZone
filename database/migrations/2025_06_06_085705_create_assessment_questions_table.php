@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('content')->nullable();
             $table->enum('type', array_keys(AssessmentQuestion::$TYPES));
             $table->json('options')->nullable();
-            $table->json('correct_answers')->nullable();
             $table->unsignedTinyInteger('position')->default(0);
 
 	        $table->foreignIdFor(Assessment::class)->constrained();

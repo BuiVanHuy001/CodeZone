@@ -33,7 +33,7 @@ class LessonNavigator extends Component
 
     public function nextLesson(): void
     {
-        if ($this->currentLesson->assessments->count() === 1) {
+        if ($this->currentLesson->type === 'assessment') {
             $this->swalWarning('Please complete the assessment before proceeding to the next lesson.');
             return;
         }

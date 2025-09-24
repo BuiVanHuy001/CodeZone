@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Client\CourseCreation\Components\Builders\Lesson\LessonTypes\AssessmentTypes;
+namespace App\Livewire\Client\CourseCreation\Components\Builders\Assessment;
 
 use App\Services\CourseCreation\Builders\AssessmentTypes\ProgrammingService;
 use App\Traits\WithSwal;
@@ -20,7 +20,6 @@ class Programming extends Component {
     public array $programming;
 
     public bool $showDetails = true;
-    public string $unique = '';
 
     public array $messages;
 
@@ -206,8 +205,8 @@ class Programming extends Component {
         $this->validate(ProgrammingPracticeValidator::getRulesNewParam(self::$typeMap));
         foreach ($this->problem['params'] as $param) {
             if (
-                strtolower($param['name']) === strtolower($this->newParam['name']) &&
-                $param['type'] === $this->newParam['type']
+                $param['type'] === $this->newParam['type'] &&
+                strtolower($param['name']) === strtolower($this->newParam['name'])
             ) {
                 $this->addError('newParam.name', 'This parameter name and type already exists.');
                 return;
@@ -338,7 +337,7 @@ class Programming extends Component {
 
     public function render(): Factory|Application|View
     {
-        return view('livewire.client.course-creation.components.builders.lesson.lesson-types.assessment-types.programming', [
+        return view('livewire.client.course-creation.components.builders.assessment.programming', [
             'typeMap' => self::$typeMap,
         ]);
     }

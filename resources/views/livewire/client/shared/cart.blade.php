@@ -55,9 +55,10 @@
                         <p class="price">{{ $totalPrice }}</p>
                     </div>
                     <hr class="mb--0">
+
                     <div class="rbt-minicart-bottom mt--20">
                         <div class="checkout-btn">
-                            <button wire:click="checkOut" class="rbt-btn btn-gradient icon-hover w-100 text-center">
+                            <button wire:click="viewCart" class="rbt-btn btn-gradient icon-hover w-100 text-center">
                                 <span class="btn-text">Go to cart</span>
                                 <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                             </button>

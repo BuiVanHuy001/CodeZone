@@ -13,13 +13,11 @@ class CourseService
 {
     public function getLesson(Course $course): string|null
     {
-        $role = auth()->user()->role;
-        if ($role === 'organization') {
-            return $course->modules->first()->lessons->first()->id;
-        } elseif ($role === 'student') {
+        if (auth()->user()->role === 'student') {
             return $this->getCurrentLessonForStudent($course);
         }
-        return null;
+
+        return $course->modules->first()->lessons->first()->id;
     }
 
     private function getCurrentLessonForStudent(Course $course): ?string
@@ -136,5 +134,16 @@ class CourseService
                 'language' => $language,
             ]);
         }
+    }
+
+    public function canAccess(Course $course): bool
+    {
+        if (auth()->check()) {
+            if ($course->author->id === auth()->user()->id ||
+                $course->enrollments()->where('user_id', auth()->id())->exists()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

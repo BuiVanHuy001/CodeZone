@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\EnsureUserIsStudent;
+use App\Livewire\Client\Cart\Index;
 use App\Livewire\Client\Student\Dashboard\Courses;
 use App\Livewire\Client\Student\Dashboard\Overview;
 use App\Livewire\Client\Student\Dashboard\Profile;
@@ -17,3 +18,5 @@ Route::middleware(EnsureUserIsStudent::class)->prefix('student/dashboard')->grou
     Route::get('/purchases', Purchases::class)->name('student.dashboard.purchases');
     Route::get('/settings', Settings::class)->name('student.dashboard.settings');
 });
+
+Route::get('cart', Index::class)->name('cart.index');

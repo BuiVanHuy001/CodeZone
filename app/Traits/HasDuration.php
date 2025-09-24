@@ -8,7 +8,7 @@ trait HasDuration
 {
 	public function convertDurationToString(): string
 	{
-		if ($this->duration == 0) {
+        if ($this->duration === 0) {
 			return '0min';
 		}
 		$totalSeconds = (int)$this->duration;

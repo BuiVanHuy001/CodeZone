@@ -17,9 +17,6 @@ class Assessment extends Component {
         'type' => '',
     ];
 
-    public string $title = 'Bài Kiểm Tra';
-    public string $unique = 'assessment';
-
     public function updatedAssessmentType(): void
     {
         unset($this->assessment['assessments_questions']);

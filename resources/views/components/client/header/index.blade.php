@@ -15,6 +15,7 @@
                             <img src="{{ asset('images/logo/logo-light.png') }}" alt="Education Logo Images">
                         </a>
                     </div>
+
                     <div class="d-none d-xl-block ms-4">
                         <div class="rbt-category-menu-wrapper">
                             <div class="rbt-category-btn rbt-side-offcanvas-activation">
@@ -120,7 +121,9 @@
                                 </div>
                             </li>
 
-                            <livewire:client.shared.cart/>
+                            @if(auth()->user()->role === 'student')
+                                <livewire:client.shared.cart/>
+                            @endif
                         @endauth
 
                         @guest

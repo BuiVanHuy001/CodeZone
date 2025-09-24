@@ -30,9 +30,9 @@ class Lesson extends Model
         return $this->belongsTo(Module::class);
     }
 
-    public function assessments(): HasMany
+    public function assessment(): HasOne
     {
-        return $this->hasMany(Assessment::class);
+        return $this->hasOne(Assessment::class);
     }
 
     public function trackingProgresses(): HasMany

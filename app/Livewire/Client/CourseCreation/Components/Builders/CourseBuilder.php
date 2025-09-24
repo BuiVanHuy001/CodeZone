@@ -104,12 +104,6 @@ class CourseBuilder extends Component {
         }
     }
 
-    #[On('document-changed')]
-    public function documentChange($document): void
-    {
-        $this->newLesson['document'] = $document;
-    }
-
     public function render(): Factory|Application|View
     {
         return view('livewire.client.course-creation.components.builders.course-builder');

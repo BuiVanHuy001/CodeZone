@@ -14,7 +14,7 @@ class CartService
 {
     public function getCart(User $user): Collection|Order|null
     {
-        return $user->orders()->where('status', 'cart')->latest()->first();
+        return $user->orders()->where('status', 'cart')->with('items')->latest()->first();
     }
 
     public function addItem(?Order $order, int|string $itemId): array
@@ -76,6 +76,7 @@ class CartService
 
     public function checkout(Order $order, string $method = 'momo'): RedirectResponse|Redirector
     {
+        $order->update(['status' => 'processing', 'payment_method' => $method]);
         if ($order->total_price === 0) {
             return $this->processFreeOrder($order);
         }

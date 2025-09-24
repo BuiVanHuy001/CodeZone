@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Livewire\Client\CourseCreation\Components\Builders\Lesson\LessonTypes\AssessmentTypes;
+namespace App\Livewire\Client\CourseCreation\Components\Builders\Assessment;
 
-use App\Models\AssessmentQuestion;
 use App\Services\CourseCreation\Builders\AssessmentTypes\QuizImportService;
 use App\Traits\WithSwal;
 use App\Validator\QuizValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Modelable;
 use Livewire\Component;
@@ -23,7 +21,6 @@ class Quiz extends Component {
     public array $quiz;
 
     public bool $showDetails = true;
-    public string $unique = '';
 
     public array $messages;
 
@@ -169,6 +166,6 @@ class Quiz extends Component {
 
     public function render(): View|Application|Factory
     {
-        return view('livewire.client.course-creation.components.builders.lesson.lesson-types.assessment-types.quiz');
+        return view('livewire.client.course-creation.components.builders.assessment.quiz');
     }
 }

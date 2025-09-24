@@ -14,9 +14,7 @@ class Courses extends Component
 
     public function mount(): void
     {
-        foreach (auth()->user()->batchEnrollments as $enrollment) {
-            $this->courses[] = $enrollment->batch->course;
-        }
+        $this->courses = auth()->user()->enrollments()->with('course')->get()->pluck('course');
     }
 
 	#[Layout('components.layouts.dashboard')]
