@@ -2,11 +2,11 @@
 
 namespace App\Services\CourseLearn;
 
-use App\Models\ProgrammingAssignmentDetails;
+use App\Models\ProgrammingProblems;
 
 class CodeRunnerService
 {
-    public function run(string $language, string $userCode, ProgrammingAssignmentDetails $problem): array
+    public function run(string $language, string $userCode, ProgrammingProblems $problem): array
     {
         $errors = [];
         $isPassed = true;

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasDuration;
+use App\Traits\HasNumberFormat;
 use App\Traits\HasSlug;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,7 @@ use Illuminate\Support\Str;
 
 class Course extends Model
 {
-    use HasFactory, HasSlug, HasUUID, HasDuration;
+    use HasFactory, HasSlug, HasUUID, HasDuration, HasNumberFormat;
 
     protected $guarded = [];
 
@@ -44,6 +45,11 @@ class Course extends Model
     public function author(): belongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function reviews(): hasMany
+    {
+        return $this->hasMany(Review::class, with("reviewable_id"));
     }
 
     public function batches(): hasMany
@@ -119,10 +125,4 @@ class Course extends Model
     {
         return $this->reviews()->count() . ' ' . Str::plural('review', $this->reviews()->count());
     }
-
-    public function reviews(): hasMany
-    {
-        return $this->hasMany(Review::class, with("reviewable_id"));
-    }
-
 }

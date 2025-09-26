@@ -9,7 +9,7 @@ trait HasSlug
 {
     public static function bootHasSlug(): void
     {
-        static::creating(function (Model $model) {
+        static::creating(static function (Model $model) {
             if (empty($model->slug)) {
                 $slug = Str::slug($model->slugSourceField());
                 $originalSlug = $slug;

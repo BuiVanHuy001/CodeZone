@@ -2,7 +2,7 @@
 
 namespace App\Validator;
 
-use App\Models\ProgrammingAssignmentDetails;
+use App\Models\ProgrammingProblems;
 
 class ProgrammingPracticeValidator {
     public static array $MESSAGES = [
@@ -64,7 +64,7 @@ class ProgrammingPracticeValidator {
                 },
             ],
             'problem.return_type' => 'required|in:' . $allowedTypes,
-            'problem.allowed_languages' => 'required|array|min:1|in:' . implode(',', array_keys(ProgrammingAssignmentDetails::$SUPPORTED_LANGUAGES)),
+            'problem.allowed_languages' => 'required|array|min:1|in:' . implode(',', array_keys(ProgrammingProblems::$SUPPORTED_LANGUAGES)),
 
             'problem.params' => [
                 function ($attribute, $value, $fail) {

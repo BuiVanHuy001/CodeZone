@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProgrammingAssignmentDetails extends Model {
+class ProgrammingProblems extends Model
+{
     protected $guarded = [];
 
     public static array $SUPPORTED_LANGUAGES = [

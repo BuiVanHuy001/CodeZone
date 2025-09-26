@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\AssessmentAttempt;
-use App\Models\AssessmentQuestion;
+use App\Models\QuizQuestion;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignIdFor(AssessmentAttempt::class)->primary();
             $table->smallInteger('correct_answers_count')->default(0);
             $table->smallInteger('total_questions_count')->default(0);
-            $table->json('user_answers');
 
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attempt_quizzes');
+        Schema::dropIfExists('quiz_attempts');
     }
 };

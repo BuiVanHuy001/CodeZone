@@ -14,4 +14,3 @@ Route::prefix('course')->group(function () {
     Route::get('{course:slug}/learn/lesson/{id}', [CourseController::class, 'showLesson'])
         ->name('course.learn.lesson');
 });
-

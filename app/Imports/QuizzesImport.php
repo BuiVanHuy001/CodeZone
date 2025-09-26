@@ -3,7 +3,7 @@
 namespace App\Imports;
 
 use AllowDynamicProperties;
-use App\Models\AssessmentQuestion;
+use App\Models\QuizQuestion;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
@@ -28,12 +28,12 @@ class QuizzesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
 
         $headers = array_keys($collection->first()->toArray());
 
-        $required = AssessmentQuestion::$REQUIRED_COLUMNS;
+        $required = QuizQuestion::$REQUIRED_COLUMNS;
 
         $missing = array_diff($required, $headers);
 
         if (!empty($missing)) {
-            $missingLabels = array_map(fn($key) => AssessmentQuestion::$EXPECTED_COLUMNS[$key] ?? $key, $missing);
+            $missingLabels = array_map(fn($key) => QuizQuestion::$EXPECTED_COLUMNS[$key] ?? $key, $missing);
 
             throw new \Exception("File Excel thiếu các cột: " . implode(', ', $missingLabels));
         }
@@ -82,7 +82,7 @@ class QuizzesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
     private function parseQuestionType(string $type): string|null
     {
         if (empty($type)) return null;
-        $key = array_search($type, AssessmentQuestion::$TYPES, true);
+        $key = array_search($type, QuizQuestion::$TYPES, true);
         return $key !== false ? $key : null;
     }
 

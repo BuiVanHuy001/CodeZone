@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class AttemptQuiz extends Model
+class QuizAttempt extends Model
 {
 	protected $primaryKey = 'assessment_attempt_id';
 	public $incrementing = false;

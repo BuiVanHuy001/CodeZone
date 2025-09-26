@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Assessment;
-use App\Models\AssessmentQuestion;
+use App\Models\QuizQuestion;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('assessment_questions', static function (Blueprint $table) {
+        Schema::create('quiz_questions', static function (Blueprint $table) {
             $table->id();
             $table->text('content')->nullable();
-            $table->enum('type', array_keys(AssessmentQuestion::$TYPES));
+            $table->enum('type', array_keys(QuizQuestion::$TYPES));
             $table->json('options')->nullable();
             $table->unsignedTinyInteger('position')->default(0);
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('assessment_questions');
+        Schema::dropIfExists('quiz_questions');
     }
 };

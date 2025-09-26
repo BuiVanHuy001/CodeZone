@@ -16,14 +16,14 @@ class BaseCourseController extends Controller
 
     public function __construct()
     {
-        $this->courseService = new CourseService();
+        $this->courseService = app(CourseService::class);
     }
 
     public function show(Course $course): View|Application|Factory
     {
-        $reviews = $course->reviews()->with('user')->latest()->get();
         $canAccess = $this->courseService->canAccess($course);
 
-        return view('client.pages.course-details', compact('course', 'reviews', 'canAccess'));
+        return view('client.pages.course-details',
+            compact('course', 'canAccess'));
     }
 }
