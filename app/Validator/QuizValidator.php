@@ -2,7 +2,7 @@
 
 namespace App\Validator;
 
-use App\Models\AssessmentQuestion;
+use App\Models\QuizQuestion;
 use Illuminate\Validation\Rule;
 
 class QuizValidator {
@@ -27,7 +27,7 @@ class QuizValidator {
             'quiz.assessments_questions.*.content' => 'required|string',
             'quiz.assessments_questions.*.type' => [
                 'required',
-                Rule::in(array_keys(AssessmentQuestion::$TYPES)),
+                Rule::in(array_keys(QuizQuestion::$TYPES)),
             ],
             'quiz.assessments_questions.*.question_options' => [
                 'required',

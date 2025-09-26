@@ -122,18 +122,18 @@
                                     <div class="col-lg-6">
                                         <div class="{{ $isMultipleChoice ? 'rbt-checkbox-wrapper mb--5' : 'rbt-form-check' }}">
                                             <input
-                                                id="{{ $isMultipleChoice ? "rbt-checkbox-$option->id" : "rbt-radio-{$question->id}-$option->id" }}"
+                                                id="{{ $isMultipleChoice ? "rbt-checkbox-$loop->index" : "rbt-radio-{$question->id}-$loop->index" }}"
                                                 name="{{ $isMultipleChoice ? "answers[{$question->id}][]" : "answers[{$question->id}]" }}"
-                                                wire:click="addAnswers({{ $question->id }}, {{ $option->id }})"
+                                                wire:click="addAnswers({{ $question->id }}, {{ $loop->index }})"
                                                 type="{{ $isMultipleChoice ? 'checkbox' : 'radio' }}"
                                                 class="{{ $isMultipleChoice ? '' : 'form-check-input' }}"
-                                                x-on:change="setAnswer({{ $questionKey + 1 }}, {{ $option->id }})"
+                                                x-on:change="setAnswer({{ $questionKey + 1 }}, {{ $loop->index }})"
                                             >
                                             <label
                                                 class="{{ $isMultipleChoice ? '' : 'form-check-label' }}"
-                                                for="{{ $isMultipleChoice ? "rbt-checkbox-$option->id" : "rbt-radio-{$question->id}-$option->id" }}"
+                                                for="{{ $isMultipleChoice ? "rbt-checkbox-$loop->index" : "rbt-radio-{$question->id}-$loop->index" }}"
                                             >
-                                                {{ $option->content }}
+                                                {{ $option['content'] }}
                                             </label>
                                         </div>
                                     </div>

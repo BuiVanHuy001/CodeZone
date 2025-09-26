@@ -87,7 +87,7 @@
                                 name="quiz.assessments_questions.{{ $questionIndex }}.type"
                                 label="Select your question type"
                                 placeholder="Select Question Type"
-                                :options="\App\Models\AssessmentQuestion::$TYPES"
+                                :options="\App\Models\QuizQuestion::$TYPES"
                                 info="Select the type of question you want to create."
                                 wire:model.lazy="quiz.assessments_questions.{{ $questionIndex }}.type"
                                 :isBoostrapSelect="false"

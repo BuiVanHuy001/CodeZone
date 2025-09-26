@@ -6,9 +6,9 @@
         <div class="row g-5 align-items-center">
             <div class="col-lg-3">
                 <div class="rating-box">
-                    <div class="rating-number">5.0</div>
+                    <div class="rating-number">{{ $course->rating }}</div>
                     <x-client.course-details.reviews.components.star
-                        :starNumber="5"
+                        :starNumber="$course->rating"
                         class="rating"
                     />
                     <span class="sub-title">Course reviews</span>

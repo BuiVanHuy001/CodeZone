@@ -23,7 +23,7 @@ class AssessmentAttempt extends Model
 
     public function attemptQuiz(): hasOne
     {
-        return $this->hasOne(AttemptQuiz::class, 'assessment_attempt_id');
+        return $this->hasOne(QuizAttempt::class, 'assessment_attempt_id');
     }
 
     public function attemptProgrammings(): hasMany

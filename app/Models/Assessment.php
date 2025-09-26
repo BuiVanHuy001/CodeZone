@@ -18,7 +18,7 @@ class Assessment extends Model
 
     public function questions(): HasMany
     {
-        return $this->hasMany(AssessmentQuestion::class);
+        return $this->hasMany(QuizQuestion::class);
     }
 
 	public function lesson(): BelongsTo
@@ -28,7 +28,7 @@ class Assessment extends Model
 
     public function programmingAssigment(): hasOne
     {
-        return $this->hasOne(ProgrammingAssignmentDetails::class);
+        return $this->hasOne(ProgrammingProblems::class);
     }
 
     public function attempts(): hasMany
@@ -38,7 +38,7 @@ class Assessment extends Model
 
 	public function problemDetails(): hasOne
 	{
-		return $this->hasOne(ProgrammingAssignmentDetails::class, 'assessment_id');
+        return $this->hasOne(ProgrammingProblems::class, 'assessment_id');
 	}
 
     public function getUserAttempts($user): array

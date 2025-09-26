@@ -11,7 +11,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('attempt_programmings', static function (Blueprint $table) {
+        Schema::create('programming_attempts', static function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(AssessmentAttempt::class);
             $table->text('user_code');
@@ -25,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('attempt_programmings');
+        Schema::dropIfExists('programming_attempts');
     }
 };

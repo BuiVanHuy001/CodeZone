@@ -120,22 +120,10 @@
                             />
                         @endif
 
-                        @if($course->description)
-                            <div class="rbt-course-feature-box rbt-shadow-box details-wrapper mt--30 has-show-more" id="details">
-                                <div class="row g-5 has-show-more-inner-content">
-                                    <div class="col-12">
-                                        <div class="section-title">
-                                            <h4 class="rbt-title-style-3">Description</h4>
-                                        </div>
-                                        <div class="markdown-body">
-                                            @markdown($course->description)
-                                        </div>
+                        <x-client.course-details.description
+                            :description="$course->description"
+                        />
 
-                                    </div>
-                                </div>
-                                <div class="rbt-show-more-btn">Show all</div>
-                            </div>
-                        @endif
 
                         <x-client.course-details.content
                             :course="$course"
@@ -145,156 +133,15 @@
                             :instructor="$course->author"
                         />
 
-                        <x-client.course-details.reviews.index
-                            :$reviews
-                        />
+                        @if($course->review_count > 1)
+                            <livewire:client.review.index :$course/>
+                        @endif
                     </div>
-                    <div class="related-course mt--60">
-                        <div class="row g-5 align-items-end mb--40">
-                            <div class="col-lg-8 col-md-8 col-12">
-                                <div class="section-title">
-                                    <h4 class="title">More Courses by <strong class="color-primary">Angela</strong>
-                                    </h4>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-12">
-                                <div class="read-more-btn text-start text-md-end">
-                                    <a class="rbt-btn rbt-switch-btn btn-border btn-sm" href="#">
-                                        <span data-text="Xem tất cả Khóa học">View all courses</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-5">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-12" data-sal-delay="150" data-sal="slide-up"
-                                 data-sal-duration="800">
-                                <div class="rbt-card variation-01 rbt-hover">
-                                    <div class="rbt-card-img">
-                                        <a href="">
-                                            <img src="{{ asset('images/course/course-online-01.jpg') }}"
-                                                 alt="Card image">
-                                            <div class="rbt-badge-3 bg-white">
-                                                <span>-40%</span>
-                                                <span>Giảm</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="rbt-card-body">
-                                        <div class="rbt-card-top">
-                                            <div class="rbt-review">
-                                                <div class="rating">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                </div>
-                                                <span class="rating-count"> (15 Đánh giá)</span>
-                                            </div>
-                                            <div class="rbt-bookmark-btn">
-                                                <a class="rbt-round-btn" title="Đánh dấu" href="#"><i
-                                                        class="feather-bookmark"></i></a>
-                                            </div>
-                                        </div>
 
-                                        <h4 class="rbt-card-title"><a href="">React Từ Frontend đến
-                                                Backend</a>
-                                        </h4>
-
-                                        <ul class="rbt-meta">
-                                            <li><i class="feather-book"></i>12 Bài học</li>
-                                            <li><i class="feather-users"></i>50 Học viên</li>
-                                        </ul>
-
-                                        <p class="rbt-card-text">Đây là một sự thật đã được thiết lập từ lâu rằng người
-                                            đọc sẽ bị
-                                            phân tâm.</p>
-                                        <div class="rbt-author-meta mb--10">
-                                            <div class="rbt-avater">
-                                                <a href="#">
-                                                    <img src="{{ asset('images/client/avatar-02.png') }}"
-                                                         alt="Sophia Jaymes">
-                                                </a>
-                                            </div>
-                                            <div class="rbt-author-info">
-                                                Bởi <a href="">Angela</a> Trong <a href="#">Phát
-                                                    triển</a>
-                                            </div>
-                                        </div>
-                                        <div class="rbt-card-bottom">
-                                            <div class="rbt-price">
-                                                <span class="current-price">1.500.000₫</span>
-                                                <span class="off-price">3.000.000₫</span>
-                                            </div>
-                                            <a class="rbt-btn-link" href="">Tìm hiểu
-                                                thêm<i class="feather-arrow-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-12" data-sal-delay="150" data-sal="slide-up"
-                                 data-sal-duration="800">
-                                <div class="rbt-card variation-01 rbt-hover">
-                                    <div class="rbt-card-img">
-                                        <a href="">
-                                            <img src="{{ asset('images/course/course-online-02.jpg') }}"
-                                                 alt="Card image">
-                                        </a>
-                                    </div>
-                                    <div class="rbt-card-body">
-                                        <div class="rbt-card-top">
-                                            <div class="rbt-review">
-                                                <div class="rating">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                </div>
-                                                <span class="rating-count"> (15 Đánh giá)</span>
-                                            </div>
-                                            <div class="rbt-bookmark-btn">
-                                                <a class="rbt-round-btn" title="Đánh dấu" href="#"><i
-                                                        class="feather-bookmark"></i></a>
-                                            </div>
-                                        </div>
-                                        <h4 class="rbt-card-title"><a href="">PHP Từ Cơ bản đến
-                                                Nâng cao</a>
-                                        </h4>
-                                        <ul class="rbt-meta">
-                                            <li><i class="feather-book"></i>12 Bài học</li>
-                                            <li><i class="feather-users"></i>50 Học viên</li>
-                                        </ul>
-
-                                        <p class="rbt-card-text">Đây là một sự thật đã được thiết lập từ lâu rằng người
-                                            đọc
-                                            sẽ bị phân tâm.</p>
-                                        <div class="rbt-author-meta mb--10">
-                                            <div class="rbt-avater">
-                                                <a href="#">
-                                                    <img src="{{ asset('images/client/avatar-02.png') }}"
-                                                         alt="Sophia Jaymes">
-                                                </a>
-                                            </div>
-                                            <div class="rbt-author-info">
-                                                Bởi <a href="">Angela</a> in <a
-                                                    href="#">Development</a>
-                                            </div>
-                                        </div>
-                                        <div class="rbt-card-bottom">
-                                            <div class="rbt-price">
-                                                <span class="current-price">1.500.000₫</span>
-                                                <span class="off-price">3.000.000₫</span>
-                                            </div>
-                                            <a class="rbt-btn-link left-icon" href=""><i
-                                                    class="feather-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <x-client.course-details.related-course
+                        :authorId="$course->author->id"
+                        :currentCourseId="$course->id"
+                    />
                 </div>
 
                 <div class="col-lg-4">

@@ -13,9 +13,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reviews', static function (Blueprint $table) {
-            $table->morphs('reviewable');
+            $table->uuidMorphs('reviewable');
             $table->text('content');
             $table->unsignedTinyInteger('rating');
+            $table->unsignedInteger('like_count')->default(0);
+            $table->unsignedInteger('dislike_count')->default(0);
 
 	        $table->foreignIdFor(User::class)->constrained();
 	        $table->primary(['user_id', 'reviewable_type', 'reviewable_id']);

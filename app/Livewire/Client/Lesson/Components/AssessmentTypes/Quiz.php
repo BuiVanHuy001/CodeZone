@@ -3,8 +3,8 @@
 namespace App\Livewire\Client\Lesson\Components\AssessmentTypes;
 
 use App\Models\AssessmentAttempt;
-use App\Models\AssessmentQuestion;
-use App\Models\AttemptQuiz;
+use App\Models\QuizQuestion;
+use App\Models\QuizAttempt;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -15,78 +15,85 @@ use Livewire\Component;
 class Quiz extends Component
 {
     public $quiz;
-	public bool $isShowPreviousAttempts = true;
+    public bool $isShowPreviousAttempts = true;
     public array $results = [];
     public array $userAnswers = [];
     public array $correctAnswersMap = [];
-
-	public $selectedAttempt;
+    public $selectedAttempt;
 
     public function mount(): void
     {
-        $this->correctAnswersMap = $this->quiz->questions->mapWithKeys(function ($question) {
-	        if ($question->isMultipleAnswers()) {
-		        return [
-			        $question->id => $question->options
-				        ->where('is_correct', true)
-				        ->pluck('id')
-				        ->sort()
-				        ->values()
-				        ->toArray()
-		        ];
+        $this->correctAnswersMap = collect($this->quiz->questions)->mapWithKeys(function ($question) {
+            $options = collect($question->options);
+
+            if ($question->isMultipleAnswers()) {
+                return [
+                    $question->id => $options
+                        ->where('is_correct', true)
+                        ->pluck('id')
+                        ->sort()
+                        ->values()
+                        ->all()
+                ];
             }
 
             return [
-                $question->id => $question->options
+                $question->id => $options
                     ->where('is_correct', true)
                     ->pluck('id')
                     ->first()
             ];
-        })->toArray();
+        })->all();
     }
 
     /**
      * @throws JsonException
      */
     public function showAttemptDetail($attemptId): void
-	{
-		$this->selectedAttempt = AttemptQuiz::where('assessment_attempt_id', $attemptId)->first();
+    {
+        $this->selectedAttempt = QuizAttempt::where('assessment_attempt_id', $attemptId)->first();
+        if (!$this->selectedAttempt) {
+            return;
+        }
+
         $rawAnswers = json_decode($this->selectedAttempt->user_answers, true, 512, JSON_THROW_ON_ERROR);
+        $evaluatedAnswers = [];
 
-		$evaluatedAnswers = [];
+        foreach ($rawAnswers as $questionId => $answer) {
+            $correct = (array)($this->correctAnswersMap[$questionId] ?? []);
+            $given = (array)$answer;
+            $question = QuizQuestion::with('options')->find($questionId);
+            $options = collect($question->options);
 
-		foreach ($rawAnswers as $questionId => $answer) {
-			$correct = (array)($this->correctAnswersMap[$questionId] ?? []);
-			$given = (array)$answer;
-			$question = AssessmentQuestion::where('id', $questionId)->with('options')->first();
+            $answerDetails = [];
+            foreach ($given as $ans) {
+                $option = $options->firstWhere('id', $ans);
+                if ($option) {
+                    $answerDetails[] = [
+                        'value' => $ans,
+                        'question' => $question->content,
+                        'content' => $option['content'] ?? null,
+                        'explanation' => $option['explanation'] ?? '',
+                        'is_correct' => in_array($ans, $correct, true),
+                    ];
+                }
+            }
 
-			$answerDetails = [];
-			foreach ($given as $ans) {
-				$answerDetails[] = [
-					'value' => $ans,
-					'question' => $question->content,
-					'content' => $question->options->where('id', $ans)->first()->content,
-					'explanation' => $question->options->where('id', $ans)->first()->explanation ?? '',
-                    'is_correct' => in_array($ans, $correct, true),
-				];
-			}
+            sort($correct);
+            sort($given);
 
-			sort($correct);
-			sort($given);
-			$isCorrect = ($given === $correct);
-
-			$evaluatedAnswers[$questionId] = [
-				'user_answers' => $answerDetails,
-				'is_correct' => $isCorrect,
-			];
-		}
-		$this->selectedAttempt['answers'] = $evaluatedAnswers;
-		$this->dispatch('open-attempt-modal');
-	}
+            $evaluatedAnswers[$questionId] = [
+                'user_answers' => $answerDetails,
+                'is_correct' => ($given === $correct),
+            ];
+        }
+        $this->selectedAttempt['answers'] = $evaluatedAnswers;
+        $this->dispatch('open-attempt-modal');
+    }
 
     public function addAnswers(int $questionId, int $answerId): void
     {
-        $question = $this->quiz->questions->firstWhere('id', $questionId);
+        $question = collect($this->quiz->questions)->firstWhere('id', $questionId);
 
         if (!$question) {
             return;
@@ -99,14 +106,14 @@ class Quiz extends Component
                 $this->userAnswers[$questionId] = [];
             }
 
-            $currentAnswers = $this->userAnswers[$questionId];
+            $currentAnswers = &$this->userAnswers[$questionId];
 
             if (in_array($answerId, $currentAnswers, true)) {
-                $this->userAnswers[$questionId] = array_diff($currentAnswers, [$answerId]);
+                $currentAnswers = array_diff($currentAnswers, [$answerId]);
             } else {
-                $this->userAnswers[$questionId][] = $answerId;
+                $currentAnswers[] = $answerId;
             }
-            sort($this->userAnswers[$questionId]);
+            sort($currentAnswers);
         }
     }
 
@@ -115,23 +122,25 @@ class Quiz extends Component
      */
     public function quizSubmit(): void
     {
-	    $correctAnswers = $this->countCorrectAnswers();
+        $correctAnswers = $this->countCorrectAnswers();
         $totalQuestions = count($this->quiz->questions);
         $score = $totalQuestions > 0 ? round(($correctAnswers / $totalQuestions) * 10, 2) : 0;
 
-	    $quizAttempt = AssessmentAttempt::create([
+        $assessmentAttempt = AssessmentAttempt::create([
             'assessment_id' => $this->quiz->id,
             'user_id' => auth()->id(),
             'total_score' => $score,
             'is_passed' => $score >= 5,
-        ])->attemptQuiz()->create([
+        ]);
+
+        $quizAttempt = $assessmentAttempt->attemptQuiz()->create([
             'correct_answers_count' => $correctAnswers,
             'total_questions_count' => $totalQuestions,
             'user_answers' => json_encode($this->userAnswers, JSON_THROW_ON_ERROR),
         ]);
 
         $this->results = [
-	        'id' => $quizAttempt->assessment_attempt_id,
+            'id' => $quizAttempt->assessment_attempt_id,
             'correctAnswersCount' => $correctAnswers,
             'score' => $score,
             'result' => $score >= 5 ? 'pass' : 'fail',
@@ -139,28 +148,29 @@ class Quiz extends Component
         ];
     }
 
-	private function countCorrectAnswers(): int
+    private function countCorrectAnswers(): int
     {
-	    $correctAnswer = 0;
-	    foreach ($this->userAnswers as $questionId => $answer) {
-		    if (is_array($answer)) {
-			    sort($answer);
-		    }
-		    if ($answer === $this->correctAnswersMap[$questionId]) {
-			    $correctAnswer++;
-		    }
-	    }
-	    return $correctAnswer;
+        $correctAnswerCount = 0;
+        foreach ($this->userAnswers as $questionId => $answer) {
+            $correctAnswer = $this->correctAnswersMap[$questionId] ?? null;
+            if (is_array($answer)) {
+                sort($answer);
+            }
+            if ($answer === $correctAnswer) {
+                $correctAnswerCount++;
+            }
+        }
+        return $correctAnswerCount;
     }
 
-	public function hidePreviousAttemptsTable(): void
-	{
-		$this->isShowPreviousAttempts = false;
-	}
+    public function hidePreviousAttemptsTable(): void
+    {
+        $this->isShowPreviousAttempts = false;
+    }
 
-	public function showPreviousAttemptsTable(): void
-	{
-		$this->isShowPreviousAttempts = true;
+    public function showPreviousAttemptsTable(): void
+    {
+        $this->isShowPreviousAttempts = true;
     }
 
     public function render(): View|Application|Factory

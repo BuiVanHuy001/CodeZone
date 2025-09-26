@@ -217,7 +217,7 @@
                     label="Allowed Languages"
                     placeholder="e.g., int, string"
                     info="Select the allowed programming languages for this problem."
-                    :options="\App\Models\ProgrammingAssignmentDetails::$SUPPORTED_LANGUAGES"
+                    :options="\App\Models\ProgrammingProblems::$SUPPORTED_LANGUAGES"
                 />
             @endif
 

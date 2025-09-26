@@ -3,8 +3,8 @@
 namespace App\Services\CourseCreation\Factories;
 
 use App\Models\Assessment;
-use App\Models\AssessmentQuestion;
-use App\Models\ProgrammingAssignmentDetails;
+use App\Models\QuizQuestion;
+use App\Models\ProgrammingProblems;
 
 class AssessmentService
 {
@@ -33,7 +33,7 @@ class AssessmentService
     {
         $details = $data['problem_details'];
 
-        ProgrammingAssignmentDetails::create([
+        ProgrammingProblems::create([
             'assessment_id' => $assessmentId,
             'function_name' => $details['function_name'],
             'code_templates' => $details['code_templates'],
@@ -44,7 +44,7 @@ class AssessmentService
     private function storeQuizQuestions(array $questions, int|string $assessmentId): void
     {
         foreach ($questions as $questionIndex => $questionData) {
-            AssessmentQuestion::create([
+            QuizQuestion::create([
                 'content' => $questionData['content'] ?? '',
                 'type' => $questionData['type'],
                 'position' => $questionIndex + 1,

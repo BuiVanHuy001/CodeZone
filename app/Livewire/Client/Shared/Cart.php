@@ -41,22 +41,30 @@ class Cart extends Component
     #[On('add-to-cart')]
     public function addToCart(string $courseId): void
     {
-        $result = $this->cartService->addItem($this->cart, $courseId);
+        if (auth()->check()) {
+            if (auth()->user()->isStudent()) {
+                $result = $this->cartService->addItem($this->cart, $courseId);
 
-        switch ($result['status']) {
-            case 'added_to_cart':
-                $this->refreshCart($result['order']);
-                $this->swal(title: 'Course added to cart');
-                break;
-            case 'already_in_cart':
-                $this->swal(title: 'Course already in cart', icon: 'warning');
-                break;
-            case 'item_not_found':
-                $this->swal(title: 'Course not found', icon: 'warning');
-                break;
-            default:
-                $this->swal(title: 'Something went wrong', text: 'Please try again', icon: 'error');
-                break;
+                switch ($result['status']) {
+                    case 'added_to_cart':
+                        $this->refreshCart($result['order']);
+                        $this->swal(title: 'Course added to cart');
+                        break;
+                    case 'already_in_cart':
+                        $this->swal(title: 'Course already in cart', icon: 'warning');
+                        break;
+                    case 'item_not_found':
+                        $this->swal(title: 'Course not found', icon: 'warning');
+                        break;
+                    default:
+                        $this->swal(title: 'Something went wrong', text: 'Please try again', icon: 'error');
+                        break;
+                }
+            } else {
+                $this->swalError('Only students can add courses to cart');
+            }
+        } else {
+            redirect(route('client.login'))->with('error', 'You need to log in to add courses to cart');
         }
     }
 

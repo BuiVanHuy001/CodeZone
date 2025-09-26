@@ -1,0 +1,34 @@
+<?php
+
+namespace App\View\Components\Client\ShareUi;
+
+use App\Models\Course;
+use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
+
+class CourseCard extends Component
+{
+    /**
+     * Create a new component instance.
+     */
+    public function __construct(
+        public Course $course,
+        public bool   $isEnrolled = false,
+    )
+    {
+        if (auth()->check() && auth()->user()->isStudent()) {
+            $this->isEnrolled = $this->course->enrollments()
+                ->where('user_id', auth()->id())
+                ->exists();
+        }
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View|Closure|string
+    {
+        return view('components.client.share-ui.course-card');
+    }
+}
