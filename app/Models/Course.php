@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -36,6 +37,19 @@ class Course extends Model
     {
         return $this->hasMany(Module::class);
     }
+
+    public function lessons(): HasManyThrough|Course
+    {
+        return $this->hasManyThrough(
+            Lesson::class,
+            Module::class,
+            'course_id',
+            'module_id',
+            'id',
+            'id'
+        );
+    }
+
 
     public function category(): belongsTo
     {

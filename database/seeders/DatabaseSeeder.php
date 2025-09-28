@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,8 +12,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $sql = file_get_contents(database_path('codezone.sql'));
-        \DB::unprepared($sql);
+        DB::beginTransaction();
+        try {
+            $sql = file_get_contents(database_path('codezone.sql'));
+            \DB::unprepared($sql);
+            $this->call(UserSeeder::class);
+            $this->call(CourseSeeder::class);
+            $this->call(EnrollmentSeeder::class);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
-
 }
