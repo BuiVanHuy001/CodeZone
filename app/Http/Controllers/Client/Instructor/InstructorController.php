@@ -14,7 +14,6 @@ class InstructorController extends Controller
             $instructor = $instructorService->prepareDetails($instructor);
             return view('client.pages.instructor-profile', compact('instructor'));
         } catch (\Exception $exception) {
-            dd($exception);
             return view('client.errors.404');
         }
     }
