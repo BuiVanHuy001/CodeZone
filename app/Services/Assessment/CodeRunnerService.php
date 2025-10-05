@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Services\CourseLearn;
+namespace App\Services\Assessment;
 
+use App\Models\Assessment;
+use App\Models\AssessmentAttempt;
+use App\Models\AttemptProgramming;
 use App\Models\ProgrammingProblems;
 
 class CodeRunnerService
@@ -10,7 +13,7 @@ class CodeRunnerService
     {
         $errors = [];
         $isPassed = true;
-        $testCases = json_decode($problem['test_cases'], true);
+        $testCases = json_decode($problem['test_cases'], true, 512, JSON_THROW_ON_ERROR);
 
         foreach ($testCases as $testCase) {
             $expected_output = $testCase['output']['value'];
@@ -37,6 +40,37 @@ class CodeRunnerService
             'isPassed' => $isPassed,
             'errors' => $errors,
         ];
+    }
+
+    public function saveProgrammingAttempt(string|int $total_score, Assessment $assessment, bool $is_passed, string $user_code, string $language): void
+    {
+        $assessmentAttempt = AssessmentAttempt::updateOrCreate(
+            [
+                'user_id' => auth()->id(),
+                'assessment_id' => $assessment->id,
+            ],
+            [
+                'total_score' => $total_score,
+                'is_passed' => $is_passed,
+            ]
+        );
+
+        $existing = AttemptProgramming::where('assessment_attempt_id', $assessmentAttempt->id)
+            ->where('language', $language)
+            ->first();
+
+        if ($existing) {
+            $existing->update([
+                'user_code' => $user_code,
+                'language' => $language,
+            ]);
+        } else {
+            AttemptProgramming::create([
+                'assessment_attempt_id' => $assessmentAttempt->id,
+                'user_code' => $user_code,
+                'language' => $language,
+            ]);
+        }
     }
 
     private function generateFullCodeExecution(string $language, string $functionName, array $testCaseInputs, string $userCode): string

@@ -3,7 +3,7 @@
 namespace App\Livewire\Client\Lesson\Components;
 
 use App\Models\Lesson;
-use App\Services\CourseLearn\CourseService;
+use App\Services\Course\LearningService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -16,11 +16,11 @@ class LessonNavigator extends Component
     public ?string $prevId = '';
     public ?string $nextId = '';
     public Lesson $currentLesson;
-    private CourseService $courseService;
+    private LearningService $courseService;
 
     public function boot(): void
     {
-        $this->courseService = new CourseService();
+        $this->courseService = new LearningService();
         $routes = $this->courseService->getNavigationRoutes(
             $this->currentLesson->module->course,
             $this->currentLesson

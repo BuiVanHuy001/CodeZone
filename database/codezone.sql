@@ -1,6 +1,6 @@
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
                             created_at, updated_at)
-VALUES (1, 'Taylor Otwell', 'taylorotwell', 'huy@codezone.com', '2025-07-16 07:57:22',
+VALUES (1, 'Taylor Otwell', 'taylorotwell', 'taylorotwell@codezone.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG',
         '5pTVG004RfwiXNSD1stvkNOefoYdBHAk2aXCVE6UyVmMZ7ZzODlHrp7sdID6', 'instructor', 'active',
         'https://avatars.githubusercontent.com/u/463230?v=4', '2025-07-16 07:57:22', '2025-07-16 07:57:22');
@@ -1883,7 +1883,7 @@ VALUES ('fdd14bdb-4c55-42ef-b227-30000e7caa2d', 'Download the Required Software\
         '61Jv7TCVekPFucDFdUqP95983E6JyR-metaV2hhdCBpcyBQeXRob24tIFdoeSBQeXRob24gaXMgU28gUG9wdWxhci0gLSBZb3VUdWJlLm1wNA==-.mp4',
         1, 246, false, 'video', null, '6e2dea38-736e-4223-b633-bf368dd11177', '2025-09-25 11:32:00',
         '2025-09-25 11:32:00');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
+INSERT INTO codezone.assessments (id, title, description, type, question_count, lesson_id, created_at, updated_at)
 VALUES (1, 'Two Sum problem', '# Two Sum Problem
 
 ### **Problem Description**
@@ -1904,7 +1904,7 @@ Given an array (or list) of integers and a single integer `target`.
 
 This problem can be solved in a number of ways, from a straightforward brute-force approach to a more efficient solution that leverages data structures like a hash map.',
         'programming', 1, '58db726e-c9ec-4b64-8cd0-046da3230f9b', '2025-09-25 08:56:48', '2025-09-25 08:56:48');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
+INSERT INTO codezone.assessments (id, title, description, type, question_count, lesson_id, created_at, updated_at)
 VALUES (2, 'Programming Exercise: Pair with a Given Difference', 'Given a non-empty array (or list) of integers and an integer `k`.
 * **Task:** Find a pair of two numbers in the array whose difference equals `k`.
 * **Output:** Return `True` if such a pair exists, otherwise return `False`.
@@ -1941,7 +1941,7 @@ VALUES (2, 'Programming Exercise: Pair with a Given Difference', 'Given a non-em
 
 Would you like me to provide a hint on how to approach this problem or a full coding solution in your preferred programming language?',
         'programming', 1, '13dedd43-3e26-450a-a1b3-5854dc2682ad', '2025-09-25 08:56:48', '2025-09-25 08:56:48');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
+INSERT INTO codezone.assessments (id, title, description, type, question_count, lesson_id, created_at, updated_at)
 VALUES (3, 'Python Fundamentals: Are You Ready to Code?', 'Ready to test your knowledge of Python basics? This quiz is designed for anyone who has just started their coding journey. It covers the fundamental concepts you need to build a solid foundation in Python, from syntax and control flow to data structures.
 
 Whether you\'ve just finished a beginner\'s course or are self-studying, this quick quiz will help you identify areas you\'ve mastered and pinpoint topics that might need a little more practice. It\'s a fun and fast way to check your understanding and get ready for more advanced topics.
@@ -2111,7 +2111,7 @@ What is the purpose of the `map()` function in Python?
 * **Incorrect Answer C:** Sorting is done with the `sorted()` function or the `.sort()` method.
 * **Incorrect Answer D:** Dictionaries can be combined in several ways, but `map()` is not used for this purpose.
 ', 'quiz', 10, '07e3d492-525c-4154-ace4-443335ef0ec2', '2025-09-25 08:56:48', '2025-09-25 08:56:48');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
+INSERT INTO codezone.assessments (id, title, description, type, question_count, lesson_id, created_at, updated_at)
 VALUES (4, 'Python Fundamentals: The Ultimate Quiz', 'Ready to put your Python skills to the test? This comprehensive quiz will challenge your understanding of core concepts, from data structures and control flow to functions and mutability. Whether you\'re a beginner solidifying your knowledge or a developer looking for a quick refresh, this quiz is designed to help you pinpoint areas of strength and opportunities for growth.
 
 By taking this quiz, you will:
@@ -2122,7 +2122,7 @@ By taking this quiz, you will:
 
 Are you ready to prove your Python proficiency?', 'quiz', 10, '0dd3c19e-b0be-49a7-a3bf-9a4cd8d41f3b',
         '2025-09-25 08:56:48', '2025-09-25 08:56:48');
-INSERT INTO codezone.assessments (id, title, description, type, questions_count, lesson_id, created_at, updated_at)
+INSERT INTO codezone.assessments (id, title, description, type, question_count, lesson_id, created_at, updated_at)
 VALUES (5, 'Quiz Kiến Thức Docker Cơ Bản – Kiểm Tra Hiểu Biết Của Bạn về Docker 2025', 'Bài quiz này giúp bạn đánh giá kiến thức cơ bản về Docker sau khi hoàn thành các module đầu tiên của khóa học **“Khóa học Docker Hoàn Chỉnh 2025: Học Docker Từ Con Số 0”**.
 Bạn sẽ gặp các câu hỏi về Docker Image, Container, Docker Engine, Docker Registry, Docker Volume, Docker Compose và các lệnh cơ bản.
 

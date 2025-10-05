@@ -3,8 +3,8 @@
 namespace App\Livewire\Client\Lesson\Components\AssessmentTypes;
 
 use App\Models\AssessmentAttempt;
-use App\Services\CourseLearn\CodeRunnerService;
-use App\Services\CourseLearn\CourseService;
+use App\Services\Assessment\CodeRunnerService;
+use App\Services\Course\LearningService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -79,7 +79,7 @@ class Programming extends Component
         $this->userCode = $code;
     }
 
-    public function submitCode(CodeRunnerService $codeRunnerService, CourseService $courseService): void
+    public function submitCode(CodeRunnerService $codeRunnerService, LearningService $courseService): void
     {
         $this->reset('executionErrors');
         if ($this->userCode !== $this->template && $this->userCode) {
@@ -88,7 +88,7 @@ class Programming extends Component
                 $this->userCode,
                 $this->problem->problemDetails
             );
-            $courseService->saveProgrammingAttempt(
+            $codeRunnerService->saveProgrammingAttempt(
                 total_score: $result['isPassed'] ? 10 : 0,
                 assessment: $this->problem,
                 is_passed: $result['isPassed'],
@@ -97,7 +97,7 @@ class Programming extends Component
             );
 
             if ($result['isPassed']) {
-                $course = $this->problem->lesson->module->course;
+                $course = $this->problem->lesson->course;
                 $courseService->markLessonComplete($this->problem->lesson_id);
                 $this->redirect(route('course.learn.lesson', [
                     'course' => $course->slug,

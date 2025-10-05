@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Client\CourseCreation;
 
-use App\Services\CourseCreation\CreateCourseService;
+use App\Services\Course\ManagementService;
 use App\Validator\CourseInfoValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -17,7 +17,6 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
-use Throwable;
 
 #[Title('Create New Course')]
 class Index extends Component
@@ -96,13 +95,13 @@ class Index extends Component
         $this->activeCourseSettingTab = $tab;
     }
 
-    public function store(CreateCourseService $createCourseService): void
+    public function store(ManagementService $managementService): void
     {
         $this->validateFields();
 
         DB::beginTransaction();
         try {
-            $createCourseService->storeCourse(
+            $managementService->create(
                 auth()->user(),
                 [
                     'title' => $this->title,

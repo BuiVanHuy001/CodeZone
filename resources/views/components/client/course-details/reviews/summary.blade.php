@@ -11,35 +11,17 @@
                         :starNumber="$course->rating"
                         class="rating"
                     />
-                    <span class="sub-title">Course reviews</span>
+                    <span class="sub-title">Rating</span>
                 </div>
             </div>
             <div class="col-lg-9">
                 <div class="review-wrapper">
-                    <x-client.course-details.reviews.components.progress-bar
-                        starNumber="5"
-                        percent="63"
-                    />
-
-                    <x-client.course-details.reviews.components.progress-bar
-                        starNumber="4"
-                        percent="29"
-                    />
-
-                    <x-client.course-details.reviews.components.progress-bar
-                        starNumber="3"
-                        percent="6"
-                    />
-
-                    <x-client.course-details.reviews.components.progress-bar
-                        starNumber="2"
-                        percent="1"
-                    />
-
-                    <x-client.course-details.reviews.components.progress-bar
-                        starNumber="1"
-                        percent="1"
-                    />
+                    @for($star = 5; $star >= 1; $star--)
+                        <x-client.course-details.reviews.components.progress-bar
+                            :starNumber="$star"
+                            :percent="round($percentages[$star], 1)"
+                        />
+                    @endfor
                 </div>
             </div>
         </div>

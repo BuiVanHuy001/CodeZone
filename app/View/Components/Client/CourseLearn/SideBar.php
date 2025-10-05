@@ -18,7 +18,6 @@ class SideBar extends Component
         public string           $courseSlug,
     )
     {
-        //
     }
 
     /**

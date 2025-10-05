@@ -1,4 +1,4 @@
-@if($relatedCourses)
+@if(count($relatedCourses) > 0)
     <div class="related-course mt--60">
         <div class="row g-5 align-items-end mb--40">
             <div class="col-lg-8 col-md-8 col-12">
@@ -10,7 +10,7 @@
             <div class="col-lg-4 col-md-4 col-12">
                 <div class="read-more-btn text-start text-md-end">
                     <a class="rbt-btn rbt-switch-btn btn-border btn-sm" href="#">
-                        <span data-text="Xem tất cả Khóa học">View all courses</span>
+                        <span data-text="View all courses">View all courses</span>
                     </a>
                 </div>
             </div>

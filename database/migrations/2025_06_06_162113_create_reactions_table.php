@@ -14,12 +14,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reactions', static function (Blueprint $table) {
+            $table->id();
             $table->morphs('reactable');
             $table->enum('action', Reaction::$ACTIONS);
             $table->timestamps();
 
 	        $table->foreignIdFor(User::class)->constrained();
-	        $table->primary(['user_id', 'reactable_type', 'reactable_id']);
         });
     }
 

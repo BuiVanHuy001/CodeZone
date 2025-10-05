@@ -25,8 +25,14 @@ class EnrollmentSeeder extends Seeder
 
         $courses = Course::all();
 
+        $goodCourses = $courses->random(8);
+        $badCourses = $courses->diff($goodCourses)->random(6);
+
+        $reviewSeeder = new ReviewSeeder();
+
         foreach ($students as $student) {
-            $enrolledCourses = $courses->random(random_int(1, 5));
+            $enrolledCourses = $courses->random(random_int(0, 30));
+
             $order = Order::create([
                 'total_price' => $enrolledCourses->sum('price'),
                 'status' => 'completed',
@@ -40,27 +46,49 @@ class EnrollmentSeeder extends Seeder
                     'course_id' => $course->id,
                 ]);
                 $status = fake()->randomElement(array_keys(Enrollment::$STATUSES));
-                $student->enrollments()->create([
-                    'course_id' => $course->id,
-                    'status' => $status,
-                ]);
+                $student->enrollments()->updateOrCreate(
+                    ['course_id' => $course->id, 'user_id' => $student->id],
+                    ['status' => $status]
+                );
 
                 $this->generateProgressTracking($status, $course, $student->id);
 
-                $isReviewed = fake()->boolean;
-                if ($isReviewed) {
-                    $this->call(
-                        class: ReviewSeeder::class,
-                        parameters: ['userId' => $student->id, 'course' => $course]
-                    );
+                if ($goodCourses->contains($course)) {
+                    $rating = random_int(4, 5);
+                } elseif ($badCourses->contains($course)) {
+                    $rating = random_int(1, 3);
+                } else {
+                    $rating = random_int(1, 5);
+                }
+
+                $isReviewedCourse = fake()->boolean(60);
+                if ($isReviewedCourse) {
+                    $reviewSeeder->createReview($student->id, $course, $rating);
+                }
+
+                $isReviewInstructor = fake()->boolean(40);
+                if ($isReviewInstructor) {
+                    $instructorRating = random_int(3, 5);
+                    $reviewSeeder->createReview($student->id, $course->author, $instructorRating);
                 }
             }
         }
 
         foreach ($courses as $course) {
             $course->update([
-                'rating' => $course->reviews()->avg('rating') ?? 0,
+                'rating' => round($course->reviews()->avg('rating') ?? 0, 1),
+                'enrollment_count' => $course->enrollments()->count(),
+                'review_count' => $course->reviews()->count(),
             ]);
+        }
+
+        $instructors = User::where('role', 'instructor')->get();
+        foreach ($instructors as $instructor) {
+            if ($instructor->instructorProfile) {
+                $instructor->instructorProfile->update([
+                    'rating' => round($instructor->reviews()->avg('rating') ?? 0, 1),
+                ]);
+            }
         }
     }
 

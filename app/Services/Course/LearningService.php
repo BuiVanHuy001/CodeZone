@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\CourseLearn;
+namespace App\Services\Course;
 
 use App\Models\Assessment;
 use App\Models\AssessmentAttempt;
@@ -9,7 +9,7 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\TrackingProgress;
 
-class CourseService
+class LearningService
 {
     public function getLesson(Course $course): string|null
     {
@@ -54,25 +54,84 @@ class CourseService
     {
         $prevId = $this->getAdjacentLessonId($course, $currentLesson->id, 'previous');
         $nextId = $this->getAdjacentLessonId($course, $currentLesson->id);
+        $isLastLesson = $this->isLastLesson($course, $currentLesson->id);
+        $allCompleted = $nextId === null && $this->areAllLessonsCompleted($course);
+
+        $nextRoute = null;
+        if ($nextId) {
+            $nextRoute = route('course.learn.lesson', ['slug' => $course->slug, 'id' => $nextId]);
+        } elseif ($isLastLesson && $allCompleted) {
+            $nextRoute = route('course.learn.lesson', ['slug' => $course->slug, 'id' => $currentLesson->id, 'completed' => 1]);
+        }
 
         return [
-            'prev' => $prevId ? route('course.learn.lesson', ['course' => $course->slug, 'id' => $prevId]) : null,
-            'next' => $nextId ? route('course.learn.lesson', ['course' => $course->slug, 'id' => $nextId]) : null,
+            'prev' => $prevId ? route('course.learn.lesson', ['slug' => $course->slug, 'id' => $prevId]) : null,
+            'next' => $nextRoute,
             'prevId' => $prevId,
             'nextId' => $nextId,
+            'isLastLesson' => $isLastLesson,
+            'allLessonsCompleted' => $allCompleted,
         ];
+    }
+
+    private function isLastLesson(Course $course, string $lessonId): bool
+    {
+        $lessons = $this->getOrderedLessons($course);
+        $lastLesson = $lessons->last();
+
+        return $lastLesson && (string)$lastLesson->id === $lessonId;
+    }
+
+    private function areAllLessonsCompleted(Course $course): bool
+    {
+        $userId = auth()->id();
+        $lessons = $this->getOrderedLessons($course);
+        $lessonIds = $lessons->pluck('id')->toArray();
+
+        $completedCount = TrackingProgress::where('user_id', $userId)
+            ->whereIn('lesson_id', $lessonIds)
+            ->where('is_completed', true)
+            ->count();
+
+        return $completedCount === count($lessonIds);
     }
 
     public function getAdjacentLessonId(Course $course, string $currentLessonId, string $direction = 'next'): ?string
     {
         $lessons = $this->getOrderedLessons($course);
-
         $index = $lessons->search(fn($l) => (string)$l->id === $currentLessonId);
         if ($index === false) {
-            return null;
+            return $lessons->first()->id;
         }
+
         $adjIndex = $direction === 'next' ? $index + 1 : $index - 1;
-        return $lessons->get($adjIndex)?->id ?? null;
+
+        if ($direction === 'next' && $adjIndex >= $lessons->count()) {
+            return $this->handleLastLessonNavigation($lessons);
+        }
+
+        return $lessons->get($adjIndex)?->id ?? $lessons->first()->id;
+    }
+
+    private function handleLastLessonNavigation($lessons): ?string
+    {
+        $userId = auth()->id();
+
+        $lessonIds = $lessons->pluck('id')->toArray();
+
+        $completedLessonIds = TrackingProgress::where('user_id', $userId)
+            ->whereIn('lesson_id', $lessonIds)
+            ->where('is_completed', true)
+            ->pluck('lesson_id')
+            ->toArray();
+
+        foreach ($lessonIds as $lessonId) {
+            if (!in_array($lessonId, $completedLessonIds)) {
+                return $lessonId;
+            }
+        }
+
+        return $lessons->first()->id;
     }
 
     private function getOrderedLessons(Course $course)
@@ -103,47 +162,5 @@ class CourseService
             'lesson_id' => $lessonId,
             'is_completed' => true,
         ]);
-    }
-
-    public function saveProgrammingAttempt(string|int $total_score, Assessment $assessment, bool $is_passed, string $user_code, string $language): void
-    {
-        $assessmentAttempt = AssessmentAttempt::updateOrCreate(
-            [
-                'user_id' => auth()->id(),
-                'assessment_id' => $assessment->id,
-            ],
-            [
-                'total_score' => $total_score,
-                'is_passed' => $is_passed,
-            ]
-        );
-
-        $existing = AttemptProgramming::where('assessment_attempt_id', $assessmentAttempt->id)
-            ->where('language', $language)
-            ->first();
-
-        if ($existing) {
-            $existing->update([
-                'user_code' => $user_code,
-                'language' => $language,
-            ]);
-        } else {
-            AttemptProgramming::create([
-                'assessment_attempt_id' => $assessmentAttempt->id,
-                'user_code' => $user_code,
-                'language' => $language,
-            ]);
-        }
-    }
-
-    public function canAccess(Course $course): bool
-    {
-        if (auth()->check()) {
-            if ($course->author->id === auth()->user()->id ||
-                $course->enrollments()->where('user_id', auth()->id())->exists()) {
-                return true;
-            }
-        }
-        return false;
     }
 }

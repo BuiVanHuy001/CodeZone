@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\CourseCreation\Factories;
+namespace App\Services\Course\Create\Factories;
 
 use App\Models\Assessment;
-use App\Models\QuizQuestion;
 use App\Models\ProgrammingProblems;
+use App\Models\QuizQuestion;
 
 class AssessmentService
 {
@@ -19,7 +19,7 @@ class AssessmentService
             'description' => $data['description'],
             'type' => $data['type'],
             'lesson_id' => $lessonId,
-            'questions_count' => $questionsCount,
+            'question_count' => $questionsCount,
         ]);
 
         match ($assessment->type) {

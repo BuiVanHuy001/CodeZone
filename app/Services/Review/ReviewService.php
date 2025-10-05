@@ -5,6 +5,7 @@ namespace App\Services\Review;
 use App\Models\Course;
 use App\Models\Review;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -13,7 +14,7 @@ class ReviewService
     /**
      * @throws Throwable
      */
-    public function store(User $user, string|int $courseId, int $rating, string $content): void
+    public function store(User $user, Model $model, int $rating, string $content): void
     {
         DB::beginTransaction();
         try {
@@ -21,10 +22,10 @@ class ReviewService
                 'user_id' => $user->id,
                 'rating' => $rating,
                 'content' => $content,
-                'reviewable_type' => 'App\Models\Course',
-                'reviewable_id' => $courseId,
+                'reviewable_type' => $model->getMorphClass(),
+                'reviewable_id' => $model->getKey(),
             ]);
-            $this->updateCourseAverageRating($courseId, $rating);
+            $this->updateCourseAverageRating($model, $rating);
             DB::commit();
         } catch (Throwable $exception) {
             DB::rollBack();
@@ -32,15 +33,21 @@ class ReviewService
         }
     }
 
-    private function updateCourseAverageRating(string|int $courseId, int $rating): void
+    private function updateCourseAverageRating(Model $model, int $rating): void
     {
-        $course = Course::find($courseId);
-        $course?->update([
-            'rating' => $this->calculateRating(
-                $course->rating,
-                $course->review_count,
-                $rating),
-            'review_count' => $course->review_count + 1,
+        if ($model instanceof Course) {
+            $currentRating = $model->rating;
+            $currentCount = $model->review_count;
+        } elseif ($model instanceof User && $model->isInstructor()) {
+            $currentRating = $model->instructorProfile->rating;
+            $currentCount = $model->instructorProfile->review_count;
+        } else {
+            return;
+        }
+
+        $model->update([
+            'rating' => $this->calculateRating($currentRating, $currentCount, $rating),
+            'review_count' => $currentCount,
         ]);
     }
 

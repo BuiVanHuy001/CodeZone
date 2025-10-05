@@ -8,7 +8,7 @@
                 <div class="rbt-profile-content b2">Registration Date</div>
             </div>
             <div class="col-lg-8 col-md-8">
-                <div class="rbt-profile-content b2">{{ auth()->user()->created_at->diffForHumans()  }}</div>
+                <div class="rbt-profile-content b2">{{ auth()->user()->created_at->diffForHumans() }}</div>
             </div>
         </div>
 

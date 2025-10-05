@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Services\CourseCreation;
+namespace App\Services\Course\Create;
 
 use App\Models\Batch;
 use App\Models\BatchEnrollments;
 use App\Models\Course;
 use App\Models\User;
-use App\Services\CourseCreation\Factories\ModuleService;
+use App\Services\Course\Create\Factories\ModuleService;
 
-readonly class CreateCourseService
+readonly class CreateService
 {
     public function __construct(
         private ModuleService $moduleService,

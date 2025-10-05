@@ -10,11 +10,11 @@
                 <div class="col-lg-8">
                     <div class="content text-start">
                         <ul class="page-list">
-                            <li class="rbt-breadcrumb-item"><a href="">Home</a></li>
+                            <li class="rbt-breadcrumb-item"><a href="{{ route('page.home') }}">Home</a></li>
                             <li>
                                 <div class="icon-right"><i class="feather-chevron-right"></i></div>
                             </li>
-                            <li class="rbt-breadcrumb-item active">Web developer</li>
+                            <li class="rbt-breadcrumb-item active">{{ $course->category_name }}</li>
                         </ul>
                         <h1 class="title">{{ $course->title }}</h1>
                         <p class="description">{{ $course->heading }}</p>
@@ -29,39 +29,36 @@
                                 </span>
                             </div>
 
-                            <div class="feature-sin rating">
-                                <a href="#">{{ $course->rating }}</a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                            </div>
+                            <x-client.course-details.reviews.components.star
+                                :starNumber="$course->rating"
+                                class="feature-sin rating"
+                            />
 
                             <div class="feature-sin total-rating">
-                                <a class="rbt-badge-4" href="#">{{ $course->review_count }} rating</a>
+                                <span class="rbt-badge-4" href="#">{{ $course->review_count_text }}</span>
                             </div>
 
                             <div class="feature-sin total-student">
-                                <span>{{ $course->enrollment_count }} {{ \Illuminate\Support\Str::plural('student', $course->enrollment_count) }}</span>
+                                <span>{{ $course->enrollment_count_text }}</span>
                             </div>
 
                         </div>
 
                         <div class="rbt-author-meta mb--20">
                             <div class="rbt-avater">
-                                <a href="#">
-                                    <img src="{{ $course->author->getAvatarPath() }}" alt="Instructor avatar">
+                                <a href="{{ $course->authorInfo['profile_url'] }}">
+                                    <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor avatar">
                                 </a>
                             </div>
                             <div class="rbt-author-info">
-                                By <a href="">{{ $course->author->name }}</a> in
-                                <a href="#">{{ $course->category->name }}</a>
+                                By
+                                <a href="{{ $course->authorInfo['profile_url'] }}">{{ $course->authorInfo['name'] }}</a>
+                                in <a href="#">{{ $course->category_name }}</a>
                             </div>
                         </div>
 
                         <ul class="rbt-meta">
-                            <li><i class="feather-calendar"></i>Last updates {{ $course->updated_at->diffForHumans() }}
+                            <li><i class="feather-calendar"></i>Last updates {{ $course->updated_at_human }}
                             </li>
                             <li><i class="feather-globe"></i>English</li>
                             <li><i class="feather-award"></i>Certification</li>
@@ -120,26 +117,26 @@
                             />
                         @endif
 
-                        <x-client.course-details.description
-                            :description="$course->description"
-                        />
+                        <x-client.course-details.description :description="$course->description"/>
 
+                        <x-client.course-details.content :course="$course"/>
 
-                        <x-client.course-details.content
-                            :course="$course"
-                        />
-
-                        <x-client.course-details.instructor
-                            :instructor="$course->author"
-                        />
+                        <x-client.course-details.instructor :instructor="$course->author"/>
 
                         @if($course->review_count > 1)
-                            <livewire:client.review.index :$course/>
+                            <x-client.course-details.reviews.summary
+                                :$course
+                                :reviews="$course->reviews"
+                            />
+                            <livewire:client.review.index
+                                :model="$course"
+                                :reviews="$course->reviews"
+                            />
                         @endif
                     </div>
 
                     <x-client.course-details.related-course
-                        :authorId="$course->author->id"
+                        :author="$course->author"
                         :currentCourseId="$course->id"
                     />
                 </div>
@@ -148,10 +145,10 @@
                     <div class="course-sidebar sticky-top rbt-shadow-box course-sidebar-top rbt-gradient-border">
                         <div class="inner">
                             <a class="video-popup-with-text video-popup-wrapper text-center popup-video sidebar-video-hidden mb--15"
-                               href="{{ asset($course->getIntroductionVideo()) }}"
+                               href="{{ asset($course->introVideo) }}"
                             >
                                 <div class="video-content">
-                                    <img class="w-100 rbt-radius" src="{{ $course->getThumbnailPath() }}"
+                                    <img class="w-100 rbt-radius" src="{{ $course->thumbnail }}"
                                          alt="Video Images">
                                     <div class="position-to-top">
                                         <span class="rbt-btn rounded-player-2 with-animation">
@@ -167,7 +164,7 @@
                                     <div
                                         class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
                                         <div class="rbt-price">
-                                            <span class="current-price">{{ number_format($course->price) }}₫</span>
+                                            <span class="current-price">{{ $course->price_formatted }}</span>
                                         </div>
                                         <div class="discount-time">
                                         <span class="rbt-badge color-danger bg-color-danger-opacity"><i
@@ -195,7 +192,7 @@
                                 <div class="rbt-widget-details has-show-more">
                                     <ul class="has-show-more-inner-content rbt-course-details-list-wrapper">
                                         <li>
-                                            <span>Duration: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->convertDurationToString()  }}</span>
+                                            <span>Duration: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->duration_text  }}</span>
                                         </li>
                                         <li>
                                             <span>Enrolled: </span><span
@@ -207,9 +204,9 @@
                                         <li>
                                             <span>Level: </span><span class="rbt-feature-value rbt-badge-5">{{ ucfirst($course->level) }}</span>
                                         </li>
-                                        @if($course->getQuizCount() > 0)
+                                        @if($course->quiz_count > 0)
                                             <li>
-                                                <span>Quiz: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->getQuizCount() }}</span>
+                                                <span>Quiz: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->quiz_count }}</span>
                                             </li>
                                         @endif
                                         <li>
@@ -220,41 +217,6 @@
                                     <div class="rbt-show-more-btn">Show more</div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="rbt-separator-mid">
-        <div class="container">
-            <hr class="rbt-separator m-0">
-        </div>
-    </div>
-
-    <div class="rbt-course-action-bottom">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 col-md-6">
-                    <div class="section-title text-center text-md-start">
-                        <h5 class="title mb--0">{{ $course->title }}</h5>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 mt_sm--15">
-                    <div class="course-action-bottom-right rbt-single-group">
-                        <div class="rbt-single-list rbt-price large-size justify-content-center">
-                            <span class="current-price color-primary">{{ $course->getFormattedPrice() }}</span>
-                            {{--                            <span class="off-price">37.500.000₫</span>--}}
-                        </div>
-                        <div class="rbt-single-list action-btn">
-                            <a class="rbt-btn btn-gradient hover-icon-reverse btn-md" href="#">
-                                <span class="icon-reverse-wrapper">
-                                    <span class="btn-text">Buy now</span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                </span>
-                            </a>
                         </div>
                     </div>
                 </div>

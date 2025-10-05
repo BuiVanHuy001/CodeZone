@@ -34,9 +34,13 @@ class AssessmentSeeder extends Seeder
             'lesson_id' => $lessonId,
             'title' => fake()->words(4, true),
             'description' => fake()->paragraphs(5, true),
+            'type' => $type,
         ]);
         if ($type === 'quiz') {
             $questionCount = fake()->numberBetween(5, 20);
+            $assessment->update([
+                'question_count' => $questionCount,
+            ]);
             $this->generateQuiz($questionCount, $assessment->id);
         } else {
             $this->generateProgramming($assessment->id);
@@ -64,16 +68,20 @@ class AssessmentSeeder extends Seeder
      */
     private function generateOptions(): string
     {
-        $optionCount = fake()->numberBetween(2, 5);
+        $optionCount = random_int(2, 5);
         $options = [];
+
+        $correctAnswersCount = random_int(1, min(2, $optionCount));
+
         for ($i = 0; $i < $optionCount; $i++) {
             $options[] = [
                 'content' => fake()->sentence(random_int(4, 10)),
-                'is_correct' => $i === 0,
+                'is_correct' => $i < $correctAnswersCount,
                 'explanation' => fake()->sentence(random_int(6, 15)),
             ];
         }
         shuffle($options);
+
         return json_encode($options, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
     }
 

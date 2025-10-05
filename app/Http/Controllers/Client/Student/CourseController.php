@@ -6,32 +6,42 @@ use App\Http\Controllers\Base\BaseCourseController;
 use App\Models\Course;
 use App\Models\Lesson;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 
 class CourseController extends BaseCourseController
 {
     use AuthorizesRequests;
 
-    public function index(Course $course): RedirectResponse
+    public function index(string $slug): View|RedirectResponse
     {
-        try {
-            $this->authorize('access', $course);
-            return redirect()->route('course.learn.lesson', [
-                'course' => $course->slug,
-                'id' => $this->courseService->getLesson($course)
-            ]);
-        } catch (AuthorizationException $e) {
-            return redirect()->route('page.forbidden');
+        $course = Course::where('slug', $slug)->firstOrFail();
+        if (!$course) {
+            return view('client.errors.404');
         }
+        if ($this->authorize('access', $course)->allowed()) {
+            return redirect()->route('course.learn.lesson', [
+                'slug' => $course->slug,
+                'id' => $this->learningService->getLesson($course)
+            ]);
+        }
+
+        return redirect()->route('page.course_detail', ['slug' => $course->slug]);
     }
 
-    public function showLesson(Course $course, string $id)
+    public function showLesson(string $slug, string $id)
     {
-        try {
-            $this->authorize('access', $course);
-            $lesson = Lesson::findOrFail($id);
-            $routes = $this->courseService->getNavigationRoutes($course, $lesson);
+        $course = Course::where('slug', $slug)->first();
+        $lesson = Lesson::find($id);
+
+        if (!$course || !$lesson) {
+            return view('client.errors.404');
+        }
+
+        if ($this->authorize('access', $course)->allowed()) {
+            $routes = $this->learningService->getNavigationRoutes($course, $lesson);
 
             return view('lesson.index', [
                 'course' => $course,
@@ -39,8 +49,8 @@ class CourseController extends BaseCourseController
                 'prevRoute' => $routes['prev'],
                 'nextRoute' => $routes['next'],
             ]);
-        } catch (AuthorizationException $e) {
-            return redirect()->route('page.forbidden');
         }
+
+        return redirect()->route('page.course_detail', ['slug' => $course->slug]);
     }
 }
