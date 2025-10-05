@@ -1,166 +1,117 @@
 <?php
+
 namespace App\Livewire\Client\Lesson\Components\AssessmentTypes;
 
+use App\Models\AssessmentAttempt;
+use App\Services\Assessment\CodeRunnerService;
+use App\Services\Course\LearningService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Collection;
+use JsonException;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Programming extends Component
 {
-    public $programmingPractice;
+    public $problem;
     public $codeTemplates = [];
     public $allowedLanguages = [];
     public string $languageSelected;
-    public string $userCode;
-    public array $submissionResults = [];
+    public string $userCode = '';
     public string $template;
+    public string $executionErrors = '';
+    public ?Collection $attemptProgrammings;
 
+    /**
+     * @throws JsonException
+     */
     public function mount(): void
     {
-        $decodedTemplates = json_decode($this->programmingPractice->problemDetails['code_templates'], true);
+        $decodedTemplates = json_decode($this->problem->problemDetails['code_templates'], true, 512, JSON_THROW_ON_ERROR);
         $this->codeTemplates = $decodedTemplates;
         $this->allowedLanguages = array_keys($decodedTemplates);
         $this->languageSelected = $this->allowedLanguages[0];
-        $this->template = $this->codeTemplates[$this->languageSelected];
-    }
 
+        $attempt = AssessmentAttempt::where('assessment_id', $this->problem->id)
+            ->where('user_id', auth()->id())
+            ->with('attemptProgrammings')
+            ->first();
+
+        $this->attemptProgrammings = $attempt->attemptProgrammings ?? collect();
+
+        $existing = $this->attemptProgrammings->firstWhere('language', $this->languageSelected);
+        if ($existing) {
+            $this->userCode = $existing->user_code;
+            $this->template = $existing->user_code;
+        } else {
+            $this->template = $this->codeTemplates[$this->languageSelected] ?? '';
+            $this->userCode = '';
+        }
+        $this->dispatch('code-editor-initialize',
+            editorId: 'code-editor-' . $this->problem->id,
+            doc: $this->template,
+            language: $this->languageSelected
+        );
+    }
     public function updatedLanguageSelected(): void
     {
-        $this->template = $this->codeTemplates[$this->languageSelected];
-        $this->dispatch('language-changed', templateCode: $this->template);
-    }
-
-    public function submitCode(): void
-    {
-        $this->submissionResults = [];
-        $testCases = json_decode($this->programmingPractice->problemDetails['test_cases'], true);
-
-        $entrypoint = [
-            'className' => 'Solution',
-            'methodName' => $this->programmingPractice->problemDetails['function_name']
-        ];
-
-        foreach ($testCases as $index => $testCase) {
-            $testCaseInput = $this->generateInputCode($testCase['input'], $this->languageSelected);
-            $inputVariables = implode(', ', array_keys($testCase['input']));
-            $callerCode = '';
-
-            switch ($this->languageSelected) {
-                //                case 'php':
-                //                    $inputVariables = '$' . implode(', $', array_keys($testCase['input']));
-                //                    $callerCode = "\$solution = new {$entrypoint['className']}();\n";
-                //                    $callerCode .= "\$result = \$solution->{$entrypoint['methodName']}($inputVariables);\n";
-                //                    $callerCode .= "echo json_encode(\$result);\n";
-                //                    break;
-                case 'python':
-                    $callerCode = "solution = {$entrypoint['className']}()\n";
-                    $callerCode .= "result = solution.{$entrypoint['methodName']}($inputVariables)\n";
-                    $callerCode .= "import json\n";
-                    $callerCode .= "print(json.dumps(result))\n";
-                    break;
-                //                case 'js':
-                //                    $callerCode = "const solution = new {$entrypoint['className']}();\n";
-                //                    $callerCode .= "const result = solution.{$entrypoint['methodName']}($inputVariables);\n";
-                //                    $callerCode .= "console.log(JSON.stringify(result));\n";
-                //                    break;
-            }
-
-            $fullCode = $testCaseInput . "\n" . $this->userCode . "\n" . $callerCode;
-            $expected_output = $testCase['output']['value'];
-            $actual_output = '';
-            try {
-                switch ($this->languageSelected) {
-                    //                    case 'php':
-                    //                        ob_start();
-                    /*                        eval('?>' . $fullCode);*/
-                    //                        $actual_output = ob_get_clean();
-                    //                        break;
-                    case 'python':
-                        $tmp_file = sys_get_temp_dir() . '/user_script_' . uniqid() . '.py';
-                        file_put_contents($tmp_file, $fullCode);
-                        $actual_output = shell_exec('python3 ' . escapeshellarg($tmp_file) . ' 2>&1');
-                        unlink($tmp_file);
-                        break;
-                    //                    case 'js':
-                    //                        $extension = $this->languageSelected === 'python' ? 'py' : 'js';
-                    //                        $command = $this->languageSelected === 'python' ? 'python3' : 'node';
-                    //                        $tmp_file = sys_get_temp_dir() . '/user_script_' . uniqid() . '.' . $extension;
-                    //                        file_put_contents($tmp_file, $fullCode);
-                    //                        $actual_output = shell_exec($command . ' ' . escapeshellarg($tmp_file) . ' 2>&1');
-                    //                        unlink($tmp_file);
-                    //                        break;
-                }
-
-                $normalized_actual = json_encode(json_decode(trim($actual_output)));
-                $normalized_expected = json_encode(json_decode(trim($expected_output)));
-
-                if ($normalized_actual === $normalized_expected) {
-                    $result_status = 'pass';
-                } else {
-                    $result_status = 'failed';
-                }
-
-            } catch (\Throwable $e) {
-                $actual_output = $e->getMessage();
-                $result_status = 'error';
-            }
-
-            $this->submissionResults[] = [
-                'case' => $index + 1,
-                'status' => $result_status,
-                'expected' => $expected_output,
-                'actual' => trim($actual_output),
-            ];
-        }
-
-        $isPass = true;
-        foreach ($this->submissionResults as $result) {
-            if ($result['status'] !== 'pass') {
-                $isPass = false;
-                break;
-            }
-        }
-        if ($isPass) {
-            $this->dispatch('swal',
-                [
-                    'title' => __('Assessment Submitted'),
-                    'text' => __('Your code has been passed all test case.'),
-                    'icon' => 'success',
-                ]
-            );
+        $existing = $this->attemptProgrammings->firstWhere('language', $this->languageSelected);
+        if ($existing) {
+            $this->template = $existing->user_code;
+            $this->userCode = $existing->user_code;
         } else {
-            $this->dispatch('swal',
-                [
-                    'title' => __('Assessment Failed'),
-                    'text' => __('Please review your code and try again.'),
-                    'icon' => 'error',
-                ]
-            );
+            $this->template = $this->codeTemplates[$this->languageSelected] ?? '';
+            $this->userCode = '';
         }
+
+        $this->dispatch('language-changed',
+            editorId: 'code-editor-' . $this->problem->id,
+            doc: $this->template,
+            language: $this->languageSelected
+        );
     }
 
-    private function generateInputCode(array $inputs, string $language): string
+    #[On('code-editor-blur')]
+    public function updateCodeEditor(string $code): void
     {
-        $inputCode = '';
-        foreach ($inputs as $name => $details) {
-            $value = $details['value'];
-            switch ($language) {
-                case 'php':
-                    $phpValue = eval('return ' . $value . ';');
-                    $inputCode .= '$' . $name . ' = ' . var_export($phpValue, true) . ";\n";
-                    break;
-                case 'python':
-                    $inputCode .= $name . ' = ' . $value . "\n";
-                    break;
-                case 'js':
-                    $inputCode .= 'const ' . $name . ' = ' . $value . ";\n";
-                    break;
-            }
-        }
-        return $inputCode;
+        $this->userCode = $code;
     }
 
+    public function submitCode(CodeRunnerService $codeRunnerService, LearningService $courseService): void
+    {
+        $this->reset('executionErrors');
+        if ($this->userCode !== $this->template && $this->userCode) {
+            $result = $codeRunnerService->run(
+                $this->languageSelected,
+                $this->userCode,
+                $this->problem->problemDetails
+            );
+            $codeRunnerService->saveProgrammingAttempt(
+                total_score: $result['isPassed'] ? 10 : 0,
+                assessment: $this->problem,
+                is_passed: $result['isPassed'],
+                user_code: $this->userCode,
+                language: $this->languageSelected
+            );
+
+            if ($result['isPassed']) {
+                $course = $this->problem->lesson->course;
+                $courseService->markLessonComplete($this->problem->lesson_id);
+                $this->redirect(route('course.learn.lesson', [
+                    'course' => $course->slug,
+                    'id' => $courseService->getAdjacentLessonId($course, $this->problem->lesson_id)
+                ]));
+
+                $this->swal('Success', 'Your code passed the test cases.');
+            } else {
+                $this->executionErrors = $result['errors'];
+            }
+        } else {
+            $this->swalError('Error', 'You cannot submit the template code or an empty code.');
+        }
+    }
 
     public function render(): View|Application|Factory
     {

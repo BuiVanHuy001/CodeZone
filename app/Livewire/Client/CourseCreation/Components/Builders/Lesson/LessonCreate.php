@@ -2,9 +2,7 @@
 
 namespace App\Livewire\Client\CourseCreation\Components\Builders\Lesson;
 
-use App\Traits\HasErrors;
 use App\Traits\WithLessonForm;
-use App\Validator\NewLessonValidator;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Application;
@@ -16,7 +14,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class LessonCreate extends Component {
-    use HasErrors, WithLessonForm;
+    use WithLessonForm;
 
     #[Validate]
     public array $lesson = [
@@ -27,14 +25,9 @@ class LessonCreate extends Component {
         'duration' => 0,
         'type' => '',
         'assessment' => [],
-        'practice_assessments' => []
     ];
 
     public string|int $moduleIndex;
-
-    public array $existingLessonTitles = [];
-
-    public bool $assessmentValid = false;
 
     public function mount(): void
     {
@@ -68,12 +61,8 @@ class LessonCreate extends Component {
                 ($this->lesson['assessment']['type'] ?? null) === 'quiz' &&
                 $this->assessmentValid === false
             ) {
+                $this->swalError('Invalid Assessment', 'Please fix assessment errors before adding the lesson.');
                 $this->addError('lesson.assessment', 'Please fix quiz errors before adding the lesson.');
-                $this->dispatch('swal', [
-                    'title' => 'Invalid Assessment',
-                    'html' => 'Please fix assessment errors before adding the lesson.',
-                    'icon' => 'error',
-                ]);
                 return;
             }
 
@@ -84,11 +73,7 @@ class LessonCreate extends Component {
 
             $this->reset('lesson');
         } catch (Exception $e) {
-            $this->dispatch('swal', [
-                'title' => 'Error',
-                'html' => 'There was an error adding the lesson: <br>' . $this->prepareRenderErrors($e),
-                'icon' => 'error',
-            ]);
+            $this->swalError('Error', 'There was an error adding the lesson:', $e->getMessage());
             throw $e;
         }
     }

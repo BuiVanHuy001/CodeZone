@@ -14,6 +14,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Throwable;
 
 class Members extends Component
 {
@@ -85,25 +86,10 @@ class Members extends Component
         $this->importedMembers = $result['displayMembers'];
         $this->dbMembers = $result['dbMembers'];
         if (!empty($result['failures'])) {
-            $html = $this->prepareForDisplayFailures($result['failures']);;
-            $this->dispatch('swal', [
-                'title' => 'Import Failed',
-                'html' => $html,
-                'icon' => 'error',
-                'showConfirmButton' => true,
-                'confirmButtonText' => 'OK',
-                'allowOutsideClick' => false,
-                'allowEscapeKey' => false,
-                'draggable' => true,
-            ]);
+            $html = $this->prepareForDisplayFailures($result['failures']);
+            $this->swalError(title: "Error", html: $html);
         } else {
-            $this->dispatch('swal', [
-                'title' => 'Import Successful',
-                'text' => 'The import process has been completed successfully.',
-                'icon' => 'success',
-                'showConfirmButton' => true,
-                'confirmButtonText' => 'OK',
-            ]);
+            $this->swal('Import Successful', 'The import process has been completed successfully.');
         }
 
         $this->hasImported = !empty($this->importedMembers);
@@ -124,23 +110,17 @@ class Members extends Component
 
     public function deleteImportedMember(int $rowIndex): void
     {
-        if (isset($this->importedMembers[$rowIndex]) && isset($this->dbMembers[$rowIndex])) {
-            unset($this->importedMembers[$rowIndex]);
-            unset($this->dbMembers[$rowIndex]);
+        if (isset($this->importedMembers[$rowIndex], $this->dbMembers[$rowIndex])) {
+            unset($this->importedMembers[$rowIndex], $this->dbMembers[$rowIndex]);
             $this->importedMembers = array_values($this->importedMembers);
             $this->dbMembers = array_values($this->dbMembers);
-            $this->dispatch('swal', [
-                'title' => 'Member Deleted',
-                'text' => 'The member has been successfully deleted.',
-                'icon' => 'success',
-                'showConfirmButton' => true,
-                'confirmButtonText' => 'OK',
-                'allowOutsideClick' => false,
-                'allowEscapeKey' => false,
-            ]);
+            $this->swal('Member Deleted', 'The member has been successfully deleted.');
         }
     }
 
+    /**
+     * @throws Throwable
+     */
     public function importMembers(): void
     {
         DB::beginTransaction();
@@ -155,14 +135,14 @@ class Members extends Component
                     'password' => Hash::make($member['password']),
                     'role' => 'student',
                     'status' => 'active',
-                    'avatar_url' => $member['avatar_url'],
+                    'avatar' => $member['avatar_url'],
                 ]);
                 $user->studentProfile()->updateOrCreate([
                     'user_id' => $user->id,
                 ], [
                     'gender' => $member['gender'] === 'female',
                     'dob' => $member['date_of_birth'],
-                    'addition_data' => json_encode($member['addition_data']),
+                    'addition_data' => json_encode($member['addition_data'], JSON_THROW_ON_ERROR),
                 ]);
 
                 OrganizationUser::create([
@@ -177,24 +157,11 @@ class Members extends Component
                 'importUsersFile'
             ]);
             $this->setTab('list');
-            $this->dispatch('swal', [
-                'title' => 'Import Successful',
-                'text' => 'The import process has been completed successfully.',
-                'icon' => 'success',
-                'showConfirmButton' => true,
-                'confirmButtonText' => 'OK',
-                'allowOutsideClick' => false,
-                'allowEscapeKey' => false,
-            ]);
+            $this->swal('Import Successful', 'The import process has been completed successfully.');
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            $this->dispatch('swal', [
-                'title' => 'Import Failed',
-                'text' => 'An error occurred while importing members: ' . $e->getMessage(),
-                'icon' => 'error',
-                'showConfirmButton' => true,
-            ]);
+            $this->swalError('Imported Failed', 'An error occurred while importing members:', $e->getMessage());
         }
     }
 
@@ -206,15 +173,7 @@ class Members extends Component
             'showImportButton',
             'importUsersFile'
         ]);
-        $this->dispatch('swal', [
-            'title' => 'Import Cancelled',
-            'text' => 'The import process has been cancelled.',
-            'icon' => 'info',
-            'showConfirmButton' => true,
-            'confirmButtonText' => 'OK',
-            'allowOutsideClick' => false,
-            'allowEscapeKey' => false,
-        ]);
+        $this->swal('Import Cancelled', 'The import process has been cancelled.', 'info');
     }
 
     #[Layout('components.layouts.dashboard')]

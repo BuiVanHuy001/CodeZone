@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('assessment_attempts', function (Blueprint $table) {
+        Schema::create('assessment_attempts', static function (Blueprint $table) {
             $table->id();
-            $table->decimal('total_score', 5, 2)->default(0);
             $table->boolean('is_passed')->default(false);
 
-	        $table->foreignIdFor(Assessment::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Assessment::class)
+                ->constrained()
+                ->cascadeOnDelete();
+
 	        $table->foreignIdFor(User::class)->constrained();
 
             $table->timestamps();

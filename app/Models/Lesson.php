@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Lesson extends Model
 {
@@ -30,9 +31,21 @@ class Lesson extends Model
         return $this->belongsTo(Module::class);
     }
 
-    public function assessments(): HasMany
+    public function course(): HasOneThrough|Lesson
     {
-        return $this->hasMany(Assessment::class);
+        return $this->hasOneThrough(
+            Course::class,
+            Module::class,
+            'id',
+            'id',
+            'module_id',
+            'course_id'
+        );
+    }
+
+    public function assessment(): HasOne
+    {
+        return $this->hasOne(Assessment::class);
     }
 
     public function trackingProgresses(): HasMany
@@ -45,20 +58,20 @@ class Lesson extends Model
         return $this->title;
     }
 
-    public function getIcon(string $type): string
+    public function getIcon(): string
     {
-        if ($type === 'video' && $this->video_file_name !== '') {
+        if ($this->type === 'video' && $this->video_file_name !== '') {
             return 'video';
-        } elseif ($this->type === 'assessment') {
-            if ($type === 'quiz') {
-                return 'help-circle';
-            } elseif ($type === 'assignment') {
-                return 'book-open';
-            } else {
-                return 'code';
-            }
-        } else {
-            return 'file-text';
         }
+
+        if ($this->type === 'assessment') {
+            if ($this->assessment->type === 'quiz') {
+                return 'help-circle';
+            }
+
+            return 'code';
+        }
+
+        return 'file-text';
     }
 }

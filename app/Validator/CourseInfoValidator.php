@@ -59,15 +59,13 @@ class CourseInfoValidator {
 
     public static function rules(): array
     {
-        return [
+        $rules = [
             'title' => 'required|min:3|max:255',
             'slug' => 'required|min:3|max:255|unique:courses,slug',
             'heading' => 'required|min:3|max:255',
             'price' => 'required|numeric|min:0',
             'category' => 'required|exists:categories,id',
             'level' => 'required|in:' . implode(',', array_keys(Course::$LEVELS)),
-            'startDate' => 'required|date|after_or_equal:today',
-            'endDate' => 'required|date|after_or_equal:startDate',
             'thumbnail' => 'nullable|string',
             'modules' => 'required|array|min:1',
             'modules.*.title' => 'required|min:3|max:255',
@@ -75,5 +73,10 @@ class CourseInfoValidator {
             'modules.*.lessons.*.title' => 'required|min:3|max:255',
             'modules.*.lessons.*.type' => 'required|in:' . implode(',', array_keys(Lesson::$TYPES)),
         ];
+        if (auth()->user()->isOrganization()) {
+            $rules['startDate'] = 'required|date|after_or_equal:today';
+            $rules['endDate'] = 'required|date|after_or_equal:startDate';
+        }
+        return $rules;
     }
 }

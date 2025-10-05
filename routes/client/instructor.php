@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Client\Instructor\InstructorController;
 use App\Http\Middleware\EnsureUserIsInstructor;
 use App\Livewire\Client\CourseCreation\Index as CourseCreation;
 use App\Livewire\Client\Instructor\Dashboard\Courses;
@@ -19,3 +20,5 @@ Route::middleware(EnsureUserIsInstructor::class)->group(function () {
 	    Route::get('/create-course', CourseCreation::class)->name('instructor.courses.create');
     });
 });
+
+Route::get('/instructor/{instructor:slug}', [InstructorController::class, 'show'])->name('instructor.details');

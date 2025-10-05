@@ -4,11 +4,14 @@ namespace App\Livewire\Client\Shared;
 
 use App\Models\InstructorProfile;
 use App\Models\OrganizationProfile;
+use App\Services\TraditionalLogin\AuthenticationService;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Account Settings')]
-class SettingsBase extends Component {
+class SettingsBase extends Component
+{
     public string $bio;
     public string $aboutMe;
     public array $socialLinks;
@@ -18,6 +21,7 @@ class SettingsBase extends Component {
     public $originalBio;
     public $originalAboutMe;
     public $originalSocialLinks;
+    public string $activeTab = 'profile';
     public array $allowedDomains = [
         'facebook' => ['facebook.com'],
         'linkedin' => ['linkedin.com'],
@@ -26,6 +30,11 @@ class SettingsBase extends Component {
         'website' => [],
     ];
 
+    public array $password = [
+        'current' => '',
+        'new' => '',
+        'confirmation' => '',
+    ];
 
     public function mount(): void
     {
@@ -45,7 +54,7 @@ class SettingsBase extends Component {
         }
         $this->aboutMe = $this->profile->about_me ?? '';
         $this->bio = $this->profile->bio ?? '';
-        $this->socialLinks = $this->profile->socials_links ?? [];
+        $this->socialLinks = $this->profile->social_links ?? [];
         $this->originalAboutMe = $this->aboutMe;
         $this->originalBio = $this->bio;
         $this->originalSocialLinks = $this->socialLinks;
@@ -104,12 +113,7 @@ class SettingsBase extends Component {
             }
         }
 
-        $this->dispatch('swal', [
-            'icon' => 'error',
-            'title' => 'Invalid URL',
-            'text' => "The provided URL for $platform is not valid. Please check the format.",
-            'timer' => 3000,
-        ]);
+        $this->swalError('Invalid URL', "The provided URL for $platform is not valid. Please check the format.");
 
         return null;
     }
@@ -130,8 +134,8 @@ class SettingsBase extends Component {
         if ($this->aboutMe !== ($this->profile->about_me ?? '')) {
             $changes['about_me'] = $this->aboutMe;
         }
-        if ($this->socialLinks !== ($this->profile->socials_links ?? '')) {
-            $changes['socials_links'] = $this->socialLinks;
+        if ($this->socialLinks !== ($this->profile->social_links ?? '')) {
+            $changes['social_links'] = $this->socialLinks;
         }
 
         if (!empty($changes)) {
@@ -143,14 +147,43 @@ class SettingsBase extends Component {
             $this->originalBio = $this->bio;
             $this->originalSocialLinks = $this->socialLinks;
             $this->isDirty = false;
-            $this->dispatch('swal', [
-                'icon' => 'success',
-                'title' => 'Settings saved successfully',
-                'text' => 'Your account settings have been updated.',
-                'timer' => 2000,
-                'showConfirmButton' => false,
-            ]);
+            $this->swal('Settings Saved', 'Your account settings have been updated.');
         }
+    }
+
+    public function changePassword(AuthenticationService $authenticationService): void
+    {
+        $this->validate([
+            'password.current' => 'required|min:8',
+            'password.new' => 'required|min:8|same:password.confirmation',
+            'password.confirmation' => 'required|min:8',
+        ],
+            [
+                'password.current.required' => 'Current password is required.',
+                'password.new.required' => 'New password is required.',
+                'password.new.min' => 'New password must be at least 8 characters.',
+                'password.new.same' => 'New password and confirmation do not match.',
+                'password.confirmation.required' => 'Please confirm your new password.',
+                'password.confirmation.min' => 'Confirmation password must be at least 8 characters.',
+            ]);
+
+        if (!Hash::check($this->password['current'], $this->user->password)) {
+            $this->addError('password.current', 'Current password is incorrect.');
+            return;
+        }
+
+        if ($authenticationService->changePassword($this->password['new'])) {
+            $this->swal('Password Changed', 'Your password has been updated successfully.');
+            $this->reset('activeTab');
+        } else {
+            $this->swalError('Error', 'There was an error updating your password. Please try again.');
+        }
+    }
+
+    public function forgotPassword(AuthenticationService $authenticationService): void
+    {
+        $authenticationService->resetPassword(auth()->user());
+        $this->swal('Password Reset', 'A new password has been sent to your email address.');
     }
 
     public function cancel(): void

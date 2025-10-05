@@ -12,14 +12,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lessons', function (Blueprint $table) {
+        Schema::create('lessons', static function (Blueprint $table) {
             $table->uuid('id')->primary();
 
             $table->string('title');
 	        $table->text('document')->nullable();
             $table->string('video_file_name')->nullable();
             $table->unsignedTinyInteger('position');
-	        $table->unsignedSmallInteger('duration')->comment('Duration in seconds and max 65535 seconds (18 hours)');
+            $table->unsignedSmallInteger('duration')
+                ->comment('Duration in seconds and max 65535 seconds (18 hours)');
 	        $table->boolean('preview')->default(false);
             $table->enum('type', array_keys(Lesson::$TYPES));
             $table->json('resources')->nullable();

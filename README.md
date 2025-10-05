@@ -1,4 +1,3 @@
-
 # CodeZone - Online Programming Learning Platform
 
 <img src="https://hackatime-badge.hackclub.com/U098ESP1YH5/CodeZone" />
@@ -13,7 +12,8 @@ coding assignments, and role-based course management.
 ## 🎨 UI Templates Used
 
 - **Client**: [HiStudy - Online Courses & Education Template](https://rainbowit.net/html/histudy/)
-- **Admin**: [Vuexy - Admin Dashboard Template](https://demos.pixinvent.com/vuexy-html-admin-template/html/vertical-menu-template/)
+- **Admin
+  **: [Vuexy - Admin Dashboard Template](https://demos.pixinvent.com/vuexy-html-admin-template/html/vertical-menu-template/)
 
 ---
 
@@ -33,16 +33,16 @@ coding assignments, and role-based course management.
 
 ## 🛠️ Technologies Used
 
-| Technology        | Purpose                                  |
-|-------------------|-------------------------------------------|
-| Laravel 12        | Backend framework                         |
-| Livewire 3        | SPA-style dynamic frontend                |
-| Alpine.js         | Lightweight frontend interactivity        |
-| Laravel Socialite | Social login (Google, Facebook)           |
-| SweetAlert2       | Beautiful alert popups                    |
-| MySQL             | Database system                           |
-| Vite              | Fast asset bundler                        |
-| Tailwind CSS      | Utility-first CSS framework               |
+| Technology        | Purpose                            |
+|-------------------|------------------------------------|
+| Laravel 12        | Backend framework                  |
+| Livewire 3        | SPA-style dynamic frontend         |
+| Alpine.js         | Lightweight frontend interactivity |
+| Laravel Socialite | Social login (Google, Facebook)    |
+| SweetAlert2       | Beautiful alert popups             |
+| MySQL             | Database system                    |
+| Vite              | Fast asset bundler                 |
+| Tailwind CSS      | Utility-first CSS framework        |
 
 ---
 
@@ -68,6 +68,7 @@ php artisan migrate
 
 # (Optional) Import sample database
 # Execute SQL script from `database/codezone.sql`
+php artisan db:seed
 # Replace the public folder in storage/app with the one from Google Drive: 
 # https://drive.google.com/drive/folders/1XWXXeOEyQhFFiNq9L3uZWrGWRnVz2evV?usp=sharing
 
@@ -79,11 +80,11 @@ php artisan serve & npm run dev
 
 ## 🔐 Default Login Accounts (if seeded)
 
-| Role         | Email              | Password |
-|--------------|--------------------|----------|
-| Student      | oanh@zalo.com      | password |
-| Instructor   | huy@codezone.com   | password |
-| Organization | caodang@vietmy.com | password |
+| Role         | Email                     | Password |
+|--------------|---------------------------|----------|
+| Student      | oanh@zalo.com             | password |
+| Instructor   | taylorotwell@codezone.com | password |
+| Organization | caodang@vietmy.com        | password |
 
 ---
 

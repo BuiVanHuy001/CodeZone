@@ -3,17 +3,20 @@
 namespace App\Models;
 
 use App\Traits\HasDuration;
+use App\Traits\HasNumberFormat;
 use App\Traits\HasSlug;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
 
 class Course extends Model
 {
-    use HasFactory, HasSlug, HasUUID, HasDuration;
+    use HasFactory, HasSlug, HasUUID, HasDuration, HasNumberFormat;
 
     protected $guarded = [];
 
@@ -24,9 +27,27 @@ class Course extends Model
 
     public static array $LEVELS = ['beginner', 'intermediate', 'advanced'];
 
+    protected $casts = [
+        'requirements' => 'array',
+        'skills' => 'array',
+        'target_audiences' => 'array',
+    ];
+
     public function modules(): hasMany
     {
         return $this->hasMany(Module::class);
+    }
+
+    public function lessons(): HasManyThrough|Course
+    {
+        return $this->hasManyThrough(
+            Lesson::class,
+            Module::class,
+            'course_id',
+            'module_id',
+            'id',
+            'id'
+        );
     }
 
     public function category(): belongsTo
@@ -39,9 +60,19 @@ class Course extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function reviews(): MorphMany
+    {
+        return $this->morphMany('App\Models\Review', 'reviewable');
+    }
+
     public function batches(): hasMany
     {
         return $this->hasMany(Batch::class);
+    }
+
+    public function enrollments(): hasMany
+    {
+        return $this->hasMany(Enrollment::class);
     }
 
     public function slugSourceField(): string
@@ -51,45 +82,21 @@ class Course extends Model
 
     public function getThumbnailPath(): string
     {
-        if ($this->thumbnail_url) {
-            return Storage::url('course/thumbnails/' . $this->thumbnail_url);
+        if ($this->thumbnail) {
+            if (filter_var($this->thumbnail, FILTER_VALIDATE_URL)) {
+                return $this->thumbnail;
+            }
+            return Storage::url('course/thumbnails/' . $this->thumbnail);
         }
         return asset('images/others/thumbnail-placeholder.svg');
     }
 
-    public function getIntroductionVideo(): string
+    public function getFormattedPrice(): string
     {
-        $introductionVideoUrl = '';
-        foreach ($this->modules as $module) {
-            foreach ($module->lessons as $lesson) {
-                if ($lesson->preview) {
-                    $introductionVideoUrl = $lesson->video_file_name;
-                    break 2;
-                }
-            }
+        if ($this->price === 0) {
+            return 'Free';
         }
-        return Storage::url('course/videos/' . $introductionVideoUrl);
-    }
 
-    public function getQuizCount(): int
-    {
-        $quiz_count = 0;
-        foreach ($this->modules as $module) {
-            foreach ($module->lessons as $lesson) {
-                if ($lesson->type === 'assessment') {
-                    foreach ($lesson->assessments as $assessment) {
-                        if ($assessment->type === 'quiz') {
-                            $quiz_count++;
-                        }
-                    }
-                }
-            }
-        }
-        return $quiz_count;
+        return number_format((int)$this->price) . '₫';
     }
-   public function reviews(): hasMany
-    {
-        return $this->hasMany(Review::class, with("reviewable_id"));
-    }
-
 }

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('categories', static function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
             $table->foreignId('parent_id')->nullable()->constrained('categories');
-            $table->string('icon_url')->nullable();
-            $table->text('thumbnail_url')->nullable();
+            $table->string('icon')->nullable();
+            $table->text('thumbnail')->nullable();
             $table->unsignedTinyInteger('position')->default(0);
 
             $table->softDeletes();

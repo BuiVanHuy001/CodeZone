@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Course;
+use App\Services\Course\CatalogService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 
 class PageController extends Controller
 {
-    public function homePage(): Factory|Application|View
+    public function homePage(CatalogService $catalog): Factory|Application|View
     {
-        return view('client.pages.homepage');
+        $popularCourses = $catalog->getPopularCourses(9);
+        $hotCourses = $catalog->getHotCourses();
+        return view('client.pages.homepage', compact('popularCourses', 'hotCourses'));
     }
 
     public function notFoundPage(): Factory|Application|View
@@ -29,16 +32,5 @@ class PageController extends Controller
     public function maintenancePage(): Factory|Application|View
     {
         return view('client.errors.maintenance');
-    }
-
-    public function courseDetail(Course $course): View|Application|Factory
-    {
-        $isReviewable = false;
-        $reviews = $course->reviews()->with('user')->latest()->get();
-
-        return view('client.pages.course-details', [
-            'course' => $course,
-            'reviews' => $reviews,
-        ]);
     }
 }

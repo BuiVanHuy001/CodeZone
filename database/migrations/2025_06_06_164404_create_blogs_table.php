@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blogs', function (Blueprint $table) {
+        Schema::create('blogs', static function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('headline');
-            $table->string('thumbnail_url')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->text('content');
             $table->enum('status', Blog::$STATUSES)->default('pending');
 

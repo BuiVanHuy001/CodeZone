@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create('order_items', static function (Blueprint $table) {
             $table->id();
 	        $table->decimal('current_price', 15, 3);
 
-	        $table->foreignIdFor(Course::class)->constrained();
-	        $table->foreignIdFor(Order::class)->constrained();
+            $table->foreignUuid('order_id')->constrained('orders');
+            $table->foreignUuid('course_id')->constrained('courses');
 
             $table->timestamps();
         });

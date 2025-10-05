@@ -68,13 +68,6 @@
                                     <small><i class="feather-info"></i> Allow students to preview this lesson content
                                         before enrollment to help them make informed decisions about the course.</small>
                                 </div>
-                                @if (!$lesson['preview'] && isset($lesson['practice_assessments']))
-                                    <livewire:client.course-creation.components.builders.lesson.lesson-types.assessment-types.practice-assessment
-                                        wire:model="lesson.practice_assessments"/>
-                                @else
-                                    <p>Practice features are disabled when lesson preview is enabled. Disable preview
-                                        mode to configure assessments for this lesson.</p>
-                                @endif
                             @endif
                         </div>
                     </div>

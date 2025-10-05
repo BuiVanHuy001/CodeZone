@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->decimal('total_price', 10, 3);
+        Schema::create('orders', static function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->decimal('total_price', 13, 3);
 
-            $table->enum('status', Order::$STATUSES)->default('processing');
-            $table->enum('payment_method', Order::$PAYMENT_METHODS)->nullable();
+            $table->enum('status', Order::$STATUSES);
+            $table->string('payment_method', 10)->nullable();
+            $table->json('payment_info')->nullable();
 
 	        $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();

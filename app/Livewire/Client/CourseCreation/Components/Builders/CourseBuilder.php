@@ -48,21 +48,11 @@ class CourseBuilder extends Component {
     public function destroyModule(string|int $index): void
     {
         if (count($this->modules) <= 1) {
-            $this->dispatch('swal', [
-                'title' => 'Minimum Modules Required',
-                'text' => 'You must have at least one module in your course.',
-                'icon' => 'warning',
-            ]);
-        } else {
-            if (isset($this->modules[$index])) {
-                unset($this->modules[$index]);
-                $this->modules = array_values($this->modules);
-                $this->dispatch('swal', [
-                    'title' => 'Module Removed',
-                    'text' => 'The module has been successfully removed.',
-                    'icon' => 'success',
-                ]);
-            }
+            $this->swalWarning('Minimum Modules Required', 'You must have at least one module in your course.');
+        } elseif (isset($this->modules[$index])) {
+            unset($this->modules[$index]);
+            $this->modules = array_values($this->modules);
+            $this->swal('Module Removed', 'The module has been successfully removed.');
         }
     }
 
@@ -87,11 +77,7 @@ class CourseBuilder extends Component {
     public function updateLesson(array $lesson, string|int $moduleIndex, string|int $lessonIndex): void
     {
         $this->modules[$moduleIndex]['lessons'][$lessonIndex] = $lesson;
-        $this->dispatch('swal', [
-            'title' => 'Lesson Updated',
-            'text' => 'The lesson has been successfully updated.',
-            'icon' => 'success',
-        ]);
+        $this->swal('Lesson Updated', 'The lesson has been successfully updated.');
         $this->dispatch('close-modal', id: 'updateLesson');
     }
 
@@ -99,44 +85,23 @@ class CourseBuilder extends Component {
     public function storeLesson(array $newLesson, string|int $moduleIndex): void
     {
         $this->modules[$moduleIndex]['lessons'][] = $newLesson;
-
-        $this->dispatch('swal', [
-            'title' => 'Lesson Added',
-            'text' => 'The lesson has been successfully added.',
-            'icon' => 'success',
-        ]);
+        $this->swal('Lesson Added', 'The lesson has been successfully added.');
     }
 
     public function destroyLesson(string|int $moduleIndex, string|int $lessonIndex): void
     {
         if (count($this->modules[$moduleIndex]['lessons']) <= 1) {
-            $this->dispatch('swal', [
-                'title' => 'Minimum Lessons Required',
-                'text' => 'You must have at least one lesson in your module.',
-                'icon' => 'warning',
-            ]);
-        } else {
-            if (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex])) {
-                if ($this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] === 'video') {
-                    Storage::disk('public')->delete('course/videos/' . $this->modules[$moduleIndex]['lessons'][$lessonIndex]['video_file_name']);
-                }
-
-                unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]);
-
-                $this->modules[$moduleIndex]['lessons'] = array_values($this->modules[$moduleIndex]['lessons']);
-                $this->dispatch('swal', [
-                    'title' => 'Lesson Removed',
-                    'text' => 'The lesson has been successfully removed.',
-                    'icon' => 'success',
-                ]);
+            $this->swalWarning('Minimum Lessons Required', 'You must have at least one lesson in your module.');
+        } elseif (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex])) {
+            if ($this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] === 'video') {
+                Storage::disk('public')->delete('course/videos/' . $this->modules[$moduleIndex]['lessons'][$lessonIndex]['video_file_name']);
             }
-        }
-    }
 
-    #[On('document-changed')]
-    public function documentChange($document): void
-    {
-        $this->newLesson['document'] = $document;
+            unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]);
+
+            $this->modules[$moduleIndex]['lessons'] = array_values($this->modules[$moduleIndex]['lessons']);
+            $this->swal('Lesson Removed', 'The lesson has been successfully removed.');
+        }
     }
 
     public function render(): Factory|Application|View

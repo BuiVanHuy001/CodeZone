@@ -17,9 +17,6 @@ class Assessment extends Component {
         'type' => '',
     ];
 
-    public string $title = 'Bài Kiểm Tra';
-    public string $unique = 'assessment';
-
     public function updatedAssessmentType(): void
     {
         unset($this->assessment['assessments_questions']);
@@ -28,21 +25,13 @@ class Assessment extends Component {
     #[On('assessment-saved')]
     public function assessmentSaved(): void
     {
-        $this->dispatch('swal', [
-            'title' => $this->assessment['title'] . ' Saved',
-            'text' => 'The assessment has been saved successfully.',
-            'icon' => 'success',
-        ]);
+        $this->swal($this->assessment['title'] . ' Saved', 'The assessment has been saved successfully.');
     }
 
     #[On('assessment-deleted')]
     public function assessmentDeleted(string $title): void
     {
-        $this->dispatch('swal', [
-            'title' => $title . ' Deleted',
-            'text' => 'The assessment has been deleted successfully.',
-            'icon' => 'success',
-        ]);
+        $this->swal($title . ' Deleted', 'The assessment has been deleted successfully.');
     }
 
     public function render(): Factory|Application|View

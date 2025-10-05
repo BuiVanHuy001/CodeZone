@@ -43,8 +43,8 @@ class AddLearners extends Component {
     public function addMemberAssign(string $userId): void
     {
         if (
-            auth()->user()->isMemberOfOrganization($userId, auth()->user()->id) &&
-            !in_array($userId, $this->learners)
+            !in_array($userId, $this->learners, true) &&
+            auth()->user()->isMemberOfOrganization($userId, auth()->user()->id)
         ) {
             $this->learners[] = $userId;
         }
@@ -52,7 +52,7 @@ class AddLearners extends Component {
 
     public function removeMemberAssign(string $userId): void
     {
-        if (($key = array_search($userId, $this->learners)) !== false) {
+        if (($key = array_search($userId, $this->learners, true)) !== false) {
             unset($this->learners[$key]);
         }
     }

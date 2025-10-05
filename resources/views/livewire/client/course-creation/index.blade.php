@@ -60,6 +60,7 @@
                                                 name="description"
                                                 :isError="$errors->has('description')"
                                                 info="Markdown is supported. Use it to describe your course in detail."
+                                                :livewireComponentId="$this->getId()"
                                             />
 
                                             <div class="course-field mb--15 edu-bg-gray">
@@ -82,7 +83,8 @@
                                                                     </li>
                                                                     @if (auth()->user()->isInstructor())
                                                                         <li class="nav-item w-100" role="presentation">
-                                                                            <a href="#" id="price-tab"
+                                                                            <a href="#"
+                                                                               id="price-tab"
                                                                                @class(['active' => $activeCourseSettingTab === 'price'])
                                                                                wire:click.prevent="setTab('price')"
                                                                                data-bs-toggle="tab"
@@ -150,7 +152,7 @@
                                                                          role="tabpanel" aria-labelledby="price-tab">
                                                                         <div class="course-field mb--15">
                                                                             <x-client.dashboard.inputs.text
-                                                                                wire:model.number="price"
+                                                                                model="price"
                                                                                 label="Regular Price (₫)"
                                                                                 name="price"
                                                                                 placeholder="₫ Regular Price"
@@ -194,11 +196,17 @@
                                                                     <x-client.dashboard.inputs.text-area
                                                                         wire:model="skills"
                                                                         label="Skills" name="skills"
-                                                                        placeholder="Add your course skills student can gain after your course here."/>
+                                                                        placeholder="List the key skills students will acquire from this course."/>
+
                                                                     <x-client.dashboard.inputs.text-area
                                                                         wire:model="requirements"
                                                                         label="Requirements" name="requirements"
-                                                                        placeholder="Add your course requirements here."/>
+                                                                        placeholder="Specify any prerequisites or requirements for enrolling in this course."/>
+
+                                                                    <x-client.dashboard.inputs.text-area
+                                                                        wire:model="targetAudiences"
+                                                                        label="Who this course is for" name="requirements"
+                                                                        placeholder="Describe the ideal audience for this course."/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -255,148 +263,3 @@
         </div>
     </div>
 </main>
-@script
-<script>
-    new EditorView(
-        {
-            extensions: [
-                lineNumbers(),
-                markdown(),
-                highlightSpecialChars(),
-                EditorView.lineWrapping,
-                EditorView.updateListener.of(update => {
-                    if (update.docChanged) {
-                        $wire.description = update.state.doc.toString();
-                    }
-                }),
-                EditorView.theme({
-                    "&": {
-                        height: "200px",
-                        width: "100%",
-                        border: "1px solid #ddd",
-                        borderRadius: "4px",
-                        padding: "10px",
-                        fontSize: "13px",
-                    },
-                    ".cm-content": {
-                        caretColor: "#000",
-                    },
-                }),
-            ],
-            parent: document.getElementById('description-editor'),
-        }
-    );
-</script>
-@endscript
-
-@push('scripts')
-    <script type="module">
-        document.addEventListener('livewire:initialized', () => {
-            Livewire.on('assignment-programming-ready', () => {
-                const assignmentProgrammingDesc = document.getElementById('description-editor');
-                const courseDescriptionInput = document.getElementById('input-description-editor');
-                if (assignmentProgrammingDesc && !assignmentProgrammingDesc.querySelector('.cm-editor')) {
-                    new EditorView(
-                        {
-                            extensions: [
-                                lineNumbers(),
-                                python(),
-                                highlightSpecialChars(),
-                                EditorView.lineWrapping,
-                                EditorView.updateListener.of(update => {
-                                    if (update.docChanged) {
-                                        courseDescriptionInput.value = update.state.doc.toString();
-                                        courseDescriptionInput.dispatchEvent(new Event('input'));
-                                    }
-                                }),
-                                EditorView.theme({
-                                    "&": {
-                                        height: "200px",
-                                        width: "100%",
-                                        border: "1px solid #ddd",
-                                        borderRadius: "4px",
-                                        padding: "10px",
-                                        fontSize: "13px",
-                                    },
-                                    ".cm-content": {
-                                        caretColor: "#000",
-                                    },
-                                }),
-                            ],
-                            parent: assignmentProgrammingDesc,
-                        }
-                    );
-                }
-            });
-            Livewire.on('assignment-programming-updated', function (data) {
-                const codeTemplates = JSON.parse(data.codeTemplate);
-                const languages = Object.keys(codeTemplates);
-                console.log("Programming languages available:", languages);
-                console.log(codeTemplates);
-                setTimeout(() => {
-                    languages.forEach(function (langKey) {
-                        const editorId = `code-editor-${langKey}`;
-                        const parentElement = document.getElementById(editorId);
-
-                        if (parentElement && !parentElement.querySelector('.cm-editor')) {
-                            let languageExtension;
-                            switch (langKey) {
-                                case 'python':
-                                    languageExtension = python();
-                                    break;
-                                case 'js':
-                                    languageExtension = javascript();
-                                    break;
-                                case 'java':
-                                    languageExtension = java();
-                                    break;
-                                case 'cpp':
-                                    languageExtension = cpp();
-                                    break;
-                                case 'php':
-                                    languageExtension = php();
-                                    break;
-                                default:
-                                    languageExtension = [];
-                            }
-
-                            new EditorView({
-                                extensions: [
-                                    lineNumbers(),
-                                    foldGutter(),
-                                    autocompletion(),
-                                    CodeMirrorHistory(),
-                                    languageExtension,
-                                    highlightActiveLine(),
-                                    highlightActiveLineGutter(),
-                                    oneDark,
-                                    keymap.of([...defaultKeymap, ...historyKeymap]),
-                                    EditorView.lineWrapping,
-                                    EditorView.theme({
-                                        "&": {
-                                            height: "300px",
-                                            width: "100%",
-                                            border: "1px solid #ddd",
-                                            borderRadius: "4px",
-                                            padding: "10px",
-                                            fontSize: "13px",
-                                        },
-                                        ".cm-content": {
-                                            caretColor: "#fff",
-                                        },
-                                    }),
-                                ],
-                                doc: codeTemplates[langKey],
-                                parent: parentElement
-                            });
-                        }
-                    });
-                }, 500);
-            });
-
-            Livewire.on('test', function (data) {
-                console.log(data);
-            })
-        });
-    </script>
-@endpush

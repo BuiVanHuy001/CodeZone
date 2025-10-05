@@ -62,8 +62,8 @@
                                     </div>
                                 </div>
                                 <div class="rbt-card-bottom">
-                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center" href="{{ route('course.learn', [$course->slug, ]) }}">Go
-                                        to course</a>
+                                    <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                       href="{{ route('course.learn', [$course->slug, ]) }}">Go to course</a>
                                 </div>
                             </div>
                         </div>

@@ -12,11 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('comments', static function (Blueprint $table) {
             $table->id();
             $table->morphs('commentable');
             $table->text('content');
 	        $table->foreignId('parent_id')->nullable()->constrained('comments')->cascadeOnDelete();
+            $table->unsignedInteger('like_count')->default(0);
+            $table->unsignedInteger('dislike_count')->default(0);
 
 	        $table->foreignIdFor(User::class)->constrained();
             $table->timestamps();

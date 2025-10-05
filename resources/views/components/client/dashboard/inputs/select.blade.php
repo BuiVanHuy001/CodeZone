@@ -43,7 +43,7 @@
                 @elseif($name === 'languageSelected')
                     @foreach($options as $type)
                         <option @checked(isset($default) && $default === $type)
-                                value="{{ $type }}">{{ \App\Models\ProgrammingAssignmentDetails::$SUPPORTED_LANGUAGES[$type] }}</option>
+                                value="{{ $type }}">{{ \App\Models\ProgrammingProblems::$SUPPORTED_LANGUAGES[$type] }}</option>
                     @endforeach
                 @else
                     @foreach ($options as $key => $label)

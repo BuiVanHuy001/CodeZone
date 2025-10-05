@@ -13,13 +13,12 @@ class Assessment extends Model
 
     public static array $ASSESSMENT_PRACTICE_TYPES = [
 		'quiz' => 'Quiz',
-        'assignment' => 'Assignment',
         'programming' => 'Programming'
 	];
 
     public function questions(): HasMany
     {
-        return $this->hasMany(AssessmentQuestion::class);
+        return $this->hasMany(QuizQuestion::class);
     }
 
 	public function lesson(): BelongsTo
@@ -29,7 +28,7 @@ class Assessment extends Model
 
     public function programmingAssigment(): hasOne
     {
-        return $this->hasOne(ProgrammingAssignmentDetails::class);
+        return $this->hasOne(ProgrammingProblems::class);
     }
 
     public function attempts(): hasMany
@@ -39,7 +38,7 @@ class Assessment extends Model
 
 	public function problemDetails(): hasOne
 	{
-		return $this->hasOne(ProgrammingAssignmentDetails::class, 'assessment_id');
+        return $this->hasOne(ProgrammingProblems::class, 'assessment_id');
 	}
 
     public function getUserAttempts($user): array
@@ -52,8 +51,8 @@ class Assessment extends Model
                 return [
                     'id' => $attempt->id,
                     'created_at' => $attempt->created_at,
-                    'total_questions_count' => $attempt->attemptQuiz?->total_questions_count ?? 0,
-                    'correct_answers_count' => $attempt->attemptQuiz?->correct_answers_count ?? 0,
+                    'total_question_count' => $attempt->attemptQuiz?->total_question_count ?? 0,
+                    'correct_answer_count' => $attempt->attemptQuiz?->correct_answer_count ?? 0,
                     'score' => $attempt->total_score,
                     'is_passed' => $attempt->is_passed,
                 ];

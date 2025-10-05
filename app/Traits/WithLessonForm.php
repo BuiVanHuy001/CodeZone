@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Services\CourseCreation\Builders\LessonTypes\VideoService;
+use App\Services\Course\Create\Builders\LessonTypes\VideoService;
 use App\Validator\NewLessonValidator;
 use Livewire\Attributes\On;
 
@@ -42,7 +42,6 @@ trait WithLessonForm {
             $this->lesson['duration'] = 0;
             $this->lesson['document'] = '';
             $this->lesson['assessment'] = [];
-            unset($this->lesson['practice_assessments']);
             break;
 
         default:
@@ -51,7 +50,6 @@ trait WithLessonForm {
             unset($this->lesson['tmp_video_file_name']);
             $this->lesson['duration'] = 0;
             $this->lesson['document'] = '';
-            $this->lesson['practice_assessments'] = [];
             unset($this->lesson['assessment']);
             break;
         }

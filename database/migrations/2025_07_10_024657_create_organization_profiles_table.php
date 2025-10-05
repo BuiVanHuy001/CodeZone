@@ -11,12 +11,25 @@ return new class extends Migration {
 	 */
 	public function up(): void
 	{
-		Schema::create('organization_profiles', function (Blueprint $table) {
+        Schema::create('organization_profiles', static function (Blueprint $table) {
 			$table->foreignIdFor(User::class)->primary();
 			$table->text('bio')->nullable();
 			$table->text('about_me')->nullable();
-			$table->json('socials_links')->nullable();
-			$table->unsignedSmallInteger('course_count')->default(0)->comment('Number of courses created by the organization and max 65535 courses');
+
+            $table->json('social_links')->nullable();
+
+            $table->mediumInteger('course_count')
+                ->default(0)
+                ->comment('Number of courses created by the organization and max 65535 courses');
+            $table->Integer('student_count')
+                ->default(0)
+                ->comment('Total number of students enrolled in the organization\'s courses and max 2,147,483,647 students');
+            $table->decimal('rating', 3)
+                ->default(0.00)
+                ->comment('Average rating of the organization\'s courses, e.g., 4.50');
+            $table->Integer('review_count')
+                ->default(0)
+                ->comment('Total number of reviews received for the organization\'s courses and max 2,147,483,647 reviews');
 			$table->timestamps();
 		});
 	}

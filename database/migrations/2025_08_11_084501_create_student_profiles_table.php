@@ -11,13 +11,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('student_profiles', function (Blueprint $table) {
+        Schema::create('student_profiles', static function (Blueprint $table) {
             $table->foreignIdFor(User::class)->primary();
 
-            $table->boolean('gender')->comment('men are false because women are always true :))')->nullable();
+            $table->boolean('gender')
+                ->comment('men are false because women are always true :))')->nullable();
             $table->mediumInteger('enrolled_count')->default(0);
             $table->mediumInteger('completed_count')->default(0);
-            $table->date('dob')->comment('Date of Birth')->nullable();
+            $table->date('dob')
+                ->comment('Date of Birth')->nullable();
             $table->json('addition_data')->nullable();
 
             $table->timestamps();

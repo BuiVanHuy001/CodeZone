@@ -237,7 +237,7 @@
              aria-labelledby="importUser"
              data-bs-focus="true"
              wire:ignore.self>
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button"
