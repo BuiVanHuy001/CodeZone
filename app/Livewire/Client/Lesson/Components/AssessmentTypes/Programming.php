@@ -9,7 +9,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
-use JsonException;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -24,9 +23,6 @@ class Programming extends Component
     public string $executionErrors = '';
     public ?Collection $attemptProgrammings;
 
-    /**
-     * @throws JsonException
-     */
     public function mount(): void
     {
         $decodedTemplates = json_decode($this->problem->problemDetails['code_templates'], true, 512, JSON_THROW_ON_ERROR);

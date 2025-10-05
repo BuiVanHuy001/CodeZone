@@ -82,7 +82,7 @@ class LearningService
         return $lastLesson && (string)$lastLesson->id === $lessonId;
     }
 
-    private function areAllLessonsCompleted(Course $course): bool
+    public function areAllLessonsCompleted(Course $course): bool
     {
         $userId = auth()->id();
         $lessons = $this->getOrderedLessons($course);

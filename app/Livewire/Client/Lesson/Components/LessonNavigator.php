@@ -8,6 +8,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Component;
+use App\Models\AssessmentAttempt;
 
 class LessonNavigator extends Component
 {
@@ -17,6 +18,7 @@ class LessonNavigator extends Component
     public ?string $nextId = '';
     public Lesson $currentLesson;
     private LearningService $courseService;
+    public bool $isCompleted = false;
 
     public function boot(): void
     {
@@ -29,21 +31,35 @@ class LessonNavigator extends Component
         $this->nextRoute = $routes['next'] ?? null;
         $this->prevId = $routes['prevId'] ?? null;
         $this->nextId = $routes['nextId'] ?? null;
+        $this->isCompleted = $this->courseService->areAllLessonsCompleted($this->currentLesson->course);
     }
 
     public function nextLesson(): void
     {
         if ($this->currentLesson->type === 'assessment') {
-            $this->swalWarning('Please complete the assessment before proceeding to the next lesson.');
-            return;
+            $assessment = $this->currentLesson->assessment;
+
+            $hasPassed = $assessment && AssessmentAttempt::where('user_id', auth()->id())
+                    ->where('assessment_id', $assessment->id)
+                    ->where('is_passed', true)
+                    ->exists();
+
+            if (!$hasPassed) {
+                $this->swalWarning('Please complete the assessment before proceeding to the next lesson.');
+                return;
+            }
         }
+
         $this->courseService->markLessonComplete($this->currentLesson->id);
-        redirect($this->nextRoute);
+
+        if ($this->nextRoute) {
+            $this->redirect($this->nextRoute, navigate: true);
+        }
     }
 
     public function prevLesson(): void
     {
-        redirect($this->prevRoute);
+        $this->redirect($this->prevRoute, navigate: true);
     }
 
     public function render(): Factory|Application|View

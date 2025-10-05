@@ -73,7 +73,6 @@ class QuizService
 
         return [
             'correct_answers_count' => $correctCount,
-            'score' => $score,
             'is_passed' => $score >= 5,
         ];
     }
