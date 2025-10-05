@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Lesson extends Model
 {
@@ -28,6 +29,18 @@ class Lesson extends Model
     public function module(): BelongsTo
     {
         return $this->belongsTo(Module::class);
+    }
+
+    public function course(): HasOneThrough|Lesson
+    {
+        return $this->hasOneThrough(
+            Course::class,
+            Module::class,
+            'id',
+            'id',
+            'module_id',
+            'course_id'
+        );
     }
 
     public function assessment(): HasOne
@@ -52,12 +65,8 @@ class Lesson extends Model
         }
 
         if ($this->type === 'assessment') {
-            if ($this->type === 'quiz') {
+            if ($this->assessment->type === 'quiz') {
                 return 'help-circle';
-            }
-
-            if ($this->type === 'assignment') {
-                return 'book-open';
             }
 
             return 'code';

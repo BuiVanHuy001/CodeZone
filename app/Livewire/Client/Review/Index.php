@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Client\Review;
 
-use App\Models\Course;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -13,36 +13,56 @@ use Livewire\Attributes\On;
 class Index extends Component
 {
     public Collection $reviews;
-    public bool $isReviewAllowed = false;
-    public Course $course;
+    public bool $canReview = false;
+    public Model $model;
 
     public function mount(): void
     {
         $this->loadReviews();
 
         if (auth()->check()) {
-            $this->isReviewAllowed = $this->determineReviewPermission();
+            $this->canReview = $this->determineReviewPermission();
         }
     }
 
     private function loadReviews(): void
     {
-        $this->reviews = $this->course->reviews()->with('user')->latest()->get();
+        $this->reviews = $this->model->reviews()->with('user')->latest()->get();
     }
 
     private function determineReviewPermission(): bool
     {
-        return auth()->user()->isStudent() &&
-            auth()->user()->enrollments()->where('course_id', $this->course->id)->exists();
+        $user = auth()->user();
+
+        if (!$user->isStudent()) {
+            return false;
+        }
+
+        $hasEnrolled = false;
+        $modelType = get_class($this->model);
+
+        if ($modelType === 'App\Models\Course') {
+            $hasEnrolled = $user->enrollments()->where('course_id', $this->model->id)->exists();
+        } elseif ($modelType === 'App\Models\User' && $this->model->isInstructor()) {
+            $hasEnrolled = $user->enrollments()
+                ->whereHas('course', function ($query) {
+                    $query->where('user_id', $this->model->id);
+                })
+                ->exists();
+        }
+
+        $hasReviewed = $this->model->reviews()->where('user_id', $user->id)->exists();
+
+        return $hasEnrolled && !$hasReviewed;
     }
 
     #[On('review-created')]
     public function refreshReviews(): void
     {
-        $this->course->refresh();
+        $this->model->refresh();
         $this->loadReviews();
         if (auth()->check()) {
-            $this->isReviewAllowed = $this->determineReviewPermission();
+            $this->canReview = $this->determineReviewPermission();
         }
     }
 

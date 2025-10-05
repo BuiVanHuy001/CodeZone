@@ -5,35 +5,35 @@
         </div>
         <div class="media align-items-center">
             <div class="thumbnail">
-                <a href="">
-                    <img src="{{ $avatar }}"
+                <a href="{{ $instructor->profileUrl }}">
+                    <img src="{{ $instructor->avatar }}"
                          alt="Instructor Avatar">
                 </a>
             </div>
             <div class="media-body">
                 <div class="author-info">
                     <h5 class="title">
-                        <a class="hover-flip-item-wrapper" href="./profile">{{ $name }}</a>
+                        <a class="hover-flip-item-wrapper" href="{{ $instructor->profileUrl }}">{{ $instructor->name }}</a>
                     </h5>
-                    <span class="b3 subtitle">{{ $jobTitle }}</span>
+                    <span class="b3 subtitle">{{ $instructor->currentJob }}</span>
                     <ul class="rbt-meta mb--20 mt--10">
-                        <li><i class="fa fa-star color-warning"></i>{{ $reviewCount }}<span
-                                class="rbt-badge-5 ml--5">{{ $rating }} Rating</span></li>
-                        <li><i class="feather-users"></i>{{ $studentCount }}</li>
-                        <li><i class="feather-video"></i>{{ $courseCount }}</li>
+                        <li><i class="fa fa-star color-warning"></i>{{ $instructor->rating }} rating<span
+                                class="rbt-badge-5 ml--5">{{ $instructor->reviewCountText }}</span></li>
+                        <li><i class="feather-users"></i>{{ $instructor->studentCountText }}</li>
+                        <li><i class="feather-video"></i>{{ $instructor->courseCountText }}</li>
                     </ul>
                 </div>
                 <div class="content has-show-more">
-                    @if($aboutMe)
+                    @if($instructor->aboutMe)
                         <div class="has-show-more-inner-content" style="max-height: 200px">
-                            {!! $aboutMe !!}
+                            {!! $instructor->aboutMe !!}
                         </div>
                         <div class="rbt-show-more-btn">Show more</div>
                     @endif
 
-                    @if($socials)
+                    @if($instructor->socialLinks)
                         <x-client.share-ui.social-link-list
-                            :socials="$socials"
+                            :socials="$instructor->socialLinks"
                         />
                     @endif
                 </div>

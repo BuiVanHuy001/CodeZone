@@ -12,8 +12,11 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::factory(100)->create();
+        $users = User::factory(300)->create();
         foreach ($users as $user) {
+            $user->update([
+                'avatar' => 'https://avatar.iran.liara.run/public/' . random_int(1, 70),
+            ]);
             $user->studentProfile()->create([
                 'gender' => fake()->boolean(),
                 'dob' => fake()->date(),
@@ -23,6 +26,9 @@ class UserSeeder extends Seeder
             'role' => 'instructor',
         ]);
         foreach ($instructor as $user) {
+            $user->update([
+                'avatar' => 'https://static.generated.photos/vue-static/face-generator/landing/wall/' . random_int(1, 24) . '.jpg'
+            ]);
             $user->instructorProfile()->create([
                 'bio' => fake()->paragraph(),
                 'about_me' => fake()->paragraphs(3, true),

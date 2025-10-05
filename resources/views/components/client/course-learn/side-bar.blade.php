@@ -33,7 +33,7 @@
                                     @foreach($module->lessons->sortBy('position') as $lesson)
                                         <li class="d-flex justify-content-between align-items-center">
                                             <div class="course-content-left">
-                                                <a @class(['active' => $currentLesson == $lesson->id])
+                                                <a @class(['active' => $currentLesson === $lesson->id])
                                                    href="{{ route('course.learn.lesson', [$courseSlug, $lesson->id]) }}"
                                                 >
                                                     <i class="feather-{{ $lesson->getIcon() }}"></i>
@@ -41,7 +41,13 @@
                                                 </a>
                                             </div>
                                             <div class="course-content-right">
-                                                <span class="min-lable">{{ $lesson->getIcon() === 'video' ? $lesson->convertDurationToString() : '' }}</span>
+                                                <span class="min-lable">
+                                                    @if($lesson->getIcon() === 'video')
+                                                        {{ $lesson->convertDurationToString() }}
+                                                    @elseif($lesson->getIcon() === 'help-circle')
+                                                        {{ $lesson->assessment->question_count . ' ' .\Illuminate\Support\Str::plural('question', $lesson->assessment->question_count) }}
+                                                    @endif
+                                                </span>
                                                 <input
                                                     type="checkbox"
                                                     class="position-relative"

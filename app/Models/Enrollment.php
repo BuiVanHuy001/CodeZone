@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Enrollment extends Model {
     protected $guarded = [];
 
+    protected $primaryKey = null;
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     public static array $STATUSES = [
         'not_started' => 'Not Started',
         'in_progress' => 'In Progress',

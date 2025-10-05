@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Services\CourseCreation\Builders\LessonTypes\VideoService;
+use App\Services\Course\Create\Builders\LessonTypes\VideoService;
 use App\Validator\NewLessonValidator;
 use Livewire\Attributes\On;
 

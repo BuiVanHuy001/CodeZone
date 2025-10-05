@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\CourseCreation\Builders\LessonTypes;
+namespace App\Services\Course\Create\Builders\LessonTypes;
 
 use getID3;
 use Illuminate\Support\Facades\File;

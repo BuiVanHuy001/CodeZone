@@ -9,26 +9,28 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Model;
 
 class Create extends Component
 {
-    public int $max = 5;
-    public ?int $selected = null;
     #[Validate('required|integer|min:1|max:5')]
     public int $rating = 0;
+
     #[Validate('required|string|max:512')]
     public string $content = '';
+
+    public ?int $selected = null;
     private readonly ReviewService $reviewService;
-    public Course $course;
+    public Model $model;
 
     public function boot(): void
     {
         $this->reviewService = app(ReviewService::class);
     }
 
-    public function mount(Course $course): void
+    public function mount(Model $model): void
     {
-        $this->course = $course;
+        $this->model = $model;
     }
 
     public function submitReview(): void
@@ -37,7 +39,7 @@ class Create extends Component
             $this->validate();
             $this->reviewService->store(
                 user: auth()->user(),
-                courseId: $this->course->id,
+                model: $this->model,
                 rating: $this->rating,
                 content: $this->content
             );
@@ -45,6 +47,7 @@ class Create extends Component
             $this->swal('Success', 'Review submitted successfully.');
             $this->dispatch('review-created');
         } catch (\Throwable $exception) {
+            dd($exception);
             $this->swalError('Error', 'Something went wrong');
         }
     }

@@ -51,8 +51,8 @@ class Assessment extends Model
                 return [
                     'id' => $attempt->id,
                     'created_at' => $attempt->created_at,
-                    'total_questions_count' => $attempt->attemptQuiz?->total_questions_count ?? 0,
-                    'correct_answers_count' => $attempt->attemptQuiz?->correct_answers_count ?? 0,
+                    'total_question_count' => $attempt->attemptQuiz?->total_question_count ?? 0,
+                    'correct_answer_count' => $attempt->attemptQuiz?->correct_answer_count ?? 0,
                     'score' => $attempt->total_score,
                     'is_passed' => $attempt->is_passed,
                 ];

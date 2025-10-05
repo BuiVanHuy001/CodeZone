@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -236,8 +237,8 @@ class User extends Authenticatable
         return $query->where('email', 'like', "%$email%");
     }
 
-    public function reviews(): hasMany
+    public function reviews(): MorphMany
     {
-        return $this->hasMany(Review::class, with("user_id"));
+        return $this->MorphMany('App\Models\Review', with('reviewable'));
     }
 }

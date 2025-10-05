@@ -3,174 +3,174 @@
 namespace App\Livewire\Client\Lesson\Components\AssessmentTypes;
 
 use App\Models\AssessmentAttempt;
-use App\Models\QuizQuestion;
-use App\Models\QuizAttempt;
-use Carbon\Carbon;
+use App\Services\Assessment\QuizService;
+use App\Services\Course\LearningService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use JsonException;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class Quiz extends Component
 {
     public $quiz;
-    public bool $isShowPreviousAttempts = true;
+    private QuizService $quizService;
+    private LearningService $learningService;
+    public Collection $questions;
     public array $results = [];
+    public array $resultDetails = [];
     public array $userAnswers = [];
+    public $currentQuestion;
+    public int $currentIndexQuestion = 0;
+    public int $totalQuestions;
     public array $correctAnswersMap = [];
-    public $selectedAttempt;
+    public bool $isShowPreviousAttempts = true;
+    public bool $isShowQuestionNavigator = false;
+
+    public bool $canSubmit = false;
+    public bool $canNext = true;
+    public bool $canBack = false;
+    public bool $canNextLesson = false;
+    public bool $isCompleted = false;
+
+    public string $nextLessonRoute = '';
+
+    public function boot(): void
+    {
+        $this->quizService = app(
+            abstract: QuizService::class,
+            parameters: ['quiz' => $this->quiz]
+        );
+        $this->learningService = app(LearningService::class);
+    }
 
     public function mount(): void
     {
-        $this->correctAnswersMap = collect($this->quiz->questions)->mapWithKeys(function ($question) {
-            $options = collect($question->options);
-
-            if ($question->isMultipleAnswers()) {
-                return [
-                    $question->id => $options
-                        ->where('is_correct', true)
-                        ->pluck('id')
-                        ->sort()
-                        ->values()
-                        ->all()
-                ];
-            }
-
-            return [
-                $question->id => $options
-                    ->where('is_correct', true)
-                    ->pluck('id')
-                    ->first()
-            ];
-        })->all();
-    }
-
-    /**
-     * @throws JsonException
-     */
-    public function showAttemptDetail($attemptId): void
-    {
-        $this->selectedAttempt = QuizAttempt::where('assessment_attempt_id', $attemptId)->first();
-        if (!$this->selectedAttempt) {
-            return;
-        }
-
-        $rawAnswers = json_decode($this->selectedAttempt->user_answers, true, 512, JSON_THROW_ON_ERROR);
-        $evaluatedAnswers = [];
-
-        foreach ($rawAnswers as $questionId => $answer) {
-            $correct = (array)($this->correctAnswersMap[$questionId] ?? []);
-            $given = (array)$answer;
-            $question = QuizQuestion::with('options')->find($questionId);
-            $options = collect($question->options);
-
-            $answerDetails = [];
-            foreach ($given as $ans) {
-                $option = $options->firstWhere('id', $ans);
-                if ($option) {
-                    $answerDetails[] = [
-                        'value' => $ans,
-                        'question' => $question->content,
-                        'content' => $option['content'] ?? null,
-                        'explanation' => $option['explanation'] ?? '',
-                        'is_correct' => in_array($ans, $correct, true),
-                    ];
-                }
-            }
-
-            sort($correct);
-            sort($given);
-
-            $evaluatedAnswers[$questionId] = [
-                'user_answers' => $answerDetails,
-                'is_correct' => ($given === $correct),
-            ];
-        }
-        $this->selectedAttempt['answers'] = $evaluatedAnswers;
-        $this->dispatch('open-attempt-modal');
+        $this->correctAnswersMap = $this->quizService->getCorrectAnswersMap();
+        $this->questions = $this->quizService->getQuestions();
+        $this->currentQuestion = $this->questions[$this->currentIndexQuestion];
+        $this->totalQuestions = $this->quiz->question_count;
+        $this->isCompleted = AssessmentAttempt::where('assessment_id', $this->quiz->id)
+            ->where('user_id', auth()->id())
+            ->where('is_passed', true)
+            ->exists();
     }
 
     public function addAnswers(int $questionId, int $answerId): void
     {
-        $question = collect($this->quiz->questions)->firstWhere('id', $questionId);
+        $question = $this->questions->firstWhere('id', $questionId);
+        if (!$question) return;
 
-        if (!$question) {
-            return;
-        }
+        $answerContent = $question['options'][$answerId]['content'] ?? null;
+        if (!$answerContent) return;
 
-        if (!$question->isMultipleAnswers()) {
-            $this->userAnswers[$questionId] = $answerId;
-        } else {
-            if (!isset($this->userAnswers[$questionId])) {
-                $this->userAnswers[$questionId] = [];
-            }
-
-            $currentAnswers = &$this->userAnswers[$questionId];
-
-            if (in_array($answerId, $currentAnswers, true)) {
-                $currentAnswers = array_diff($currentAnswers, [$answerId]);
+        if ($question['is_multiple_answers']) {
+            $this->userAnswers[$questionId] ??= [];
+            if (in_array($answerContent, $this->userAnswers[$questionId], true)) {
+                $this->userAnswers[$questionId] = array_values(array_diff($this->userAnswers[$questionId], [$answerContent]));
             } else {
-                $currentAnswers[] = $answerId;
+                $this->userAnswers[$questionId][] = $answerContent;
             }
-            sort($currentAnswers);
+
+            if (empty($this->userAnswers[$questionId])) {
+                unset($this->userAnswers[$questionId]);
+            }
+        } else {
+            $this->userAnswers[$questionId] = [$answerContent];
         }
+
+        $this->canSubmit = count($this->userAnswers) === $this->questions->count() && !$this->canNext;
     }
 
-    /**
-     * @throws JsonException
-     */
     public function quizSubmit(): void
     {
-        $correctAnswers = $this->countCorrectAnswers();
-        $totalQuestions = count($this->quiz->questions);
-        $score = $totalQuestions > 0 ? round(($correctAnswers / $totalQuestions) * 10, 2) : 0;
+        $correctAnswersMap = $this->quizService->getCorrectAnswersMap();
+        $this->results = $this->quizService->calculateResult($this->userAnswers, $correctAnswersMap);
 
-        $assessmentAttempt = AssessmentAttempt::create([
-            'assessment_id' => $this->quiz->id,
-            'user_id' => auth()->id(),
-            'total_score' => $score,
-            'is_passed' => $score >= 5,
-        ]);
+        if ($this->results['is_passed']) {
+            $course = $this->quiz->lesson->course;
+            $this->learningService->markLessonComplete($this->quiz->lesson_id);
+            if ($this->results['correct_answers_count'] === $this->totalQuestions) {
+                session()->flash('swal', [
+                    'icon' => 'success',
+                    'title' => 'Perfect! You answered all questions correctly.',
+                    'timer' => 3000,
+                ]);
 
-        $quizAttempt = $assessmentAttempt->attemptQuiz()->create([
-            'correct_answers_count' => $correctAnswers,
-            'total_questions_count' => $totalQuestions,
-            'user_answers' => json_encode($this->userAnswers, JSON_THROW_ON_ERROR),
-        ]);
+                $this->redirectRoute('course.learn.lesson', [
+                    'course' => $course->slug,
+                    'id' => $this->learningService->getAdjacentLessonId($course, $this->quiz->lesson_id)
+                ]);
+            } else {
+                $this->canNextLesson = true;
+                $this->swal('Congratulations! You have passed the quiz.');
 
-        $this->results = [
-            'id' => $quizAttempt->assessment_attempt_id,
-            'correctAnswersCount' => $correctAnswers,
-            'score' => $score,
-            'result' => $score >= 5 ? 'pass' : 'fail',
-            'testTime' => Carbon::now(),
-        ];
+                $this->nextLessonRoute = route('course.learn.lesson', [
+                    'course' => $course->slug,
+                    'id' => $this->learningService->getAdjacentLessonId($course, $this->quiz->lesson_id)
+                ]);
+            }
+        } else {
+            $this->swalError('You did not pass the quiz. Please try again.');
+        }
+
+        $this->resultDetails = $this->quizService->generateQuizResult($this->userAnswers);
+        $this->quizService->saveAttempt($this->results);
     }
 
-    private function countCorrectAnswers(): int
+    public function nextQuestion(): void
     {
-        $correctAnswerCount = 0;
-        foreach ($this->userAnswers as $questionId => $answer) {
-            $correctAnswer = $this->correctAnswersMap[$questionId] ?? null;
-            if (is_array($answer)) {
-                sort($answer);
+        if ($this->currentIndexQuestion < $this->totalQuestions - 1) {
+            $questionId = $this->currentQuestion['id'];
+            $hasValidAnswer = false;
+
+            if (array_key_exists($questionId, $this->userAnswers)) {
+                $answer = $this->userAnswers[$questionId];
+
+                if (is_array($answer)) {
+                    $hasValidAnswer = count($answer) > 0;
+                } else {
+                    $hasValidAnswer = $answer !== null;
+                }
             }
-            if ($answer === $correctAnswer) {
-                $correctAnswerCount++;
+
+            if ($hasValidAnswer) {
+                $this->currentIndexQuestion++;
+                $this->currentQuestion = $this->questions[$this->currentIndexQuestion];
+                $this->canBack = $this->currentIndexQuestion > 0;
+                $this->canNext = $this->currentIndexQuestion < $this->totalQuestions - 1;
+                $this->canSubmit = count($this->userAnswers) === $this->questions->count() && !$this->canNext;
+            } else {
+                $this->swalError('Please select an answer before proceeding to the next question.');
             }
         }
-        return $correctAnswerCount;
     }
 
-    public function hidePreviousAttemptsTable(): void
+    public function prevQuestion(): void
+    {
+        if ($this->currentIndexQuestion > 0) {
+            $this->currentIndexQuestion--;
+            $this->currentQuestion = $this->questions[$this->currentIndexQuestion];
+            $this->canBack = $this->currentIndexQuestion > 0;
+            $this->canNext = true;
+            $this->canSubmit = count($this->userAnswers) === $this->questions->count() && !$this->canNext;
+        }
+    }
+
+    public function startQuiz(): void
     {
         $this->isShowPreviousAttempts = false;
+        $this->isShowQuestionNavigator = true;
+        $this->canBack = false;
+        $this->canNext = $this->totalQuestions > 1;
+        $this->canSubmit = false;
     }
 
-    public function showPreviousAttemptsTable(): void
+    public function redirectToNextLesson(): void
     {
-        $this->isShowPreviousAttempts = true;
+        if ($this->nextLessonRoute) {
+            $this->redirect($this->nextLessonRoute);
+        }
     }
 
     public function render(): View|Application|Factory

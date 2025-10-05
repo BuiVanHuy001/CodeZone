@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('orders', static function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->decimal('total_price', 10, 3);
+            $table->decimal('total_price', 13, 3);
 
             $table->enum('status', Order::$STATUSES);
             $table->string('payment_method', 10)->nullable();

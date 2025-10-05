@@ -7,7 +7,7 @@
             @csrf
             <div class="col-12">
                 <div class="rating-stars">
-                    @for($i = $max; $i >= 1; $i--)
+                    @for($i = 5; $i >= 1; $i--)
                         <input value="{{ $i }}" name="rating" id="star{{ $i }}" type="radio" wire:model="rating"/>
                         <label title="{{ $i }} stars" for="star{{ $i }}">
                             <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2"

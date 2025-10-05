@@ -4,26 +4,34 @@ namespace App\Http\Controllers\Base;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
-use App\Services\CourseLearn\CourseService;
+use App\Services\Course\CatalogService;
+use App\Services\Course\LearningService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class BaseCourseController extends Controller
 {
-    protected CourseService $courseService;
+    protected LearningService $learningService;
+    protected CatalogService $catalogService;
 
     public function __construct()
     {
-        $this->courseService = app(CourseService::class);
+        $this->learningService = app(LearningService::class);
+        $this->catalogService = app(CatalogService::class);
     }
 
-    public function show(Course $course): View|Application|Factory
+    public function show(string $slug): View|Application|Factory
     {
-        $canAccess = $this->courseService->canAccess($course);
-
-        return view('client.pages.course-details',
-            compact('course', 'canAccess'));
+        try {
+            $course = Course::where('slug', $slug)->firstOrFail();
+            $course = $this->catalogService->prepareDetails($course);
+            $canAccess = Gate::allows('access', $course);
+            return view('client.pages.course-details',
+                compact('course', 'canAccess'));
+        } catch (\Exception $e) {
+            return view('client.errors.404');
+        }
     }
 }

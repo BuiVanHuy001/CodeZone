@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="row g-5">
-                @foreach($courses as $course)
+                @foreach($popularCourses as $course)
                     <x-client.share-ui.course-card
                         :$course
                     />

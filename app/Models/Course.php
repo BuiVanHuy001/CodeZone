@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class Course extends Model
 {
@@ -50,7 +50,6 @@ class Course extends Model
         );
     }
 
-
     public function category(): belongsTo
     {
         return $this->belongsTo(Category::class);
@@ -61,9 +60,9 @@ class Course extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function reviews(): hasMany
+    public function reviews(): MorphMany
     {
-        return $this->hasMany(Review::class, with("reviewable_id"));
+        return $this->morphMany('App\Models\Review', 'reviewable');
     }
 
     public function batches(): hasMany
@@ -84,6 +83,9 @@ class Course extends Model
     public function getThumbnailPath(): string
     {
         if ($this->thumbnail) {
+            if (filter_var($this->thumbnail, FILTER_VALIDATE_URL)) {
+                return $this->thumbnail;
+            }
             return Storage::url('course/thumbnails/' . $this->thumbnail);
         }
         return asset('images/others/thumbnail-placeholder.svg');
@@ -95,48 +97,6 @@ class Course extends Model
             return 'Free';
         }
 
-        return number_format($this->price) . '₫';
-    }
-
-    public function getIntroductionVideo(): string
-    {
-        $introductionVideoUrl = '';
-        foreach ($this->modules as $module) {
-            foreach ($module->lessons as $lesson) {
-                if ($lesson->preview) {
-                    $introductionVideoUrl = $lesson->video_file_name;
-                    break 2;
-                }
-            }
-        }
-        return Storage::url('course/videos/' . $introductionVideoUrl);
-    }
-
-    public function getQuizCount(): int
-    {
-        $quiz_count = 0;
-        foreach ($this->modules as $module) {
-            foreach ($module->lessons as $lesson) {
-                if (($lesson->type === 'assessment') && $lesson->assessment->type === 'quiz') {
-                    $quiz_count++;
-                }
-            }
-        }
-        return $quiz_count;
-    }
-
-    public function getFormattedLesson(): string
-    {
-        return $this->lesson_count . ' ' . Str::plural('Lesson', $this->lesson_count);
-    }
-
-    public function getFormattedEnrollment(): string
-    {
-        return $this->enrollments()->count() . ' ' . Str::plural('student', $this->enrollments()->count());
-    }
-
-    public function getFormattedReview(): string
-    {
-        return $this->reviews()->count() . ' ' . Str::plural('review', $this->reviews()->count());
+        return number_format((int)$this->price) . '₫';
     }
 }

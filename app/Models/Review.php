@@ -33,9 +33,14 @@ class Review extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function course(): BelongsTo
+    public function scopeCourse($query)
     {
-        return $this->belongsTo(Course::class, 'reviewable_id');
+        return $query->where('reviewable_type', Course::class);
+    }
+
+    public function scopeInstructor($query)
+    {
+        return $query->where('reviewable_type', User::class);
     }
 
     public function getFormattedCount(int $count, string $type = 'short'): string

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\CourseCreation\Factories;
+namespace App\Services\Course\Create\Factories;
 
 use App\Models\Course;
 use App\Models\Module;

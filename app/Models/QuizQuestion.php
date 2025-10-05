@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class QuizQuestion extends Model
 {
-	protected $guarded = [];
+    protected $guarded = [];
 
-	public static array $TYPES = [
-		'multiple_choice' => 'Multiple Choice',
-	];
+    protected $casts = [
+        'options' => 'array',   // Ensures $this->options is an array
+    ];
 
-    public $casts = [
-        'options' => 'array',
+    public static array $TYPES = [
+        'multiple_choice' => 'Multiple Choice',
     ];
 
     public static array $EXPECTED_COLUMNS = [
@@ -41,7 +41,9 @@ class QuizQuestion extends Model
     public function isMultipleAnswers(): bool
     {
         $answerCount = 0;
-        foreach ($this->options as $option) {
+        $decodeOptions = json_decode($this->options, true, 512, JSON_THROW_ON_ERROR);
+
+        foreach ($decodeOptions as $option) {
             if ($option['is_correct']) {
                 $answerCount++;
             }

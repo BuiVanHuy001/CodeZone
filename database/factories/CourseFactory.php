@@ -7,15 +7,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
 use Random\RandomException;
 
-/**
- * @extends Factory<Course>
- */
 class CourseFactory extends Factory
 {
+    protected $model = Course::class;
+
     /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
      * @throws RandomException
      */
     public function definition(): array
@@ -27,7 +23,7 @@ class CourseFactory extends Factory
             'description' => fake()->paragraphs(3, true),
             'price' => fake()->randomFloat(2, 100_000, 1_000_000),
             'level' => fake()->randomElement(Course::$LEVELS),
-            'status' => fake()->randomElement(Course::$STATUSES),
+            'status' => 'published',
             'category_id' => fake()->randomElement(DB::table('categories')->pluck('id')->toArray()),
             'review_count' => 0,
             'lesson_count' => 0,

@@ -1,12 +1,3 @@
-/* --- Normal (từ nặng đến nhẹ) --- */
-@font-face {
-    font-family: "SF Pro Display";
-    src: url("../../fonts/SFPRODISPLAYBLACK.OTF") format("opentype");
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
-
 @font-face {
     font-family: "SF Pro Display";
     src: url("../../fonts/SFPRODISPLAYBOLD.OTF") format("opentype");
@@ -31,7 +22,6 @@
     font-display: swap;
 }
 
-/* --- Italic (từ nặng đến nhẹ) --- */
 @font-face {
     font-family: "SF Pro Display";
     src: url("../../fonts/SFPRODISPLAYBLACKITALIC.OTF") format("opentype");

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\CourseCreation\Builders\AssessmentTypes;
+namespace App\Services\Course\Create\Builders\AssessmentTypes;
 
 use App\Imports\QuizzesImport;
 use Illuminate\Support\Facades\File;
