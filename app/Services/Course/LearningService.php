@@ -4,7 +4,7 @@ namespace App\Services\Course;
 
 use App\Models\Assessment;
 use App\Models\AssessmentAttempt;
-use App\Models\AttemptProgramming;
+use App\Models\ProgrammingAttempt;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\TrackingProgress;
@@ -144,23 +144,25 @@ class LearningService
 
     public function markLessonComplete(string $lessonId): void
     {
-        $userId = auth()->id();
+        if (auth()->user()->isStudent()) {
+            $userId = auth()->id();
 
-        $progress = TrackingProgress::where('user_id', $userId)
-            ->where('lesson_id', $lessonId)
-            ->first();
+            $progress = TrackingProgress::where('user_id', $userId)
+                ->where('lesson_id', $lessonId)
+                ->first();
 
-        if ($progress) {
-            if (!$progress->is_completed) {
-                $progress->update(['is_completed' => true]);
+            if ($progress) {
+                if (!$progress->is_completed) {
+                    $progress->update(['is_completed' => true]);
+                }
+                return;
             }
-            return;
-        }
 
-        TrackingProgress::create([
-            'user_id' => $userId,
-            'lesson_id' => $lessonId,
-            'is_completed' => true,
-        ]);
+            TrackingProgress::create([
+                'user_id' => $userId,
+                'lesson_id' => $lessonId,
+                'is_completed' => true,
+            ]);
+        }
     }
 }

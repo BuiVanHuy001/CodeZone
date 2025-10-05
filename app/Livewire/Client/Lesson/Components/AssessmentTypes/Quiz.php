@@ -98,7 +98,7 @@ class Quiz extends Component
                 ]);
 
                 $this->redirectRoute('course.learn.lesson', [
-                    'course' => $course->slug,
+                    'slug' => $course->slug,
                     'id' => $this->learningService->getAdjacentLessonId($course, $this->quiz->lesson_id)
                 ]);
             } else {
@@ -106,7 +106,7 @@ class Quiz extends Component
                 $this->swal('Congratulations! You have passed the quiz.');
 
                 $this->nextLessonRoute = route('course.learn.lesson', [
-                    'course' => $course->slug,
+                    'slug' => $course->slug,
                     'id' => $this->learningService->getAdjacentLessonId($course, $this->quiz->lesson_id)
                 ]);
             }

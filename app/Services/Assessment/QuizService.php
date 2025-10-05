@@ -80,11 +80,13 @@ class QuizService
 
     public function saveAttempt(array $results): void
     {
-        AssessmentAttempt::create([
-            'assessment_id' => $this->quiz->id,
-            'user_id' => auth()->id(),
-            'is_passed' => $results['is_passed'],
-        ]);
+        if (auth()->user()->isStudent()) {
+            AssessmentAttempt::create([
+                'assessment_id' => $this->quiz->id,
+                'user_id' => auth()->id(),
+                'is_passed' => $results['is_passed'],
+            ]);
+        }
     }
 
     public function generateQuizResult(array $userAnswers): array

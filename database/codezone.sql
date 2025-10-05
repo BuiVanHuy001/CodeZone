@@ -6,49 +6,49 @@ VALUES (1, 'Taylor Otwell', 'taylorotwell', 'taylorotwell@codezone.com', '2025-0
         'https://avatars.githubusercontent.com/u/463230?v=4', '2025-07-16 07:57:22', '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
                             created_at, updated_at)
-VALUES (2, 'Nguyễn Hoàng Bảo Quân', 'nguyen-hoang-bao-quan', 'baoquan@zalo.com', '2025-07-16 07:57:22',
+VALUES (2, 'Nguyễn Hoàng Bảo Quân', 'nguyen-hoang-bao-quan', 'baoquan@example.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'UhBpv0OLwa', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/e/b/c/4/14/120/46ccb5a6f617d44a0deb5b7c78cc57dd.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
                             created_at, updated_at)
-VALUES (3, 'Kim Oanh', 'kim-oanh', 'oanh@zalo.com', '2025-07-16 07:57:22',
+VALUES (3, 'Kim Oanh', 'kim-oanh', 'oanh@example.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '32ZwAnKIxo', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/f/7/3/9/16/120/cb49ec6773223cb8ec670fa5809cf03c.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
                             created_at, updated_at)
-VALUES (4, 'Nhã Linh', 'nha-linh', 'nhalinh@zalo.com', '2025-07-16 07:57:22',
+VALUES (4, 'Nhã Linh', 'nha-linh', 'nhalinh@example.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'FFPlAw1Qus', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/c/9/f/9/7/120/38b60c8ee3e418225e8271febf7ca1c2.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
                             created_at, updated_at)
-VALUES (5, 'Bảo Anh', 'bao-anh', 'baoanh@zalo.com', '2025-07-16 07:57:22',
+VALUES (5, 'Bảo Anh', 'bao-anh', 'baoanh@example.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'zozbCI3VAl', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/5/5/f/c/9/120/52e2d7d39ba0a7df493334af72c494b4.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
                             created_at, updated_at)
-VALUES (6, 'Thanh Thúy', 'thanh-thuy', 'thanhthuy@zalo.com', '2025-07-16 07:57:22',
+VALUES (6, 'Thanh Thúy', 'thanh-thuy', 'thanhthuy@example.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'JEnfFjxjIV', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/f/d/3/f/11/120/bf87c651c9479056f13f557e64a813e3.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
                             created_at, updated_at)
-VALUES (7, 'Lê Thị Mỹ Hằng', 'le-thi-my-hang', 'lethimyhang@zalo.com', '2025-07-16 07:57:22',
+VALUES (7, 'Lê Thị Mỹ Hằng', 'le-thi-my-hang', 'lethimyhang@example.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'bhyS6IuZDt', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/5/6/f/8/14/120/0c08f5c75cd695f3344a653c392efdf7.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
                             created_at, updated_at)
-VALUES (8, 'Tu Pham', 'tu-pham', 'tu@zalo.com', '2025-07-16 07:57:22',
+VALUES (8, 'Tu Pham', 'tu-pham', 'tu@example.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'CBLQxl6CO0', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/f/5/c/e/9/120/02c783d24913b12cb949206f4bbafe31.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
                             created_at, updated_at)
-VALUES (9, 'Rylee John', 'rylee-john', 'berge.thurman@zalo.com', '2025-07-16 07:57:22',
+VALUES (9, 'Rylee John', 'rylee-john', 'berge.thurman@example.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '99xmuytpg1', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/a/e/d/7/143/120/c5546614ce8d2fe81cc02eda9fff2d40.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');

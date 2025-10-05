@@ -28,6 +28,6 @@ class AssessmentAttempt extends Model
 
     public function attemptProgrammings(): hasMany
     {
-        return $this->hasMany(AttemptProgramming::class, 'assessment_attempt_id');
+        return $this->hasMany(ProgrammingAttempt::class, 'assessment_attempt_id');
     }
 }
