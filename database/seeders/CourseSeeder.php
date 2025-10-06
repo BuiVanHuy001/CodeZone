@@ -7,6 +7,7 @@ use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Collection;
 use JsonException;
 use Random\RandomException;
 use Throwable;
@@ -14,11 +15,11 @@ use Throwable;
 class CourseSeeder extends Seeder
 {
     public array $videoFileNames = [
-        'intro_to_python.mp4',
-        'javascript_basics.mp4',
-        'what_is_python.mp4',
-        'sorting_in_python.mp4',
-        'python_popularity.mp4'
+        '7sPOPfpibvEJyIi17SpvHFZ9wDOYAy-metaIzQgQlVJTEQgJiBDSEHMo1kgSU1BR0UgVcybzIFORyBEVcyjTkcgTk9ERS5KUyBWT8ybzIFJIERPQ0tFUiAtIERvY2tlciBTaWXMgnUgRGXMgsyDIENobyBCZWdpbm5lcnMgVHXMm8yAIEEgxJFlzILMgW4gWiAtIFlvdVR1YmUubXA0-.mp4',
+        'bWhqhns8CfSTDPeAdSYAPyxAswTwnn-metaSG93IHRvIFNvcnQgTGlzdHMgaW4gUHl0aG9uIC0gUHl0aG9uIFR1dG9yaWFsIGZvciBBYnNvbHV0ZSBCZWdpbm5lcnMgLSBNb3NoIC0gWW91VHViZS5tcDQ=-.mp4',
+        'cpVWHa7zPDRyBWpdKN9MEjS6Gc9iMT-metaV2hhdCBpcyBQeXRob24tIFdoeSBQeXRob24gaXMgU28gUG9wdWxhci0gLSBZb3VUdWJlLm1wNA==-.mp4',
+        'Hwvn1EhU5OBptQBQMecYjsN6NpL83T-metaTWFwIGFuZCBGaWx0ZXIgRnVuY3Rpb25zIGluIFB5dGhvbiAtIFB5dGhvbiBUdXRvcmlhbCBmb3IgQWJzb2x1dGUgQmVnaW5uZXJzIC0gTW9zaCAtIFlvdVR1YmUubXA0-.mp4',
+        'kfA5MwEHnyBHWFlYALBHxewpzNXmfS-metaIzEgRE9DS0VSIExBzIAgR0nMgCAtIFRBzKNJIFNBTyBDSFXMgU5HIFRBIExBzKNJIENBzILMgE4gRE9DS0VSIC0gLSBEb2NrZXIgU2llzIJ1IERlzILMgyBDaG8gTmd1zJtvzJvMgGkgTW_Mm8yBaSBCYcyGzIF0IMSQYcyCzIB1IC0gWW91VHViZS5tcDQ=-.mp4'
     ];
 
     public array $skills = [
@@ -132,45 +133,92 @@ class CourseSeeder extends Seeder
         'Freelancers aiming to offer programming as a new service.',
     ];
 
-    /**
-     * @throws RandomException
-     */
+    public array $thumbnailFileNames = [
+        'a4fge8HjKLpBCxwz1nPQo9sT5uVZY2mR-metaODU5MTQ4X2FydGlzdGljLnBng-2025.webp',
+        'c9hVw2MNTyGQRk3bZ6sL1uJpAeXF4oD5-metaMTEzNjc5X2Vjb21tZXJjZS5qcGc-2025.webp',
+        'b7kPq5RSfXZALm3jDcWvU0iYtE6gNnOH-metaNDAzMjE5X2Z1bmdhbS5wbmc-2025.webp',
+        'd1rXz6LpUTjIYgCq2eVh9kBfM0sN7dOZ-metaOTAxNTM4X21hcmtldGluZy5wbmc-2025.webp',
+        'e8sTy1GfWbOIHZk7QcD9xUaN3vP6lYJR-metaMTIzOTg3X3RyYXZlbC5qcGc-2025.webp',
+        'f3uVb9XmKjRPLo4iTdQz6sGhA5cE1yFW-metaNzQxNTYwX3NjaWVuY2UucG5n-2025.webp',
+        'g6wZa0CdEuXFh8yBvJpL2tM4rNqS5iOG-metaMjIwMzQ1X2Zhc2hpb24uanBn-2025.webp',
+        'h0xBc7YdDkGvP2uMz9lFw4sTjO5aI8QE-metaODExNzYyX2hlYWx0aC5wbmc-2025.webp',
+        'i5yDe2ZgFmHwQ1tNr0oKs3pLb6cR7jSA-metaNDQ1MjczX3Rlc3Rpbmcud2VicA-2025.webp',
+        'j2zEf4AgaIiXx0vOs8rPu7qKy5wM9nBT-metaNTg3MTIzX2Jsb2dnZXIuSlBn-2025.webp',
+        'k7aFg9BhcJjYuR1pQw6lVz8sT3mN2oCU-metaMjc5MDQxX2RhdGFzY2llbmNlX3d0dG1sbi5wbmc-2025.webp',
+        'JsGqggVjHuF9OYBGwHyTO6WoPbbpy3kD-metaNTIxMzExX2x5ZGt5Zi53ZWJw-.webp',
+        'vIEKksQGMIN42SCBOUo8CzGwhfaqHMTd-metaODEwODc4X2VrcmtiYy53ZWJw-.webp',
+        'WPllbkj9olZP9dJBYaFAl0IneNJXUBEC-metaMzEyNjMxX292aW5laC53ZWJw-.webp',
+        'z5OEDuqVIMuydBqSz2TiNH4Aq1a01Rbs-metaMzkzNjc4X2NobHV0bi53ZWJw-.webp',
+        'uzm3u0c3c71igbxpQWvd7GmbdcXC40A7-metaNDM2MzE0X2FzZWp2cC53ZWJw-.webp',
+        'gYpaPhQ3guTJKrtBHkDrLyybkhlbDhWJ-metaNTA5NDk0X2pub29raC53ZWJw-.webp',
+        '6vxAmZ5pcpuD6UgTxFb3WmKnTykbXMMM-metaMjgxOTgzX2hndnlycy53ZWJw-.webp',
+        'ogXSfjdwNzy3kV7fIHHevweD3SVCRnT8-metaMjc3OTM5X25uYXdubC53ZWJw-.webp',
+        'iXXUYXydCXl6tutNg5AiR8n2Hfabdrcj-metaOTQwMTMyX3h3d21tZC53ZWJw-.webp',
+        'MdfpkRzllCroUJ0K0nTWfKMySikD7QVB-metaNTU5ODA1X2hienpsai53ZWJw-.webp',
+        'fa7tPX1TJsjqBQwC2RRLpWUXvUIdA6HW-metaMzYzOTQ0X3J0Y2RvcC53ZWJw-.webp',
+        '9dnPPECpNyz2PoYnc02xtsNbOQtcjX2X-metaNjAyNTQxX3RiZ2xraC53ZWJw-.webp',
+        '1mx9F4xw8cGr3JWlJW6jd6hSvNNtcWVk-metaNjMzMDUyX25qenpjdC53ZWJw-.webp',
+        'fp9IGaUU0fC0wrwCfFj6gfQ5bO5OEI8A-metaNzU3NjQ1X3JyZ2tzZy53ZWJw-.webp',
+        'UGx7sun7neRRTuEDquYBfJioyd7xIncm-metaMjg2NTQxX25hbGJjai53ZWJw-.webp',
+        'YlscXOTnunH031fZaEUoMrBUGhakNZwc-metaMjY5OTQ2X2VyZ25pZS53ZWJw-.webp',
+        'edluciOZuDRFakwtuq6bfuraeeziEmmq-metaNTkxNTk3X2plbmp0Zy53ZWJw-.webp',
+        'JoE8KboCKgFkvnvU3NFlKW4V8M7ndlGX-metaMTUxNDk0X2pkbGV3by53ZWJw-.webp',
+        'lRtnvQPgLES54eajvEmNv81sxJsCtaUG-metaMzA5NjIzX2lwamJpci53ZWJw-.webp',
+        'tu2dih3DTf7EAqrsiRsZs1eNTAYs5hKK-metaNjMyMDUyX3d0dG1sbi53ZWJw-.webp',
+    ];
+
     public function run(): void
     {
         $instructors = User::where('role', 'instructor')->get();
+
+        $courseStates = [
+            ['count' => 50, 'status' => 'published'],
+            ['count' => 20, 'status' => 'draft'],
+            ['count' => 20, 'status' => 'pending'],
+            ['count' => 30, 'status' => 'rejected'],
+        ];
+
         $seeder = $this;
 
-        $courses = Course::factory()
-            ->count(50)
-            ->state(function () use ($seeder, $instructors) {
-                return [
-                    'user_id' => $instructors->random()->id,
-                    'skills' => $seeder->generateSkills(),
-                    'requirements' => $seeder->generateRequirements(),
-                    'target_audiences' => $seeder->generateTargetAudience(),
-                ];
-            })
-            ->create();
+        $courses = [];
+        foreach ($courseStates as $state) {
+            $courses[] = Course::factory($state['count'])
+                ->state(function () use ($instructors, $state, $seeder) {
+                    return [
+                        'user_id' => $instructors->random()->id,
+                        'status' => $state['status'],
+                        'skills' => $seeder->generateSkills(),
+                        'requirements' => $seeder->generateRequirements(),
+                        'target_audiences' => $seeder->generateTargetAudience(),
+                    ];
+                })
+                ->create();
+        }
+
+        $courses = collect($courses)->flatten(1);
 
         foreach ($courses as $course) {
             $moduleCount = random_int(3, 10);
             for ($i = 1; $i <= $moduleCount; $i++) {
                 $lessonCount = random_int(3, 10);
+                if (!isset($course->id)) {
+                    dd($course);
+                }
                 $module = $this->generateModule($lessonCount, $i, $course->id);
                 for ($j = 1; $j <= $lessonCount; $j++) {
                     $this->generateLesson($module->id, $j);
                 }
             }
+            $thumbnail = array_shift($this->thumbnailFileNames);
+
             $course->update([
+                'thumbnail' => $thumbnail,
                 'duration' => $course->modules->sum('duration'),
                 'lesson_count' => $course->modules->sum('lesson_count')
             ]);
         }
     }
 
-    /**
-     * @throws JsonException
-     */
     private function generateSkills(): string
     {
         $skills = fake()->randomElements(
@@ -181,9 +229,6 @@ class CourseSeeder extends Seeder
         return json_encode(array_map(static fn($skill) => ['name' => $skill], $skills), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
     }
 
-    /**
-     * @throws JsonException
-     */
     private function generateRequirements(): string
     {
         $level = fake()->randomElement(array_keys($this->requirements));
@@ -195,9 +240,6 @@ class CourseSeeder extends Seeder
         return json_encode(array_map(static fn($req) => ['name' => $req], $requirements), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
     }
 
-    /**
-     * @throws JsonException
-     */
     private function generateTargetAudience(): string
     {
         $audience = fake()->randomElements(
@@ -208,9 +250,6 @@ class CourseSeeder extends Seeder
         return json_encode(array_map(static fn($aud) => ['name' => $aud], $audience), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
     }
 
-    /**
-     * @throws RandomException
-     */
     private function generateModule(int $lessonCount, int $position, string $courseId): Module
     {
         return Module::create([
@@ -222,9 +261,6 @@ class CourseSeeder extends Seeder
         ]);
     }
 
-    /**
-     * @throws RandomException
-     */
     private function generateLesson(string|int $moduleId, int $position): void
     {
         $type = fake()->randomElement(array_keys(Lesson::$TYPES));

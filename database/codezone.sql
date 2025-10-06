@@ -52,74 +52,14 @@ VALUES (9, 'Rylee John', 'rylee-john', 'berge.thurman@example.com', '2025-07-16 
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '99xmuytpg1', 'student', 'active',
         'https://s120-ava-talk.zadn.vn/a/e/d/7/143/120/c5546614ce8d2fe81cc02eda9fff2d40.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
-                            created_at, updated_at)
-VALUES (10, 'Cao Đẳng Việt Mỹ', 'cao-dang-viet-my', 'huy423210063@caodangvietmy.edu.vn', '2025-07-16 07:57:22',
-        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '3H6eUsprpP', 'organization', 'active',
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr4wRHjRQ3yRY15tizUO350Rw4oBjdTzhUsg&s',
-        '2025-07-16 07:57:22', '2025-07-16 07:57:22');
+
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
                             created_at, updated_at)
 VALUES (11, 'Bùi Văn Huy', 'bui-van-huy', 'work.buivanhuy@gmail.com', null,
         '$2y$12$9NhmMntQNhq/YtUAMtUIBuQxSfUAZtCPxOAIUdN7mveLkjfT1QVdS',
         'AWldtr0y1i9ECS3FFgv3gQDqfJ0dFOqhoPn33qiN6h3h3EJrux3c63auriWo', 'student', 'active',
-        '68d511fc888b89.12751051.jpg', '2025-09-25 09:57:16', '2025-09-25 09:57:16');
-INSERT INTO codezone.organization_profiles (user_id, bio, about_me, social_links, course_count, student_count, rating,
-                                            review_count, created_at, updated_at)
-VALUES (10, '# 🎓 **TRƯỜNG CAO ĐẲNG VIỆT MỸ (APC)**
-*Tiên phong đào tạo nguồn nhân lực chất lượng cao theo chuẩn quốc tế*
+        'https://avatars.githubusercontent.com/u/11849?v=4', '2025-09-25 09:57:16', '2025-09-25 09:57:16');
 
----
-
-## 🌟 **GIỚI THIỆU CHUNG**
-Trực thuộc Tập đoàn giáo dục Quốc tế Á Châu, **Cao đẳng Việt Mỹ (APC)** là một trong những trường cao đẳng uy tín nhất tại Việt Nam với hơn **15 năm kinh nghiệm** đào tạo đa ngành. Trường áp dụng mô hình giáo dục **"Học đi đôi với hành"**, kết hợp giữa lý thuyết chuyên sâu và thực tiễn doanh nghiệp, giúp sinh viên tự tin làm việc ngay sau tốt nghiệp.
-
----
-
-## 🏆 **THẾ MẠNH NỔI BẬT**
-
-### 👨‍🏫 **Đội ngũ giảng viên ưu tú**
-- **100% giảng viên có bằng Thạc sĩ trở lên**, nhiều thầy cô là tiến sĩ, chuyên gia đầu ngành với **hơn 10 năm kinh nghiệm** giảng dạy và làm việc thực tế.
-- **Giảng viên doanh nghiệp**: Hơn 30% giờ học được giảng dạy bởi các CEO, quản lý cấp cao từ tập đoàn như FPT, Samsung, Unilever...
-- **Phương pháp sư phạm hiện đại**: Áp dụng mô hình **Blended Learning** (kết hợp online-offline) và **Project-based Learning** (học qua dự án thực tế).
-
-### 🖥️ **Cơ sở vật chất đẳng cấp**
-- **Phòng lab công nghệ cao**: Máy tính cấu hình mạnh, phòng mô phỏng ngành Du lịch - Khách sạn, studio Thiết kế đồ họa...
-- **Thư viện số**: Hơn 50.000 tài liệu điện tử, học liệu mở (MOOC) từ các đại học Mỹ, Anh.
-- **Hệ thống E-learning APC 4.0**: Nền tảng học trực tuyến tích hợp AI, cho phép sinh viên học mọi lúc mọi nơi.
-
-### 🤝 **Hợp tác doanh nghiệp sâu rộng**
-- **500+ đối tác tuyển dụng**: Các tập đoàn đa quốc gia (Microsoft, Nestlé), doanh nghiệp Việt (Viettel, VinGroup)... cam kết tiếp nhận thực tập và tuyển dụng.
-- **Chương trình "Một sinh viên - Một việc làm"**: 95% sinh viên APC có việc làm đúng ngành với mức lương **8-25 triệu đồng/tháng** ngay năm đầu tiên.
-
----
-
-## 📊 **CÁC NGÀNH ĐÀO TẠO TIÊU BIỂU**
-
-| Ngành học                  | Thời gian đào tạo | Học phí (VNĐ/năm) | Điểm nổi bật                     |
-|----------------------------|-------------------|-------------------|-----------------------------------|
-| **Công nghệ thông tin**    | 2.5 năm          | 22–25 triệu       | Chuyên sâu AI, Blockchain, DevOps |
-| **Digital Marketing**      | 2 năm            | 20–22 triệu       | Được Google Certificated          |
-| **Thiết kế đa phương tiện**| 2.5 năm          | 23–25 triệu       | Học với Adobe Creative Cloud      |
-| **Quản trị Khách sạn 5*** | 2 năm            | 24–26 triệu       | Thực tập tại InterContinental, Marriott |
-
----
-
-## 💰 **CHÍNH SÁCH HỖ TRỢ**
-- **Học bổng "Tài năng APC"**: Giảm **30–100%** học phí cho thí sinh đạt IELTS 6.5+ hoặc có thành tích xuất sắc.
-- **Trả góp 0% lãi**: Hỗ trợ qua ngân hàng VPBank, Vietcombank.
-- **Ưu đãi nhóm**: Giảm thêm 5% khi đăng ký theo nhóm 3 người.
-
-> *"APC không chỉ đào tạo chuyên môn mà còn rèn luyện tư duy khởi nghiệp, ngoại ngữ và kỹ năng toàn cầu để sinh viên thích ứng với mọi môi trường làm việc."*  ', 'Trường Cao đẳng Việt Mỹ (American Polytechnic College – APC) là một trong những cơ sở giáo dục uy tín tại Việt Nam, chuyên đào tạo đa ngành từ Quản trị kinh doanh, Công nghệ thông tin đến Dược, Điều dưỡng và Ngôn ngữ. Với cơ sở vật chất hiện đại, chương trình đào tạo chuẩn quốc tế và đội ngũ giảng viên giàu kinh nghiệm, trường mang đến môi trường học tập năng động, gắn liền với thực tiễn doanh nghiệp. Học phí tại đây được đánh giá hợp lý, đi kèm nhiều chính sách hỗ trợ như học bổng (10–50%) và chương trình vay ưu đãi, giúp sinh viên giảm bớt gánh nặng tài chính.
-APC nổi bật với mô hình "thực học – thực hành", liên kết với hơn 500 doanh nghiệp để đảm bảo sinh viên có cơ hội thực tập và việc làm ngay sau tốt nghiệp. Các ngành "hot" như Công nghệ thông tin (điểm chuẩn 2025: 23.0), Marketing (22.5 điểm), và Thiết kế đồ họa (21.5 điểm) thu hút đông đảo thí sinh nhờ triển vọng nghề nghiệp rộng mở và thu nhập hấp dẫn (từ 10–20 triệu đồng/tháng sau 1–2 năm kinh nghiệm). Trường cũng đào tạo hệ 9+, liên thông đại học, phù hợp với nhiều đối tượng học viên.
-Với các cơ sở tại Hà Nội, TP.HCM và Cần Thơ, APC tạo điều kiện thuận lợi cho sinh viên cả nước. Phương thức xét tuyển linh hoạt (học bạ) và nhiều đợt tuyển sinh trong năm giúp thí sinh dễ dàng tiếp cận.',
-        '{
-            "github": null,
-            "website": "https://www.caodangvietmy.edu.vn",
-            "youtube": "@caodangvietmyhochiminh",
-            "facebook": "americanpolytechnic",
-            "linkedin": "company/caodangvietmy"
-        }', 0, 0, 0.00, 0, '2025-08-09 14:49:51', '2025-08-11 09:24:57');
 INSERT INTO codezone.instructor_profiles (user_id, bio, about_me, current_job, social_links, course_count,
                                           student_count, rating, review_count, created_at, updated_at)
 VALUES (1, '## **Taylor Otwell – Laravel Creator Profile**
@@ -281,6 +221,7 @@ VALUES (24, 'CI/CD', 'cicd', 21, NULL, NULL, 0, NULL, NOW(), NOW());
 INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
 VALUES (25, 'Other', 'other', NULL, NULL, NULL, 0, NULL, NOW(), NOW());
+
 INSERT INTO codezone.courses (id, title, slug, heading, description, thumbnail, price, enrollment_count, review_count,
                               lesson_count, rating, duration, level, status, category_id, skills, requirements,
                               target_audiences, user_id, created_at, updated_at)
@@ -326,6 +267,7 @@ Hãy bắt đầu hành trình cùng **Docker 2025: Từ Cơ Bản Đến Thành
         '"{\\"0\\":{\\"name\\":\\"Không cần kiến thức về Container trước đây – khóa học này dành cho người mới hoàn toàn.\\"},\\"2\\":{\\"name\\":\\"Máy tính Windows, macOS hoặc Linux có kết nối Internet.\\"},\\"4\\":{\\"name\\":\\"Kỹ năng cơ bản về máy tính như sử dụng trình duyệt và cài đặt phần mềm.\\"},\\"6\\":{\\"name\\":\\"Tinh thần học hỏi và tư duy logic.\\"}}"',
         '"{\\"0\\":{\\"name\\":\\"Người mới bắt đầu Chưa biết gì về Container nhưng muốn học Docker từ đầu.\\"},\\"2\\":{\\"name\\":\\"Lập trình viên & Người học DevOps Muốn container hóa ứng dụng để triển khai nhanh chóng và dễ dàng.\\"},\\"4\\":{\\"name\\":\\"Người muốn chuyển nghề Từ lĩnh vực khác sang IT hoặc Cloud\\\\/DevOps.\\"},\\"6\\":{\\"name\\":\\"Người yêu công nghệ Bất kỳ ai muốn hiểu Docker để tự động hóa và triển khai ứng dụng hiệu quả hơn.\\"},\\"8\\":{\\"name\\":\\"Nhóm & Doanh nghiệp Muốn chuẩn hóa môi trường dev\\\\/test\\\\/prod và cải thiện quy trình CI\\\\/CD.\\"}}"',
         1, '2025-09-25 09:41:19', '2025-09-25 09:58:25');
+
 INSERT INTO codezone.courses (id, title, slug, heading, description, thumbnail, price, enrollment_count, review_count,
                               lesson_count, rating, duration, level, status, category_id, skills, requirements,
                               target_audiences, user_id, created_at, updated_at)

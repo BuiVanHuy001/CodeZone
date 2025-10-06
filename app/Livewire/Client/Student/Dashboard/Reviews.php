@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Client\Student\Dashboard;
 
-use App\Models\Review;
+use App\Services\Review\ReviewService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -15,11 +15,10 @@ class Reviews extends Component
     public Collection $courseReviews;
     public Collection $instructorReviews;
 
-    public function mount(): void
+    public function mount(ReviewService $reviewService): void
     {
-        $this->courseReviews = Review::course()->where('user_id', auth()->id())->get();
-        $this->instructorReviews = Review::instructor()->where('user_id', auth()->id())->get();
-        dd($this->courseReviews, $this->instructorReviews);
+        $this->courseReviews = $reviewService->getCourseReviewsByStudent(auth()->user());
+        $this->instructorReviews = $reviewService->getInstructorReviewsByStudent(auth()->user());
     }
 
     #[Layout('components.layouts.dashboard')]

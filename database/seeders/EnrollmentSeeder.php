@@ -23,7 +23,7 @@ class EnrollmentSeeder extends Seeder
             'status' => 'active',
         ])->get();
 
-        $courses = Course::all();
+        $courses = Course::whereNotIn('status', ['rejected', 'draft', 'pending'])->get();
 
         $goodCourses = $courses->random(8);
         $badCourses = $courses->diff($goodCourses)->random(6);
@@ -32,6 +32,11 @@ class EnrollmentSeeder extends Seeder
 
         foreach ($students as $student) {
             $enrolledCourses = $courses->random(random_int(0, 30));
+
+            $student->studentProfile()->updateOrCreate(
+                ['user_id' => $student->id],
+                ['enrolled_count' => $enrolledCourses->count()]
+            );
 
             $order = Order::create([
                 'total_price' => $enrolledCourses->sum('price'),
@@ -46,6 +51,14 @@ class EnrollmentSeeder extends Seeder
                     'course_id' => $course->id,
                 ]);
                 $status = fake()->randomElement(array_keys(Enrollment::$STATUSES));
+                if ($status === 'completed') {
+                    $student->load('studentProfile');
+                    if ($student->studentProfile) {
+                        $student->studentProfile->update([
+                            'completed_count' => $student->studentProfile->completed_count + 1
+                        ]);
+                    }
+                }
                 $student->enrollments()->updateOrCreate(
                     ['course_id' => $course->id, 'user_id' => $student->id],
                     ['status' => $status]
@@ -54,7 +67,7 @@ class EnrollmentSeeder extends Seeder
                 $this->generateProgressTracking($status, $course, $student->id);
 
                 if ($goodCourses->contains($course)) {
-                    $rating = random_int(4, 5);
+                    $rating = random_int(3, 5);
                 } elseif ($badCourses->contains($course)) {
                     $rating = random_int(1, 3);
                 } else {
@@ -68,7 +81,7 @@ class EnrollmentSeeder extends Seeder
 
                 $isReviewInstructor = fake()->boolean(40);
                 if ($isReviewInstructor) {
-                    $instructorRating = random_int(3, 5);
+                    $instructorRating = random_int(1, 5);
                     $reviewSeeder->createReview($student->id, $course->author, $instructorRating);
                 }
             }
@@ -97,9 +110,9 @@ class EnrollmentSeeder extends Seeder
      */
     private function generateProgressTracking(string $status, Course $course, string $userId): void
     {
-        if ($status === 'in_progress') {
-            $lessons = $course->lessons->pluck('id')->toArray();
+        $lessons = $course->lessons->pluck('id')->toArray();
 
+        if ($status === 'in_progress') {
             shuffle($lessons);
             $completedLessonCount = random_int(1, $course->lesson_count - 1);
             for ($i = 0; $i < $completedLessonCount; $i++) {
@@ -112,7 +125,6 @@ class EnrollmentSeeder extends Seeder
         }
 
         if ($status === 'completed') {
-            $lessons = $course->lessons();
             foreach ($lessons as $lessonId) {
                 TrackingProgress::create([
                     'is_completed' => true,

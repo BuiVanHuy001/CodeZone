@@ -104,25 +104,6 @@ class User extends Authenticatable
         return self::$STATUSES[$this->status]['label'] ?? 'Unknown';
     }
 
-    public function calculateCourseProgress(Course $course): float|int
-    {
-        $totalLessons = $course->lesson_count;
-
-        if ($totalLessons === 0) {
-            return 0;
-        }
-
-        $completedLessons = $this
-            ->progressTracking()
-            ->whereHas('lesson', function ($query) use ($course) {
-                $query->whereIn('module_id', $course->modules->pluck('id'));
-            })
-            ->where('is_completed', true)
-            ->count();
-
-        return round(($completedLessons / $totalLessons) * 100, 2);
-    }
-
     public function organizationProfile(): HasOne
     {
         return $this->hasOne(OrganizationProfile::class, 'user_id');

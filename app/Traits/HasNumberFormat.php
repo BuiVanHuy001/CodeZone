@@ -25,4 +25,8 @@ trait HasNumberFormat
         return number_format($number, 0, ',', '.') . $symbol;
     }
 
+    public function formatCount(int $count, string $word): string
+    {
+        return $count . ' ' . str($word)->plural($count);
+    }
 }

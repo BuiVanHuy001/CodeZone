@@ -22,13 +22,12 @@ class DatabaseSeeder extends Seeder
             $this->call(UserSeeder::class);
             $this->call(CourseSeeder::class);
             $this->call(EnrollmentSeeder::class);
-            $this->call(ReviewSeeder::class);
             $instructors = User::where('role', 'instructor')->get();
             foreach ($instructors as $instructor) {
                 $instructorProfile = $instructor->instructorProfile;
 
                 $instructorProfile->student_count = $instructor->courses->sum('enrollment_count');
-                $instructorProfile->course_count = $instructor->courses->count();
+                $instructorProfile->course_count = $instructor->courses->where('status', 'published')->count();
                 $instructorProfile->review_count = $instructor->reviews->count();
                 $instructorProfile->rating = $instructor->reviews->avg('rating') ?? 0;
                 $instructorProfile->save();

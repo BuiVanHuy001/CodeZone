@@ -8,6 +8,7 @@ use App\Models\ProgrammingAttempt;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\TrackingProgress;
+use App\Models\User;
 
 class LearningService
 {
@@ -165,4 +166,24 @@ class LearningService
             ]);
         }
     }
+
+    public function calculateCourseProgressPercentage(User $user, Course $course): float|int
+    {
+        $totalLessons = $course->lesson_count;
+
+        if ($totalLessons === 0) {
+            return 0;
+        }
+
+        $completedLessons = $user
+            ->progressTracking()
+            ->whereHas('lesson', function ($query) use ($course) {
+                $query->whereIn('module_id', $course->modules->pluck('id'));
+            })
+            ->where('is_completed', true)
+            ->count();
+
+        return round(($completedLessons / $totalLessons) * 100, 2);
+    }
+
 }

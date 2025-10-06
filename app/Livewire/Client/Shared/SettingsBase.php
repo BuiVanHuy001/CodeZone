@@ -4,6 +4,7 @@ namespace App\Livewire\Client\Shared;
 
 use App\Models\InstructorProfile;
 use App\Models\OrganizationProfile;
+use App\Models\StudentProfile;
 use App\Services\TraditionalLogin\AuthenticationService;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Title;
@@ -46,10 +47,12 @@ class SettingsBase extends Component
                     ['user_id' => $this->user->id],
 
                 );
-            } else {
+            } elseif ($this->user->isInstructor()) {
                 $this->profile = InstructorProfile::create(
                     ['user_id' => $this->user->id]
                 );
+            } else {
+                $this->profile = StudentProfile::create(['user_id' => $this->user->id]);
             }
         }
         $this->aboutMe = $this->profile->about_me ?? '';
@@ -157,15 +160,14 @@ class SettingsBase extends Component
             'password.current' => 'required|min:8',
             'password.new' => 'required|min:8|same:password.confirmation',
             'password.confirmation' => 'required|min:8',
-        ],
-            [
-                'password.current.required' => 'Current password is required.',
-                'password.new.required' => 'New password is required.',
-                'password.new.min' => 'New password must be at least 8 characters.',
-                'password.new.same' => 'New password and confirmation do not match.',
-                'password.confirmation.required' => 'Please confirm your new password.',
-                'password.confirmation.min' => 'Confirmation password must be at least 8 characters.',
-            ]);
+        ], [
+            'password.current.required' => 'Current password is required.',
+            'password.new.required' => 'New password is required.',
+            'password.new.min' => 'New password must be at least 8 characters.',
+            'password.new.same' => 'New password and confirmation do not match.',
+            'password.confirmation.required' => 'Please confirm your new password.',
+            'password.confirmation.min' => 'Confirmation password must be at least 8 characters.',
+        ]);
 
         if (!Hash::check($this->password['current'], $this->user->password)) {
             $this->addError('password.current', 'Current password is incorrect.');

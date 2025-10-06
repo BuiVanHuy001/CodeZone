@@ -66,11 +66,10 @@ php artisan key:generate
 # Run database migrations
 php artisan migrate
 
-# (Optional) Import sample database
-# Execute SQL script from `database/codezone.sql`
+# (Optional) Import sample database seeders
 php artisan db:seed
 # Replace the public folder in storage/app with the one from Google Drive: 
-# https://drive.google.com/drive/folders/1XWXXeOEyQhFFiNq9L3uZWrGWRnVz2evV?usp=sharing
+# https://drive.google.com/drive/folders/1goptWKpEjREzeQdbbpVFHoQiBXGrM9TH?usp=sharing
 
 # Start development servers
 php artisan serve & npm run dev
@@ -80,11 +79,10 @@ php artisan serve & npm run dev
 
 ## 🔐 Default Login Accounts (if seeded)
 
-| Role         | Email                     | Password |
-|--------------|---------------------------|----------|
-| Student      | oanh@zalo.com             | password |
-| Instructor   | taylorotwell@codezone.com | password |
-| Organization | caodang@vietmy.com        | password |
+| Role       | Email                    | Password |
+|------------|--------------------------|----------|
+| Student    | work.buivanhuy@gmail.com | password |
+| Instructor | taylorotwell             | password |
 
 ---
 
