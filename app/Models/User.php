@@ -76,7 +76,7 @@ class User extends Authenticatable
 
     public function organizations(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'organization_users', 'user_id', 'organization_id');
+        return $this->belongsToMany(__CLASS__, 'organization_users', 'user_id', 'organization_id');
     }
 
     public function batchEnrollments(): hasMany
@@ -149,6 +149,11 @@ class User extends Authenticatable
     public function isStudent(): bool
     {
         return $this->role === 'student';
+    }
+
+    public function isAdmin(): bool
+    {
+        return in_array($this->role, ['admin', 'super_admin']);
     }
 
     public function isMemberOfOrganization(string $userId, string $organizationId): bool

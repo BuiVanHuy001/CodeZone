@@ -2391,18 +2391,12 @@ VALUES ('392ecdc3-e577-416e-9d31-f8890104cd80', 658000.000, 'completed', 'momo',
     "partnerCode": "MOMOBKUN20180529",
     "responseTime": "1758794302496"
 }', 11, '2025-09-25 09:57:21', '2025-09-25 09:58:25');
-INSERT INTO codezone.orders (id, total_price, status, payment_method, payment_info, user_id, created_at, updated_at)
-VALUES ('6fe19593-34dd-4cf3-bb52-e602e3344833', 279000.000, 'cart', null, null, 11, '2025-09-25 15:29:56',
-        '2025-09-25 15:29:56');
 INSERT INTO codezone.order_items (id, current_price, order_id, course_id, created_at, updated_at)
 VALUES (1, 389000.000, '392ecdc3-e577-416e-9d31-f8890104cd80', '23670677-ad80-49df-b199-4b1918acc562',
         '2025-09-25 09:57:21', '2025-09-25 09:57:21');
 INSERT INTO codezone.order_items (id, current_price, order_id, course_id, created_at, updated_at)
 VALUES (2, 269000.000, '392ecdc3-e577-416e-9d31-f8890104cd80', '37803ab9-7e43-4cad-93e2-a7e60b5e5c87',
         '2025-09-25 09:57:23', '2025-09-25 09:57:23');
-INSERT INTO codezone.order_items (id, current_price, order_id, course_id, created_at, updated_at)
-VALUES (3, 279000.000, '6fe19593-34dd-4cf3-bb52-e602e3344833', 'ab472e85-984d-42a1-abaa-0cbd68e500fa',
-        '2025-09-25 15:29:56', '2025-09-25 15:29:56');
 INSERT INTO codezone.enrollments (course_id, user_id, status, created_at, updated_at)
 VALUES ('23670677-ad80-49df-b199-4b1918acc562', 11, 'not_started', '2025-09-25 09:58:25', '2025-09-25 09:58:25');
 INSERT INTO codezone.enrollments (course_id, user_id, status, created_at, updated_at)

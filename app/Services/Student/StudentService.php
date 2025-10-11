@@ -44,6 +44,12 @@ readonly class StudentService
         return $infos;
     }
 
+    public function prepareBasicDetails(User $student): User
+    {
+        $student->avatar = $student->getAvatarPath();
+        return $student;
+    }
+
     public function getPurchases(): Collection
     {
         $orders = Order::where('user_id', auth()->id())

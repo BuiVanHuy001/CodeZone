@@ -11,6 +11,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/images/favicon.ico') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('swal::index')
+    @stack('styles')
     <title>{{ $title ?? 'CodeZone' }}</title>
 </head>
 
@@ -45,9 +46,12 @@
                 @elseif($lesson->type === 'assessment')
                     <x-client.course-learn.assessment-types :assessment="$lesson->assessment"/>
                 @endif
-            </div>
 
+                    <livewire:client.lesson.components.comment.comment-area :$lesson/>
+
+            </div>
             <livewire:client.lesson.components.lesson-navigator :current-lesson="$lesson"/>
+
         </div>
         <div class="rbt-progress-parent">
             <svg class="rbt-back-circle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">

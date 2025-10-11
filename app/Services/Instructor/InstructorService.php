@@ -34,6 +34,13 @@ readonly class InstructorService
         return $instructor;
     }
 
+    public function prepareBasicDetails(User $instructor): User
+    {
+        $instructor->avatar = $instructor->getAvatarPath();
+        $instructor->profileUrl = route('instructor.details', $instructor->slug);
+        return $instructor;
+    }
+
     public function getInstructorOverviewData(User $instructor): array
     {
         $publishedCourses = $this->catalogService->getCoursesByAuthor($instructor);
