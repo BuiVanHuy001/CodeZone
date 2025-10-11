@@ -63,89 +63,8 @@
                                 <input class="disabled" id="lastname" type="text" value="{{ $user->email }}">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="rbt-form-group">
-                                <label for="bio">About me</label>
-                                <textarea cols="20" rows="5" wire:model.lazy="aboutMe">{{ $aboutMe }}</textarea>
-                                <small style="margin-top: -5px; display: block"><i class="feather-info"></i> A brief
-                                    description about yourself.</small>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="rbt-form-group">
-                                <label for="bio">Biography</label>
-                                <div id="bio-editor" wire:ignore></div>
-                                <input type="hidden" id="bio-input" wire:model.lazy="bio">
-                                <small class="d-block"><i class="feather-info"></i> This will
-                                    be displayed on your public profile. Markdown is supported.</small>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="col-12 row">
-                        <h5>Social accounts</h5>
-                        <div class="col-4">
-                            <div class="rbt-form-group">
-                                <label for="facebook">Facebook</label>
-                                <input wire:model.blur="socialLinks.facebook" id="facebook" type="url" placeholder="https://facebook.com/">
-                                @if(isset($socialLinks['facebook']))
-                                    <small class="d-block mb-3" style="margin-top: -15px">
-                                        <a href="https://facebook.com/{{ $socialLinks['facebook'] }}" target="_blank"><i class="feather-facebook"></i>/{{ $socialLinks['facebook'] }}
-                                        </a>
-                                    </small>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="rbt-form-group">
-                                <label for="linkedin">Linkedin</label>
-                                <input wire:model.blur="socialLinks.linkedin" id="linkedin" type="url" placeholder="https://linkedin.com/">
-                                @if(isset($socialLinks['linkedin']))
-                                    <small class="d-block mb-3" style="margin-top: -15px">
-                                        <a href="https://linkedin.com/{{ $socialLinks['linkedin'] }}" target="_blank"><i class="feather-linkedin"></i>/{{ $socialLinks['linkedin'] }}
-                                        </a>
-                                    </small>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="rbt-form-group">
-                                <label for="website">Website</label>
-                                <input wire:model.blur="socialLinks.website" id="website" type="url" placeholder="https://website.com/">
-                                @if(isset($socialLinks['website']))
-                                    <small class="d-block mb-3" style="margin-top: -15px">
-                                        <a href="https://{{ $socialLinks['website'] }}" target="_blank"><i class="feather-globe"></i>{{ $socialLinks['website'] }}
-                                        </a>
-                                    </small>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="rbt-form-group">
-                                <label for="github"><i class="feather-github"></i> Github</label>
-                                <input wire:model.blur="socialLinks.github" id="github" type="url" placeholder="https://github.com/">
-                                @if(isset($socialLinks['github']))
-                                    <small class="d-block mb-3" style="margin-top: -15px">
-                                        <i class="feather-link"></i> Link:
-                                        <a href="https://github.com/{{ $socialLinks['github'] }}" target="_blank" wire:text="socialLinks.github"></a>
-                                    </small>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="col-4">
-                            <div class="rbt-form-group">
-                                <label for="youtube"><i class="feather-youtube"></i> Youtube</label>
-                                <input wire:model.blur="socialLinks.youtube" id="youtube" type="url" placeholder="https://www.youtube.com/">
-                                @if (isset($socialLinks['youtube']))
-                                    <small class="d-block mb-3" style="margin-top: -15px">
-                                        <i class="feather-link"></i> Link:
-                                        <a href="https://www.youtube.com/{{ $socialLinks['youtube'] }}" target="_blank" wire:text="socialLinks.youtube"></a>
-                                    </small>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
                     @if ($isDirty)
                         <div class="col-12 mt--20">
                             <div class="rbt-form-group">

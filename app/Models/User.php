@@ -76,7 +76,7 @@ class User extends Authenticatable
 
     public function organizations(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'organization_users', 'user_id', 'organization_id');
+        return $this->belongsToMany(__CLASS__, 'organization_users', 'user_id', 'organization_id');
     }
 
     public function batchEnrollments(): hasMany
@@ -102,25 +102,6 @@ class User extends Authenticatable
     public function getStatusLabelAttribute(): string
     {
         return self::$STATUSES[$this->status]['label'] ?? 'Unknown';
-    }
-
-    public function calculateCourseProgress(Course $course): float|int
-    {
-        $totalLessons = $course->lesson_count;
-
-        if ($totalLessons === 0) {
-            return 0;
-        }
-
-        $completedLessons = $this
-            ->progressTracking()
-            ->whereHas('lesson', function ($query) use ($course) {
-                $query->whereIn('module_id', $course->modules->pluck('id'));
-            })
-            ->where('is_completed', true)
-            ->count();
-
-        return round(($completedLessons / $totalLessons) * 100, 2);
     }
 
     public function organizationProfile(): HasOne
@@ -168,6 +149,11 @@ class User extends Authenticatable
     public function isStudent(): bool
     {
         return $this->role === 'student';
+    }
+
+    public function isAdmin(): bool
+    {
+        return in_array($this->role, ['admin', 'super_admin']);
     }
 
     public function isMemberOfOrganization(string $userId, string $organizationId): bool

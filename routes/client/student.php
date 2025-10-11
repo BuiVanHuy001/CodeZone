@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Client\Student\StudentController;
 use App\Http\Middleware\EnsureUserIsStudent;
 use App\Livewire\Client\Cart\Index;
 use App\Livewire\Client\Student\Dashboard\Courses;
@@ -20,3 +21,4 @@ Route::middleware(EnsureUserIsStudent::class)->prefix('student/dashboard')->grou
 });
 
 Route::get('cart', Index::class)->name('cart.index');
+Route::get('/student/{student:slug}', [StudentController::class, 'show'])->name('student.details');

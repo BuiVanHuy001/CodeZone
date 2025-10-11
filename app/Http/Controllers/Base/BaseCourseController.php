@@ -24,14 +24,18 @@ class BaseCourseController extends Controller
 
     public function show(string $slug): View|Application|Factory
     {
-        try {
-            $course = Course::where('slug', $slug)->firstOrFail();
+        $course = Course::where([
+            'slug' => $slug,
+            'status' => 'published'
+        ])->first();
+
+        if ($course) {
             $course = $this->catalogService->prepareDetails($course);
             $canAccess = Gate::allows('access', $course);
             return view('client.pages.course-details',
                 compact('course', 'canAccess'));
-        } catch (\Exception $e) {
-            return view('client.errors.404');
         }
+
+        return view('client.errors.404');
     }
 }

@@ -14,9 +14,8 @@ return new class extends Migration
     {
         Schema::create('comments', static function (Blueprint $table) {
             $table->id();
-            $table->morphs('commentable');
+            $table->uuidMorphs('commentable');
             $table->text('content');
-	        $table->foreignId('parent_id')->nullable()->constrained('comments')->cascadeOnDelete();
             $table->unsignedInteger('like_count')->default(0);
             $table->unsignedInteger('dislike_count')->default(0);
 

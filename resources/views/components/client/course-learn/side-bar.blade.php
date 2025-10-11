@@ -16,16 +16,24 @@
         <div class="rbt-accordion-style rbt-accordion-02 for-right-content accordion">
             <div class="accordion">
                 @foreach($modules->sortBy('position') as $key => $module)
+                    @php
+                        $isOpen = $module->lessons->pluck('id')->map(fn($id) => (string)$id)->contains((string)$currentLesson);
+                    @endphp
                     <div class="accordion-item card">
                         <h2 class="accordion-header card-header" id="headingTwo{{ $key }}">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#collapseTwo{{ $key }}" aria-controls="collapseTwo{{ $key }}">{{ $module->title }}
+                            <button class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    aria-expanded="{{ $isOpen ? 'true' : 'false' }}"
+                                    data-bs-target="#collapseTwo{{ $key }}"
+                                    aria-controls="collapseTwo{{ $key }}">{{ $module->title }}
                                 <span class="rbt-badge-5 ml--10">{{ "$module->lesson_count | " . $module->convertDurationToString() }}</span>
                             </button>
                         </h2>
                         <div id="collapseTwo{{ $key }}"
                              @class([
                                 'accordion-collapse collapse',
-                                'show' => $module->lessons->pluck('id')->contains($currentLesson)
+                                'show' => $isOpen
                             ])
                              aria-labelledby="headingTwo{{ $key }}">
                             <div class="accordion-body card-body">

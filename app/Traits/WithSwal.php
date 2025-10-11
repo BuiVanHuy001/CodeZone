@@ -102,6 +102,29 @@ trait WithSwal
         ]);
     }
 
+    public function swalConfirm(
+        string $method,
+        string $componentId,
+        array  $parameters = [],
+        string $title = 'Are you sure?',
+        string $text = 'You won\'t be able to revert this!',
+        string $icon = 'warning',
+        bool   $showCancelButton = true,
+        string $confirmButtonText = 'Yes, delete it!'
+    ): void
+    {
+        $this->dispatch('swal:livewire:confirm', [
+            'title' => $title,
+            'text' => $text,
+            'icon' => $icon,
+            'showCancelButton' => $showCancelButton,
+            'confirmButtonText' => $confirmButtonText,
+            'method' => $method,
+            'componentId' => $componentId,
+            'params' => $parameters,
+        ]);
+    }
+
     private function prepareRenderErrors($text, $errors): string
     {
         if ($errors instanceof ValidationException) {

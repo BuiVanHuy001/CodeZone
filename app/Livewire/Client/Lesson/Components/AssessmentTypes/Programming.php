@@ -9,7 +9,6 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Collection;
-use JsonException;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -24,9 +23,6 @@ class Programming extends Component
     public string $executionErrors = '';
     public ?Collection $attemptProgrammings;
 
-    /**
-     * @throws JsonException
-     */
     public function mount(): void
     {
         $decodedTemplates = json_decode($this->problem->problemDetails['code_templates'], true, 512, JSON_THROW_ON_ERROR);
@@ -88,19 +84,19 @@ class Programming extends Component
                 $this->userCode,
                 $this->problem->problemDetails
             );
-            $codeRunnerService->saveProgrammingAttempt(
-                total_score: $result['isPassed'] ? 10 : 0,
-                assessment: $this->problem,
-                is_passed: $result['isPassed'],
-                user_code: $this->userCode,
-                language: $this->languageSelected
-            );
 
             if ($result['isPassed']) {
+                $codeRunnerService->saveProgrammingAttempt(
+                    assessment: $this->problem,
+                    is_passed: $result['isPassed'],
+                    user_code: $this->userCode,
+                    language: $this->languageSelected
+                );
+
                 $course = $this->problem->lesson->course;
                 $courseService->markLessonComplete($this->problem->lesson_id);
                 $this->redirect(route('course.learn.lesson', [
-                    'course' => $course->slug,
+                    'slug' => $course->slug,
                     'id' => $courseService->getAdjacentLessonId($course, $this->problem->lesson_id)
                 ]));
 
@@ -108,8 +104,16 @@ class Programming extends Component
             } else {
                 $this->executionErrors = $result['errors'];
             }
+        } elseif ($this->attemptProgrammings->firstWhere('language', $this->languageSelected)->user_code === $this->userCode) {
+            $this->swal(
+                title: 'You have already submitted this code.',
+                icon: 'info'
+            );
         } else {
-            $this->swalError('Error', 'You cannot submit the template code or an empty code.');
+            $this->swal(
+                title: 'You cannot submit the template code or an empty code.',
+                icon: 'warning'
+            );
         }
     }
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b2f01b79a3a35bfd4d1c06eb73ba6631",
+    "content-hash": "338f900924a695d838a640242e1d36ff",
     "packages": [
         {
             "name": "brick/math",
@@ -68,16 +68,16 @@
         },
         {
             "name": "buivanhuy/sweetalert-laravel",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BuiVanHuy001/sweetalert-laravel.git",
-                "reference": "499764fbae551d05320d40627a76fdafbde7897a"
+                "reference": "3ca87e06c8ef1119178c9b6444377bd24ae71664"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BuiVanHuy001/sweetalert-laravel/zipball/499764fbae551d05320d40627a76fdafbde7897a",
-                "reference": "499764fbae551d05320d40627a76fdafbde7897a",
+                "url": "https://api.github.com/repos/BuiVanHuy001/sweetalert-laravel/zipball/3ca87e06c8ef1119178c9b6444377bd24ae71664",
+                "reference": "3ca87e06c8ef1119178c9b6444377bd24ae71664",
                 "shasum": ""
             },
             "require": {
@@ -107,9 +107,9 @@
             "description": "SweetAlert2 integration for Laravel (supports Livewire, Blade)",
             "support": {
                 "issues": "https://github.com/BuiVanHuy001/sweetalert-laravel/issues",
-                "source": "https://github.com/BuiVanHuy001/sweetalert-laravel/tree/v1.2.0"
+                "source": "https://github.com/BuiVanHuy001/sweetalert-laravel/tree/v1.2.1"
             },
-            "time": "2025-09-18T06:46:12+00:00"
+            "time": "2025-10-10T07:22:39+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -10653,7 +10653,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.2"
+        "php": "^8.2",
+        "ext-curl": "*"
     },
     "platform-dev": {},
     "plugin-api-version": "2.6.0"

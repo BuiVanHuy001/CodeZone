@@ -4,7 +4,7 @@ namespace App\Services\Assessment;
 
 use App\Models\Assessment;
 use App\Models\AssessmentAttempt;
-use App\Models\AttemptProgramming;
+use App\Models\ProgrammingAttempt;
 use App\Models\ProgrammingProblems;
 
 class CodeRunnerService
@@ -14,7 +14,6 @@ class CodeRunnerService
         $errors = [];
         $isPassed = true;
         $testCases = json_decode($problem['test_cases'], true, 512, JSON_THROW_ON_ERROR);
-
         foreach ($testCases as $testCase) {
             $expected_output = $testCase['output']['value'];
 
@@ -27,7 +26,8 @@ class CodeRunnerService
 
             $actual_output = $this->executeCode($fullCode, $language);
 
-            $result_status = (trim($actual_output) === trim($expected_output)) ? 'pass' : 'failed';
+            $isEqual = $this->outputsEqual($actual_output, $expected_output);
+            $result_status = $isEqual ? 'pass' : 'failed';
 
             if ($result_status === 'failed') {
                 $isPassed = false;
@@ -42,46 +42,47 @@ class CodeRunnerService
         ];
     }
 
-    public function saveProgrammingAttempt(string|int $total_score, Assessment $assessment, bool $is_passed, string $user_code, string $language): void
+    public function saveProgrammingAttempt(Assessment $assessment, bool $is_passed, string $user_code, string $language): void
     {
-        $assessmentAttempt = AssessmentAttempt::updateOrCreate(
-            [
-                'user_id' => auth()->id(),
-                'assessment_id' => $assessment->id,
-            ],
-            [
-                'total_score' => $total_score,
-                'is_passed' => $is_passed,
-            ]
-        );
+        if (auth()->user()->isStudent()) {
+            $assessmentAttempt = AssessmentAttempt::updateOrCreate(
+                [
+                    'user_id' => auth()->id(),
+                    'assessment_id' => $assessment->id,
+                ],
+                [
+                    'is_passed' => $is_passed,
+                ]
+            );
 
-        $existing = AttemptProgramming::where('assessment_attempt_id', $assessmentAttempt->id)
-            ->where('language', $language)
-            ->first();
+            $existing = ProgrammingAttempt::where('assessment_attempt_id', $assessmentAttempt->id)
+                ->where('language', $language)
+                ->first();
 
-        if ($existing) {
-            $existing->update([
-                'user_code' => $user_code,
-                'language' => $language,
-            ]);
-        } else {
-            AttemptProgramming::create([
-                'assessment_attempt_id' => $assessmentAttempt->id,
-                'user_code' => $user_code,
-                'language' => $language,
-            ]);
+            if ($existing) {
+                $existing->update([
+                    'user_code' => $user_code,
+                    'language' => $language,
+                ]);
+            } else {
+                ProgrammingAttempt::create([
+                    'assessment_attempt_id' => $assessmentAttempt->id,
+                    'user_code' => $user_code,
+                    'language' => $language,
+                ]);
+            }
         }
     }
 
     private function generateFullCodeExecution(string $language, string $functionName, array $testCaseInputs, string $userCode): string
     {
-        $inputVariables = implode(', ', array_map(fn($input) => $input['name'], $testCaseInputs));
+        $inputVariables = $this->buildInvocationArgs($testCaseInputs, $language);
         $testCaseInput = $this->generateInputCode($testCaseInputs, $language);
         $callerCode = $this->generateCallerCode($language, $functionName, $inputVariables);
 
         if ($language === 'php') {
             $userCode = preg_replace('/^\s*<\?php\s*/', '', $userCode);
-            return '<?php\n' . $testCaseInput . "\n" . $userCode . "\n" . $callerCode;
+            return "<?php\n" . $testCaseInput . "\n" . $userCode . "\n" . $callerCode;
         }
         return $testCaseInput . "\n" . $userCode . "\n" . $callerCode;
     }
@@ -112,6 +113,9 @@ class CodeRunnerService
                 $callerCode = "\$solution = new {$entrypoint['className']}();\n";
                 $callerCode .= "\$result = \$solution->{$entrypoint['methodName']}($inputVariables);\n";
                 $callerCode .= "echo json_encode(\$result);\n";
+                break;
+
+            case 'java':
                 break;
         }
         return $callerCode;
@@ -206,7 +210,43 @@ class CodeRunnerService
                 'extension' => '.php',
                 'command' => 'php '
             ],
+            'java' => [
+                'extension' => '.java',
+                'command' => 'javac '
+            ],
         ];
         return $languageMap[$language];
+    }
+
+    private function outputsEqual(string $actual, string $expected): bool
+    {
+        $actual = trim($actual);
+        $expected = trim($expected);
+
+        $actualDecoded = null;
+        $expectedDecoded = null;
+        $actualOk = $this->tryJsonDecode($actual, $actualDecoded);
+        $expectedOk = $this->tryJsonDecode($expected, $expectedDecoded);
+
+        if ($actualOk && $expectedOk) {
+            return json_encode($actualDecoded) === json_encode($expectedDecoded);
+        }
+
+        return $actual === $expected;
+    }
+
+    private function tryJsonDecode(string $input, mixed &$decoded): bool
+    {
+        $decoded = json_decode($input, true);
+        return json_last_error() === JSON_ERROR_NONE;
+    }
+
+    private function buildInvocationArgs(array $inputs, string $language): string
+    {
+        $names = array_map(fn($input) => $input['name'], $inputs);
+        if ($language === 'php') {
+            $names = array_map(fn($n) => '$' . $n, $names);
+        }
+        return implode(', ', $names);
     }
 }

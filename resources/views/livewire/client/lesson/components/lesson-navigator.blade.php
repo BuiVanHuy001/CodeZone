@@ -17,5 +17,12 @@
             <span class="btn-text">Next</span>
             <span class="btn-icon"><i class="feather-arrow-right"></i></span>
         </button>
+
+        @if($isCompleted)
+            <button class="rbt-btn icon-hover btn-md btn-border">
+                <span class="btn-text">Get Certificate</span>
+                <span class="btn-icon"><i class="feather-check-circle"></i></span>
+            </button>
+        @endif
     </div>
 </div>

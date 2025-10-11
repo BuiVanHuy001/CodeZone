@@ -3,6 +3,7 @@
 namespace App\Services\Course;
 
 use App\Models\Course;
+use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -78,7 +79,7 @@ class CatalogService
         return $query->take($amount)->get()->map(fn(Course $course) => $this->decorateCourseCard($course));
     }
 
-    public function getAllCourse(User $author): Collection
+    public function getCoursesByAuthor(User $author, ?array $status = null): Collection
     {
         $order = [
             ['enrollment_count', 'desc'],
@@ -86,15 +87,45 @@ class CatalogService
             ['rating', 'desc'],
         ];
 
+        $statuses = $status ?? ['published'];
+
         $query = Course::query()
-            ->where('user_id', $author->id)
-            ->where('status', 'published');
+            ->whereIn('status', $statuses)
+            ->with(['reviews', 'category'])
+            ->where('user_id', $author->id);
 
         foreach ($order as [$col, $dir]) {
             $query->orderBy($col, $dir);
         }
 
         return $query->get()->map(fn(Course $course) => $this->decorateCourseCard($course));
+    }
+
+    public function getCoursesByStudent(User $student): Collection
+    {
+        $enrollments = $student->enrollments()
+            ->with(['course' => fn($q) => $q->where('status', 'published')->with(['author', 'reviews', 'category'])])
+            ->get();
+
+        $courses = $enrollments
+            ->map(function ($enrollment) use ($student) {
+                if (!$enrollment->course) {
+                    return null;
+                }
+                $course = $enrollment->course;
+                $course->status = $enrollment->status;
+                $course->progressPercentage = app(LearningService::class)
+                    ->calculateCourseProgressPercentage($student, $course);
+                return $course;
+            })
+            ->filter();
+
+        return $courses->map(fn(Course $course) => $this->decorateCourseCard($course));
+    }
+
+    public function calculateCourseEarnings(Course $course): float
+    {
+        return OrderItem::where('course_id', $course->id)->sum('current_price');
     }
 
     private function fetchCourses(int $amount, array $order): Collection
@@ -112,18 +143,25 @@ class CatalogService
 
     private function decorateCourseCard(Course $course): Course
     {
-        $course->lessonCountText = $this->formatCount($course->lesson_count, 'lesson');
-        $course->studentCountText = $this->formatCount($course->enrollment_count, 'student');
-        $course->reviewCountText = $this->formatCount($course->review_count, 'review');
-        $course->priceFormatted = $course->getFormattedPrice();
         $course->thumbnail = $course->getThumbnailPath();
-        $course->detailsPageUrl = route('page.course_detail', $course->slug);
+
+        if ($course->status === 'published' || $course->status === 'pending') {
+            if ($course->status === 'published') {
+                $course->reviewCountText = $this->formatCount($course->review_count, 'review');
+                $course->studentCountText = $this->formatCount($course->enrollment_count, 'student');
+                $course->detailsPageUrl = route('page.course_detail', $course->slug);
+            }
+        }
+        $course->lessonCountText = $this->formatCount($course->lesson_count, 'lesson');
+        $course->priceFormatted = $course->getFormattedPrice();
+        $course->durationText = $course->convertDurationToString();
         $course->authorInfo = [
             'name' => $course->author->name,
             'slug' => $course->author->slug,
             'avatar' => $course->author->getAvatarPath(),
             'profile_url' => route('instructor.details', $course->author->slug)
         ];
+
         return $course;
     }
 
@@ -154,4 +192,5 @@ class CatalogService
                 && $l->assessment->type === 'quiz')
             ->count();
     }
+
 }

@@ -23,7 +23,7 @@ class Course extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    public static array $STATUSES = ['draft', 'published', 'pending', 'rejected', 'deleted'];
+    public static array $STATUSES = ['draft', 'published', 'pending', 'rejected'];
 
     public static array $LEVELS = ['beginner', 'intermediate', 'advanced'];
 
@@ -97,6 +97,6 @@ class Course extends Model
             return 'Free';
         }
 
-        return number_format((int)$this->price) . '₫';
+        return $this->formatCurrency($this->price);
     }
 }

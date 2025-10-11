@@ -4,10 +4,11 @@ namespace App\Services\Course;
 
 use App\Models\Assessment;
 use App\Models\AssessmentAttempt;
-use App\Models\AttemptProgramming;
+use App\Models\ProgrammingAttempt;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\TrackingProgress;
+use App\Models\User;
 
 class LearningService
 {
@@ -82,7 +83,7 @@ class LearningService
         return $lastLesson && (string)$lastLesson->id === $lessonId;
     }
 
-    private function areAllLessonsCompleted(Course $course): bool
+    public function areAllLessonsCompleted(Course $course): bool
     {
         $userId = auth()->id();
         $lessons = $this->getOrderedLessons($course);
@@ -144,23 +145,45 @@ class LearningService
 
     public function markLessonComplete(string $lessonId): void
     {
-        $userId = auth()->id();
+        if (auth()->user()->isStudent()) {
+            $userId = auth()->id();
 
-        $progress = TrackingProgress::where('user_id', $userId)
-            ->where('lesson_id', $lessonId)
-            ->first();
+            $progress = TrackingProgress::where('user_id', $userId)
+                ->where('lesson_id', $lessonId)
+                ->first();
 
-        if ($progress) {
-            if (!$progress->is_completed) {
-                $progress->update(['is_completed' => true]);
+            if ($progress) {
+                if (!$progress->is_completed) {
+                    $progress->update(['is_completed' => true]);
+                }
+                return;
             }
-            return;
+
+            TrackingProgress::create([
+                'user_id' => $userId,
+                'lesson_id' => $lessonId,
+                'is_completed' => true,
+            ]);
+        }
+    }
+
+    public function calculateCourseProgressPercentage(User $user, Course $course): float|int
+    {
+        $totalLessons = $course->lesson_count;
+
+        if ($totalLessons === 0) {
+            return 0;
         }
 
-        TrackingProgress::create([
-            'user_id' => $userId,
-            'lesson_id' => $lessonId,
-            'is_completed' => true,
-        ]);
+        $completedLessons = $user
+            ->progressTracking()
+            ->whereHas('lesson', function ($query) use ($course) {
+                $query->whereIn('module_id', $course->modules->pluck('id'));
+            })
+            ->where('is_completed', true)
+            ->count();
+
+        return round(($completedLessons / $totalLessons) * 100, 2);
     }
+
 }

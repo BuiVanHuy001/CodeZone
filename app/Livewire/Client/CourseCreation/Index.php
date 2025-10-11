@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Client\CourseCreation;
 
+use App\Models\Course;
 use App\Services\Course\ManagementService;
 use App\Validator\CourseInfoValidator;
 use Illuminate\Contracts\View\Factory;
@@ -111,7 +112,7 @@ class Index extends Component
                     'thumbnail' => $this->thumbnail,
                     'price' => $this->price,
                     'category' => $this->category,
-                    'level' => $this->level,
+                    'level' => Course::$LEVELS[$this->level],
                     'requirements' => $this->requirements,
                     'targetAudiences' => $this->targetAudiences,
                     'skills' => $this->skills,

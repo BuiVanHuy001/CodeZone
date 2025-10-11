@@ -5,115 +5,43 @@
                 <h4 class="rbt-title-style-3">Dashboard</h4>
             </div>
             <div class="row g-5">
+                <x-client.dashboard.counter-card
+                    title="Active Courses"
+                    :count="$this->publishedCourses"
+                    icon="book-open"
+                />
 
-                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-primary-opacity">
-                        <div class="inner">
-                            <div class="rbt-round-icon bg-primary-opacity">
-                                <i class="feather-book-open"></i>
-                            </div>
-                            <div class="content">
-                                <h3 class="counter without-icon color-primary">
-                                    <span class="odometer" data-count="30">00</span>
-                                </h3>
-                                <span class="rbt-title-style-2 d-block">Enrolled Courses</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Single Card  -->
+                <x-client.dashboard.counter-card
+                    title="Total Earnings"
+                    :count="$this->rating"
+                    icon="star"
+                    bgClass="bg-warning-opacity"
+                    textClass="color-warning"
+                />
 
-                <!-- Start Single Card  -->
-                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-secondary-opacity">
-                        <div class="inner">
-                            <div class="rbt-round-icon bg-secondary-opacity">
-                                <i class="feather-monitor"></i>
-                            </div>
-                            <div class="content">
-                                <h3 class="counter without-icon color-secondary">
-                                    <span class="odometer" data-count="10">00</span>
-                                </h3>
-                                <span class="rbt-title-style-2 d-block">ACTIVE COURSES</span>
-                            </div>
-                        </div>
-                    </div>
+                <x-client.dashboard.counter-card
+                    title="Student"
+                    :count="$this->studentsEnrolled"
+                    icon="user"
+                    bgClass="bg-violet-opacity"
+                    textClass="color-violet"
+                />
 
-                </div>
-                <!-- End Single Card  -->
+                <x-client.dashboard.counter-card
+                    title="Reviews"
+                    :count="$this->reviewCount"
+                    icon="check-circle"
+                    bgClass="bg-coral-opacity"
+                    textClass="color-coral"
+                />
 
-                <!-- Start Single Card  -->
-                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-violet-opacity">
-                        <div class="inner">
-                            <div class="rbt-round-icon bg-violet-opacity">
-                                <i class="feather-award"></i>
-                            </div>
-                            <div class="content">
-                                <h3 class="counter without-icon color-violet">
-                                    <span class="odometer" data-count="7">00</span>
-                                </h3>
-                                <span class="rbt-title-style-2 d-block">Completed Courses</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Single Card  -->
-
-                <!-- Start Single Card  -->
-                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-pink-opacity">
-                        <div class="inner">
-                            <div class="rbt-round-icon bg-pink-opacity">
-                                <i class="feather-users"></i>
-                            </div>
-                            <div class="content">
-                                <h3 class="counter without-icon color-pink">
-                                    <span class="odometer" data-count="160">00</span>
-                                </h3>
-                                <span class="rbt-title-style-2 d-block">Total Students</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Single Card  -->
-
-                <!-- Start Single Card  -->
-                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-coral-opacity">
-                        <div class="inner">
-                            <div class="rbt-round-icon bg-coral-opacity">
-                                <i class="feather-gift"></i>
-                            </div>
-                            <div class="content">
-                                <h3 class="counter without-icon color-coral">
-                                    <span class="odometer" data-count="20">00</span>
-                                </h3>
-                                <span class="rbt-title-style-2 d-block">Total Courses</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Single Card  -->
-
-                <!-- Start Single Card  -->
-                <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-warning-opacity">
-                        <div class="inner">
-                            <div class="rbt-round-icon bg-warning-opacity">
-                                <i class="feather-dollar-sign"></i>
-                            </div>
-                            <div class="content">
-                                <h3 class="counter color-warning">
-                                    <span class="odometer" data-count="25000">00</span>
-                                </h3>
-                                <span class="rbt-title-style-2 d-block">Total Earnings</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Single Card  -->
-
+                <x-client.dashboard.counter-card
+                    title="Total Earnings"
+                    :count="$this->totalEarnings"
+                    icon="dollar-sign"
+                    bgClass="bg-pink-opacity"
+                    textClass="color-pink"
+                />
             </div>
         </div>
     </div>

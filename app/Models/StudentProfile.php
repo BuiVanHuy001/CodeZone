@@ -12,6 +12,9 @@ class StudentProfile extends Model {
         'user_id',
     ];
 
+    protected $primaryKey = 'user_id';
+    public $incrementing = false;
+
     protected $casts = [
         'addition_data' => 'array',
         'dob' => 'date:d-m-Y',

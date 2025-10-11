@@ -2,18 +2,25 @@
 
 namespace App\Services\Instructor;
 
+use App\Models\Course;
 use App\Models\User;
 use App\Services\Course\CatalogService;
+use App\Traits\HasNumberFormat;
+use Illuminate\Support\Collection;
 
-class InstructorService
+readonly class InstructorService
 {
+    use HasNumberFormat;
+
+    public function __construct(private CatalogService $catalogService) { }
+
     public function prepareDetails(User $instructor): User
     {
         $catalogService = app(CatalogService::class);
         $profile = $instructor->instructorProfile;
 
         $instructor->avatar = $instructor->getAvatarPath();
-        $instructor->courses = $catalogService->getAllCourse($instructor);
+        $instructor->courses = $catalogService->getCoursesByAuthor($instructor);
         $instructor->reviews = $instructor->reviews->sortByDesc('created_at');
         $instructor->bio = $profile->bio;
         $instructor->aboutMe = $profile->about_me;
@@ -27,8 +34,39 @@ class InstructorService
         return $instructor;
     }
 
-    public function formatCount(int $count, string $word): string
+    public function prepareBasicDetails(User $instructor): User
     {
-        return $count . ' ' . str($word)->plural($count);
+        $instructor->avatar = $instructor->getAvatarPath();
+        $instructor->profileUrl = route('instructor.details', $instructor->slug);
+        return $instructor;
+    }
+
+    public function getInstructorOverviewData(User $instructor): array
+    {
+        $publishedCourses = $this->catalogService->getCoursesByAuthor($instructor);
+        $totalEarnings = $this->calculateTotalEarnings($publishedCourses);
+        $studentsEnrolled = $instructor->instructorProfile->student_count;
+        $rating = $instructor->instructorProfile->rating;
+        return [
+            'publishedCourses' => $publishedCourses->count(),
+            'totalEarnings' => $totalEarnings,
+            'studentsEnrolled' => $studentsEnrolled,
+            'rating' => number_format($rating, 1),
+            'reviewCount' => $instructor->instructorProfile->review_count
+        ];
+    }
+
+    private function calculateTotalEarnings(Collection $publishedCourses): string
+    {
+        $totalEarnings = 0;
+        foreach ($publishedCourses as $course) {
+            $totalEarnings += $this->catalogService->calculateCourseEarnings($course);
+        }
+        return number_format($totalEarnings);
+    }
+
+    public function getInstructorCourses(User $instructor): Collection
+    {
+        return $this->catalogService->getCoursesByAuthor($instructor, Course::$STATUSES);
     }
 }

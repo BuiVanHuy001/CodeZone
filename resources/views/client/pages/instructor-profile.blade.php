@@ -35,6 +35,7 @@
                         </div>
                     </div>
                 </div>
+
                 @if($instructor->aboutMe)
                     <div class="col-lg-12 mt--30">
                         <div class="profile-content rbt-shadow-box">
@@ -88,4 +89,5 @@
                 @endif
             </div>
         </div>
+    </div>
 @endsection

@@ -178,6 +178,10 @@ a {
     transition: 0.3s;
 }
 
+a.text-primary:hover {
+    text-decoration: underline;
+}
+
 a:hover,
 a:focus,
 a:active {
@@ -14930,6 +14934,7 @@ span.rbt-btn-link {
     font-size: 14px;
     font-weight: 500;
     display: inline-block;
+    cursor: pointer;
 }
 
 a.rbt-btn-link i,
@@ -25697,7 +25702,7 @@ figcaption {
     Comments Styles
 -----------------------------*/
 .comment-list ul.children {
-    padding-left: 75px;
+    padding-left: 50px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -25721,7 +25726,7 @@ figcaption {
 }
 
 .comment-list .comment .single-comment {
-    padding: 20px 0;
+    padding: 15px 0;
     display: flex;
 }
 

@@ -16,6 +16,11 @@
 <body class="rbt-header-sticky">
 <x-client.header.index/>
 @yield('content')
+<div class="rbt-separator-mid">
+    <div class="container">
+        <hr class="rbt-separator m-0">
+    </div>
+</div>
 <x-client.footer/>
 <div class="rbt-progress-parent">
     <svg class="rbt-back-circle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">

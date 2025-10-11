@@ -17,7 +17,7 @@
         createCodeEditor(
             '{{ $id }}-editor',
             'markdown',
-            '',
+            @json($doc ?? '', JSON_THROW_ON_ERROR),
             false,
             @json($livewireComponentId ?? null, JSON_THROW_ON_ERROR),
             @json($name, JSON_THROW_ON_ERROR)

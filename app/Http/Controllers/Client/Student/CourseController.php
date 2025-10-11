@@ -5,23 +5,19 @@ namespace App\Http\Controllers\Client\Student;
 use App\Http\Controllers\Base\BaseCourseController;
 use App\Models\Course;
 use App\Models\Lesson;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 
 class CourseController extends BaseCourseController
 {
-    use AuthorizesRequests;
-
     public function index(string $slug): View|RedirectResponse
     {
         $course = Course::where('slug', $slug)->firstOrFail();
         if (!$course) {
             return view('client.errors.404');
         }
-        if ($this->authorize('access', $course)->allowed()) {
+        if (Gate::allows('access', $course)) {
             return redirect()->route('course.learn.lesson', [
                 'slug' => $course->slug,
                 'id' => $this->learningService->getLesson($course)
@@ -40,7 +36,7 @@ class CourseController extends BaseCourseController
             return view('client.errors.404');
         }
 
-        if ($this->authorize('access', $course)->allowed()) {
+        if (Gate::allows('access', $course)) {
             $routes = $this->learningService->getNavigationRoutes($course, $lesson);
 
             return view('lesson.index', [

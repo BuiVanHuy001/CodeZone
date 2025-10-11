@@ -73,18 +73,19 @@ class QuizService
 
         return [
             'correct_answers_count' => $correctCount,
-            'score' => $score,
             'is_passed' => $score >= 5,
         ];
     }
 
     public function saveAttempt(array $results): void
     {
-        AssessmentAttempt::create([
-            'assessment_id' => $this->quiz->id,
-            'user_id' => auth()->id(),
-            'is_passed' => $results['is_passed'],
-        ]);
+        if (auth()->user()->isStudent()) {
+            AssessmentAttempt::create([
+                'assessment_id' => $this->quiz->id,
+                'user_id' => auth()->id(),
+                'is_passed' => $results['is_passed'],
+            ]);
+        }
     }
 
     public function generateQuizResult(array $userAnswers): array

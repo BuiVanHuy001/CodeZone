@@ -10,7 +10,6 @@
                     <th>Question</th>
                     <th>Correct Answer</th>
                     <th>Incorrect Answer</th>
-                    <th>Score</th>
                     <th>Result</th>
                     <th>Details</th>
                 </tr>
@@ -25,9 +24,6 @@
                     </td>
                     <td>
                         <p class="b3">{{ $totalQuestions - $results['correct_answers_count'] }}</p>
-                    </td>
-                    <td>
-                        <p class="b3">{{ $results['score'] }}/10</p>
                     </td>
                     <td>
                         <span class="rbt-badge-5 bg-color-success-opacity color-{{ $results['is_passed'] ? 'success' : 'danger' }}">{{ $results['is_passed'] ? 'Pass' : 'Fail' }}</span>
@@ -45,15 +41,15 @@
                 </tr>
                 </tbody>
             </table>
-            @if($canNextLesson)
-                <button wire:click="redirectToNextLesson" class="rbt-btn btn-border rbt-sm-btn-2"
-                        type="button">
+        </div>
+        @if($canNextLesson)
+            <button wire:click="redirectToNextLesson" class="rbt-btn btn-border rbt-sm-btn-2"
+                    type="button">
                     <span class="icon-reverse-wrapper">
                         <span class="btn-text">Next lesson</span>
                     </span>
-                </button>
-            @endif
-        </div>
+            </button>
+        @endif
 
         @if(isset($resultDetails))
             <div class="rbt-team-modal modal fade rbt-modal-default"

@@ -17,146 +17,28 @@
                 </thead>
 
                 <tbody>
-                <tr>
-                    <th>#5478</th>
-                    <td>App Development</td>
-                    <td>January 27, 2024</td>
-                    <td>$100.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>#4585</th>
-                    <td>Graphic</td>
-                    <td>May 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span class="rbt-badge-5 bg-primary-opacity">Processing</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>#9656</th>
-                    <td>Graphic</td>
-                    <td>March 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-warning-opacity color-warning">On
-                                                            Hold</span></td>
-                </tr>
-                <tr>
-                    <th>#2045</th>
-                    <td>Application</td>
-                    <td>March 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-danger-opacity color-danger">Canceled</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>#5478</th>
-                    <td>App Development</td>
-                    <td>January 27, 2024</td>
-                    <td>$100.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>#4585</th>
-                    <td>Graphic</td>
-                    <td>May 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span class="rbt-badge-5 bg-primary-opacity">Processing</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>#9656</th>
-                    <td>Graphic</td>
-                    <td>March 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-warning-opacity color-warning">On
-                                                            Hold</span></td>
-                </tr>
-                <tr>
-                    <th>#2045</th>
-                    <td>Application</td>
-                    <td>March 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-danger-opacity color-danger">Canceled</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>#5478</th>
-                    <td>App Development</td>
-                    <td>January 27, 2024</td>
-                    <td>$100.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>#4585</th>
-                    <td>Graphic</td>
-                    <td>May 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span class="rbt-badge-5 bg-primary-opacity">Processing</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>#9656</th>
-                    <td>Graphic</td>
-                    <td>March 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-warning-opacity color-warning">On
-                                                            Hold</span></td>
-                </tr>
-                <tr>
-                    <th>#2045</th>
-                    <td>Application</td>
-                    <td>March 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-danger-opacity color-danger">Canceled</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>#5478</th>
-                    <td>App Development</td>
-                    <td>January 27, 2024</td>
-                    <td>$100.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-success-opacity color-success">Success</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>#4585</th>
-                    <td>Graphic</td>
-                    <td>May 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span class="rbt-badge-5 bg-primary-opacity">Processing</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>#9656</th>
-                    <td>Graphic</td>
-                    <td>March 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-warning-opacity color-warning">On
-                                                            Hold</span></td>
-                </tr>
-                <tr>
-                    <th>#2045</th>
-                    <td>Application</td>
-                    <td>March 27, 2024</td>
-                    <td>$200.99</td>
-                    <td><span
-                            class="rbt-badge-5 bg-color-danger-opacity color-danger">Canceled</span>
-                    </td>
-                </tr>
+                @forelse($purchases as $purchase)
+                    <tr>
+                        <th>{{ $purchase->id }}</th>
+                        <td>
+                            <ul>
+                                @foreach($purchase->courses as $course)
+                                    <li>
+                                        <a href="{{ route('page.course_detail', $course->slug) }}">{{ $course->title }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </td>
+                        <td>{{ $purchase->created_at->diffForHumans() }}</td>
+                        <td>{{ $purchase->totalPriceText }}</td>
+                        <td><span class="rbt-badge-5 bg-primary-opacity">{{ $purchase->status }}</span>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center">No purchases found.</td>
+                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>
