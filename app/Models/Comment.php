@@ -22,6 +22,11 @@ class Comment extends Model
         return $this->morphMany(__CLASS__, 'commentable');
     }
 
+    public function reactions(): MorphMany
+    {
+        return $this->morphMany(Reaction::class, 'reactionable');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

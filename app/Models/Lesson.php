@@ -54,6 +54,11 @@ class Lesson extends Model
         return $this->morphMany(Comment::class, 'commentable');
     }
 
+    public function reactions(): MorphMany
+    {
+        return $this->morphMany(Reaction::class, 'reactionable');
+    }
+
     public function trackingProgresses(): HasMany
     {
         return $this->hasMany(TrackingProgress::class);

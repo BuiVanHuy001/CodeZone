@@ -74,7 +74,7 @@ class Index extends Component
             return;
         }
 
-        $reaction = $review->reactions()->where('user_id', auth()->id())->first();
+        $reaction = $review->reactions->where('user_id', auth()->id())->first();
 
         if ($reaction) {
             if ($reaction->type === $type) {

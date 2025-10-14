@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             $this->call(UserSeeder::class);
             $this->call(CourseSeeder::class);
             $this->call(EnrollmentSeeder::class);
+            $this->call(CommentSeeder::class);
+            $this->call(ReactionSeeder::class);
+
             $instructors = User::where('role', 'instructor')->get();
             foreach ($instructors as $instructor) {
                 $instructorProfile = $instructor->instructorProfile;
