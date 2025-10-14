@@ -36953,3 +36953,193 @@ Course OverView
     max-height: 100% !important;
     border-radius: 0 !important;
 }
+
+.like-dislike-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 1rem;
+    transition: .2s ease all;
+}
+
+.like-dislike-container .text-content {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.like-dislike-container .icons-box {
+    display: flex;
+}
+
+.like-dislike-container .icons {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: .6;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid #767676;
+    border-radius: 50px;
+    transition: .2s ease all;
+}
+
+.like-dislike-container .icons:hover {
+    opacity: .9;
+    box-shadow: var(--shadow);
+}
+
+.like-dislike-container .icons:active {
+    opacity: .9;
+    box-shadow: 0 5px 5px 0 #00000026;
+}
+
+.like-dislike-container .icons .btn-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.5rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.like-dislike-container .like-text-content {
+    border-right: 0.1rem solid #353535;
+    padding: 0 0.6rem 0 0.5rem;
+    pointer-events: none;
+}
+
+.like-dislike-container .dislike-text-content {
+    border-left: 0.1rem solid #353535;
+    padding: 0 0.5rem 0 0.6rem;
+    pointer-events: none;
+}
+
+.like-dislike-container .icons .svgs {
+    width: 1.3rem;
+    fill: #000000;
+    box-sizing: content-box;
+    padding: 10px 10px;
+    transition: .2s ease all;
+}
+
+.like-dislike-container .icons .input-box {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.like-dislike-container .icons:hover :is(#icon-like-solid, #icon-like-regular) {
+    animation: rotate-icon-like 0.7s ease-in-out both;
+}
+
+.like-dislike-container .icons .like-checkbox:checked ~ #icon-like-regular {
+    display: none;
+    animation: checked-icon-like 0.5s;
+}
+
+.like-dislike-container .icons .like-checkbox:checked ~ #icon-like-solid {
+    display: block;
+    animation: checked-icon-like 0.5s;
+}
+
+.like-dislike-container .icons:hover :is(#icon-dislike-solid, #icon-dislike-regular) {
+    animation: rotate-icon-dislike 0.7s ease-in-out both;
+}
+
+.like-dislike-container .icons .dislike-checkbox:checked ~ #icon-dislike-regular {
+    display: none;
+    animation: checked-icon-dislike 0.5s;
+}
+
+.like-dislike-container .icons .dislike-checkbox:checked ~ #icon-dislike-solid {
+    display: block;
+    animation: checked-icon-dislike 0.5s;
+}
+
+.like-dislike-container .icons .fireworks {
+    transform: scale(0.4);
+}
+
+.like-dislike-container .icons #icon-dislike-regular,
+.like-dislike-container .icons #icon-dislike-solid {
+    transform: rotate(180deg);
+}
+
+#icon-like-solid,
+#icon-like-regular,
+#icon-dislike-solid,
+#icon-dislike-regular {
+    display: inline !important;
+}
+
+@keyframes rotate-icon-like {
+    0% {
+        transform: rotate(0deg) translate3d(0, 0, 0);
+    }
+
+    25% {
+        transform: rotate(3deg) translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: rotate(-3deg) translate3d(0, 0, 0);
+    }
+
+    75% {
+        transform: rotate(1deg) translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: rotate(0deg) translate3d(0, 0, 0);
+    }
+}
+
+@keyframes rotate-icon-dislike {
+    0% {
+        transform: rotate(180deg) translate3d(0, 0, 0);
+    }
+
+    25% {
+        transform: rotate(183deg) translate3d(0, 0, 0);
+    }
+
+    50% {
+        transform: rotate(177deg) translate3d(0, 0, 0);
+    }
+
+    75% {
+        transform: rotate(181deg) translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: rotate(180deg) translate3d(0, 0, 0);
+    }
+}
+
+@keyframes checked-icon-like {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2) rotate(-10deg);
+    }
+}
+
+@keyframes checked-icon-dislike {
+    0% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.2) rotate(170deg);
+    }
+}

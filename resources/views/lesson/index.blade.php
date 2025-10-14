@@ -47,8 +47,10 @@
                     <x-client.course-learn.assessment-types :assessment="$lesson->assessment"/>
                 @endif
 
+                    <div class="d-flex align-items-end justify-content-center gap-3 mt-4 mb-3">
+                        <livewire:client.shared.reaction-box :model="$lesson"/>
                     <livewire:client.lesson.components.comment.comment-area :$lesson/>
-
+                    </div>
             </div>
             <livewire:client.lesson.components.lesson-navigator :current-lesson="$lesson"/>
 

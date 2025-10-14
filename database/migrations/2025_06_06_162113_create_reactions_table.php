@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('reactions', static function (Blueprint $table) {
             $table->id();
-            $table->morphs('reactable');
+            $table->uuidMorphs('reactionable');
             $table->enum('action', Reaction::$ACTIONS);
             $table->timestamps();
 
