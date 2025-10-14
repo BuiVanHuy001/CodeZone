@@ -1,4 +1,5 @@
 <div class="rbt-comment-area">
+
     <a class="rbt-btn-link text-end" wire:click.prevent="$dispatch('open-modal', { id: 'commentList' })">{{ $commentCountText }}</a>
     <div wire:ignore.self class="rbt-default-modal modal fade" id="commentList" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
@@ -12,7 +13,7 @@
                     <div class="inner rbt-default-form">
                         <ul class="comment-list">
                             @forelse($comments as $comment)
-                                <li class="comment position-relative" wire:key="comment-{{ $comment->id }}" wire:key="comment-{{ $comment->id }}">
+                                <li class="comment position-relative" wire:key="comment-{{ $comment->id }}">
                                     @if(auth()->user()->id === $comment->user->id)
                                         <button
                                             class="btn btn-light btn-sm position-absolute translate-middle shadow-sm rounded-circle border-0 text-muted hover:text-danger"
@@ -50,7 +51,6 @@
                                                 <div class="comment-text mt-1">
                                                     <p class="mb-0">{!! $comment->content !!}</p>
                                                 </div>
-                                                <livewire:client.shared.reaction-box :model="$comment" wire:key="reaction-comment-{{ $comment->id }}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -96,6 +96,7 @@
                                                                 <i class="feather-x"></i>
                                                             </button>
                                                         @endif
+                                                        
                                                         <div class="comment-body">
                                                             <div class="single-comment d-flex">
                                                                 <div class="comment-img position-relative">

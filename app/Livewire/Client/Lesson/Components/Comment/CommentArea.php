@@ -68,7 +68,6 @@ class CommentArea extends Component
         foreach ($replies as $reply) {
             $this->loadedReplies[$reply->id] = $this->loadedReplies[$reply->id] ?? [];
         }
-        \Log::info(json_encode($this->loadedReplies[$commentId], JSON_PRETTY_PRINT));
     }
 
     public function showReplyForm(int $commentId): void
