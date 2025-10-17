@@ -21,7 +21,7 @@ class Overview extends Component
 
     public function mount(InstructorService $instructorService): void
     {
-        $data = $instructorService->getInstructorOverviewData(auth()->user());
+        $data = $instructorService->prepareOverviewData(auth()->user());
 
         $this->publishedCourses = $data['publishedCourses'];
         $this->totalEarnings = $data['totalEarnings'];

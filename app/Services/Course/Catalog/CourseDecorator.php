@@ -15,13 +15,21 @@ class CourseDecorator
     {
         $course = $this->decorateBase($course);
 
-        $course->loadMissing('reviews:id,rating');
+        $course->loadMissing(['reviews:id,rating', 'category:id,name', 'author:id,name', 'author:instructorProfile']);
 
         if ($course->status === 'published') {
+            $course->categoryName = $course->category?->name;
             $course->reviewCountText = $this->formatCount($course->review_count, 'review');
             $course->enrollmentCountText = $this->formatCount($course->enrollment_count, 'student');
             $course->detailsPageUrl = route('page.course_detail', $course->slug);
         }
+
+        $course->authorInfo = [
+            'name' => $course->author->name,
+            'slug' => $course->author->slug,
+            'avatar' => $course->author->getAvatarPath(),
+            'profileUrl' => route('instructor.details', $course->author->slug),
+        ];
 
         return $course;
     }
@@ -30,10 +38,7 @@ class CourseDecorator
     {
         $course = $this->decorateBase($course);
 
-        $course->loadMissing([
-            'reviews.user',
-            'modules.lessons.assessment',
-        ]);
+        $course->loadMissing(['reviews.user', 'modules.lessons.assessment']);
 
         $course->reviewCountText = $this->formatCount($course->reviews->count(), 'review');
         $course->enrollmentCountText = $this->formatCount($course->enrollment_count, 'student');
@@ -41,6 +46,34 @@ class CourseDecorator
         $course->quizCount = $this->getQuizCount($course->modules);
         $course->reviews = $course->reviews->sortByDesc('created_at')->values();
         $course->updatedAtHuman = $course->updated_at->diffForHumans();
+
+        $course->authorInfo = [
+            'name' => $course->author->name,
+            'slug' => $course->author->slug,
+            'avatar' => $course->author->getAvatarPath(),
+            'profileUrl' => route('instructor.details', $course->author->slug),
+        ];
+
+        return $course;
+    }
+
+    public function decorateForInstructorDashboard(Course $course): Course
+    {
+        $course = $this->decorateBase($course);
+
+        $course->detailsPageUrl = route('page.course_detail', $course->slug);
+        $course->studentCountText = $this->formatCount($course->enrollment_count, 'student');
+        $course->reviewCountText = $this->formatCount($course->review_count, 'review');
+
+        return $course;
+    }
+
+    private function decorateBase(Course $course): Course
+    {
+        $course->thumbnail = $this->getThumbnailPath($course);
+        $course->lessonCountText = $this->formatCount($course->lesson_count, 'lesson');
+        $course->priceFormatted = $this->formatCurrency($course->price);
+        $course->durationText = $course->convertDurationToString();
 
         return $course;
     }
@@ -63,26 +96,6 @@ class CourseDecorator
             return Storage::url('course/thumbnails/' . $course->thumbnail);
         }
         return asset('images/others/thumbnail-placeholder.svg');
-    }
-
-    private function decorateBase(Course $course): Course
-    {
-        $course->loadMissing('category:id,name', 'author');
-
-        $course->thumbnail = $this->getThumbnailPath($course);
-        $course->categoryName = $course->category?->name;
-        $course->lessonCountText = $this->formatCount($course->lesson_count, 'lesson');
-        $course->priceFormatted = $this->formatCurrency($course->price);
-        $course->durationText = $course->convertDurationToString();
-
-        $course->authorInfo = [
-            'name' => $course->author->name,
-            'slug' => $course->author->slug,
-            'avatar' => $course->author->getAvatarPath(),
-            'profileUrl' => route('instructor.details', $course->author->slug),
-        ];
-
-        return $course;
     }
 
     private function getIntroductionVideo(Collection $modules): string

@@ -94,41 +94,43 @@
                     @endforelse
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-12 mt--60">
-                        <nav>
-                            <ul class="rbt-pagination">
-                                @if ($courses->onFirstPage())
-                                    <li class="disabled">
-                                        <span aria-label="Previous"><i class="feather-chevron-left"></i></span></li>
-                                @else
-                                    <li>
-                                        <a href="{{ $courses->appends(request()->query())->previousPageUrl() }}" aria-label="Previous"><i class="feather-chevron-left"></i></a>
-                                    </li>
-                                @endif
-
-                                @foreach ($courses->getUrlRange(1, $courses->lastPage()) as $page => $url)
-                                    @if ($page == $courses->currentPage())
-                                        <li class="active"><a href="#">{{ $page }}</a></li>
+                @if($courses->total() > 9)
+                    <div class="row">
+                        <div class="col-lg-12 mt--60">
+                            <nav>
+                                <ul class="rbt-pagination">
+                                    @if ($courses->onFirstPage())
+                                        <li class="disabled">
+                                            <span aria-label="Previous"><i class="feather-chevron-left"></i></span></li>
                                     @else
                                         <li>
-                                            <a href="{{ $courses->appends(request()->query())->url($page) }}">{{ $page }}</a>
+                                            <a href="{{ $courses->appends(request()->query())->previousPageUrl() }}" aria-label="Previous"><i class="feather-chevron-left"></i></a>
                                         </li>
                                     @endif
-                                @endforeach
 
-                                @if ($courses->hasMorePages())
-                                    <li>
-                                        <a href="{{ $courses->appends(request()->query())->nextPageUrl() }}" aria-label="Next"><i class="feather-chevron-right"></i></a>
-                                    </li>
-                                @else
-                                    <li class="disabled">
-                                        <span aria-label="Next"><i class="feather-chevron-right"></i></span></li>
-                                @endif
-                            </ul>
-                        </nav>
+                                    @foreach ($courses->getUrlRange(1, $courses->lastPage()) as $page => $url)
+                                        @if ($page === $courses->currentPage())
+                                            <li class="active"><a href="#">{{ $page }}</a></li>
+                                        @else
+                                            <li>
+                                                <a href="{{ $courses->appends(request()->query())->url($page) }}">{{ $page }}</a>
+                                            </li>
+                                        @endif
+                                    @endforeach
+
+                                    @if ($courses->hasMorePages())
+                                        <li>
+                                            <a href="{{ $courses->appends(request()->query())->nextPageUrl() }}" aria-label="Next"><i class="feather-chevron-right"></i></a>
+                                        </li>
+                                    @else
+                                        <li class="disabled">
+                                            <span aria-label="Next"><i class="feather-chevron-right"></i></span></li>
+                                    @endif
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>

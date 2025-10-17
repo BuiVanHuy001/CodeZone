@@ -25,7 +25,7 @@
             </h4>
             @if($course->status === 'published')
                 <ul class="rbt-meta">
-                    <li><i class="feather-book"></i>{{ $course->studentCountText }}</li>
+                    <li><i class="feather-book"></i>{{ $course->enrollmentCountText }}</li>
                     <li><i class="feather-clock"></i>{{ $course->durationText }}</li>
                 </ul>
 

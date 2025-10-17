@@ -86,7 +86,7 @@ class CatalogService
         return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course));
     }
 
-    public function getCoursesByAuthor(User $author, ?array $status = null): Collection
+    public function getCoursesByAuthor(User $author): Collection
     {
         $order = [
             ['enrollment_count', 'desc'],
@@ -94,18 +94,13 @@ class CatalogService
             ['rating', 'desc'],
         ];
 
-        $statuses = $status ?? ['published'];
-
-        $query = Course::query()
-            ->whereIn('status', $statuses)
-            ->with(['reviews', 'category'])
-            ->where('user_id', $author->id);
+        $query = Course::query()->where('user_id', $author->id);
 
         foreach ($order as [$col, $dir]) {
             $query->orderBy($col, $dir);
         }
 
-        return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course));
+        return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForInstructorDashboard($course));
     }
 
     public function getCoursesByStudent(User $student): Collection

@@ -40,6 +40,11 @@ readonly class CourseService
         return null;
     }
 
+    public function getCoursesByAuthor(User $author): Collection
+    {
+        return $this->catalogService->getCoursesByAuthor($author);
+    }
+
     public function storeCourse(User $author, array $courseData): void
     {
         $this->createService->storeCourse($author, $courseData);
