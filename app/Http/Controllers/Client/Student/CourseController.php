@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Gate;
 
 class CourseController extends BaseCourseController
 {
-    public function index(string $slug): View|RedirectResponse
+    public function learn(string $slug): View|RedirectResponse
     {
         $course = Course::where('slug', $slug)->firstOrFail();
         if (!$course) {

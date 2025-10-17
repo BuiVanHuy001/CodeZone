@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use LaravelIdea\Helper\App\Models\_IH_Category_C;
+use LaravelIdea\Helper\App\Models\_IH_Category_QB;
 
 class Category extends Model
 {
@@ -26,12 +28,12 @@ class Category extends Model
         return $query->where('parent_id', $parentId)->get();
     }
 
-	public function scopeParents()
-	{
+    public function scopeParents(): _IH_Category_C|array
+    {
 		return $this->where('parent_id', null)->get();
 	}
 
-    public static function fetchCategoriesWithChildren(): Collection
+    public static function fetchCategoriesWithChildren(): _IH_Category_QB|Collection
     {
         $categories = Category::getParents();
         foreach ($categories as $category) {

@@ -1,7 +1,4 @@
-<div class="{{ $attributes->get('class', 'col-lg-4 col-md-6 col-sm-12 col-12') }}"
-     data-sal-delay="300"
-     data-sal="slide-up"
-     data-sal-duration="800">
+<div class="{{ $attributes->get('class', 'col-lg-4 col-md-6 col-sm-12 col-12') }}">
     <div class="rbt-card variation-01 rbt-hover">
         <div class="rbt-card-img">
             <a href="{{ $course->detailsPageUrl }}">
@@ -28,18 +25,18 @@
 
             <ul class="rbt-meta">
                 <li><i class="feather-book"></i>{{ $course->lessonCountText }}</li>
-                <li><i class="feather-users"></i>{{ $course->studentCountText }}</li>
+                <li><i class="feather-users"></i>{{ $course->enrollmentCountText }}</li>
             </ul>
 
             <p class="rbt-card-text">{{ $course->heading }}</p>
             <div class="rbt-author-meta mb--10">
                 <div class="rbt-avater">
-                    <a href="{{ $course->authorInfo['profile_url'] }}">
+                    <a href="{{ $course->authorInfo['profileUrl'] }}">
                         <img src="{{ $course->authorInfo['avatar'] }}" alt="{{ $course->author['name'] }}">
                     </a>
                 </div>
                 <div class="rbt-author-info">
-                    By <a href="{{ $course->authorInfo['profile_url'] }}">{{ $course->author['name'] }}</a>
+                    By <a href="{{ $course->authorInfo['profileUrl'] }}">{{ $course->author['name'] }}</a>
                 </div>
             </div>
             <div class="rbt-card-bottom">

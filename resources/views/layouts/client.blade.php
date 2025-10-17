@@ -30,4 +30,5 @@
 </body>
 
 <script src="{{ asset('js/vendor/wow.js') }}"></script>
+@stack('scripts')
 </html>

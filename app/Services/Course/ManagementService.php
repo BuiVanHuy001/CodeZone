@@ -13,8 +13,5 @@ readonly class ManagementService
     {
     }
 
-    public function create(User $author, array $courseData): void
-    {
-        $this->createCourseService->storeCourse($author, $courseData);
-    }
+
 }

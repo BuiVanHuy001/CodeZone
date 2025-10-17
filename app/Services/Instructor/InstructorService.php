@@ -3,8 +3,9 @@
 namespace App\Services\Instructor;
 
 use App\Models\Course;
+use App\Models\OrderItem;
 use App\Models\User;
-use App\Services\Course\CatalogService;
+use App\Services\Course\Catalog\CatalogService;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
 
@@ -41,6 +42,17 @@ readonly class InstructorService
         return $instructor;
     }
 
+    public function getTopInstructors(): Collection
+    {
+        $instructors = User::where('role', 'instructor')
+            ->whereHas('instructorProfile', function ($query) {
+                $query->where('course_count', '>', 0);
+            })
+            ->with('instructorProfile')
+            ->get();
+        return $instructors->sortByDesc(fn($instructor) => $instructor->instructorProfile->rating);
+    }
+
     public function getInstructorOverviewData(User $instructor): array
     {
         $publishedCourses = $this->catalogService->getCoursesByAuthor($instructor);
@@ -60,7 +72,8 @@ readonly class InstructorService
     {
         $totalEarnings = 0;
         foreach ($publishedCourses as $course) {
-            $totalEarnings += $this->catalogService->calculateCourseEarnings($course);
+
+            $totalEarnings += OrderItem::where('course_id', $course->id)->sum('current_price');
         }
         return number_format($totalEarnings);
     }

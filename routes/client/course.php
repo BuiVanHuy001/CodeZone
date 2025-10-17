@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Client\Student\CourseController;
 use App\Http\Middleware\EnsureUserIsLogin;
+use App\Livewire\Client\Course\CourseList;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('course')->group(function () {
@@ -9,9 +10,14 @@ Route::prefix('course')->group(function () {
         ->name('page.course_detail');
 
     Route::middleware(EnsureUserIsLogin::class)->group(function () {
-        Route::get('{slug}/learn', [CourseController::class, 'index'])
+        Route::get('{slug}/learn', [CourseController::class, 'learn'])
             ->name('course.learn');
         Route::get('{slug}/learn/lesson/{id}', [CourseController::class, 'showLesson'])
             ->name('course.learn.lesson');
     });
+});
+
+Route::prefix('courses')->group(function () {
+    Route::get('/', [CourseController::class, 'index'])
+        ->name('page.courses');
 });

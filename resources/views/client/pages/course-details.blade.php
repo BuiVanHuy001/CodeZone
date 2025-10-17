@@ -14,7 +14,7 @@
                             <li>
                                 <div class="icon-right"><i class="feather-chevron-right"></i></div>
                             </li>
-                            <li class="rbt-breadcrumb-item active">{{ $course->category_name }}</li>
+                            <li class="rbt-breadcrumb-item active">{{ $course->categoryName }}</li>
                         </ul>
                         <h1 class="title">{{ $course->title }}</h1>
                         <p class="description">{{ $course->heading }}</p>
@@ -35,30 +35,30 @@
                             />
 
                             <div class="feature-sin total-rating">
-                                <span class="rbt-badge-4" href="#">{{ $course->review_count_text }}</span>
+                                <span class="rbt-badge-4" href="#">{{ $course->reviewCountText }}</span>
                             </div>
 
                             <div class="feature-sin total-student">
-                                <span>{{ $course->enrollment_count_text }}</span>
+                                <span>{{ $course->enrollmentCountText }}</span>
                             </div>
 
                         </div>
 
                         <div class="rbt-author-meta mb--20">
                             <div class="rbt-avater">
-                                <a href="{{ $course->authorInfo['profile_url'] }}">
+                                <a href="{{ $course->authorInfo['profileUrl'] }}">
                                     <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor avatar">
                                 </a>
                             </div>
                             <div class="rbt-author-info">
                                 By
-                                <a href="{{ $course->authorInfo['profile_url'] }}">{{ $course->authorInfo['name'] }}</a>
-                                in <a href="#">{{ $course->category_name }}</a>
+                                <a href="{{ $course->authorInfo['profileUrl'] }}">{{ $course->authorInfo['name'] }}</a>
+                                in <a href="#">{{ $course->categoryName }}</a>
                             </div>
                         </div>
 
                         <ul class="rbt-meta">
-                            <li><i class="feather-calendar"></i>Last updates {{ $course->updated_at_human }}
+                            <li><i class="feather-calendar"></i>Last updates {{ $course->updatedAtHuman }}
                             </li>
                             <li><i class="feather-globe"></i>English</li>
                             <li><i class="feather-award"></i>Certification</li>
@@ -127,10 +127,12 @@
                             <x-client.course-details.reviews.summary
                                 :$course
                                 :reviews="$course->reviews"
+                                lazy
                             />
                             <livewire:client.review.index
                                 :model="$course"
                                 :reviews="$course->reviews"
+                                lazy
                             />
                         @endif
                     </div>
@@ -164,7 +166,7 @@
                                     <div
                                         class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
                                         <div class="rbt-price">
-                                            <span class="current-price">{{ $course->price_formatted }}</span>
+                                            <span class="current-price">{{ $course->priceFormatted }}</span>
                                         </div>
                                         <div class="discount-time">
                                         <span class="rbt-badge color-danger bg-color-danger-opacity"><i
@@ -192,19 +194,19 @@
                                 <div class="rbt-widget-details has-show-more">
                                     <ul class="has-show-more-inner-content rbt-course-details-list-wrapper">
                                         <li>
-                                            <span>Duration: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->duration_text  }}</span>
+                                            <span>Duration: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->durationText  }}</span>
                                         </li>
                                         <li>
                                             <span>Enrolled: </span><span
                                                 class="rbt-feature-value rbt-badge-5">{{ $course->enrollment_count }}</span>
                                         </li>
                                         <li>
-                                            <span>Lesson: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->lesson_count }}</span>
+                                            <span>Lesson: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->lessonCountText }}</span>
                                         </li>
                                         <li>
                                             <span>Level: </span><span class="rbt-feature-value rbt-badge-5">{{ ucfirst($course->level) }}</span>
                                         </li>
-                                        @if($course->quiz_count > 0)
+                                        @if($course->quizCount > 0)
                                             <li>
                                                 <span>Quiz: </span><span class="rbt-feature-value rbt-badge-5">{{ $course->quiz_count }}</span>
                                             </li>
