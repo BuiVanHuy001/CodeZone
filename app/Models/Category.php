@@ -16,11 +16,11 @@ class Category extends Model
 
     protected static function booted(): void
     {
-        static::saved(function (self $category) {
+        static::saved(static function (self $category) {
             Cache::forget('categories_with_children');
         });
 
-        static::deleted(function (self $category) {
+        static::deleted(static function (self $category) {
             Cache::forget('categories_with_children');
         });
     }

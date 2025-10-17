@@ -17,7 +17,7 @@ class CoursePolicy
 
     public function access(User $user, Course $course): bool
     {
-        if ($user->role === 'instructor' || $user->role === 'organization') {
+        if ($user->role === 'instructor') {
             return $course->user_id === $user->id;
         }
 

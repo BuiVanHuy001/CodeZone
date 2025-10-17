@@ -8,23 +8,9 @@
                 </div>
                 <div class="tutor-content">
                     <h5 class="title">{{ $user->name }}</h5>
-                    @if($role === 'instructor')
-                        <div class="rbt-review">
-                            <x-client.course-details.reviews.components.star
-                                :star-number="$user->instructorProfile->rating"
-                                class="rating"
-                            />
-                            <span class="rating-count"> ({{ $user->reviewCountText }})</span>
-                        </div>
-                    @else
-                        <ul class="rbt-meta rbt-meta-white mt--5">
-                            <li><i class="feather-book"></i>{{ $user->enrolledCountText }}</li>
-                            <li><i class="feather-award"></i>{{ $user->completedCountText }}</li>
-                        </ul>
-                    @endif
                 </div>
             </div>
-            @if($courseCreateRoute && ($user->isOrganization() || $user->isInstructor()))
+            @if($courseCreateRoute)
                 <div class="rbt-tutor-information-right">
                     <div class="tutor-btn">
                         <a class="rbt-btn btn-md hover-icon-reverse" wire:navigate href="{{ $courseCreateRoute }}">

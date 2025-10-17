@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     protected $hidden = ['password', 'remember_token',];
 
-    public static array $ROLES = ['student', 'admin', 'instructor', 'super_admin', 'organization'];
+    public static array $ROLES = ['student', 'admin', 'instructor', 'super_admin'];
 
     public static array $STATUSES = [
         'active' => [
@@ -74,16 +74,6 @@ class User extends Authenticatable
         return $this->hasMany(Course::class);
     }
 
-    public function organizations(): BelongsToMany
-    {
-        return $this->belongsToMany(__CLASS__, 'organization_users', 'user_id', 'organization_id');
-    }
-
-    public function batchEnrollments(): hasMany
-    {
-        return $this->hasMany(BatchEnrollments::class);
-    }
-
     public function progressTracking(): HasMany
     {
         return $this->hasMany(TrackingProgress::class);
@@ -104,11 +94,6 @@ class User extends Authenticatable
         return self::$STATUSES[$this->status]['label'] ?? 'Unknown';
     }
 
-    public function organizationProfile(): HasOne
-    {
-        return $this->hasOne(OrganizationProfile::class, 'user_id');
-    }
-
     public function instructorProfile(): HasOne
     {
         return $this->hasOne(InstructorProfile::class, 'user_id');
@@ -121,14 +106,11 @@ class User extends Authenticatable
 
     public function getProfile(): HasOne
     {
-        if ($this->isOrganization()) {
-            return $this->organizationProfile();
-        } elseif ($this->isStudent()) {
+        if ($this->isStudent()) {
             return $this->studentProfile();
-        } else {
-            return $this->instructorProfile();
         }
 
+        return $this->instructorProfile();
     }
 
     public function orders(): HasMany
@@ -141,11 +123,6 @@ class User extends Authenticatable
         return $this->role === 'instructor';
     }
 
-    public function isOrganization(): bool
-    {
-        return $this->role === 'organization';
-    }
-
     public function isStudent(): bool
     {
         return $this->role === 'student';
@@ -154,25 +131,6 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return in_array($this->role, ['admin', 'super_admin']);
-    }
-
-    public function isMemberOfOrganization(string $userId, string $organizationId): bool
-    {
-        return OrganizationUser::where('organization_id', $organizationId)
-            ->where('user_id', $userId)
-            ->exists();
-    }
-
-    public function isEnrolledThisCourse(Course $course): bool
-    {
-        $isReviewable = false;
-        foreach ($this->batchEnrollments as $enrollment) {
-            if ($enrollment->batch->course_id === $course->id) {
-                $isReviewable = $enrollment->batch->course->where('id', $course->id)->exists();
-                break;
-            }
-        }
-        return $isReviewable;
     }
 
     public function getAvatarPath(): string
@@ -195,32 +153,9 @@ class User extends Authenticatable
         return config("menus.$this->role", []);
     }
 
-    public function getOrganizationOfUser(): string
-    {
-        $organizations = $this->relationLoaded('organizations')
-            ? $this->organizations
-            : $this->organizations()->select('users.id', 'users.name')->get();
-
-        return $organizations
-            ->pluck('name')
-            ->filter()
-            ->unique()
-            ->implode(', ');
-    }
-
     public function slugSourceField(): string
     {
         return $this->name;
-    }
-
-    public function scopeWithName($query, $name): Builder|QueryBuilder
-    {
-        return $query->where('name', 'like', "%$name%");
-    }
-
-    public function scopeWithEmail($query, $email): Builder|QueryBuilder
-    {
-        return $query->where('email', 'like', "%$email%");
     }
 
     public function reviews(): MorphMany

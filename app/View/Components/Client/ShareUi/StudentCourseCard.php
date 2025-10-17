@@ -9,16 +9,10 @@ use Illuminate\View\Component;
 
 class StudentCourseCard extends Component
 {
-    public string $status;
-
-    /**
-     * Create a new component instance.
-     */
     public function __construct(
         public Course $course
     )
     {
-        $this->status = $course->status;
     }
 
     /**

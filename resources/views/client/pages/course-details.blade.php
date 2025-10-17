@@ -162,35 +162,31 @@
                             </a>
 
                             <div class="content-item-content">
-                                @if(!$course->author->isOrganization())
-                                    <div
-                                        class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
-                                        <div class="rbt-price">
-                                            <span class="current-price">{{ $course->priceFormatted }}</span>
-                                        </div>
-                                        <div class="discount-time">
+                                <div
+                                    class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
+                                    <div class="rbt-price">
+                                        <span class="current-price">{{ $course->priceFormatted }}</span>
+                                    </div>
+                                    <div class="discount-time">
                                         <span class="rbt-badge color-danger bg-color-danger-opacity"><i
                                                 class="feather-clock"></i> 3 days left!</span>
-                                        </div>
                                     </div>
-                                    @if($canAccess)
-                                        <div class="buy-now-btn mt--15">
-                                            <a class="rbt-btn btn-border icon-hover w-100 d-block text-center" href="{{ route('course.learn', $course->slug) }}">
-                                                <span class="btn-text">Go to course</span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                            </a>
-                                        </div>
-                                    @else
-                                        <div class="add-to-card-button mt--15">
-                                            <button onclick="Livewire.dispatch('add-to-cart', ['{{ $course->id }}'])" class="rbt-btn btn-gradient icon-hover w-100 d-block text-center">
-                                                <span class="btn-text">Add to cart</span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                            </button>
-                                        </div>
-                                    @endif
+                                </div>
+                                @if($canAccess)
+                                    <div class="buy-now-btn mt--15">
+                                        <a class="rbt-btn btn-border icon-hover w-100 d-block text-center" href="{{ route('course.learn', $course->slug) }}">
+                                            <span class="btn-text">Go to course</span>
+                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                        </a>
+                                    </div>
                                 @else
-                                    <h5 class="text-center text-primary">This is Organization Course</h5>
-                                @endif
+                                    <div class="add-to-card-button mt--15">
+                                        <button onclick="Livewire.dispatch('add-to-cart', ['{{ $course->id }}'])" class="rbt-btn btn-gradient icon-hover w-100 d-block text-center">
+                                            <span class="btn-text">Add to cart</span>
+                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                        </button>
+                                    </div>
+                                @endifư
                                 <div class="rbt-widget-details has-show-more">
                                     <ul class="has-show-more-inner-content rbt-course-details-list-wrapper">
                                         <li>

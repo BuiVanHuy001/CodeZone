@@ -10,9 +10,6 @@ use Random\RandomException;
 
 class PaymentController extends Controller
 {
-    /**
-     * @throws RandomException
-     */
     public function redirect(Order $order, string $method): RedirectResponse
     {
         return (new PaymentContext($method))->createPaymentUrl(['order' => $order,]);

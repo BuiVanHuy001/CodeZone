@@ -60,7 +60,6 @@ class CourseDecorator
     public function decorateForInstructorDashboard(Course $course): Course
     {
         $course = $this->decorateBase($course);
-
         $course->detailsPageUrl = route('page.course_detail', $course->slug);
         $course->studentCountText = $this->formatCount($course->enrollment_count, 'student');
         $course->reviewCountText = $this->formatCount($course->review_count, 'review');

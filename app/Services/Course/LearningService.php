@@ -143,8 +143,7 @@ class LearningService
         $totalLessons = max($course->lesson_count, 1);
 
         $completed = TrackingProgress::where('user_id', $user->id)
-            ->whereHas('lesson', fn($q) => $q->whereIn('module_id', $course->modules->pluck('id'))
-            )
+            ->whereHas('lesson', fn($q) => $q->whereIn('module_id', $course->modules->pluck('id')))
             ->where('is_completed', true)
             ->count();
 

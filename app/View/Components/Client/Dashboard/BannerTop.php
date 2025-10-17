@@ -21,22 +21,10 @@ class BannerTop extends Component
         $this->user = auth()->user();
         $this->role = $this->user->role;
 
-        if ($this->role === 'student') {
-            $studentService = app(StudentService::class);
-            $this->user = $studentService->prepareDetails($this->user);
-        } elseif ($this->role === 'instructor') {
-            $instructorService = app(InstructorService::class);
-            $this->user = $instructorService->prepareDetails($this->user);
-        }
-
 		$roleSettings = [
 			'instructor' => [
 				'background' => 'bg_image--14',
 				'route' => 'instructor.courses.create',
-			],
-			'organization' => [
-				'background' => 'bg_image--11',
-				'route' => 'organization.courses.create',
 			],
             'student' => [
                 'background' => 'bg_image--12',

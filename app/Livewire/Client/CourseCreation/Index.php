@@ -18,6 +18,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
+use Throwable;
 
 #[Title('Create New Course')]
 class Index extends Component
@@ -148,22 +149,11 @@ class Index extends Component
     private function handleRedirect(bool $isSuccess): RedirectResponse|Redirector
     {
         if ($isSuccess) {
-            if (auth()->user()->isOrganization()) {
-                return redirect()
-                    ->route('organization.dashboard.overview')
-                    ->with('swal', [
-                        'title' => 'Course Created',
-                        'text' => 'Your course has been created successfully.',
-                        'icon' => 'success',
-                        'timer' => 3000,
-                    ]);
-            }
-
             return redirect()
                 ->route('instructor.dashboard.index')
                 ->with('swal', [
                     'title' => 'Course Created',
-                    'text' => 'Your course has been created successfully.',
+                    'text' => 'Your course has been created successfully. You meed to wait for admin approval before it goes live.',
                     'icon' => 'success',
                     'timer' => 3000,
                 ]);

@@ -2,11 +2,6 @@
 
 <img src="https://hackatime-badge.hackclub.com/U098ESP1YH5/CodeZone" />
 
-**CodeZone** is a web-based learning platform designed to support students and instructors in teaching and learning
-programming more effectively.  
-Built with **Laravel 12** and **Livewire 3**, CodeZone offers modern features like interactive lessons, auto-graded
-coding assignments, and role-based course management.
-
 ---
 
 ## 🎨 UI Templates Used
@@ -14,35 +9,6 @@ coding assignments, and role-based course management.
 - **Client**: [HiStudy - Online Courses & Education Template](https://rainbowit.net/html/histudy/)
 - **Admin
   **: [Vuexy - Admin Dashboard Template](https://demos.pixinvent.com/vuexy-html-admin-template/html/vertical-menu-template/)
-
----
-
-## 🚀 Features
-
-- 🎓 **Role-based system**: Admin, Instructor, Student, Organization
-- 📚 **Course creation & management** with modules and lessons
-- 🎥 **Multiple lesson types**: Video, Document, Quiz, Programming Assignment
-- 🧠 **Quiz engine**: Multiple choice & True/False questions
-- 💻 **Code assignments** with auto-evaluation using test cases
-- 📈 **Learning progress tracking**
-- 📜 **Certification generation** upon course completion
-- 📅 **Organization-based course batches** with start/end dates
-- 🔐 **Access control** for private enterprise courses
-
----
-
-## 🛠️ Technologies Used
-
-| Technology        | Purpose                            |
-|-------------------|------------------------------------|
-| Laravel 12        | Backend framework                  |
-| Livewire 3        | SPA-style dynamic frontend         |
-| Alpine.js         | Lightweight frontend interactivity |
-| Laravel Socialite | Social login (Google, Facebook)    |
-| SweetAlert2       | Beautiful alert popups             |
-| MySQL             | Database system                    |
-| Vite              | Fast asset bundler                 |
-| Tailwind CSS      | Utility-first CSS framework        |
 
 ---
 
@@ -76,34 +42,6 @@ php artisan serve & npm run dev
 ````
 
 ---
-
-## 🔐 Default Login Accounts (if seeded)
-
-| Role       | Email                    | Password |
-|------------|--------------------------|----------|
-| Student    | work.buivanhuy@gmail.com | password |
-| Instructor | taylorotwell             | password |
-
----
-
-## 📌 Requirements
-
-* PHP 8.2+
-* Composer 2+
-* Node.js 18+
-* MySQL 5.7+
-
-For **social login**, you must configure these variables in `.env`:
-
-```
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-FACEBOOK_CLIENT_ID=
-FACEBOOK_CLIENT_SECRET=
-```
-
----
-
 ## 📬 Contact & Contribution
 
 For feedback, contributions, or bug reports:

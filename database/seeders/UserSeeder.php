@@ -41,21 +41,5 @@ class UserSeeder extends Seeder
                 ],
             ]);
         }
-
-        $organizations = User::factory(5)->create([
-            'role' => 'organization',
-        ]);
-        foreach ($organizations as $user) {
-            $user->organizationProfile()->create([
-                'bio' => fake()->company(),
-                'about_me' => fake()->paragraphs(3, true),
-                'social_links' => [
-                    'facebook' => fake()->url(),
-                    'twitter' => fake()->url(),
-                    'linkedin' => fake()->url(),
-                    'github' => fake()->url(),
-                ],
-            ]);
-        }
     }
 }
