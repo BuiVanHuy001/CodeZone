@@ -9,8 +9,8 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="load-more-btn text-start text-md-end">
-                        <a class="rbt-btn rbt-switch-btn bg-primary-opacity" href="">
-                            <span data-text="View all Khóa học">View all courses</span>
+                        <a class="rbt-btn rbt-switch-btn bg-primary-opacity" href="{{ route('page.courses') }}">
+                            <span data-text="View all courses">View all courses</span>
                         </a>
                     </div>
                 </div>

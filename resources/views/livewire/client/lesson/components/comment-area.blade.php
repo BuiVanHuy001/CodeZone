@@ -51,6 +51,10 @@
                                                 <div class="comment-text mt-1">
                                                     <p class="mb-0">{!! $comment->content !!}</p>
                                                 </div>
+                                                <livewire:client.shared.reaction-box
+                                                    :model="$comment"
+                                                    wire:key="reaction-comment-{{ $comment->id }}"
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -96,8 +100,8 @@
                                                                 <i class="feather-x"></i>
                                                             </button>
                                                         @endif
-                                                        
-                                                        <div class="comment-body">
+
+                                                            <div class="comment-body">
                                                             <div class="single-comment d-flex">
                                                                 <div class="comment-img position-relative">
                                                                     @if($reply->user->isInstructor())

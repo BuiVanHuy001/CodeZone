@@ -38,7 +38,7 @@
                                         <div class="rbt-card-body">
                                             <ul class="rbt-meta">
                                                 <li><i class="feather-book"></i>{{ $course->lessonCountText }}</li>
-                                                <li><i class="feather-users"></i>{{ $course->studentCountText }}</li>
+                                                <li><i class="feather-users"></i>{{ $course->enrollmentCountText }}</li>
                                             </ul>
                                             <h4 class="rbt-card-title">
                                                 <a href="{{ $course->detailsPageUrl }}">{{ $course->title }}
@@ -46,10 +46,7 @@
                                             </h4>
                                             <p class="rbt-card-text">{{ $course->heading }}</p>
                                             <div class="rbt-review">
-                                                <x-client.course-details.reviews.components.star
-                                                    :starNumber="$course->rating"
-                                                    class="rating"
-                                                />
+                                                <x-client.course-details.reviews.components.star :starNumber="$course->rating" class="rating"/>
                                                 <span class="rating-count"> ({{ $course->reviewCountText }})</span>
                                             </div>
                                             <div class="rbt-card-bottom">

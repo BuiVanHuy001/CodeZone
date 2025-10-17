@@ -15,7 +15,6 @@ class Index extends Component
     public function __construct()
     {
         $this->categories = Category::fetchCategoriesWithChildren();
-
     }
 
     public function render(): View|Closure|string

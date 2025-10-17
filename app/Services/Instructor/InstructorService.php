@@ -3,8 +3,10 @@
 namespace App\Services\Instructor;
 
 use App\Models\Course;
+use App\Models\OrderItem;
 use App\Models\User;
-use App\Services\Course\CatalogService;
+use App\Services\Instructor\Catalog\CatalogService;
+use App\Services\Course\CourseService;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
 
@@ -12,61 +14,46 @@ readonly class InstructorService
 {
     use HasNumberFormat;
 
-    public function __construct(private CatalogService $catalogService) { }
+    private CourseService $courseService;
+    private CatalogService $catalogService;
+
+    public function __construct()
+    {
+        $this->courseService = app(CourseService::class);
+        $this->catalogService = app(CatalogService::class);
+    }
 
     public function prepareDetails(User $instructor): User
     {
-        $catalogService = app(CatalogService::class);
-        $profile = $instructor->instructorProfile;
-
-        $instructor->avatar = $instructor->getAvatarPath();
-        $instructor->courses = $catalogService->getCoursesByAuthor($instructor);
-        $instructor->reviews = $instructor->reviews->sortByDesc('created_at');
-        $instructor->bio = $profile->bio;
-        $instructor->aboutMe = $profile->about_me;
-        $instructor->socialLinks = $profile->social_links;
-        $instructor->currentJob = $profile->current_job;
-        $instructor->profileUrl = route('instructor.details', $instructor->slug);
-        $instructor->reviewCountText = $this->formatCount($profile->review_count, 'review');
-        $instructor->studentCountText = $this->formatCount($profile->student_count, 'student');
-        $instructor->courseCountText = $this->formatCount($profile->course_count, 'course');
-        $instructor->rating = number_format($profile->rating, 1);
-        return $instructor;
+        return $this->catalogService->prepareInstructorDetails($instructor);
     }
 
     public function prepareBasicDetails(User $instructor): User
     {
-        $instructor->avatar = $instructor->getAvatarPath();
-        $instructor->profileUrl = route('instructor.details', $instructor->slug);
-        return $instructor;
+        return $this->catalogService->prepareInstructorBasicDetails($instructor);
     }
 
-    public function getInstructorOverviewData(User $instructor): array
+    public function prepareOverviewData(User $instructor): array
     {
-        $publishedCourses = $this->catalogService->getCoursesByAuthor($instructor);
-        $totalEarnings = $this->calculateTotalEarnings($publishedCourses);
-        $studentsEnrolled = $instructor->instructorProfile->student_count;
-        $rating = $instructor->instructorProfile->rating;
-        return [
-            'publishedCourses' => $publishedCourses->count(),
-            'totalEarnings' => $totalEarnings,
-            'studentsEnrolled' => $studentsEnrolled,
-            'rating' => number_format($rating, 1),
-            'reviewCount' => $instructor->instructorProfile->review_count
-        ];
+        return $this->catalogService->getOverviewData($instructor);
     }
 
-    private function calculateTotalEarnings(Collection $publishedCourses): string
+    public function getInstructors(): Collection
     {
-        $totalEarnings = 0;
-        foreach ($publishedCourses as $course) {
-            $totalEarnings += $this->catalogService->calculateCourseEarnings($course);
-        }
-        return number_format($totalEarnings);
+        $instructors = User::where([
+            'role' => 'instructor',
+            'status' => 'active'])
+            ->whereHas('instructorProfile', function ($query) {
+                $query->where('course_count', '>', 0);
+            })
+            ->with('instructorProfile')
+            ->get();
+        return $instructors->sortByDesc(fn($instructor) => $instructor->instructorProfile->rating);
     }
+
 
     public function getInstructorCourses(User $instructor): Collection
     {
-        return $this->catalogService->getCoursesByAuthor($instructor, Course::$STATUSES);
+        return $this->courseService->getCoursesByAuthor($instructor);
     }
 }

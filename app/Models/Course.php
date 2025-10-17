@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\HasDuration;
-use App\Traits\HasNumberFormat;
 use App\Traits\HasSlug;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,11 +11,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Facades\Storage;
 
 class Course extends Model
 {
-    use HasFactory, HasSlug, HasUUID, HasDuration, HasNumberFormat;
+    use HasFactory, HasSlug, HasUUID, HasDuration;
 
     protected $guarded = [];
 
@@ -78,25 +76,5 @@ class Course extends Model
     public function slugSourceField(): string
     {
         return $this->title;
-    }
-
-    public function getThumbnailPath(): string
-    {
-        if ($this->thumbnail) {
-            if (filter_var($this->thumbnail, FILTER_VALIDATE_URL)) {
-                return $this->thumbnail;
-            }
-            return Storage::url('course/thumbnails/' . $this->thumbnail);
-        }
-        return asset('images/others/thumbnail-placeholder.svg');
-    }
-
-    public function getFormattedPrice(): string
-    {
-        if ($this->price === 0) {
-            return 'Free';
-        }
-
-        return $this->formatCurrency($this->price);
     }
 }

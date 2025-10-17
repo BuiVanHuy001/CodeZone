@@ -6,10 +6,24 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
+use LaravelIdea\Helper\App\Models\_IH_Category_C;
+use LaravelIdea\Helper\App\Models\_IH_Category_QB;
 
 class Category extends Model
 {
     use HasFactory;
+
+    protected static function booted(): void
+    {
+        static::saved(function (self $category) {
+            Cache::forget('categories_with_children');
+        });
+
+        static::deleted(function (self $category) {
+            Cache::forget('categories_with_children');
+        });
+    }
 
     public function children(): HasMany
     {
@@ -26,17 +40,18 @@ class Category extends Model
         return $query->where('parent_id', $parentId)->get();
     }
 
-	public function scopeParents()
-	{
+    public function scopeParents(): _IH_Category_C|array
+    {
 		return $this->where('parent_id', null)->get();
 	}
 
     public static function fetchCategoriesWithChildren(): Collection
     {
-        $categories = Category::getParents();
-        foreach ($categories as $category) {
-            $category->children = Category::with('children')->getChildren($category->id);
-        }
-        return $categories;
+        return Cache::rememberForever('categories_with_children', static function (): Collection {
+            return self::whereNull('parent_id')
+                ->with('children')
+                ->orderBy('position')
+                ->get();
+        });
     }
 }

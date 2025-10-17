@@ -6,7 +6,8 @@ use App\Imports\QuizzesImport;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 
-class QuizImportService {
+class QuizImportService
+{
     public function importFile($filePath): array
     {
         $dbQuestions = [];
