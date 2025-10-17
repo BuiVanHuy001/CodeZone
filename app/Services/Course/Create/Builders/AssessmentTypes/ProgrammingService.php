@@ -4,7 +4,8 @@ namespace App\Services\Course\Create\Builders\AssessmentTypes;
 
 use App\Livewire\Client\CourseCreation\Components\Builders\Assessment\Programming;
 
-class ProgrammingService {
+readonly class ProgrammingService
+{
     protected array $typeMap;
 
     public function __construct()

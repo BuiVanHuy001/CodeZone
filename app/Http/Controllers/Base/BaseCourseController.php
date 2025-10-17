@@ -25,7 +25,7 @@ class BaseCourseController extends Controller
 
     public function show(string $slug): View|Application|Factory
     {
-        $course = $this->courseService->prepareCourseDetailData($slug);
+        $course = $this->courseService->prepareDataForCourseDetails($slug);
 
         if (!$course) {
             return view('client.errors.404');
@@ -39,11 +39,11 @@ class BaseCourseController extends Controller
 
     public function index(Request $request): View|Application|Factory
     {
-        $data = $this->courseService->prepareCatalogData($request);
+        $data = $this->courseService->prepareDataForCourseList($request);
 
         return view('client.pages.course-list', [
             'courses' => $data['courses'],
-            'topInstructors' => $data['topInstructors'],
+            'instructors' => $data['instructors'],
             'categories' => $data['categories'],
             'shortByOptions' => CourseFilter::$shortByOptions,
             'offsetOptions' => CourseFilter::$offerOptions,

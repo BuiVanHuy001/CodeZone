@@ -41,7 +41,7 @@ readonly class CreateService
         $author->getProfile->increment('course_count');
     }
 
-    public function storeCourseInfo(array $info, string $authorId): Course
+    private function storeCourseInfo(array $info, string $authorId): Course
     {
         return Course::create([
             'title' => $info['title'],

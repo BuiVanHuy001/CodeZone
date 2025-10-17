@@ -61,7 +61,7 @@
                             <div class="filter-inner">
                                 <x-client.share-ui.filter-select label="Short By" :items="$shortByOptions" name="short_by"/>
 
-                                <x-client.share-ui.filter-select label="Short By Author" :items="$topInstructors" :isModern="true" name="instructor"/>
+                                <x-client.share-ui.filter-select label="Short By Author" :items="$instructors" :isModern="true" name="instructor"/>
 
                                 <x-client.share-ui.filter-select label="Short By Offer" :items="$offsetOptions" name="offer"/>
 

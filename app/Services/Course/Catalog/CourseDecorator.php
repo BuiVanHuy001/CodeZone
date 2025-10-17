@@ -15,14 +15,13 @@ class CourseDecorator
     {
         $course = $this->decorateBase($course);
 
-        $course->loadMissing('reviews:id,course_id,rating');
+        $course->loadMissing('reviews:id,rating');
 
         if ($course->status === 'published') {
             $course->reviewCountText = $this->formatCount($course->review_count, 'review');
             $course->enrollmentCountText = $this->formatCount($course->enrollment_count, 'student');
             $course->detailsPageUrl = route('page.course_detail', $course->slug);
         }
-
 
         return $course;
     }

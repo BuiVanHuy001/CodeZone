@@ -24,7 +24,7 @@ class CatalogService
         $this->courseDecorator = app(CourseDecorator::class);
     }
 
-    public function prepareCatalogData(int $amount, Request $request): Collection
+    public function prepareCourseList(int $amount, Request $request): Collection
     {
         $instructorService = app(InstructorService::class);
 
@@ -35,13 +35,13 @@ class CatalogService
         $categories = Category::fetchCategoriesWithChildren();
 
         return collect([
-            'courses' => $coursesPaginated, // Keep as LengthAwarePaginator
+            'courses' => $coursesPaginated,
             'categories' => $categories,
-            'topInstructors' => $instructorService->getTopInstructors(),
+            'instructors' => $instructorService->getInstructors(),
         ]);
     }
 
-    public function prepareDetails(Course $course): Course
+    public function prepareCourseDetails(Course $course): Course
     {
         return $this->courseDecorator->decorateForDetails($course);
     }

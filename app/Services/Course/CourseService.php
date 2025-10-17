@@ -4,25 +4,29 @@ namespace App\Services\Course;
 
 
 use App\Models\Course;
+use App\Models\User;
 use App\Services\Course\Catalog\CatalogService;
+use App\Services\Course\Create\CreateService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-class CourseService
+readonly class CourseService
 {
     private CatalogService $catalogService;
+    private CreateService $createService;
 
     public function __construct()
     {
         $this->catalogService = app(CatalogService::class);
+        $this->createService = app(CreateService::class);
     }
 
-    public function prepareCatalogData(Request $request): Collection
+    public function prepareDataForCourseList(Request $request): Collection
     {
-        return $this->catalogService->prepareCatalogData(9, $request);
+        return $this->catalogService->prepareCourseList(9, $request);
     }
 
-    public function prepareCourseDetailData(string $slug): ?Course
+    public function prepareDataForCourseDetails(string $slug): ?Course
     {
         $course = Course::where([
             'slug' => $slug,
@@ -30,9 +34,14 @@ class CourseService
         ])->first();
 
         if ($course) {
-            return $this->catalogService->prepareDetails($course);
+            return $this->catalogService->prepareCourseDetails($course);
         }
 
         return null;
+    }
+
+    public function storeCourse(User $author, array $courseData): void
+    {
+        $this->createService->storeCourse($author, $courseData);
     }
 }

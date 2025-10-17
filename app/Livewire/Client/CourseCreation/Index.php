@@ -3,7 +3,7 @@
 namespace App\Livewire\Client\CourseCreation;
 
 use App\Models\Course;
-use App\Services\Course\ManagementService;
+use App\Services\Course\CourseService;
 use App\Validator\CourseInfoValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -23,6 +23,8 @@ use Livewire\WithFileUploads;
 class Index extends Component
 {
     use WithFileUploads;
+
+    private CourseService $courseService;
 
     public string $title = '';
     public string $slug = '';
@@ -45,6 +47,11 @@ class Index extends Component
     public string $activeCourseSettingTab = 'general';
 
     public array $messages;
+
+    public function boot(): void
+    {
+        $this->courseService = app(CourseService::class);
+    }
 
     public function mount(): void
     {
@@ -96,13 +103,13 @@ class Index extends Component
         $this->activeCourseSettingTab = $tab;
     }
 
-    public function store(ManagementService $managementService): void
+    public function store(): void
     {
         $this->validateFields();
 
         DB::beginTransaction();
         try {
-            $managementService->create(
+            $this->courseService->storeCourse(
                 auth()->user(),
                 [
                     'title' => $this->title,

@@ -13,7 +13,11 @@ readonly class InstructorService
 {
     use HasNumberFormat;
 
-    public function __construct(private CatalogService $catalogService) { }
+    public function __construct(
+        private CatalogService $catalogService
+    )
+    {
+    }
 
     public function prepareDetails(User $instructor): User
     {
@@ -42,9 +46,11 @@ readonly class InstructorService
         return $instructor;
     }
 
-    public function getTopInstructors(): Collection
+    public function getInstructors(): Collection
     {
-        $instructors = User::where('role', 'instructor')
+        $instructors = User::where([
+            'role' => 'instructor',
+            'status' => 'active'])
             ->whereHas('instructorProfile', function ($query) {
                 $query->where('course_count', '>', 0);
             })
