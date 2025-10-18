@@ -21,13 +21,13 @@
                                 @foreach($items as $item)
                                     <tr>
                                         <td class="pro-thumbnail">
-                                            <a href="{{ route('page.course_detail', $item['slug']) }}"><img src="{{ $item['thumbnail'] }}" alt="Product"></a>
+                                            <a href="{{ $item->detailPageUrl }}"><img src="{{ $item->thumbnail }}" alt="Product"></a>
                                         </td>
                                         <td class="pro-title">
-                                            <a href="{{ route('page.course_detail', $item['slug']) }}">{{ $item['title'] }}</a>
+                                            <a href="{{ $item->detailPageUrl }}">{{ $item->title }}</a>
                                         </td>
-                                        <td class="pro-price"><span>{{ $item['price'] }}</span></td>
-                                        <td class="pro-subtotal"><span>{{ $item['price'] }}</span></td>
+                                        <td class="pro-price"><span>{{ $item->price }}</span></td>
+                                        <td class="pro-subtotal"><span>{{ $item->price }}</span></td>
                                         <td class="pro-remove"><a href="#"><i class="feather-x"></i></a>
                                         </td>
                                     </tr>

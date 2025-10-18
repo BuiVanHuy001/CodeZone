@@ -23,21 +23,21 @@
                     @forelse($items as $item)
                         <li class="minicart-item">
                             <div class="thumbnail">
-                                <a href="{{ route('page.course_detail', $item->course->slug) }}">
-                                    <img src="{{ $item->course->getThumbnailPath() }}" alt="Product Images">
+                                <a href="{{ $item['detailsPageUrl'] }}">
+                                    <img src="{{ $item['thumbnail'] }}" alt="Course thumbnail">
                                 </a>
                             </div>
                             <div class="product-content">
                                 <h6 class="title">
-                                    <a href="{{ route('page.course_detail', $item->course->slug) }}">{{ $item->course->title }}</a>
+                                    <a href="{{ $item['detailsPageUrl'] }}">{{ $item['title'] }}</a>
                                 </h6>
-                                <p class="title">{{ $item->course->author->name }}</p>
+                                <p class="title">{{ $item['authorInfo']['name'] }}</p>
                                 <span class="quantity">
-                                    <span class="price">{{ $item->course->getFormattedPrice() }}</span>
+                                    <span class="price">{{ $item['priceFormatted'] }}</span>
                                 </span>
                             </div>
                             <div class="close-btn">
-                                <button wire:click.prevent="removeFromCart('{{ $item->id }}')" class="rbt-round-btn">
+                                <button wire:click.prevent="removeFromCart('{{ $item['id'] }}')" class="rbt-round-btn">
                                     <i class="feather-x"></i></button>
                             </div>
                         </li>

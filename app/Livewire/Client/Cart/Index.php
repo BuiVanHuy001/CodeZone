@@ -4,6 +4,8 @@ namespace App\Livewire\Client\Cart;
 
 use App\Models\Order;
 use App\Services\Cart\CartService;
+use App\Services\Course\Catalog\CourseDecorator;
+use App\Services\Course\CourseService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -13,6 +15,7 @@ use Livewire\Component;
 class Index extends Component
 {
     private CartService $cartService;
+    private CourseDecorator $courseDecorator;
     public ?Order $order;
     public string $totalPrice = '0';
     public string $paymentMethod = 'momo';
@@ -21,6 +24,7 @@ class Index extends Component
     public function __construct()
     {
         $this->cartService = app(CartService::class);
+        $this->courseDecorator = app(CourseDecorator::class);
     }
 
     public function mount(): void
@@ -28,13 +32,7 @@ class Index extends Component
         $this->order = $this->cartService->getCart(auth()->user());
         if ($this->order) {
             $this->totalPrice = $this->cartService->formatPrice($this->order->total_price);
-            $this->items = $this->order->items->map(fn($item) => [
-                'id' => $item->course->id,
-                'title' => $item->course->title,
-                'slug' => $item->course->slug,
-                'price' => $item->course->getFormattedPrice(),
-                'thumbnail' => $item->course->getThumbnailPath(),
-            ])->toArray();
+            $this->items = $this->order->items->map(fn($item) => $this->courseDecorator->decorateForCartItem($item->course));
         }
     }
 

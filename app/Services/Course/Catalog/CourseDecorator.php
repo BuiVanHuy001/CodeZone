@@ -91,6 +91,20 @@ class CourseDecorator
         return $course;
     }
 
+    public function decorateForCartItem(Course $course): Course
+    {
+        $course = $this->decorateBase($course);
+        $course->detailsPageUrl = route('page.course_detail', $course->slug);
+        $course->authorInfo = [
+            'name' => $course->author->name,
+            'slug' => $course->author->slug,
+            'avatar' => $course->author->getAvatarPath(),
+            'profileUrl' => route('instructor.details', $course->author->slug),
+        ];
+
+        return $course;
+    }
+
     public function decorateForInstructorDashboard(Course $course): Course
     {
         $course = $this->decorateBase($course);

@@ -14,7 +14,7 @@ class CartService
 {
     public function getCart(User $user): Collection|Order|null
     {
-        return $user->orders()->where('status', 'cart')->with('items')->latest()->first();
+        return $user->orders()->where('status', 'cart')->with(['items', 'items.course'])->latest()->first();
     }
 
     public function addItem(?Order $order, int|string $itemId): array

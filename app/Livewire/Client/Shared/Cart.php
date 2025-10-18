@@ -2,10 +2,9 @@
 
 namespace App\Livewire\Client\Shared;
 
-use App\Models\Course;
 use App\Models\Order;
 use App\Services\Cart\CartService;
-use App\Traits\WithSwal;
+use App\Services\Course\Catalog\CourseDecorator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -16,6 +15,7 @@ use Livewire\Component;
 
 class Cart extends Component
 {
+    private CourseDecorator $courseDecorator;
     public Order|null $cart = null;
     public Collection $items;
     public string $totalPrice = '0₫';
@@ -25,16 +25,16 @@ class Cart extends Component
     public function boot(): void
     {
         $this->cartService = app(CartService::class);
+        $this->courseDecorator = app(CourseDecorator::class);
     }
 
     public function mount(): void
     {
-        if (auth()->check() &&
-            auth()->user()->role === 'student'
-        ) {
+        if (auth()->check() && auth()->user()->isStudent()) {
             $this->cart = $this->cartService->getCart(auth()->user());
             $this->totalPrice = $this->cartService->formatPrice($this->cart->total_price ?? 0);
-            $this->items = collect($this->cart?->items);
+            $this->items = $this->cart->items
+                ->map(fn($item) => collect($this->courseDecorator->decorateForCartItem($item->course)));
         }
     }
 
@@ -94,7 +94,8 @@ class Cart extends Component
     {
         $this->cart = $order;
         $this->totalPrice = $this->cartService->formatPrice($this->cart->total_price ?? 0);
-        $this->items = collect($this->cart?->items);
+        $this->items = $this->cart->items
+            ->map(fn($item) => collect($this->courseDecorator->decorateForCartItem($item->course)));
     }
 
     private function handleItemRemoved(Order $order): void

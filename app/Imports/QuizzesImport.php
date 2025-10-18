@@ -17,9 +17,6 @@ class QuizzesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
 {
     private array $quizzes = [];
 
-    /**
-     * @throws \Exception
-     */
     public function collection(Collection $collection): void
     {
         if ($collection->isEmpty()) {
@@ -90,7 +87,9 @@ class QuizzesImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
     {
         if (is_string($correct_answer)) {
             return array_map('trim', explode(',', $correct_answer));
-        } elseif (is_int($correct_answer)) {
+        }
+
+        if (is_int($correct_answer)) {
             return [$correct_answer];
         }
         return [];

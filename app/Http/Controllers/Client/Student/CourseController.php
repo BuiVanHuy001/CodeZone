@@ -2,15 +2,57 @@
 
 namespace App\Http\Controllers\Client\Student;
 
-use App\Http\Controllers\Base\BaseCourseController;
+use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Services\Course\CourseService;
+use App\Services\Course\LearningService;
+use App\Support\CourseFilter;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class CourseController extends BaseCourseController
+class CourseController extends Controller
 {
+    protected LearningService $learningService;
+    protected CourseService $courseService;
+
+    public function __construct()
+    {
+        $this->learningService = app(LearningService::class);
+        $this->courseService = app(CourseService::class);
+    }
+
+    public function show(string $slug): View|Application|Factory
+    {
+        $course = $this->courseService->prepareDataForCourseDetails($slug);
+
+        if (!$course) {
+            return view('client.errors.404');
+        }
+
+        return view('client.pages.course-details', [
+            'course' => $course,
+            'canAccess' => Gate::allows('access', $course),
+        ]);
+    }
+
+    public function index(Request $request): View|Application|Factory
+    {
+        $data = $this->courseService->prepareDataForCourseList($request);
+
+        return view('client.pages.course-list', [
+            'courses' => $data['courses'],
+            'instructors' => $data['instructors'],
+            'categories' => $data['categories'],
+            'shortByOptions' => CourseFilter::$shortByOptions,
+            'offsetOptions' => CourseFilter::$offerOptions,
+        ]);
+    }
+
     public function learn(string $slug): View|RedirectResponse
     {
         $course = Course::where('slug', $slug)->firstOrFail();
@@ -34,7 +76,7 @@ class CourseController extends BaseCourseController
                 'modules' => fn($q) => $q->orderBy('position'),
                 'modules.lessons' => function ($query) {
                     $query->orderBy('position')
-                        ->with([ // Tải trước các relationship của lesson luôn
+                        ->with([
                             'assessment',
                             'trackingProgresses' => fn($q) => $q->where('user_id', auth()->id())
                         ]);
