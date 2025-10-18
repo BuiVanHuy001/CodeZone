@@ -14,14 +14,8 @@ class CourseCard extends Component
      */
     public function __construct(
         public Course $course,
-        public bool   $isEnrolled = false,
     )
     {
-        if (auth()->check() && auth()->user()->isStudent()) {
-            $this->isEnrolled = $this->course->enrollments()
-                ->where('user_id', auth()->id())
-                ->exists();
-        }
     }
 
     /**

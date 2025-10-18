@@ -29,7 +29,7 @@ class CatalogService
 
         $coursesPaginated = $this->courseFilter->filterCourse($amount, $request);
 
-        $coursesPaginated->getCollection()->transform(fn(Course $course) => $this->courseDecorator->decorateForCard($course));
+        $coursesPaginated->getCollection()->transform(fn(Course $course) => $this->courseDecorator->decorateForCard($course, collect()));
 
         $categories = Category::fetchCategoriesWithChildren();
 
@@ -82,7 +82,7 @@ class CatalogService
             $query->orderBy($col, $dir);
         }
 
-        return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course));
+        return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, collect()));
     }
 
     public function getCoursesByAuthor(User $author): Collection
@@ -139,7 +139,7 @@ class CatalogService
             $course->progressPercentage = round(($completedCount / $totalLessons) * 100, 2);
         });
 
-        return $courses->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course));
+        return $courses->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, $enrolledCourseIds));
     }
 
     private function fetchCourses(int $amount, array $order): Collection
@@ -152,6 +152,11 @@ class CatalogService
             $query->orderBy($col, $dir);
         }
 
-        return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course));
+        $enrolledCourseIds = collect();
+        if (auth()->check() && auth()->user()->isStudent()) {
+            $enrolledCourseIds = auth()->user()->enrollments()->pluck('course_id');
+        }
+
+        return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, $enrolledCourseIds));
     }
 }

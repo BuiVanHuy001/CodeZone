@@ -12,11 +12,18 @@ class CommentDisplayService
 {
     use HasNumberFormat;
 
+    public function __construct(
+        protected InstructorService $instructorService,
+        protected StudentService    $studentService
+    )
+    {
+    }
+
     public function getComments($commentable): Collection
     {
         return $commentable->comments()
-            ->with('user')
-            ->withCount('replies')
+            ->with(['user', 'replies'])
+            ->withCount(['replies', 'mentions'])
             ->latest()
             ->get()
             ->map(fn($comment) => $this->decorateData($comment));
@@ -24,16 +31,15 @@ class CommentDisplayService
 
     private function decorateData(Comment $comment): Comment
     {
-        $replyCount = $comment->replies()->count();
+        $replyCount = $comment->replies_count;
         if ($replyCount > 0) {
             $comment->replyCountText = $this->formatCount($replyCount, 'reply');
         }
-        $instructorService = app(InstructorService::class);
-        $studentService = app(StudentService::class);
+
         if ($comment->user->isInstructor()) {
-            $comment->user = $instructorService->prepareBasicDetails($comment->user);
+            $comment->user = $this->instructorService->prepareBasicDetails($comment->user);
         } else {
-            $comment->user = $studentService->prepareBasicDetails($comment->user);
+            $comment->user = $this->studentService->prepareBasicDetails($comment->user);
         }
 
         return $comment;

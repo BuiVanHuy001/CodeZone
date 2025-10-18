@@ -43,7 +43,7 @@
                 <div class="rbt-price">
                     <span class="current-price">{{ $course->priceFormatted }}</span>
                 </div>
-                @if($isEnrolled)
+                @if($course->isEnrolled)
                     <a class="rbt-btn btn-border icon-hover w-100 d-block text-center"
                        href="{{ route('course.learn', $course->slug) }}">
                         <span class="btn-text">Go to course</span>

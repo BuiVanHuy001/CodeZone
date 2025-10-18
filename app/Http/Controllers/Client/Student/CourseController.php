@@ -29,7 +29,23 @@ class CourseController extends BaseCourseController
 
     public function showLesson(string $slug, string $id)
     {
-        $course = Course::where('slug', $slug)->first();
+        $course = Course::where('slug', $slug)
+            ->with([
+                'modules' => fn($q) => $q->orderBy('position'),
+                'modules.lessons' => function ($query) {
+                    $query->orderBy('position')
+                        ->with([ // Tải trước các relationship của lesson luôn
+                            'assessment',
+                            'trackingProgresses' => fn($q) => $q->where('user_id', auth()->id())
+                        ]);
+                },
+                'modules.lessons.assessment',
+                'modules.lessons.trackingProgresses' => function ($query) {
+                    $query->where('user_id', auth()->id());
+                }
+            ])
+            ->first();
+
         $lesson = Lesson::find($id);
 
         if (!$course || !$lesson) {

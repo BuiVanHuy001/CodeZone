@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Client\Student\CourseController;
 use App\Http\Middleware\EnsureUserIsLogin;
-use App\Livewire\Client\Course\CourseList;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('course')->group(function () {

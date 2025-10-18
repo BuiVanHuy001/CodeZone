@@ -186,7 +186,7 @@
                                             <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                         </button>
                                     </div>
-                                @endifư
+                                @endif
                                 <div class="rbt-widget-details has-show-more">
                                     <ul class="has-show-more-inner-content rbt-course-details-list-wrapper">
                                         <li>

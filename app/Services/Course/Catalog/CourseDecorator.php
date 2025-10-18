@@ -3,6 +3,7 @@
 namespace App\Services\Course\Catalog;
 
 use App\Models\Course;
+use App\Models\Review;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -11,17 +12,22 @@ class CourseDecorator
 {
     use HasNumberFormat;
 
-    public function decorateForCard(Course $course): Course
+    public function decorateForCard(Course $course, Collection $enrolledCourseIds): Course
     {
         $course = $this->decorateBase($course);
 
-        $course->loadMissing(['reviews:id,rating', 'category:id,name', 'author:id,name', 'author:instructorProfile']);
+        $course->loadMissing(['reviews:id,rating', 'category:id,name', 'author:id,name,slug', 'author:instructorProfile']);
 
         if ($course->status === 'published') {
             $course->categoryName = $course->category?->name;
             $course->reviewCountText = $this->formatCount($course->review_count, 'review');
             $course->enrollmentCountText = $this->formatCount($course->enrollment_count, 'student');
             $course->detailsPageUrl = route('page.course_detail', $course->slug);
+            if (!$enrolledCourseIds->isEmpty()) {
+                $course->isEnrolled = $enrolledCourseIds->contains($course->id);
+            } else {
+                $course->isEnrolled = false;
+            }
         }
 
         $course->authorInfo = [
@@ -36,15 +42,42 @@ class CourseDecorator
 
     public function decorateForDetails(Course $course): Course
     {
+        $course->loadMissing([
+            'author:id,name,slug',
+            'category:id,name',
+            'modules.lessons.assessment',
+            'reviews' => function ($query) {
+                $query->with('user:id,name,avatar')
+                    ->with('reactions')
+                    ->orderBy('created_at', 'desc');
+            }
+        ]);
+
+        if ($course->reviews->isNotEmpty() && auth()->check()) {
+            $reviewIds = $course->reviews->pluck('id');
+            $userId = auth()->id();
+
+            $userReactions = \App\Models\Reaction::query()
+                ->where('user_id', $userId)
+                ->where('reactionable_type', Review::class)
+                ->whereIn('reactionable_id', $reviewIds)
+                ->get()
+                ->keyBy('reactionable_id');
+
+            $course->reviews->each(function ($review) use ($userReactions) {
+                $reaction = $userReactions->get($review->id);
+                $review->userReaction = $reaction->action ?? null;
+            });
+        }
+
         $course = $this->decorateBase($course);
 
-        $course->loadMissing(['reviews.user', 'modules.lessons.assessment']);
-
         $course->reviewCountText = $this->formatCount($course->reviews->count(), 'review');
+        $course->categoryName = $course->category?->name;
         $course->enrollmentCountText = $this->formatCount($course->enrollment_count, 'student');
         $course->introVideo = $this->getIntroductionVideo($course->modules);
         $course->quizCount = $this->getQuizCount($course->modules);
-        $course->reviews = $course->reviews->sortByDesc('created_at')->values();
+        $course->reviews = $course->reviews->values();
         $course->updatedAtHuman = $course->updated_at->diffForHumans();
 
         $course->authorInfo = [
@@ -54,6 +87,7 @@ class CourseDecorator
             'profileUrl' => route('instructor.details', $course->author->slug),
         ];
 
+        $course->reviews = $course->reviews->values();
         return $course;
     }
 

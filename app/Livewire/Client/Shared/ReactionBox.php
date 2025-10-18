@@ -42,13 +42,7 @@ class ReactionBox extends Component
         $this->likeCount = $this->formatShort($this->model->like_count ?? 0);
         $this->dislikeCount = $this->formatShort($this->model->dislike_count ?? 0);
 
-        if (auth()->check()) {
-            $this->userReaction = $this->model->reactions()
-                ->where('user_id', auth()->id())
-                ->value('action');
-        } else {
-            $this->userReaction = null;
-        }
+        $this->userReaction = $this->model->userReaction ?? null;
     }
 
     public function render(): View
