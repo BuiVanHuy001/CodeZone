@@ -31,14 +31,15 @@
                                 <h6 class="title">
                                     <a href="{{ $item['detailsPageUrl'] }}">{{ $item['title'] }}</a>
                                 </h6>
-                                <p class="title">{{ $item['authorInfo']['name'] }}</p>
+                                <p class="title">{{ $item['authorName'] }}</p>
                                 <span class="quantity">
                                     <span class="price">{{ $item['priceFormatted'] }}</span>
                                 </span>
                             </div>
                             <div class="close-btn">
                                 <button wire:click.prevent="removeFromCart('{{ $item['id'] }}')" class="rbt-round-btn">
-                                    <i class="feather-x"></i></button>
+                                    <i class="feather-x"></i>
+                                </button>
                             </div>
                         </li>
                     @empty

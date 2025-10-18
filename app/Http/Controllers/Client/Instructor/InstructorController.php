@@ -8,13 +8,20 @@ use App\Services\Instructor\InstructorService;
 
 class InstructorController extends Controller
 {
-    public function show(User $instructor, InstructorService $instructorService)
+    private InstructorService $instructorService;
+
+    public function __construct()
     {
-        try {
-            $instructor = $instructorService->prepareDetails($instructor);
-            return view('client.pages.instructor-profile', compact('instructor'));
-        } catch (\Exception $exception) {
+        $this->instructorService = app(InstructorService::class);
+    }
+
+    public function show(string $slug, InstructorService $instructorService)
+    {
+        $instructor = $this->instructorService->prepareDataForInstructorDetails($slug);
+        if (!$instructor) {
             return view('client.errors.404');
         }
+
+        return view('client.pages.instructor-profile', compact('instructor'));
     }
 }

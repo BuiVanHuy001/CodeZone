@@ -12,7 +12,7 @@ class CatalogService
 {
     use HasNumberFormat;
 
-    public function prepareInstructorDetails(User $instructor): User
+    public function getInstructorDetails(User $instructor): User
     {
         $profile = $instructor->instructorProfile;
 

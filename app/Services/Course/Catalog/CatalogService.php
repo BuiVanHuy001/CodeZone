@@ -100,7 +100,7 @@ class CatalogService
             $query->orderBy($col, $dir);
         }
 
-        return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForInstructorDashboard($course));
+        return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForInstructorDashboard($course, $author));
     }
 
     public function getCoursesByStudent(User $student): Collection
@@ -132,7 +132,7 @@ class CatalogService
             ->get();
 
         $courses->each(function ($course) use ($enrollmentsMap) {
-            $course->enrollmentStatus = ($enrollmentsMap[$course->id] ?? null)?->status;
+            $course->enrollmentStatus = $enrollmentsMap[$course->id]->status;
 
             $totalLessons = max($course->lesson_count, 1);
             $completedCount = $course->completed_lessons_count;

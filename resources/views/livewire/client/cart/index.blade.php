@@ -26,8 +26,8 @@
                                         <td class="pro-title">
                                             <a href="{{ $item->detailPageUrl }}">{{ $item->title }}</a>
                                         </td>
-                                        <td class="pro-price"><span>{{ $item->price }}</span></td>
-                                        <td class="pro-subtotal"><span>{{ $item->price }}</span></td>
+                                        <td class="pro-price"><span>{{ $item->priceFormatted }}</span></td>
+                                        <td class="pro-subtotal"><span>{{ $item->priceFormatted }}</span></td>
                                         <td class="pro-remove"><a href="#"><i class="feather-x"></i></a>
                                         </td>
                                     </tr>

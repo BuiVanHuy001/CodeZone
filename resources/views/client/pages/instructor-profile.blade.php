@@ -68,6 +68,7 @@
                     <livewire:client.review.index
                         :model="$instructor"
                         :reviews="$instructor->reviews"
+                        lazy
                     />
                 </div>
 

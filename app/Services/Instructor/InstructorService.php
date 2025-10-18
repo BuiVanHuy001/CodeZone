@@ -23,9 +23,19 @@ readonly class InstructorService
         $this->catalogService = app(CatalogService::class);
     }
 
-    public function prepareDetails(User $instructor): User
+    public function prepareDataForInstructorDetails(string $slug): ?User
     {
-        return $this->catalogService->prepareInstructorDetails($instructor);
+        $instructor = User::where([
+            'slug' => $slug,
+            'role' => 'instructor',
+            'status' => 'active'
+        ])->first();
+
+        if ($instructor) {
+            return $this->catalogService->getInstructorDetails($instructor);
+        }
+
+        return null;
     }
 
     public function prepareBasicDetails(User $instructor): User

@@ -59,10 +59,12 @@ class EnrollmentSeeder extends Seeder
                         ]);
                     }
                 }
-                $student->enrollments()->updateOrCreate(
-                    ['course_id' => $course->id, 'user_id' => $student->id],
-                    ['status' => $status]
-                );
+
+                Enrollment::create([
+                    'course_id' => $course->id,
+                    'user_id' => $student->id,
+                    'status' => $status,
+                ]);
 
                 $this->generateProgressTracking($status, $course, $student->id);
 

@@ -32,11 +32,11 @@
             <div class="rbt-author-meta mb--10">
                 <div class="rbt-avater">
                     <a href="{{ $course->authorInfo['profileUrl'] }}">
-                        <img src="{{ $course->authorInfo['avatar'] }}" alt="{{ $course->author['name'] }}">
+                        <img src="{{ $course->authorInfo['avatar'] }}" alt="{{ $course->authorInfo['name'] }}">
                     </a>
                 </div>
                 <div class="rbt-author-info">
-                    By <a href="{{ $course->authorInfo['profileUrl'] }}">{{ $course->author['name'] }}</a>
+                    By <a href="{{ $course->authorInfo['profileUrl'] }}">{{ $course->authorInfo['name'] }}</a>
                 </div>
             </div>
             <div class="rbt-card-bottom">

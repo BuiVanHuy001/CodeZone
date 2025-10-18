@@ -4,6 +4,7 @@ namespace App\Services\Course\Catalog;
 
 use App\Models\Course;
 use App\Models\Review;
+use App\Models\User;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -105,12 +106,18 @@ class CourseDecorator
         return $course;
     }
 
-    public function decorateForInstructorDashboard(Course $course): Course
+    public function decorateForInstructorDashboard(Course $course, User $author): Course
     {
         $course = $this->decorateBase($course);
         $course->detailsPageUrl = route('page.course_detail', $course->slug);
         $course->studentCountText = $this->formatCount($course->enrollment_count, 'student');
         $course->reviewCountText = $this->formatCount($course->review_count, 'review');
+        $course->authorInfo = [
+            'name' => $author->name,
+            'slug' => $author->slug,
+            'avatar' => $author->getAvatarPath(),
+            'profileUrl' => route('instructor.details', $author->slug),
+        ];
 
         return $course;
     }
