@@ -6,15 +6,11 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureUserIsInstructor {
-    /**
-     * Handle an incoming request.
-     *
-     * @param Closure(Request): (Response) $next
-     */
+class EnsureUserIsInstructor
+{
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->check() || !auth()->user()->role === 'instructor') {
+        if (!auth()->check() || !auth()->user()->isInstructor()) {
             return redirect()->route('page.forbidden');
         }
         return $next($request);

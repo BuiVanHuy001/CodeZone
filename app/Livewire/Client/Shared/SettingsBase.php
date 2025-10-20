@@ -3,7 +3,6 @@
 namespace App\Livewire\Client\Shared;
 
 use App\Models\InstructorProfile;
-use App\Models\OrganizationProfile;
 use App\Models\StudentProfile;
 use App\Services\TraditionalLogin\AuthenticationService;
 use Illuminate\Support\Facades\Hash;
@@ -42,12 +41,7 @@ class SettingsBase extends Component
         $this->user = auth()->user();
         $this->profile = $this->user->getProfile;
         if (!$this->profile) {
-            if ($this->user->isOrganization()) {
-                $this->profile = OrganizationProfile::create(
-                    ['user_id' => $this->user->id],
-
-                );
-            } elseif ($this->user->isInstructor()) {
+            if ($this->user->isInstructor()) {
                 $this->profile = InstructorProfile::create(
                     ['user_id' => $this->user->id]
                 );

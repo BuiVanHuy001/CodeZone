@@ -130,7 +130,7 @@
                                                                         label="Course Categories"
                                                                         name="category"
                                                                         info="Select the category of your course."
-                                                                        :options="App\Models\Category::all()"
+                                                                        :options="App\Models\Category::fetchCategoriesWithChildren()"
                                                                     />
 
                                                                     <x-client.dashboard.inputs.select
@@ -221,28 +221,6 @@
                             </div>
 
                             <livewire:client.course-creation.components.builders.course-builder wire:model="modules"/>
-
-                            @if (auth()->user()->isOrganization())
-                                <div class="accordion-item card">
-                                    <h2 class="accordion-header card-header" id="accMembers">
-                                        <button class="accordion-button"
-                                                type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#accCollapseMembers"
-                                                aria-expanded="true"
-                                                aria-controls="accCollapseMembers">
-                                            Add members to course
-                                        </button>
-                                    </h2>
-                                    <div wire:ignore.self
-                                         id="accCollapseMembers"
-                                         class="accordion-collapse collapse"
-                                         aria-labelledby="accMembers"
-                                         data-bs-parent="#courseCreation">
-                                        <livewire:client.course-creation.components.builders.members.add-learners wire:model="membersAssigned"/>
-                                    </div>
-                                </div>
-                            @endif
                         </div>
                     </div>
                     <div class="mt--10 row g-5">

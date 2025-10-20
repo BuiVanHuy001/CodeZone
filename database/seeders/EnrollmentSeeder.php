@@ -31,7 +31,7 @@ class EnrollmentSeeder extends Seeder
         $reviewSeeder = new ReviewSeeder();
 
         foreach ($students as $student) {
-            $enrolledCourses = $courses->random(random_int(0, 30));
+            $enrolledCourses = $courses->random(random_int(0, 30))->unique('id');
 
             $student->studentProfile()->updateOrCreate(
                 ['user_id' => $student->id],
@@ -59,9 +59,15 @@ class EnrollmentSeeder extends Seeder
                         ]);
                     }
                 }
-                $student->enrollments()->updateOrCreate(
-                    ['course_id' => $course->id, 'user_id' => $student->id],
-                    ['status' => $status]
+
+                Enrollment::updateOrCreate(
+                    [
+                        'user_id' => $student->id,
+                        'course_id' => $course->id,
+                    ],
+                    [
+                        'status' => $status,
+                    ]
                 );
 
                 $this->generateProgressTracking($status, $course, $student->id);

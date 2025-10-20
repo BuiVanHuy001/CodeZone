@@ -3,6 +3,7 @@
 namespace App\Services\Course;
 
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\Lesson;
 use App\Models\TrackingProgress;
 use App\Models\User;
@@ -10,6 +11,8 @@ use Illuminate\Support\Collection;
 
 class LearningService
 {
+    private ?Collection $orderedLessonsCache = null;
+
     public function getLesson(Course $course): ?string
     {
         $user = auth()->user();
@@ -120,35 +123,46 @@ class LearningService
 
     private function getOrderedLessons(Course $course): Collection
     {
-        return $course->modules
+        if ($this->orderedLessonsCache !== null) {
+            return $this->orderedLessonsCache;
+        }
+
+        $lessons = $course->modules
             ->sortBy('position')
             ->flatMap(fn($module) => $module->lessons->sortBy('position'))
             ->values();
+
+        return $this->orderedLessonsCache = $lessons;
     }
 
     public function markLessonComplete(string $lessonId): void
     {
         $user = auth()->user();
-
         if (!$user->isStudent()) return;
 
         TrackingProgress::updateOrCreate(
             ['user_id' => $user->id, 'lesson_id' => $lessonId],
             ['is_completed' => true]
         );
-    }
 
-    public function calculateCourseProgressPercentage(User $user, Course $course): float
-    {
-        $totalLessons = max($course->lesson_count, 1);
+        $lesson = Lesson::with('course')->find($lessonId);
+        if (!$lesson || !$lesson->course) {
+            return;
+        }
 
-        $completed = TrackingProgress::where('user_id', $user->id)
-            ->whereHas('lesson', fn($q) => $q->whereIn('module_id', $course->modules->pluck('id'))
-            )
-            ->where('is_completed', true)
-            ->count();
+        $enrollment = Enrollment::where('course_id', $lesson->course->id)
+            ->where('user_id', $user->id)
+            ->first();
 
-        return round(($completed / $totalLessons) * 100, 2);
+
+        if ($this->areAllLessonsCompleted($lesson->course)) {
+            $enrollment?->update(['status' => 'completed']);
+            return;
+        }
+
+        if ($enrollment && $enrollment->status === 'not_started') {
+            $enrollment->update(['status' => 'in_progress']);
+        }
     }
 
     private function getFirstLessonId(Course $course): ?string
@@ -172,6 +186,6 @@ class LearningService
             ->pluck('lesson_id')
             ->toArray();
 
-        return $lessons->first(fn($l) => !in_array($l->id, $completed))?->id;
+        return $lessons->first(fn($l) => !in_array($l->id, $completed, true))?->id;
     }
 }

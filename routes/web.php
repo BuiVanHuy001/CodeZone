@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/client/auth.php';
 require __DIR__ . '/client/instructor.php';
-require __DIR__ . '/client/organization.php';
 require __DIR__ . '/client/student.php';
 require __DIR__ . '/client/course.php';
 require __DIR__ . '/client/payment.php';

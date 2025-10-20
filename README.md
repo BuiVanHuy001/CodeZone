@@ -1,48 +1,113 @@
-# CodeZone - Online Programming Learning Platform
+# 🎓 CodeZone - Online Programming Learning Platform
 
 <img src="https://hackatime-badge.hackclub.com/U098ESP1YH5/CodeZone" />
 
-**CodeZone** is a web-based learning platform designed to support students and instructors in teaching and learning
-programming more effectively.  
-Built with **Laravel 12** and **Livewire 3**, CodeZone offers modern features like interactive lessons, auto-graded
-coding assignments, and role-based course management.
+## 🚀 Project Overview
+
+**CodeZone** is a Laravel-based online learning platform built as a **side project** to apply and deepen my
+understanding of Laravel and modern PHP development.
+Inspired by **[Udemy](https://www.udemy.com/)** and **[Coursera](https://www.coursera.org/)**, it features course
+management, interactive learning, and real-time engagement.
 
 ---
 
 ## 🎨 UI Templates Used
 
-- **Client**: [HiStudy - Online Courses & Education Template](https://rainbowit.net/html/histudy/)
-- **Admin
+* **Client**: [HiStudy - Online Courses & Education Template](https://rainbowit.net/html/histudy/)
+* **Admin
   **: [Vuexy - Admin Dashboard Template](https://demos.pixinvent.com/vuexy-html-admin-template/html/vertical-menu-template/)
 
 ---
 
-## 🚀 Features
+## 🛠️ Features
 
-- 🎓 **Role-based system**: Admin, Instructor, Student, Organization
-- 📚 **Course creation & management** with modules and lessons
-- 🎥 **Multiple lesson types**: Video, Document, Quiz, Programming Assignment
-- 🧠 **Quiz engine**: Multiple choice & True/False questions
-- 💻 **Code assignments** with auto-evaluation using test cases
-- 📈 **Learning progress tracking**
-- 📜 **Certification generation** upon course completion
-- 📅 **Organization-based course batches** with start/end dates
-- 🔐 **Access control** for private enterprise courses
+### 🎓 Course Management
+
+* Create courses with multiple modules and lessons.
+* Support for video lessons, text content, and coding assessments.
+
+### 👨‍🏫 Instructor System
+
+* Dedicated instructor profiles with ratings, bio, and statistics.
+* Instructor earnings and analytics (revenue, student count, course rating).
+
+### 💻 Learning Experience
+
+* Interactive lesson player with previous/next navigation.
+* Auto progress tracking and completion detection.
+* Integrated quizzes and coding assessments.
+
+### 💬 Community & Engagement
+
+* Nested comment system (up to 3 levels).
+* Reactions (like/dislike) for reviews and comments.
+* Real-time updates via Livewire.
+* Review and rating system per course/instructor.
+
+### 🔍 Catalog & Filtering
+
+* Advanced filtering by category, instructor, price, and level.
+* Sorting by popularity, latest, rating, or price.
+* Search across titles, descriptions, and skills.
+
+### 👤 User & Enrollment
+
+* Role-based access (Student / Instructor / Admin).
+* Secure authentication and enrollment management.
+* Student dashboard to track progress and completed courses.
+
+### 🧰 Admin Panel *(Planned Features)*
+
+> ⚠️ **Not yet implemented**
+
+* Admin dashboard (Vuexy template).
+* Manage users, courses, categories, and settings.
+* Review reports, monitor metrics, and course approval workflow.
 
 ---
 
-## 🛠️ Technologies Used
+## 🧩 Tech Stack
 
-| Technology        | Purpose                            |
-|-------------------|------------------------------------|
-| Laravel 12        | Backend framework                  |
-| Livewire 3        | SPA-style dynamic frontend         |
-| Alpine.js         | Lightweight frontend interactivity |
-| Laravel Socialite | Social login (Google, Facebook)    |
-| SweetAlert2       | Beautiful alert popups             |
-| MySQL             | Database system                    |
-| Vite              | Fast asset bundler                 |
-| Tailwind CSS      | Utility-first CSS framework        |
+### ⚙️ Backend
+
+| Technology     | Description                                    |
+|----------------|------------------------------------------------|
+| **PHP 8.2**    | Core programming language                      |
+| **Laravel 12** | Modern PHP framework                           |
+| **Livewire 3** | Reactive components for SPA-like interactivity |
+| **MySQL**      | Relational database engine                     |
+
+### 🔌 Core Laravel Packages
+
+| Package                        | Purpose                              |
+|--------------------------------|--------------------------------------|
+| `laravel/socialite`            | OAuth login (Google, GitHub, etc.)   |
+| `maatwebsite/excel`            | Excel import/export                  |
+| `spatie/laravel-markdown`      | Render Markdown for lessons          |
+| `james-heinrich/getid3`        | Media metadata analysis              |
+| `buivanhuy/sweetalert-laravel` | SweetAlert2 integration              |
+| `ext-curl`                     | PHP cURL extension for HTTP requests |
+
+---
+
+### 🎨 Frontend
+
+| Technology                       | Description                  |
+|----------------------------------|------------------------------|
+| **Vite 6 + laravel-vite-plugin** | Modern frontend bundler      |
+| **Alpine.js 3**                  | Lightweight reactivity layer |
+| **Plyr**                         | HTML5 video/audio player     |
+
+---
+
+### 💻 Code Editor Integration
+
+| Package             | Description                                  |
+|---------------------|----------------------------------------------|
+| **CodeMirror 6**    | Embedded programming editor                  |
+| Supported languages | JavaScript, Python, PHP, Java, C++, Markdown |
+| Theme               | `@codemirror/theme-one-dark`                 |
+| **Shiki**           | Syntax highlighting for lessons              |
 
 ---
 
@@ -66,57 +131,18 @@ php artisan key:generate
 # Run database migrations
 php artisan migrate
 
-# (Optional) Import sample database seeders
+# (Optional) Import sample data
 php artisan db:seed
-# Replace the public folder in storage/app with the one from Google Drive: 
+
+# Replace the public folder in storage/app with the one from Google Drive:
 # https://drive.google.com/drive/folders/1goptWKpEjREzeQdbbpVFHoQiBXGrM9TH?usp=sharing
 
 # Start development servers
 php artisan serve & npm run dev
-````
-
----
-
-## 🔐 Default Login Accounts (if seeded)
-
-| Role       | Email                    | Password |
-|------------|--------------------------|----------|
-| Student    | work.buivanhuy@gmail.com | password |
-| Instructor | taylorotwell             | password |
-
----
-
-## 📌 Requirements
-
-* PHP 8.2+
-* Composer 2+
-* Node.js 18+
-* MySQL 5.7+
-
-For **social login**, you must configure these variables in `.env`:
-
 ```
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-FACEBOOK_CLIENT_ID=
-FACEBOOK_CLIENT_SECRET=
-```
-
----
-
-## 📬 Contact & Contribution
-
-For feedback, contributions, or bug reports:
-
-* **Email**: [work.buivanhuy@gmail.com](mailto:work.buivanhuy@gmail.com)
-* **GitHub Issues**: [Submit here](https://github.com/BuiVanHuy001/CodeZone/issues)
-
 ---
 
 ## 👨‍💻 Author
 
 **Bui Van Huy**
-
-* GitHub: [buivanhuy001](https://github.com/buivanhuy001)
-
----
+🔗 [GitHub Profile](https://github.com/buivanhuy001)

@@ -3,25 +3,34 @@
 namespace App\Services\Course\Catalog;
 
 use App\Models\Course;
+use App\Models\Reaction;
+use App\Models\Review;
+use App\Models\User;
+use App\Services\Instructor\InstructorService;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
-class CourseDecorator
+readonly class CourseDecorator
 {
     use HasNumberFormat;
 
-    public function decorateForCard(Course $course): Course
+    public function decorateForCard(Course $course, Collection $enrolledCourseIds): Course
     {
         $course = $this->decorateBase($course);
 
-        $course->loadMissing(['reviews:id,rating', 'category:id,name', 'author:id,name', 'author:instructorProfile']);
+        $course->loadMissing(['reviews:id,rating', 'category:id,name', 'author:id,name,slug', 'author:instructorProfile']);
 
         if ($course->status === 'published') {
             $course->categoryName = $course->category?->name;
             $course->reviewCountText = $this->formatCount($course->review_count, 'review');
             $course->enrollmentCountText = $this->formatCount($course->enrollment_count, 'student');
             $course->detailsPageUrl = route('page.course_detail', $course->slug);
+            if (!$enrolledCourseIds->isEmpty()) {
+                $course->isEnrolled = $enrolledCourseIds->contains($course->id);
+            } else {
+                $course->isEnrolled = false;
+            }
         }
 
         $course->authorInfo = [
@@ -36,17 +45,54 @@ class CourseDecorator
 
     public function decorateForDetails(Course $course): Course
     {
+        $course->loadMissing([
+            'author:id,name,slug',
+            'category:id,name',
+            'modules.lessons.assessment',
+            'reviews' => function ($query) {
+                $query->with('user:id,name,avatar')
+                    ->with('reactions')
+                    ->orderBy('created_at', 'desc');
+            }
+        ]);
+
+        if ($course->reviews->isNotEmpty() && auth()->check()) {
+            $reviewIds = $course->reviews->pluck('id');
+            $userId = auth()->id();
+
+            $userReactions = Reaction::query()
+                ->where('user_id', $userId)
+                ->where('reactionable_type', Review::class)
+                ->whereIn('reactionable_id', $reviewIds)
+                ->get()
+                ->keyBy('reactionable_id');
+
+            $course->reviews->each(function ($review) use ($userReactions) {
+                $reaction = $userReactions->get($review->id);
+                $review->userReaction = $reaction->action ?? null;
+            });
+        }
+
         $course = $this->decorateBase($course);
 
-        $course->loadMissing(['reviews.user', 'modules.lessons.assessment']);
-
         $course->reviewCountText = $this->formatCount($course->reviews->count(), 'review');
+        $course->categoryName = $course->category?->name;
         $course->enrollmentCountText = $this->formatCount($course->enrollment_count, 'student');
         $course->introVideo = $this->getIntroductionVideo($course->modules);
         $course->quizCount = $this->getQuizCount($course->modules);
-        $course->reviews = $course->reviews->sortByDesc('created_at')->values();
+        $course->reviews = $course->reviews->values();
         $course->updatedAtHuman = $course->updated_at->diffForHumans();
 
+        $course->author = app(InstructorService::class)->prepareDetailForCourseDetail($course->author);
+
+        $course->reviews = $course->reviews->values();
+        return $course;
+    }
+
+    public function decorateForCartItem(Course $course): Course
+    {
+        $course = $this->decorateBase($course);
+        $course->detailsPageUrl = route('page.course_detail', $course->slug);
         $course->authorInfo = [
             'name' => $course->author->name,
             'slug' => $course->author->slug,
@@ -57,13 +103,18 @@ class CourseDecorator
         return $course;
     }
 
-    public function decorateForInstructorDashboard(Course $course): Course
+    public function decorateForInstructorDashboard(Course $course, User $author): Course
     {
         $course = $this->decorateBase($course);
-
         $course->detailsPageUrl = route('page.course_detail', $course->slug);
         $course->studentCountText = $this->formatCount($course->enrollment_count, 'student');
         $course->reviewCountText = $this->formatCount($course->review_count, 'review');
+        $course->authorInfo = [
+            'name' => $author->name,
+            'slug' => $author->slug,
+            'avatar' => $author->getAvatarPath(),
+            'profileUrl' => route('instructor.details', $author->slug),
+        ];
 
         return $course;
     }

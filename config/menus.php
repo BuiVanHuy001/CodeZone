@@ -1,29 +1,6 @@
 <?php
 
 return [
-	'organization' => [
-		0 => [
-			'Overview' => [
-				'icon' => 'feather-home',
-				'route' => 'organization.dashboard.overview',
-			],
-			'My Courses' => [
-				'icon' => 'feather-book-open',
-				'route' => 'organization.dashboard.courses',
-			],
-			'My Member' => [
-				'icon' => 'feather-users',
-				'route' => 'organization.dashboard.members',
-			],
-		],
-		1 => [
-			'Account Settings' => [
-				'icon' => 'feather-settings',
-				'route' => 'organization.dashboard.settings',
-			],
-		]
-
-	],
 	'instructor' => [
 		0 => [
 			'Overview' => [

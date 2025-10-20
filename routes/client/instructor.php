@@ -21,4 +21,4 @@ Route::middleware(EnsureUserIsInstructor::class)->group(function () {
     });
 });
 
-Route::get('/instructor/{instructor:slug}', [InstructorController::class, 'show'])->name('instructor.details');
+Route::get('/instructor/{slug}', [InstructorController::class, 'show'])->name('instructor.details');

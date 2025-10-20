@@ -40,24 +40,4 @@ class Assessment extends Model
 	{
         return $this->hasOne(ProgrammingProblems::class, 'assessment_id');
 	}
-
-    public function getUserAttempts($user): array
-    {
-        return $this->attempts()
-            ->where('user_id', $user->id)
-            ->orderBy('created_at', 'desc')
-            ->get()
-            ->map(function ($attempt) {
-                return [
-                    'id' => $attempt->id,
-                    'created_at' => $attempt->created_at,
-                    'total_question_count' => $attempt->attemptQuiz?->total_question_count ?? 0,
-                    'correct_answer_count' => $attempt->attemptQuiz?->correct_answer_count ?? 0,
-                    'score' => $attempt->total_score,
-                    'is_passed' => $attempt->is_passed,
-                ];
-            })
-            ->toArray();
-    }
-
 }

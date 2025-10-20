@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Client\Student\Dashboard;
 
-use App\Services\Course\Catalog\CatalogService;
+use App\Services\Course\CourseService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -19,11 +19,10 @@ class Courses extends Component
 
     public function mount(): void
     {
-        $catalogService = app(CatalogService::class);
-        $this->courses = $catalogService->getCoursesByStudent(auth()->user());
-        $this->notStartedCourses = $this->courses->where('status', 'not_started');
-        $this->inProgressCourses = $this->courses->where('status', 'in_progress');
-        $this->completedCourses = $this->courses->where('status', 'completed');
+        $this->courses = app(CourseService::class)->getCoursesByStudent(auth()->user());
+        $this->notStartedCourses = $this->courses->where('enrollmentStatus', 'not_started');
+        $this->inProgressCourses = $this->courses->where('enrollmentStatus', 'in_progress');
+        $this->completedCourses = $this->courses->where('enrollmentStatus', 'completed');
     }
 
 	#[Layout('components.layouts.dashboard')]

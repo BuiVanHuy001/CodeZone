@@ -20,9 +20,9 @@ class Courses extends Component
     public Collection $draftCourses;
     public Collection $rejectedCourses;
 
-    public function mount(InstructorService $instructorService): void
+    public function mount(): void
     {
-        $this->allCourses = $instructorService->getInstructorCourses(auth()->user());
+        $this->allCourses = app(InstructorService::class)->getInstructorCourses(auth()->user());
         $this->publicCourses = $this->allCourses->where('status', 'published')->values();
         $this->pendingCourses = $this->allCourses->where('status', 'pending')->values();
         $this->draftCourses = $this->allCourses->where('status', 'draft')->values();

@@ -5,7 +5,6 @@ namespace App\Services\Course\Catalog;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\User;
-use App\Services\Course\LearningService;
 use App\Services\Instructor\InstructorService;
 use App\Traits\HasNumberFormat;
 use Illuminate\Http\Request;
@@ -30,7 +29,7 @@ class CatalogService
 
         $coursesPaginated = $this->courseFilter->filterCourse($amount, $request);
 
-        $coursesPaginated->getCollection()->transform(fn(Course $course) => $this->courseDecorator->decorateForCard($course));
+        $coursesPaginated->getCollection()->transform(fn(Course $course) => $this->courseDecorator->decorateForCard($course, collect()));
 
         $categories = Category::fetchCategoriesWithChildren();
 
@@ -83,7 +82,7 @@ class CatalogService
             $query->orderBy($col, $dir);
         }
 
-        return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course));
+        return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, collect()));
     }
 
     public function getCoursesByAuthor(User $author): Collection
@@ -94,35 +93,53 @@ class CatalogService
             ['rating', 'desc'],
         ];
 
-        $query = Course::query()->where('user_id', $author->id);
+        $query = Course::query()
+            ->where('user_id', $author->id);
 
         foreach ($order as [$col, $dir]) {
             $query->orderBy($col, $dir);
         }
 
-        return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForInstructorDashboard($course));
+        return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForInstructorDashboard($course, $author));
     }
 
     public function getCoursesByStudent(User $student): Collection
     {
-        $enrollments = $student->enrollments()
-            ->with(['course' => fn($q) => $q->where('status', 'published')
-                ->with(['author', 'reviews', 'category'])])->get();
+        $enrollmentsMap = $student->enrollments()
+            ->get()
+            ->keyBy('course_id');
 
-        $courses = $enrollments
-            ->map(function ($enrollment) use ($student) {
-                if (!$enrollment->course) {
-                    return null;
+        if ($enrollmentsMap->isEmpty()) {
+            return collect();
+        }
+
+        $enrolledCourseIds = $enrollmentsMap->keys();
+
+        $courses = Course::whereIn('id', $enrolledCourseIds)
+            ->where('status', 'published')
+            ->with(['author', 'reviews', 'category'])
+            ->withCount([
+                'modules as completed_lessons_count' => function ($query) use ($student) {
+                    $query->selectRaw('count(distinct tracking_progresses.id)')
+                        ->from('tracking_progresses')
+                        ->join('lessons', 'lessons.id', '=', 'tracking_progresses.lesson_id')
+                        ->join('modules', 'modules.id', '=', 'lessons.module_id')
+                        ->whereColumn('modules.course_id', 'courses.id')
+                        ->where('tracking_progresses.user_id', $student->id)
+                        ->where('tracking_progresses.is_completed', true);
                 }
-                $course = $enrollment->course;
-                $course->status = $enrollment->status;
-                $course->progressPercentage = app(LearningService::class)
-                    ->calculateCourseProgressPercentage($student, $course);
-                return $course;
-            })
-            ->filter();
+            ])
+            ->get();
 
-        return $courses->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course));
+        $courses->each(function ($course) use ($enrollmentsMap) {
+            $course->enrollmentStatus = $enrollmentsMap[$course->id]->status;
+
+            $totalLessons = max($course->lesson_count, 1);
+            $completedCount = $course->completed_lessons_count;
+            $course->progressPercentage = round(($completedCount / $totalLessons) * 100, 2);
+        });
+
+        return $courses->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, $enrolledCourseIds));
     }
 
     private function fetchCourses(int $amount, array $order): Collection
@@ -135,6 +152,11 @@ class CatalogService
             $query->orderBy($col, $dir);
         }
 
-        return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course));
+        $enrolledCourseIds = collect();
+        if (auth()->check() && auth()->user()->isStudent()) {
+            $enrolledCourseIds = auth()->user()->enrollments()->pluck('course_id');
+        }
+
+        return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, $enrolledCourseIds));
     }
 }

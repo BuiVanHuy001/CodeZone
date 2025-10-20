@@ -46,13 +46,13 @@
 
                         <div class="rbt-author-meta mb--20">
                             <div class="rbt-avater">
-                                <a href="{{ $course->authorInfo['profileUrl'] }}">
-                                    <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor avatar">
+                                <a href="{{ $course->author->profileUrl }}">
+                                    <img src="{{ $course->author->avatar }}" alt="Instructor avatar">
                                 </a>
                             </div>
                             <div class="rbt-author-info">
                                 By
-                                <a href="{{ $course->authorInfo['profileUrl'] }}">{{ $course->authorInfo['name'] }}</a>
+                                <a href="{{ $course->author->profileUrl }}">{{ $course->author->name }}</a>
                                 in <a href="#">{{ $course->categoryName }}</a>
                             </div>
                         </div>
@@ -162,34 +162,30 @@
                             </a>
 
                             <div class="content-item-content">
-                                @if(!$course->author->isOrganization())
-                                    <div
-                                        class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
-                                        <div class="rbt-price">
-                                            <span class="current-price">{{ $course->priceFormatted }}</span>
-                                        </div>
-                                        <div class="discount-time">
+                                <div
+                                    class="rbt-price-wrapper d-flex flex-wrap align-items-center justify-content-between">
+                                    <div class="rbt-price">
+                                        <span class="current-price">{{ $course->priceFormatted }}</span>
+                                    </div>
+                                    <div class="discount-time">
                                         <span class="rbt-badge color-danger bg-color-danger-opacity"><i
                                                 class="feather-clock"></i> 3 days left!</span>
-                                        </div>
                                     </div>
-                                    @if($canAccess)
-                                        <div class="buy-now-btn mt--15">
-                                            <a class="rbt-btn btn-border icon-hover w-100 d-block text-center" href="{{ route('course.learn', $course->slug) }}">
-                                                <span class="btn-text">Go to course</span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                            </a>
-                                        </div>
-                                    @else
-                                        <div class="add-to-card-button mt--15">
-                                            <button onclick="Livewire.dispatch('add-to-cart', ['{{ $course->id }}'])" class="rbt-btn btn-gradient icon-hover w-100 d-block text-center">
-                                                <span class="btn-text">Add to cart</span>
-                                                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                            </button>
-                                        </div>
-                                    @endif
+                                </div>
+                                @if($canAccess)
+                                    <div class="buy-now-btn mt--15">
+                                        <a class="rbt-btn btn-border icon-hover w-100 d-block text-center" href="{{ route('course.learn', $course->slug) }}">
+                                            <span class="btn-text">Go to course</span>
+                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                        </a>
+                                    </div>
                                 @else
-                                    <h5 class="text-center text-primary">This is Organization Course</h5>
+                                    <div class="add-to-card-button mt--15">
+                                        <button onclick="Livewire.dispatch('add-to-cart', ['{{ $course->id }}'])" class="rbt-btn btn-gradient icon-hover w-100 d-block text-center">
+                                            <span class="btn-text">Add to cart</span>
+                                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                        </button>
+                                    </div>
                                 @endif
                                 <div class="rbt-widget-details has-show-more">
                                     <ul class="has-show-more-inner-content rbt-course-details-list-wrapper">

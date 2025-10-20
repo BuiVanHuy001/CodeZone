@@ -63,14 +63,14 @@ class Course extends Model
         return $this->morphMany('App\Models\Review', 'reviewable');
     }
 
-    public function batches(): hasMany
-    {
-        return $this->hasMany(Batch::class);
-    }
-
     public function enrollments(): hasMany
     {
         return $this->hasMany(Enrollment::class);
+    }
+
+    public function trackingProgresses(): HasManyThrough
+    {
+        return $this->hasManyThrough(TrackingProgress::class, Module::class);
     }
 
     public function slugSourceField(): string

@@ -73,10 +73,6 @@ class CourseInfoValidator {
             'modules.*.lessons.*.title' => 'required|min:3|max:255',
             'modules.*.lessons.*.type' => 'required|in:' . implode(',', array_keys(Lesson::$TYPES)),
         ];
-        if (auth()->user()->isOrganization()) {
-            $rules['startDate'] = 'required|date|after_or_equal:today';
-            $rules['endDate'] = 'required|date|after_or_equal:startDate';
-        }
         return $rules;
     }
 }

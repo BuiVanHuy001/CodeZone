@@ -2,113 +2,136 @@
 
 namespace App\Livewire\Client\Shared;
 
-use App\Models\Course;
 use App\Models\Order;
 use App\Services\Cart\CartService;
+use App\Services\Course\Catalog\CourseDecorator;
 use App\Traits\WithSwal;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Routing\Redirector;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class Cart extends Component
 {
-    public Order|null $cart = null;
+    use WithSwal;
+
+    private CourseDecorator $courseDecorator;
+    private CartService $cartService;
+    public ?Order $cart = null;
     public Collection $items;
     public string $totalPrice = '0₫';
-    private CartService $cartService;
     public bool $isOpen = false;
 
     public function boot(): void
     {
         $this->cartService = app(CartService::class);
+        $this->courseDecorator = app(CourseDecorator::class);
     }
 
     public function mount(): void
     {
-        if (auth()->check() &&
-            auth()->user()->role === 'student'
-        ) {
+        $this->items = collect();
+
+        if (auth()->check() && auth()->user()->isStudent()) {
             $this->cart = $this->cartService->getCart(auth()->user());
-            $this->totalPrice = $this->cartService->formatPrice($this->cart->total_price ?? 0);
-            $this->items = collect($this->cart?->items);
+            $this->totalPrice = $this->cartService->formatPrice($this->cart?->total_price ?? 0);
+            $this->items = $this->decorateItems($this->cart);
         }
     }
 
     #[On('add-to-cart')]
-    public function addToCart(string $courseId): void
+    public function addToCart(string $courseId): ?RedirectResponse
     {
-        if (auth()->check()) {
-            if (auth()->user()->isStudent()) {
-                $result = $this->cartService->addItem($this->cart, $courseId);
-
-                switch ($result['status']) {
-                    case 'added_to_cart':
-                        $this->refreshCart($result['order']);
-                        $this->swal(title: 'Course added to cart');
-                        break;
-                    case 'already_in_cart':
-                        $this->swal(title: 'Course already in cart', icon: 'warning');
-                        break;
-                    case 'item_not_found':
-                        $this->swal(title: 'Course not found', icon: 'warning');
-                        break;
-                    default:
-                        $this->swal(title: 'Something went wrong', text: 'Please try again', icon: 'error');
-                        break;
-                }
-            } else {
-                $this->swalError('Only students can add courses to cart');
-            }
-        } else {
-            redirect(route('client.login'))->with('error', 'You need to log in to add courses to cart');
+        if (!auth()->check()) {
+            return redirect()->route('client.login')->with('error', 'You need to log in to add courses to cart');
         }
+
+        if (!auth()->user()->isStudent()) {
+            $this->swalError('Only students can add courses to cart');
+            return null;
+        }
+
+        $result = $this->cartService->addItem($this->cart, $courseId);
+
+        match ($result['status']) {
+            'added_to_cart' => $this->handleAddedToCart($result['order'] ?? null),
+            'already_in_cart' => $this->swalWarning('Course already in cart'),
+            'item_not_found' => $this->swalWarning('Course not found'),
+            default => $this->swalError('Something went wrong', 'Please try again'),
+        };
+
+        return null;
     }
 
-    public function removeFromCart(string $courseId): void
+    public function removeFromCart(string $itemId): void
     {
-        $result = $this->cartService->removeItem($this->cart, $courseId);
+        $result = $this->cartService->removeItem($this->cart, $itemId);
 
         match ($result['status']) {
             'item_removed' => $this->handleItemRemoved($result['order']),
-
             'cart_empty' => $this->handleCartEmpty(),
-
-            'item_not_found' => $this->swal(title: 'Item not found in cart', icon: 'warning'),
-
-            'unauthorized' => $this->swal(title: 'You are not authorized to perform this action', icon: 'error'),
-
-            default => $this->swal(title: 'Something went wrong', text: 'Please try again', icon: 'error')
+            'item_not_found' => $this->swalWarning('Item not found in cart'),
+            'unauthorized' => $this->swalError('You are not authorized'),
+            default => $this->swalError('Something went wrong', 'Please try again'),
         };
     }
 
     public function viewCart(): Redirector
     {
-        return redirect(route('cart.index'));
+        return redirect()->route('cart.index');
     }
 
-    private function refreshCart(Order $order): void
+    private function handleAddedToCart(?Order $order): void
+    {
+        $this->refreshCart($order);
+        $this->swal('Course added to cart');
+    }
+
+    private function refreshCart(?Order $order): void
     {
         $this->cart = $order;
-        $this->totalPrice = $this->cartService->formatPrice($this->cart->total_price ?? 0);
-        $this->items = collect($this->cart?->items);
+        $this->totalPrice = $this->cartService->formatPrice($this->cart?->total_price ?? 0);
+        $this->items = $this->decorateItems($this->cart);
     }
 
     private function handleItemRemoved(Order $order): void
     {
         $this->refreshCart($order);
-        $this->swal(title: 'Course removed from cart');
+        $this->swal('Course removed from cart');
     }
 
     private function handleCartEmpty(): void
     {
         $this->cart = null;
         $this->items = collect();
-        $this->reset('totalPrice');
-        $this->swal(title: 'Course removed from cart');
+        $this->totalPrice = '0₫';
+        $this->swal('Course removed from cart');
+    }
+
+    private function decorateItems(?Order $order): Collection
+    {
+        if (!$order) {
+            return collect();
+        }
+
+        $order->loadMissing('items.course.author');
+
+        return $order->items->map(function ($item) {
+            $course = $this->courseDecorator->decorateForCartItem($item->course);
+
+            return [
+                'id' => $item->id,
+                'title' => $course['title'] ?? '',
+                'thumbnail' => $course['thumbnail'] ?? '',
+                'detailsPageUrl' => $course['detailsPageUrl'] ?? '#',
+                'priceFormatted' => $course['priceFormatted'] ?? '0₫',
+                'authorName' => $course['authorName'] ?? ($item->course->author->name ?? ''),
+            ];
+        });
     }
 
     public function render(): View|Application|Factory

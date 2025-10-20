@@ -32,18 +32,18 @@
             <div class="rbt-author-meta mb--10">
                 <div class="rbt-avater">
                     <a href="{{ $course->authorInfo['profileUrl'] }}">
-                        <img src="{{ $course->authorInfo['avatar'] }}" alt="{{ $course->author['name'] }}">
+                        <img src="{{ $course->authorInfo['avatar'] }}" alt="{{ $course->authorInfo['name'] }}">
                     </a>
                 </div>
                 <div class="rbt-author-info">
-                    By <a href="{{ $course->authorInfo['profileUrl'] }}">{{ $course->author['name'] }}</a>
+                    By <a href="{{ $course->authorInfo['profileUrl'] }}">{{ $course->authorInfo['name'] }}</a>
                 </div>
             </div>
             <div class="rbt-card-bottom">
                 <div class="rbt-price">
                     <span class="current-price">{{ $course->priceFormatted }}</span>
                 </div>
-                @if($isEnrolled)
+                @if($course->isEnrolled)
                     <a class="rbt-btn btn-border icon-hover w-100 d-block text-center"
                        href="{{ route('course.learn', $course->slug) }}">
                         <span class="btn-text">Go to course</span>

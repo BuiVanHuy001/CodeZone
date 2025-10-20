@@ -10,7 +10,7 @@ class QuizQuestion extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'options' => 'array',   // Ensures $this->options is an array
+        'options' => 'array',
     ];
 
     public static array $TYPES = [

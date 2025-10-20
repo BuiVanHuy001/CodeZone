@@ -15,7 +15,7 @@
             </ul>
         </div>
 
-        @if($status !== 'not_started')
+        @if($course->enrollmentStatus !== 'not_started')
             <div class="rbt-progress-style-1 mb--20 mt--10">
                 <div class="single-progress">
                     <h6 class="rbt-title-style-2 mb--10">Complete</h6>
@@ -31,12 +31,12 @@
             </div>
         @endif
 
-        @if($status === 'completed')
+        @if($course->enrollmentStatus === 'completed')
             <div class="rbt-card-bottom">
                 <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
                    href="">View Certificate</a>
             </div>
-        @elseif($status === 'in_progress')
+        @elseif($course->enrollmentStatus === 'in_progress')
             <div class="rbt-card-bottom">
                 <a class="rbt-btn btn-sm bg-color-warning-opacity text-dark w-100 text-center"
                    href="{{ route('course.learn', $course->slug) }}">Continue learning</a>

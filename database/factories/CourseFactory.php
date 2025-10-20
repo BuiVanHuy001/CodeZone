@@ -18,8 +18,6 @@ class CourseFactory extends Factory
     {
         return [
             'id' => fake()->uuid(),
-            'title' => fake()->unique()->sentence(random_int(5, 10)),
-            'heading' => fake()->sentence(random_int(15, 20)),
             'description' => fake()->paragraphs(3, true),
             'price' => fake()->randomFloat(2, 100_000, 1_000_000),
             'level' => fake()->randomElement(Course::$LEVELS),

@@ -13,18 +13,17 @@ class CatalogService
 {
     use HasNumberFormat;
 
-    public function prepareInstructorDetails(User $instructor): User
+    public function getDetails(User $instructor): User
     {
         $profile = $instructor->instructorProfile;
 
-        $instructor->avatar = $instructor->getAvatarPath();
-        $instructor->courses = app(CourseService::class)->getCoursesByAuthor($instructor, Course::$STATUSES);
+        $this->prepareBasicDetails($instructor);
+        $instructor->courses = app(CourseService::class)->getCoursesByAuthor($instructor);
         $instructor->reviews = $instructor->reviews->sortByDesc('created_at');
         $instructor->bio = $profile->bio;
         $instructor->aboutMe = $profile->about_me;
         $instructor->socialLinks = $profile->social_links;
         $instructor->currentJob = $profile->current_job;
-        $instructor->profileUrl = route('instructor.details', $instructor->slug);
         $instructor->reviewCountText = $this->formatCount($profile->review_count, 'review');
         $instructor->studentCountText = $this->formatCount($profile->student_count, 'student');
         $instructor->courseCountText = $this->formatCount($profile->course_count, 'course');
@@ -32,7 +31,21 @@ class CatalogService
         return $instructor;
     }
 
-    public function prepareInstructorBasicDetails(User $instructor): User
+    public function prepareDetailForCourseDetail(User $instructor): User
+    {
+        $profile = $instructor->instructorProfile;
+
+        $this->prepareBasicDetails($instructor);
+        $instructor->courseCountText = $this->formatCount($profile->course_count, 'course');
+        $instructor->rating = number_format($profile->rating, 1);
+        $instructor->reviewCountText = $this->formatCount($profile->review_count, 'review');
+        $instructor->currentJob = $profile->current_job;
+        $instructor->aboutMe = $profile->about_me;
+        $instructor->avatar = $instructor->getAvatarPath();
+        return $instructor;
+    }
+
+    public function prepareBasicDetails(User $instructor): User
     {
         $instructor->avatar = $instructor->getAvatarPath();
         $instructor->profileUrl = route('instructor.details', $instructor->slug);
@@ -41,7 +54,7 @@ class CatalogService
 
     public function getOverviewData(User $instructor): array
     {
-        $publishedCourses = $this->catalogService->getCoursesByAuthor($instructor);
+        $publishedCourses = app(\App\Services\Course\Catalog\CatalogService::class)->getCoursesByAuthor($instructor);
         $totalEarnings = $this->calculateTotalEarnings($publishedCourses);
         $studentsEnrolled = $instructor->instructorProfile->student_count;
         $rating = $instructor->instructorProfile->rating;
@@ -56,11 +69,14 @@ class CatalogService
 
     private function calculateTotalEarnings(Collection $publishedCourses): string
     {
-        $totalEarnings = 0;
-        foreach ($publishedCourses as $course) {
+        $courseIds = $publishedCourses->pluck('id');
 
-            $totalEarnings += OrderItem::where('course_id', $course->id)->sum('current_price');
+        if ($courseIds->isEmpty()) {
+            return '0';
         }
+
+        $totalEarnings = OrderItem::whereIn('course_id', $courseIds)->sum('current_price');
+
         return number_format($totalEarnings);
     }
 }

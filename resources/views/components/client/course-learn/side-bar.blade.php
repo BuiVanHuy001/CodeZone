@@ -59,7 +59,7 @@
                                                 <input
                                                     type="checkbox"
                                                     class="position-relative"
-                                                    @checked($lesson->trackingProgresses()->where('user_id', auth()->user()->id)->first()?->is_completed ?? false)
+                                                    @checked($lesson->trackingProgresses->first()?->is_completed ?? false)
                                                     style="opacity: 1; width: 13px; height: 13px"
                                                 >
                                             </div>

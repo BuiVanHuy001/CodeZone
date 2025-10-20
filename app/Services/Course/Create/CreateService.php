@@ -22,23 +22,7 @@ readonly class CreateService
 
         $this->moduleService->create($course, $courseData['modules']);
 
-        if ($author->isOrganization()) {
-            $batch = Batch::create([
-                'start_at' => $courseData['startDate'],
-                'end_at' => $courseData['endDate'],
-                'course_id' => $course->id
-            ]);
-            $course->update(['enrollment_count' => count($courseData['membersAssigned'])]);
-
-            foreach ($courseData['membersAssigned'] as $employeeId) {
-                BatchEnrollments::create([
-                    'batch_id' => $batch->id,
-                    'user_id' => $employeeId,
-                    'status' => 'not_started'
-                ]);
-            }
-        }
-        $author->getProfile->increment('course_count');
+        $author->instructorProfile->increment('course_count');
     }
 
     private function storeCourseInfo(array $info, string $authorId): Course
@@ -75,7 +59,7 @@ readonly class CreateService
 
         return json_encode(
             array_map(
-                fn($item) => ['name' => $item], $lines),
+                static fn($item) => ['name' => $item], $lines),
             JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
     }
 }
