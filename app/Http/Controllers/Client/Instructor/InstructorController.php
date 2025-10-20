@@ -17,7 +17,7 @@ class InstructorController extends Controller
 
     public function show(string $slug, InstructorService $instructorService)
     {
-        $instructor = $this->instructorService->prepareDataForInstructorDetails($slug);
+        $instructor = $this->instructorService->prepareDetailData($slug);
         if (!$instructor) {
             return view('client.errors.404');
         }

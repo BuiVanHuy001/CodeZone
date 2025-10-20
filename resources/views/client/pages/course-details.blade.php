@@ -46,13 +46,13 @@
 
                         <div class="rbt-author-meta mb--20">
                             <div class="rbt-avater">
-                                <a href="{{ $course->authorInfo['profileUrl'] }}">
-                                    <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor avatar">
+                                <a href="{{ $course->author->profileUrl }}">
+                                    <img src="{{ $course->author->avatar }}" alt="Instructor avatar">
                                 </a>
                             </div>
                             <div class="rbt-author-info">
                                 By
-                                <a href="{{ $course->authorInfo['profileUrl'] }}">{{ $course->authorInfo['name'] }}</a>
+                                <a href="{{ $course->author->profileUrl }}">{{ $course->author->name }}</a>
                                 in <a href="#">{{ $course->categoryName }}</a>
                             </div>
                         </div>

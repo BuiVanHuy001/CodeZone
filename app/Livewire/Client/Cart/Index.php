@@ -9,8 +9,10 @@ use App\Services\Course\CourseService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class Index extends Component
 {
@@ -21,23 +23,38 @@ class Index extends Component
     public string $paymentMethod = 'momo';
     public array|Collection $items = [];
 
-    public function __construct()
+    public function boot(): void
     {
         $this->cartService = app(CartService::class);
         $this->courseDecorator = app(CourseDecorator::class);
     }
 
-    public function mount(): void
+    public function mount(): Redirector|null
     {
         $this->order = $this->cartService->getCart(auth()->user());
         if ($this->order) {
             $this->totalPrice = $this->cartService->formatPrice($this->order->total_price);
             $this->items = $this->order->items->map(fn($item) => $this->courseDecorator->decorateForCartItem($item->course));
+
+            return null;
         }
+
+        return redirect()->route('page.home')->with('swal', [
+            'icon' => 'info',
+            'title' => 'Your cart is empty!',
+            'text' => 'Please add some courses to your cart before proceeding to checkout.',
+        ]);
     }
 
-    public function checkOut(): void
+    public function checkOut(): Redirector|null
     {
+        if (!$this->order) {
+            return redirect()->route('page.home')->with('swal', [
+                'icon' => 'info',
+                'title' => 'Your cart is empty!',
+                'text' => 'Please add some courses to your cart before proceeding to checkout.',
+            ]);
+        }
         $this->cartService->checkout($this->order, $this->paymentMethod);
     }
 

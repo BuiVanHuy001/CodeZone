@@ -2,11 +2,12 @@
 
 namespace App\Services\Payment\Strategies;
 
+use App\Models\Enrollment;
 use App\Models\Order;
 use App\Services\Payment\Contracts\PaymentGateWayInterface;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Env;
-use Random\RandomException;
 
 class VNPayStrategy implements PaymentGateWayInterface
 {
@@ -20,7 +21,7 @@ class VNPayStrategy implements PaymentGateWayInterface
         $startTime = date("YmdHis");
         $expire = date('YmdHis', strtotime('+15 minutes', strtotime($startTime)));
 
-        $vnp_TxnRef = rand(1, 10000);
+        $vnp_TxnRef = random_int(1, 10000);
         $amountVnd = (float)$order->total_price;
         $vnp_Amount = (int)round($amountVnd);
         $vnp_Amount *= 100;
@@ -71,11 +72,48 @@ class VNPayStrategy implements PaymentGateWayInterface
         return redirect($vnp_Url);
     }
 
-    public function handleCallback(array $data): mixed
+    public function handleCallback(array $data): Redirector|RedirectResponse
     {
         $resultCode = $data['vnp_ResponseCode'] ?? '';
-        dd($data);
-        return $data;
-    }
+        $orderId = $data['vnp_TxnRef'] ?? null;
 
+        $order = Order::where('id', $orderId)->first();
+
+        if (!$order) {
+            return redirect()->route('page.home')->with('swal', [
+                'icon' => 'error',
+                'title' => 'Payment Error',
+                'text' => 'Order not found',
+            ]);
+        }
+
+        if ($resultCode !== '00') {
+            $order->update(['status' => 'failed']);
+            return redirect()->route('page.home')->with('swal', [
+                'icon' => 'error',
+                'title' => 'Payment Failed',
+                'text' => 'Your payment could not be processed. Please try again.',
+            ]);
+        }
+
+        $order->update([
+            'status' => 'completed',
+            'payment_info' => json_encode($data, JSON_THROW_ON_ERROR),
+        ]);
+
+        foreach ($order->items as $item) {
+            $item->course->increment('enrollment_count');
+            Enrollment::create([
+                'user_id' => $order->user_id,
+                'course_id' => $item->course->id,
+                'status' => 'not_started',
+            ]);
+        }
+
+        return redirect()->route('page.home')->with('swal', [
+            'icon' => 'success',
+            'title' => 'Payment Successful',
+            'text' => 'Your order has been completed successfully.',
+        ]);
+    }
 }

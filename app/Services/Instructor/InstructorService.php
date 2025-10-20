@@ -23,7 +23,7 @@ readonly class InstructorService
         $this->catalogService = app(CatalogService::class);
     }
 
-    public function prepareDataForInstructorDetails(string $slug): ?User
+    public function prepareDetailData(string $slug): ?User
     {
         $instructor = User::where([
             'slug' => $slug,
@@ -32,15 +32,25 @@ readonly class InstructorService
         ])->first();
 
         if ($instructor) {
-            return $this->catalogService->getInstructorDetails($instructor);
+            return $this->catalogService->getDetails($instructor);
         }
 
         return null;
     }
 
+    public function prepareDetails(User $instructor): Collection
+    {
+        return $this->catalogService->getDetails($instructor);
+    }
+
+    public function prepareDetailForCourseDetail(User $instructor): User
+    {
+        return $this->catalogService->prepareDetailForCourseDetail($instructor);
+    }
+
     public function prepareBasicDetails(User $instructor): User
     {
-        return $this->catalogService->prepareInstructorBasicDetails($instructor);
+        return $this->catalogService->prepareBasicDetails($instructor);
     }
 
     public function prepareOverviewData(User $instructor): array

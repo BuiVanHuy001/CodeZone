@@ -2,6 +2,7 @@
 
 namespace App\Services\Instructor\Catalog;
 
+use App\Models\Course;
 use App\Models\OrderItem;
 use App\Models\User;
 use App\Services\Course\CourseService;
@@ -12,11 +13,11 @@ class CatalogService
 {
     use HasNumberFormat;
 
-    public function getInstructorDetails(User $instructor): User
+    public function getDetails(User $instructor): User
     {
         $profile = $instructor->instructorProfile;
 
-        $this->prepareInstructorBasicDetails($instructor);
+        $this->prepareBasicDetails($instructor);
         $instructor->courses = app(CourseService::class)->getCoursesByAuthor($instructor);
         $instructor->reviews = $instructor->reviews->sortByDesc('created_at');
         $instructor->bio = $profile->bio;
@@ -30,7 +31,21 @@ class CatalogService
         return $instructor;
     }
 
-    public function prepareInstructorBasicDetails(User $instructor): User
+    public function prepareDetailForCourseDetail(User $instructor): User
+    {
+        $profile = $instructor->instructorProfile;
+
+        $this->prepareBasicDetails($instructor);
+        $instructor->courseCountText = $this->formatCount($profile->course_count, 'course');
+        $instructor->rating = number_format($profile->rating, 1);
+        $instructor->reviewCountText = $this->formatCount($profile->review_count, 'review');
+        $instructor->currentJob = $profile->current_job;
+        $instructor->aboutMe = $profile->about_me;
+        $instructor->avatar = $instructor->getAvatarPath();
+        return $instructor;
+    }
+
+    public function prepareBasicDetails(User $instructor): User
     {
         $instructor->avatar = $instructor->getAvatarPath();
         $instructor->profileUrl = route('instructor.details', $instructor->slug);

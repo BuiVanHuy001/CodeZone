@@ -128,7 +128,8 @@ class LearningService
         }
 
         $lessons = $course->modules
-            ->flatMap(fn($module) => $module->lessons)
+            ->sortBy('position')
+            ->flatMap(fn($module) => $module->lessons->sortBy('position'))
             ->values();
 
         return $this->orderedLessonsCache = $lessons;
@@ -152,6 +153,7 @@ class LearningService
         $enrollment = Enrollment::where('course_id', $lesson->course->id)
             ->where('user_id', $user->id)
             ->first();
+
 
         if ($this->areAllLessonsCompleted($lesson->course)) {
             $enrollment?->update(['status' => 'completed']);

@@ -20,9 +20,9 @@ class Courses extends Component
     public function mount(): void
     {
         $this->courses = app(CourseService::class)->getCoursesByStudent(auth()->user());
-        $this->notStartedCourses = $this->courses->where('status', 'not_started');
-        $this->inProgressCourses = $this->courses->where('status', 'in_progress');
-        $this->completedCourses = $this->courses->where('status', 'completed');
+        $this->notStartedCourses = $this->courses->where('enrollmentStatus', 'not_started');
+        $this->inProgressCourses = $this->courses->where('enrollmentStatus', 'in_progress');
+        $this->completedCourses = $this->courses->where('enrollmentStatus', 'completed');
     }
 
 	#[Layout('components.layouts.dashboard')]

@@ -3,13 +3,15 @@
 namespace App\Services\Course\Catalog;
 
 use App\Models\Course;
+use App\Models\Reaction;
 use App\Models\Review;
 use App\Models\User;
+use App\Services\Instructor\InstructorService;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
-class CourseDecorator
+readonly class CourseDecorator
 {
     use HasNumberFormat;
 
@@ -58,7 +60,7 @@ class CourseDecorator
             $reviewIds = $course->reviews->pluck('id');
             $userId = auth()->id();
 
-            $userReactions = \App\Models\Reaction::query()
+            $userReactions = Reaction::query()
                 ->where('user_id', $userId)
                 ->where('reactionable_type', Review::class)
                 ->whereIn('reactionable_id', $reviewIds)
@@ -81,12 +83,7 @@ class CourseDecorator
         $course->reviews = $course->reviews->values();
         $course->updatedAtHuman = $course->updated_at->diffForHumans();
 
-        $course->authorInfo = [
-            'name' => $course->author->name,
-            'slug' => $course->author->slug,
-            'avatar' => $course->author->getAvatarPath(),
-            'profileUrl' => route('instructor.details', $course->author->slug),
-        ];
+        $course->author = app(InstructorService::class)->prepareDetailForCourseDetail($course->author);
 
         $course->reviews = $course->reviews->values();
         return $course;
