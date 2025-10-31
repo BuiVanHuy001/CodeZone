@@ -6,7 +6,7 @@
     <meta name="robots" content="noindex, follow"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/images/favicon.ico') }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/client/app.css', 'resources/js/client/app.js'])
     <title>Maintenance</title>
 </head>
 <body class="rbt-header-sticky">

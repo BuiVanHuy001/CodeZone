@@ -8,6 +8,7 @@ require __DIR__ . '/client/instructor.php';
 require __DIR__ . '/client/student.php';
 require __DIR__ . '/client/course.php';
 require __DIR__ . '/client/payment.php';
+require __DIR__ . '/admin/admin.php';
 
 Route::get('/', [PageController::class, 'homePage'])->name('page.home');
 Route::get('/not-found', [PageController::class, 'notFoundPage'])->name('page.not_found');

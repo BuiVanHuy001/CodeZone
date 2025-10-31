@@ -1,0 +1,20 @@
+@import "../../assets/client/css/vendor/bootstrap.min.css";
+@import "../../assets/client/css/vendor/slick.css";
+@import "../../assets/client/css/vendor/slick-theme.css";
+@import "../../assets/client/css/vendor/external-elements.css";
+@import "../../assets/client/css/vendor/github-markdown.css";
+
+@import "../../assets/client/css/plugins/sal.css";
+@import "../../assets/client/css/plugins/feather.css";
+@import "../../assets/client/css/plugins/fontawesome.min.css";
+@import "../../assets/client/css/plugins/fonts.css";
+@import "../../assets/client/css/plugins/swiper.css";
+@import "../../assets/client/css/plugins/odometer.css";
+@import "../../assets/client/css/plugins/animation.css";
+@import "../../assets/client/css/plugins/bootstrap-select.min.css";
+@import "../../assets/client/css/plugins/jquery-ui.css";
+@import "../../assets/client/css/plugins/magnigy-popup.min.css";
+@import "../../assets/client/css/plugins/plyr.css";
+@import "../../assets/client/css/plugins/jodit.min.css";
+
+@import "../../assets/client/css/styles.css";
