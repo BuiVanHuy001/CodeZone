@@ -10165,7 +10165,7 @@ th.gridjs-th-sort:focus, th.gridjs-th-sort:hover {
 }
 
 .gridjs-pagination .gridjs-pages button.gridjs-currentPage {
-    background-color: #405189;
+    background-color: #405189 !important;
     color: #fff;
     border-color: #405189;
     font-weight: 500
@@ -10193,7 +10193,7 @@ input.gridjs-input {
     background-color: var(--vz-input-bg-custom);
     color: var(--vz-body-color);
     line-height: 1.5;
-    padding: .5rem .9rem .5rem 2.025rem;
+    padding: .5rem .9rem .5rem 2.025rem !important;
     border-radius: var(--vz-border-radius);
     font-size: .8125rem
 }

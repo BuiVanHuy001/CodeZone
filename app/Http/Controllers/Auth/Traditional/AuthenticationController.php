@@ -40,6 +40,7 @@ class AuthenticationController
 
     public function logout(): RedirectResponse
     {
+        dd('here');
         return $this->authService->logout();
     }
 

@@ -168,8 +168,8 @@
                                         <span class="current-price">{{ $course->priceFormatted }}</span>
                                     </div>
                                     <div class="discount-time">
-                                        <span class="rbt-badge color-danger bg-color-danger-opacity"><i
-                                                class="feather-clock"></i> 3 days left!</span>
+                                        <span class="rbt-badge color-danger bg-color-danger-opacity">
+                                            <i class="feather-clock"></i> 3 days left!</span>
                                     </div>
                                 </div>
                                 @if($canAccess)
@@ -184,6 +184,14 @@
                                         <button onclick="Livewire.dispatch('add-to-cart', ['{{ $course->id }}'])" class="rbt-btn btn-gradient icon-hover w-100 d-block text-center">
                                             <span class="btn-text">Add to cart</span>
                                             <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                                        </button>
+                                    </div>
+                                @endif
+
+                                @if(auth()->user()->isAdmin())
+                                    <div class="mt-3">
+                                        <button class="rbt-btn btn-outline w-100 d-block text-center">
+                                            <span class="btn-text">{{ $course->status }}</span>
                                         </button>
                                     </div>
                                 @endif

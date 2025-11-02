@@ -28,16 +28,16 @@ readonly class CourseService
 
     public function prepareDataForCourseDetails(string $slug): ?Course
     {
-        $course = Course::where([
-            'slug' => $slug,
-            'status' => 'published'
-        ])->first();
+        $isAdmin = auth()->user()?->isAdmin() === true;
 
-        if ($course) {
-            return $this->catalogService->prepareCourseDetails($course);
+        $query = Course::query()->where('slug', $slug);
+        if (!$isAdmin) {
+            $query->where('status', 'published');
         }
 
-        return null;
+        $course = $query->first();
+
+        return $course ? $this->catalogService->prepareCourseDetails($course) : null;
     }
 
     public function getCoursesByAuthor(User $author): Collection

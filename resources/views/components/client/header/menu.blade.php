@@ -20,7 +20,7 @@
         <li>
             <form class="menu-logout-form" action="{{ route('client.logout') }}" method="POST">
                 @csrf
-                @method('DELETE')
+                @method('POST')
                 <a class="menu-logout-btn" href="#">
                     <i class="feather-log-out"></i><span>Logout</span>
                 </a>

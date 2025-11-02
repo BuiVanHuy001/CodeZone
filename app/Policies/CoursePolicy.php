@@ -25,6 +25,10 @@ class CoursePolicy
             return $course->enrollments()->where('user_id', $user->id)->exists();
         }
 
+        if ($user->role === 'admin') {
+            return true;
+        }
+
         return false;
     }
 }

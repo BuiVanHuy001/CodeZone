@@ -58,6 +58,14 @@ class AuthenticationService
         ]);
 
         if (auth()->attempt($credentials)) {
+            if (auth()->user()->isAdmin()) {
+                return redirect()->route('admin.overview.index')->with('swal', [
+                    'title' => 'Login Successful',
+                    'text' => 'Welcome back, Admin!',
+                    'icon' => 'success',
+                ]);
+            }
+
             return redirect()->intended()->with('swal', [
                 'title' => 'Login Successful',
                 'text' => 'Welcome back!',

@@ -8,7 +8,7 @@ Route::get('login', [AuthenticationController::class, 'showLoginForm'])
     ->name('client.login');
 Route::post('login', [AuthenticationController::class, 'login'])
     ->name('login.post');
-Route::delete('logout', [AuthenticationController::class, 'logout'])
+Route::post('logout', [AuthenticationController::class, 'logout'])
     ->name('client.logout');
 Route::get('register', [AuthenticationController::class, 'showRegistrationForm'])
     ->name('client.register');

@@ -142,6 +142,50 @@ class CatalogService
         return $courses->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, $enrolledCourseIds));
     }
 
+    public function getCoursesByStatus(string $status): Collection
+    {
+        return match ($status) {
+            'published' => $this->getPublishedCourses(),
+            'draft' => $this->getDraftCourses(),
+            'pending' => $this->getPendingCourses(),
+            'rejected' => $this->getRejectedCourses(),
+            default => collect(),
+        };
+    }
+
+    private function getPublishedCourses(): Collection
+    {
+        $query = Course::query()
+            ->where('status', 'published')
+            ->with(['author', 'reviews', 'category']);
+
+        return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForAdminList($course));
+    }
+
+    private function getDraftCourses(): Collection
+    {
+        return collect();
+    }
+
+    private function getPendingCourses(): Collection
+    {
+        $query = Course::query()
+            ->where('status', 'pending')
+            ->with(['author', 'category']);
+
+        return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForAdminList($course, 'pending'));
+    }
+
+    private function getRejectedCourses(): Collection
+    {
+        $query = Course::query()
+            ->where('status', 'rejected')
+            ->with(['author', 'category']);
+
+        return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForAdminList($course, 'rejected'));
+    }
+
+
     private function fetchCourses(int $amount, array $order): Collection
     {
         $query = Course::query()
