@@ -1,5 +1,12 @@
 INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
                             created_at, updated_at)
+VALUES (99999, 'Admin User', 'admin-user', 'admin@codezone.com', '2025-07-16 07:57:22',
+        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG',
+        'aNewRandomTokenString', 'admin', 'active',
+        NULL, '2025-07-16 07:57:22', '2025-07-16 07:57:22');
+
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+                            created_at, updated_at)
 VALUES (1, 'Taylor Otwell', 'taylorotwell', 'taylorotwell@codezone.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG',
         '5pTVG004RfwiXNSD1stvkNOefoYdBHAk2aXCVE6UyVmMZ7ZzODlHrp7sdID6', 'instructor', 'active',

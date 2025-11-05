@@ -25,7 +25,7 @@ class EnrollmentSeeder extends Seeder
 
         $courses = Course::whereNotIn('status', ['rejected', 'draft', 'pending'])->get();
 
-        $goodCourses = $courses->random(8);
+        $goodCourses = $courses->random(10);
         $badCourses = $courses->diff($goodCourses)->random(6);
 
         $reviewSeeder = new ReviewSeeder();
@@ -38,17 +38,24 @@ class EnrollmentSeeder extends Seeder
                 ['enrolled_count' => $enrolledCourses->count()]
             );
 
+            $orderCreatedAt = fake()->dateTimeBetween('-1 year', 'now');
+            $orderUpdatedAt = fake()->dateTimeBetween($orderCreatedAt, 'now');
+
             $order = Order::create([
                 'total_price' => $enrolledCourses->sum('price'),
                 'status' => 'completed',
                 'payment_method' => fake()->randomElement(Order::$PAYMENT_METHODS),
                 'user_id' => $student->id,
+                'created_at' => $orderCreatedAt,
+                'updated_at' => $orderUpdatedAt,
             ]);
 
             foreach ($enrolledCourses as $course) {
                 $order->items()->create([
                     'current_price' => $course->price,
                     'course_id' => $course->id,
+                    'created_at' => $orderCreatedAt,
+                    'updated_at' => $orderUpdatedAt,
                 ]);
                 $status = fake()->randomElement(array_keys(Enrollment::$STATUSES));
                 if ($status === 'completed') {

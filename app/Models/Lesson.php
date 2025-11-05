@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Storage;
 
 class Lesson extends Model
 {
@@ -26,6 +27,23 @@ class Lesson extends Model
         'document' => 'Document',
         'assessment' => 'Assessment',
     ];
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Lesson $lesson) {
+            if ($lesson->video_file_name && Storage::disk('public')->exists("lessons/{$lesson->video_file_name}")) {
+                Storage::disk('public')->delete("lessons/{$lesson->video_file_name}");
+            }
+
+            if ($lesson->resources && is_array($lesson->resources)) {
+                foreach ($lesson->resources as $resource) {
+                    if (Storage::disk('public')->exists("lessons/resources/{$resource}")) {
+                        Storage::disk('public')->delete("lessons/resources/{$resource}");
+                    }
+                }
+            }
+        });
+    }
 
     public function module(): BelongsTo
     {

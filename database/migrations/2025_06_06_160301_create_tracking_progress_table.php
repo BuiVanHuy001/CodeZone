@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->boolean('is_completed')->default(false);
 	        $table->foreignIdFor(User::class)->constrained();
-            $table->foreignIdFor(Lesson::class)->constrained();
+            $table->foreignIdFor(Lesson::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

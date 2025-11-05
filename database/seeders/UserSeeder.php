@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::factory(300)->create();
+        $users = User::factory(500)->create();
         foreach ($users as $user) {
             $user->update([
                 'avatar' => 'https://avatar.iran.liara.run/public/' . random_int(1, 70),
@@ -22,10 +22,13 @@ class UserSeeder extends Seeder
                 'dob' => fake()->date(),
             ]);
         }
-        $instructor = User::factory(20)->create([
+
+        $approvedInstructors = User::factory(40)->create([
             'role' => 'instructor',
+            'status' => 'active',
         ]);
-        foreach ($instructor as $user) {
+
+        foreach ($approvedInstructors as $user) {
             $user->update([
                 'avatar' => 'https://static.generated.photos/vue-static/face-generator/landing/wall/' . random_int(1, 24) . '.jpg'
             ]);
@@ -40,6 +43,15 @@ class UserSeeder extends Seeder
                     'github' => fake()->url(),
                 ],
             ]);
+        }
+
+        $pendingInstructors = User::factory(20)->create([
+            'role' => 'instructor',
+            'status' => 'pending',
+        ]);
+
+        foreach ($pendingInstructors as $user) {
+            $user->instructorProfile()->create();
         }
     }
 }

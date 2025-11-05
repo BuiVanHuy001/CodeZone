@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('type', array_keys(Assessment::$ASSESSMENT_PRACTICE_TYPES))->default('quiz');
             $table->unsignedTinyInteger('question_count')->default(1);
 
-	        $table->foreignUuid('lesson_id')->constrained('lessons');
+            $table->foreignUuid('lesson_id')->constrained('lessons')->cascadeOnDelete();
 
             $table->timestamps();
         });

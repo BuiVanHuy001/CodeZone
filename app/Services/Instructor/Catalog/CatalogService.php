@@ -2,10 +2,10 @@
 
 namespace App\Services\Instructor\Catalog;
 
-use App\Models\Course;
 use App\Models\OrderItem;
 use App\Models\User;
 use App\Services\Course\CourseService;
+use App\Support\UserStatusMapping;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
 
@@ -67,6 +67,34 @@ class CatalogService
         ];
     }
 
+    public function getDetailsForAdminList(string $status): Collection
+    {
+        $instructors = User::where('role', 'instructor')
+            ->where('status', $status)
+            ->with('instructorProfile')
+            ->get();
+
+        return $instructors->map(function (User $instructor) {
+            return $this->prepareDetailsForAdminList($instructor);
+        });
+    }
+
+    private function prepareDetailsForAdminList(User $instructor): User
+    {
+        $publishedCourses = app(\App\Services\Course\Catalog\CatalogService::class)->getCoursesByAuthor($instructor);
+        $this->prepareBasicDetails($instructor);
+        $instructor->totalEarningsText = $this->calculateTotalEarnings($publishedCourses);
+        $instructor->joinedDateText = $instructor->created_at->diffForHumans();
+        $instructor->status = UserStatusMapping::$STATUSES[$instructor->status];
+        $profile = $instructor->instructorProfile;
+        if ($profile) {
+            $instructor->studentCountText = $this->formatCount($profile->student_count, 'student');
+            $instructor->courseCountText = $this->formatCount($profile->course_count, 'course');
+            $instructor->ratingText = number_format($profile->rating, 1) . '/5⭐' . ' (' . $this->formatCount($profile->review_count, 'review') . ')';
+        }
+        return $instructor;
+    }
+
     private function calculateTotalEarnings(Collection $publishedCourses): string
     {
         $courseIds = $publishedCourses->pluck('id');
@@ -77,6 +105,6 @@ class CatalogService
 
         $totalEarnings = OrderItem::whereIn('course_id', $courseIds)->sum('current_price');
 
-        return number_format($totalEarnings);
+        return $this->formatCurrency($totalEarnings);
     }
 }

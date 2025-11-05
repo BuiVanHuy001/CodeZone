@@ -25,7 +25,7 @@ return new class extends Migration
             $table->enum('type', array_keys(Lesson::$TYPES));
             $table->json('resources')->nullable();
 
-	        $table->foreignUuid('module_id')->constrained('modules');
+            $table->foreignUuid('module_id')->constrained('modules')->cascadeOnDelete();
 
             $table->timestamps();
         });

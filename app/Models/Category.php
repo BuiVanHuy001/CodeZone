@@ -30,6 +30,11 @@ class Category extends Model
         return $this->hasMany(__CLASS__, 'parent_id');
     }
 
+    public function courses(): HasMany
+    {
+        return $this->hasMany(Course::class);
+    }
+
     public function scopeGetParents($query)
     {
         return $query->whereNull('parent_id')->get();
