@@ -128,6 +128,7 @@
 @push('scripts')
     <script src="{{ Vite::asset('resources/assets/admin/libs/apexcharts/apexcharts.min.js') }}"></script>
     <script>
+        // Store chart instances for proper cleanup during Livewire navigation
         let chartInstances = {};
 
         function getChartColorsArray(id) {

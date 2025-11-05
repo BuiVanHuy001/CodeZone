@@ -186,23 +186,26 @@
     <script src="{{ Vite::asset('resources/assets/admin/libs/jszip/3.1.3/jszip.min.js') }}"></script>
 
     <script>
-        let activeInstructorTableInstance = null;
-        let pendingInstructorTableInstance = null;
+        // Store DataTable instances for proper cleanup during Livewire navigation
+        let tableInstances = {
+            active: null,
+            pending: null
+        };
 
         function initDataTables() {
             // Destroy existing instances if they exist
-            if (activeInstructorTableInstance) {
-                activeInstructorTableInstance.destroy();
-                activeInstructorTableInstance = null;
+            if (tableInstances.active) {
+                tableInstances.active.destroy();
+                tableInstances.active = null;
             }
-            if (pendingInstructorTableInstance) {
-                pendingInstructorTableInstance.destroy();
-                pendingInstructorTableInstance = null;
+            if (tableInstances.pending) {
+                tableInstances.pending.destroy();
+                tableInstances.pending = null;
             }
 
             var activeInstructorTable = $('#activeInstructorTable');
             if (activeInstructorTable.length) {
-                activeInstructorTableInstance = activeInstructorTable.DataTable({
+                tableInstances.active = activeInstructorTable.DataTable({
                     dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6 d-flex align-items-center"li><"col-sm-12 col-md-6"p>>',
                     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
                     pageLength: 10,
@@ -223,7 +226,7 @@
 
             var pendingInstructorTable = $('#pendingInstructorTable');
             if (pendingInstructorTable.length) {
-                pendingInstructorTableInstance = pendingInstructorTable.DataTable({
+                tableInstances.pending = pendingInstructorTable.DataTable({
                     dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6 d-flex align-items-center"li><"col-sm-12 col-md-6"p>>',
                     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
                     pageLength: 10,
@@ -252,13 +255,13 @@
 
         // Cleanup DataTables before navigating away
         document.addEventListener('livewire:navigating', function () {
-            if (activeInstructorTableInstance) {
-                activeInstructorTableInstance.destroy();
-                activeInstructorTableInstance = null;
+            if (tableInstances.active) {
+                tableInstances.active.destroy();
+                tableInstances.active = null;
             }
-            if (pendingInstructorTableInstance) {
-                pendingInstructorTableInstance.destroy();
-                pendingInstructorTableInstance = null;
+            if (tableInstances.pending) {
+                tableInstances.pending.destroy();
+                tableInstances.pending = null;
             }
         });
     </script>
