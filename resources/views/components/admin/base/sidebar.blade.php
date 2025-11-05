@@ -28,6 +28,7 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link menu-link"
+                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.overview.index') }}"
                     >
@@ -38,6 +39,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link"
+                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.courses.index') }}">
                         <i class="bx bxs-graduation"></i>
@@ -47,6 +49,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link"
+                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.instructors.index') }}"
                     >
@@ -56,6 +59,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link"
+                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.students.index') }}"
                     >

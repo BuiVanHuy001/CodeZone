@@ -84,4 +84,16 @@ readonly class CourseService
     {
         $course->modules()->delete();
     }
+
+    public function suspendCourse(string|int $courseId): bool
+    {
+        $course = Course::find($courseId);
+        if ($course) {
+            $course->update([
+                'status' => 'suspended',
+            ]);
+            return true;
+        }
+        return false;
+    }
 }

@@ -95,22 +95,41 @@
     }
 
     function G() {
-        document.addEventListener("DOMContentLoaded", function () {
+        function initializeApp() {
             var e = document.getElementsByClassName("code-switcher");
             Array.from(e).forEach(function (a) {
                 a.addEventListener("change", function () {
                     var e = a.closest(".card"), t = e.querySelector(".live-preview"), e = e.querySelector(".code-view");
                     a.checked ? (t.classList.add("d-none"), e.classList.remove("d-none")) : (t.classList.remove("d-none"), e.classList.add("d-none"))
                 })
-            }), feather.replace()
-        }), window.addEventListener("load", function () {
+            });
+            feather.replace();
+            D();
+        }
+
+        function onPageLoad() {
             var e;
             ("twocolumn" === document.documentElement.getAttribute("data-layout") ? u : g)(), (e = document.getElementsByClassName("vertical-overlay")) && Array.from(e).forEach(function (e) {
                 e.addEventListener("click", function () {
                     document.body.classList.remove("vertical-sidebar-enable"), "twocolumn" === sessionStorage.getItem("data-layout") ? document.body.classList.add("twocolumn-panel") : document.documentElement.setAttribute("data-sidebar-size", sessionStorage.getItem("data-sidebar-size"))
                 })
             }), E()
-        }), document.getElementById("topnav-hamburger-icon") && document.getElementById("topnav-hamburger-icon").addEventListener("click", O);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            initializeApp();
+        });
+
+        document.addEventListener("livewire:navigated", function () {
+            initializeApp();
+            onPageLoad();
+        });
+
+        window.addEventListener("load", function () {
+            onPageLoad();
+        });
+
+        document.getElementById("topnav-hamburger-icon") && document.getElementById("topnav-hamburger-icon").addEventListener("click", O);
         var e = sessionStorage.getItem("defaultAttribute"), e = JSON.parse(e), t = document.documentElement.clientWidth;
         "twocolumn" === e["data-layout"] && t < 767 && Array.from(document.getElementById("two-column-menu").querySelectorAll("li")).forEach(function (e) {
             e.addEventListener("click", function (e) {

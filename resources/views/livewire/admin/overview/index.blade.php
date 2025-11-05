@@ -128,27 +128,64 @@
 @push('scripts')
     <script src="{{ Vite::asset('resources/assets/admin/libs/apexcharts/apexcharts.min.js') }}"></script>
     <script>
-        function getChartColorsArray(id) {
-            const el = document.getElementById(id);
-            if (!el) return null;
+        (function () {
+            const chartInstances = {};
 
-            const colors = JSON.parse(el.getAttribute("data-colors"));
-            return colors.map(value => {
-                const color = value.replace(" ", "");
-                if (color.indexOf(",") === -1) {
-                    return getComputedStyle(document.documentElement).getPropertyValue(color) || color;
+            function getChartColorsArray(id) {
+                const el = document.getElementById(id);
+                if (!el) return null;
+
+                const colors = JSON.parse(el.getAttribute("data-colors"));
+                return colors.map(value => {
+                    const color = value.replace(" ", "");
+                    if (color.indexOf(",") === -1) {
+                        return getComputedStyle(document.documentElement).getPropertyValue(color) || color;
+                    }
+                    const [base, opacity] = color.split(",");
+                    return `rgba(${getComputedStyle(document.documentElement).getPropertyValue(base)}, ${opacity})`;
+                });
+            }
+
+            function destroyChart(id) {
+                if (chartInstances[id]) {
+                    try {
+                        chartInstances[id].destroy();
+                    } catch (e) {
+                        console.warn(`Error destroying chart ${id}:`, e);
+                    }
+                    delete chartInstances[id];
                 }
-                const [base, opacity] = color.split(",");
-                return `rgba(${getComputedStyle(document.documentElement).getPropertyValue(base)}, ${opacity})`;
-            });
-        }
 
-        function initHorizontalBarChart(id, chartData) {
-            const chartColors = getChartColorsArray(id);
-            const element = document.querySelector(`#${id}`);
-            if (!chartColors || !element) return;
+                const element = document.querySelector(`#${id}`);
+                if (element) {
+                    element.innerHTML = '';
+                }
+            }
 
-            const options = {
+            function destroyAllCharts() {
+                Object.keys(chartInstances).forEach(id => {
+                    destroyChart(id);
+                });
+            }
+
+            function initHorizontalBarChart(id, chartData) {
+                if (typeof ApexCharts === 'undefined') {
+                    console.warn('ApexCharts not loaded yet, skipping chart initialization');
+                    return;
+                }
+
+                const chartColors = getChartColorsArray(id);
+                const element = document.querySelector(`#${id}`);
+                if (!chartColors || !element) return;
+
+                if (!chartData || !chartData.data || !Array.isArray(chartData.data) || chartData.data.length === 0) {
+                    console.warn(`Invalid chart data for ${id}`);
+                    return;
+                }
+
+                destroyChart(id);
+
+                const options = {
                 series: [{data: chartData.data}],
                 chart: {type: "bar", height: 350, toolbar: {show: false}},
                 plotOptions: {
@@ -187,13 +224,26 @@
                 },
             };
 
-            new ApexCharts(element, options).render();
+                chartInstances[id] = new ApexCharts(element, options);
+                chartInstances[id].render();
         }
 
         function initTreemapChart(id, chartData) {
+            if (typeof ApexCharts === 'undefined') {
+                console.warn('ApexCharts not loaded yet, skipping chart initialization');
+                return;
+            }
+
             const chartColors = getChartColorsArray(id);
             const element = document.querySelector(`#${id}`);
             if (!chartColors || !element) return;
+
+            if (!chartData || !chartData.data || !Array.isArray(chartData.data) || chartData.data.length === 0) {
+                console.warn(`Invalid chart data for ${id}`);
+                return;
+            }
+
+            destroyChart(id);
 
             const seriesData = chartData.data.map((value, index) => ({
                 x: chartData.categories[index],
@@ -249,13 +299,26 @@
                 },
             };
 
-            new ApexCharts(element, options).render();
+            chartInstances[id] = new ApexCharts(element, options);
+            chartInstances[id].render();
         }
 
         function initPlatformPerformanceChart(id, chartData) {
+            if (typeof ApexCharts === 'undefined') {
+                console.warn('ApexCharts not loaded yet, skipping chart initialization');
+                return;
+            }
+
             const colors = getChartColorsArray(id);
             const element = document.querySelector(`#${id}`);
             if (!colors || !element) return;
+
+            if (!chartData || !chartData.revenue || !chartData.orders || !chartData.students) {
+                console.warn(`Invalid chart data for ${id}`);
+                return;
+            }
+
+            destroyChart(id);
 
             const options = {
                 series: [
@@ -339,16 +402,31 @@
                 },
             };
 
-            new ApexCharts(element, options).render();
+            chartInstances[id] = new ApexCharts(element, options);
+            chartInstances[id].render();
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            initHorizontalBarChart("top-enrolled-courses", @json($topEnrolledCourses, JSON_THROW_ON_ERROR));
-            initHorizontalBarChart("top-rating-courses", @json($topRatingCourses, JSON_THROW_ON_ERROR));
-            initTreemapChart("course-category-distribution", @json($courseCategoryDistribution, JSON_THROW_ON_ERROR));
-            initTreemapChart("revenue-category-distribution", @json($revenueCategoryDistribution, JSON_THROW_ON_ERROR));
-            initPlatformPerformanceChart("platform_performance_trends", @json($platformPerformanceTrends, JSON_THROW_ON_ERROR));
-        });
+            function initCharts() {
+                setTimeout(() => {
+                    if (typeof ApexCharts === 'undefined') {
+                        console.error('ApexCharts library not loaded');
+                        return;
+                    }
+
+                    destroyAllCharts();
+
+                    initHorizontalBarChart("top-enrolled-courses", @json($topEnrolledCourses, JSON_THROW_ON_ERROR));
+                    initHorizontalBarChart("top-rating-courses", @json($topRatingCourses, JSON_THROW_ON_ERROR));
+                    initTreemapChart("course-category-distribution", @json($courseCategoryDistribution, JSON_THROW_ON_ERROR));
+                    initTreemapChart("revenue-category-distribution", @json($revenueCategoryDistribution, JSON_THROW_ON_ERROR));
+                    initPlatformPerformanceChart("platform_performance_trends", @json($platformPerformanceTrends, JSON_THROW_ON_ERROR));
+                }, 100);
+            }
+
+            document.addEventListener("DOMContentLoaded", initCharts);
+
+            document.addEventListener('livewire:navigated', initCharts);
+        })();
     </script>
 @endpush
 

@@ -58,7 +58,10 @@
     </div>
 
     <button
-        onclick="topFunction()"
+        onclick="function topFunction() {
+            document.body.scrollTop = 0, document.documentElement.scrollTop = 0
+        }
+        topFunction()"
         class="btn btn-danger btn-icon"
         id="back-to-top"
     >
@@ -67,10 +70,5 @@
 </div>
 @stack('scripts')
 <script src="{{ Vite::asset('resources/assets/admin/libs/simplebar/simplebar.min.js') }}"></script>
-<script>
-    function topFunction() {
-        document.body.scrollTop = 0, document.documentElement.scrollTop = 0
-    }
-</script>
 </body>
 </html>

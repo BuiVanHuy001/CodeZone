@@ -12,9 +12,13 @@ class Index extends Component
     public array $instructors;
     private AdminInstructorService $adminInstructorService;
 
-    public function mount(): void
+    public function boot(): void
     {
         $this->adminInstructorService = app(AdminInstructorService::class);
+    }
+
+    public function mount(): void
+    {
         foreach (User::$STATUSES as $status) {
             $this->instructors[$status] = $this->adminInstructorService->getInstructorsByStatus($status);
         }

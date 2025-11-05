@@ -149,6 +149,7 @@ class CatalogService
             'draft' => $this->getDraftCourses(),
             'pending' => $this->getPendingCourses(),
             'rejected' => $this->getRejectedCourses(),
+            'suspended' => $this->getSuspendedCourses(),
             default => collect(),
         };
     }
@@ -203,5 +204,14 @@ class CatalogService
         }
 
         return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, $enrolledCourseIds));
+    }
+
+    private function getSuspendedCourses(): Collection
+    {
+        $query = Course::query()
+            ->where('status', 'suspended')
+            ->with(['author', 'category']);
+
+        return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForAdminList($course, 'suspended'));
     }
 }

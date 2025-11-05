@@ -186,47 +186,89 @@
     <script src="{{ Vite::asset('resources/assets/admin/libs/jszip/3.1.3/jszip.min.js') }}"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var activeInstructorTable = $('#activeInstructorTable');
-            if (activeInstructorTable.length) {
-                activeInstructorTable.DataTable({
-                    dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6 d-flex align-items-center"li><"col-sm-12 col-md-6"p>>',
+        (function () {
+            let initializedTables = {};
+
+            function initTable(selector, opts = {}) {
+                if (typeof $ === 'undefined' || typeof $.fn === 'undefined') {
+                    console.warn('jQuery not loaded yet, skipping DataTable initialization');
+                    return null;
+                }
+
+                const el = $(selector);
+                if (!el.length) return null;
+
+                if (typeof $.fn.DataTable === 'undefined') {
+                    console.warn('DataTables plugin not loaded yet');
+                    return null;
+                }
+
+                if ($.fn.DataTable.isDataTable(selector)) {
+                    $(selector).DataTable().destroy();
+                }
+
+                const defaultOptions = {
                     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
                     pageLength: 10,
                     searching: true,
-                    fixedHeader: true,
-                    scrollX: true,
-                    scrollY: 500,
+                    order: [],
+                    dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6 d-flex align-items-center"li><"col-sm-12 col-md-6"p>>',
                     language: {
-                        info: "Showing _START_ to _END_ of _TOTAL_ instructors",
-                        infoEmpty: "No instructors to display",
+                        info: "Displaying items _START_ to _END_ out of _TOTAL_ total instructors",
+                        infoEmpty: "No instructors found to display",
                         lengthMenu: "Show _MENU_ instructors",
                         search: "Search instructors:",
                         zeroRecords: "No matching instructors found",
                         paginate: {previous: 'Prev', next: 'Next'}
                     },
-                });
+                };
+                const config = Object.assign({}, defaultOptions, opts);
 
+                const table = el.DataTable(config);
+
+                initializedTables[selector] = table;
+                return table;
             }
 
-            var pendingInstructorTable = $('#pendingInstructorTable');
-            if (pendingInstructorTable.length) {
-                pendingInstructorTable.DataTable({
-                    dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6 d-flex align-items-center"li><"col-sm-12 col-md-6"p>>',
-                    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-                    pageLength: 10,
-                    searching: true,
-                    scrollY: 500,
-                    language: {
-                        info: "Showing _START_ to _END_ of _TOTAL_ instructors",
-                        infoEmpty: "No pending instructors to display",
-                        lengthMenu: "Show _MENU_ instructors",
-                        search: "Search instructors:",
-                        zeroRecords: "No matching instructors found",
-                        paginate: {previous: 'Prev', next: 'Next'}
-                    },
-                });
+            function initializeDataTables() {
+                setTimeout(() => {
+                    const tableDefinitions = [
+                        {
+                            selector: '#activeInstructorTable',
+                            opts: {
+                                fixedHeader: true,
+                                scrollX: true,
+                                scrollY: 500,
+                            }
+                        },
+                        {
+                            selector: '#pendingInstructorTable',
+                            opts: {
+                                scrollY: 500,
+                                language: {
+                                    info: "Displaying items _START_ to _END_ out of _TOTAL_ total instructors",
+                                    infoEmpty: "No pending instructors found to display",
+                                }
+                            }
+                        }
+                    ];
+
+                    tableDefinitions.forEach(({selector, opts}) => initTable(selector, opts));
+                }, 100);
             }
-        });
+
+            document.addEventListener('DOMContentLoaded', initializeDataTables);
+            document.addEventListener('livewire:navigated', initializeDataTables);
+
+            document.addEventListener('livewire:initialized', function () {
+                window.Livewire.on('instructor-approved', () => {
+                    setTimeout(initializeDataTables, 200);
+                });
+
+                window.Livewire.hook('morph.updated', ({el, component}) => {
+                    setTimeout(initializeDataTables, 200);
+                });
+            });
+        })();
     </script>
 @endpush
