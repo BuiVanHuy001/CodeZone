@@ -254,6 +254,21 @@
 
         document.addEventListener('DOMContentLoaded', initializeDataTables);
 
+        // Reinitialize DataTables when navigating with Livewire
+        document.addEventListener('livewire:navigated', function () {
+            initializeDataTables();
+        });
+
+        // Cleanup DataTables before navigating away
+        document.addEventListener('livewire:navigating', function () {
+            Object.keys(initializedTables).forEach(selector => {
+                if ($.fn.DataTable.isDataTable(selector)) {
+                    $(selector).DataTable().destroy();
+                }
+            });
+            initializedTables = {};
+        });
+
         document.addEventListener('livewire:initialized', function () {
             window.Livewire.on('course-approved', () => {
                 setTimeout(initializeDataTables, 200);

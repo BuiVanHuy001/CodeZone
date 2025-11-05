@@ -342,12 +342,21 @@
             new ApexCharts(element, options).render();
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
+        function initializeCharts() {
             initHorizontalBarChart("top-enrolled-courses", @json($topEnrolledCourses, JSON_THROW_ON_ERROR));
             initHorizontalBarChart("top-rating-courses", @json($topRatingCourses, JSON_THROW_ON_ERROR));
             initTreemapChart("course-category-distribution", @json($courseCategoryDistribution, JSON_THROW_ON_ERROR));
             initTreemapChart("revenue-category-distribution", @json($revenueCategoryDistribution, JSON_THROW_ON_ERROR));
             initPlatformPerformanceChart("platform_performance_trends", @json($platformPerformanceTrends, JSON_THROW_ON_ERROR));
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            initializeCharts();
+        });
+
+        // Reinitialize charts when navigating with Livewire
+        document.addEventListener('livewire:navigated', function () {
+            initializeCharts();
         });
     </script>
 @endpush
