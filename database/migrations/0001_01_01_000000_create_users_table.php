@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->enum('role', User::$ROLES)->default('student');
-	        $table->enum('status', array_keys(User::$STATUSES))->default('active');
+            $table->enum('status', User::$STATUSES)->default('active');
             $table->string('avatar')->nullable();
 
             $table->timestamps();

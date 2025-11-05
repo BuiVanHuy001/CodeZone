@@ -42,6 +42,7 @@ return new class extends Migration {
             $table->json('target_audiences')->nullable();
 
             $table->foreignIdFor(User::class)->constrained('users');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

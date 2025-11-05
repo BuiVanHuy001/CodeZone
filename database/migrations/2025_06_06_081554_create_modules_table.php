@@ -21,7 +21,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('duration')
                 ->comment('Duration in seconds and max 65535 seconds (18 hours)');
 
-	        $table->foreignUuid('course_id')->constrained('courses');
+            $table->foreignUuid('course_id')->constrained('courses')->cascadeOnDelete();
 
             $table->timestamps();
         });

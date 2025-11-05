@@ -29,4 +29,26 @@ trait HasNumberFormat
     {
         return $count . ' ' . str($word)->plural($count);
     }
+
+    public function getFormattedParts(float $number): array
+    {
+        if ($number < 1000) {
+            return ['number' => number_format($number, 0), 'suffix' => ''];
+        } elseif ($number < 1000000) {
+            return [
+                'number' => number_format($number / 1000, 1),
+                'suffix' => 'k'
+            ];
+        } elseif ($number < 1000000000) {
+            return [
+                'number' => number_format($number / 1000000, 2),
+                'suffix' => 'M'
+            ];
+        } else {
+            return [
+                'number' => number_format($number / 1000000000, 2),
+                'suffix' => 'B'
+            ];
+        }
+    }
 }

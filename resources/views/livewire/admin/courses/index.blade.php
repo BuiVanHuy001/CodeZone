@@ -1,11 +1,15 @@
 <div class="row">
+    <div wire:loading wire:target="approveCourse, rejectCourse">
+        <x-client.share-ui.loading-effect/>
+    </div>
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title mb-0">Active Courses</h5>
             </div>
             <div class="card-body">
-                <table id="activeCourseTable" class="table nowrap align-middle" style="width:100%">
+                <div wire:ignore.self>
+                    <table id="activeCourseTable" class="table nowrap align-middle" style="width:100%">
                     <thead>
                     <tr>
                         <th data-ordering="false">ID</th>
@@ -21,7 +25,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($gridData['published'] as $course)
+                    @foreach($courses['published'] as $course)
                         <tr>
                             <td>{{ $course->id }}</td>
                             <td><a href="{{ $course->detailsPageUrl }}" class="fw-bold">{{ $course->title }}</a></td>
@@ -65,6 +69,7 @@
                     @endforeach
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
@@ -75,7 +80,8 @@
                 <h5 class="card-title mb-0">Pending Courses</h5>
             </div>
             <div class="card-body">
-                <table id="pendingCourseTable" class="table align-middle" style="width:100%">
+                <div wire:ignore.self>
+                    <table id="pendingCourseTable" class="table align-middle" style="width:100%">
                     <thead>
                     <tr>
                         <th data-ordering="false">ID</th>
@@ -89,7 +95,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($gridData['pending'] as $course)
+                    @foreach($courses['pending'] as $course)
                         <tr>
                             <td>{{ $course->id }}</td>
                             <td><a href="{{ $course->detailsPageUrl }}" class="fw-bold">{{ $course->title }}</a></td>
@@ -112,22 +118,19 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
-                                            <a class="dropdown-item">
-                                                <button class="btn btn-xl">
-                                                    <span class="badge bg-success-subtle">
-                                                        <i class="ri-checkbox-circle-line align-bottom me-2 text-success"></i>Approve
-                                                    </span>
-                                                </button>
-                                            </a>
+                                            <button wire:click="approve('{{ $course->id }}')"
+                                                    class="btn btn-xl dropdown-item">
+                                                <span class="badge bg-success-subtle">
+                                                    <i class="ri-checkbox-circle-line align-bottom me-2 text-success"></i>Approve
+                                                </span>
+                                            </button>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item">
-                                                <button class="btn btn-xl">
-                                                    <span class="badge bg-danger-subtle text-danger">
-                                                        <i class="ri-close-circle-fill align-bottom me-2 text-danger"></i>Reject
-                                                    </span>
-                                                </button>
-                                            </a>
+                                            <button wire:click="reject('{{ $course->id }}')" class="btn btn-xl dropdown-item">
+                                                <span class="badge bg-danger-subtle text-danger">
+                                                    <i class="ri-close-circle-fill align-bottom me-2 text-danger"></i>Reject
+                                                </span>
+                                            </button>
                                         </li>
                                     </ul>
                                 </div>
@@ -136,6 +139,7 @@
                     @endforeach
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
@@ -196,38 +200,68 @@
     <script src="{{ Vite::asset('resources/assets/admin/libs/jszip/3.1.3/jszip.min.js') }}"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var activeCoursesTable = $('#activeCourseTable');
-            if (activeCoursesTable.length) {
-                activeCoursesTable.DataTable({
-                    dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6 d-flex align-items-center"li><"col-sm-12 col-md-6"p>>',
-                    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-                    pageLength: 10,
-                    searching: true,
-                    fixedHeader: true,
-                    scrollX: true,
-                    scrollY: 500,
-                    language: {
-                        info: "Displaying items _START_ to _END_ out of _TOTAL_ total courses.",
-                        infoEmpty: "No courses found to display",
-                        lengthMenu: "Show _MENU_ courses",
-                        search: "Search courses:",
-                    },
-                });
+        let initializedTables = {};
 
+        function initTable(selector, opts = {}) {
+            const el = $(selector);
+            if (!el.length) return null;
+
+            // destroy previous instance if exists
+            if ($.fn.DataTable.isDataTable(selector)) {
+                $(selector).DataTable().destroy();
             }
 
-            var pendingCoursesTable = $('#pendingCourseTable');
-            if (pendingCoursesTable.length) {
-                pendingCoursesTable.DataTable({
-                        search: true,
-                        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-                        pageLength: 10,
-                        searching: true,
+            const defaultOptions = {
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+                pageLength: 10,
+                searching: true,
+                order: [],
+                language: {
+                    info: "Displaying items _START_ to _END_ out of _TOTAL_ total courses.",
+                    infoEmpty: "No courses found to display",
+                    lengthMenu: "Show _MENU_ courses",
+                    search: "Search courses:",
+                },
+            };
+
+            const config = Object.assign({}, defaultOptions, opts);
+            const table = el.DataTable(config);
+            initializedTables[selector] = table;
+            return table;
+        }
+
+        function initializeDataTables() {
+            const tableDefinitions = [
+                {
+                    selector: '#activeCourseTable',
+                    opts: {
+                        dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6 d-flex align-items-center"li><"col-sm-12 col-md-6"p>>',
+                        fixedHeader: true,
+                        scrollX: true,
                         scrollY: 500,
                     }
-                );
-            }
+                },
+                {
+                    selector: '#pendingCourseTable',
+                    opts: {
+                        scrollY: 500
+                    }
+                }
+            ];
+
+            tableDefinitions.forEach(({selector, opts}) => initTable(selector, opts));
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeDataTables);
+
+        document.addEventListener('livewire:initialized', function () {
+            window.Livewire.on('course-approved', () => {
+                setTimeout(initializeDataTables, 200);
+            });
+
+            window.Livewire.hook('morph.updated', ({el, component}) => {
+                setTimeout(initializeDataTables, 200);
+            });
         });
     </script>
 @endpush

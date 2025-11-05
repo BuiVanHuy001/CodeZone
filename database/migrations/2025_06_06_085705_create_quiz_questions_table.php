@@ -20,7 +20,7 @@ return new class extends Migration
             $table->json('options')->nullable();
             $table->unsignedTinyInteger('position')->default(0);
 
-	        $table->foreignIdFor(Assessment::class)->constrained();
+            $table->foreignIdFor(Assessment::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

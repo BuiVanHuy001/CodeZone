@@ -11,17 +11,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Course extends Model
 {
-    use HasFactory, HasSlug, HasUUID, HasDuration;
+    use HasFactory, HasSlug, HasUUID, HasDuration, SoftDeletes;
 
     protected $guarded = [];
 
     public $incrementing = false;
     protected $keyType = 'string';
 
-    public static array $STATUSES = ['draft', 'published', 'pending', 'rejected'];
+    public static array $STATUSES = ['draft', 'published', 'pending', 'rejected', 'suspended'];
 
     public static array $LEVELS = ['beginner', 'intermediate', 'advanced'];
 

@@ -3150,7 +3150,7 @@ code {
 
 #back-to-top {
     position: fixed;
-    bottom: 100px;
+    bottom: 30px;
     right: 28px;
     -webkit-transition: all .5s ease;
     transition: all .5s ease;

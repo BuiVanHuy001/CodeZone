@@ -2,12 +2,26 @@
 
 namespace App\Livewire\Admin\Instructor;
 
+use App\Models\User;
+use App\Services\Instructor\AdminInstructorService;
+use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
 class Index extends Component
 {
-    public function render()
+    public array $instructors;
+    private AdminInstructorService $adminInstructorService;
+
+    public function mount(): void
     {
-        return view('livewire.admin.instructor.index');
+        $this->adminInstructorService = app(AdminInstructorService::class);
+        foreach (User::$STATUSES as $status) {
+            $this->instructors[$status] = $this->adminInstructorService->getInstructorsByStatus($status);
+        }
+    }
+
+    public function render(): View
+    {
+        return view('livewire.admin.instructor.index')->layout('components.layouts.admin-dashboard');
     }
 }

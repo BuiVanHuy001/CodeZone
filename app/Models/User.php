@@ -34,32 +34,7 @@ class User extends Authenticatable
 
     public static array $ROLES = ['student', 'admin', 'instructor', 'super_admin'];
 
-    public static array $STATUSES = [
-        'active' => [
-            'label' => 'Active',
-            'class' => 'bg-color-success-opacity color-success'
-        ],
-        'pending' => [
-            'label' => 'Pending',
-            'class' => 'bg-color-warning-opacity color-warning'
-        ],
-        'banned' => [
-            'label' => 'Banned',
-            'class' => 'bg-color-danger-opacity color-danger'
-        ],
-        'suspended' => [
-            'label' => 'Suspended',
-            'class' => 'bg-color-danger-opacity color-danger'
-        ],
-        'rejected' => [
-            'label' => 'Rejected',
-            'class' => 'bg-color-secondary-opacity color-secondary'
-        ],
-        'deleted' => [
-            'label' => 'Deleted',
-            'class' => 'bg-color-secondary-opacity color-secondary'
-        ],
-    ];
+    public static array $STATUSES = ['active', 'pending', 'banned', 'suspended', 'rejected', 'deleted'];
 
     protected function casts(): array
     {

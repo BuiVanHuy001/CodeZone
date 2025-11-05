@@ -171,6 +171,7 @@ class CatalogService
     {
         $query = Course::query()
             ->where('status', 'pending')
+            ->orderBy('created_at', 'desc')
             ->with(['author', 'category']);
 
         return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForAdminList($course, 'pending'));

@@ -273,7 +273,7 @@ class CourseSeeder extends Seeder
         $instructors = User::where('role', 'instructor')->get();
 
         $courseStates = [
-            ['count' => 50, 'status' => 'published'],
+            ['count' => 100, 'status' => 'published'],
             ['count' => 20, 'status' => 'draft'],
             ['count' => 20, 'status' => 'pending'],
             ['count' => 30, 'status' => 'rejected'],

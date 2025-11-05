@@ -25,6 +25,7 @@ class CourseFactory extends Factory
             'review_count' => 0,
             'lesson_count' => 0,
             'duration' => random_int(10 * 3600, 25 * 3600),
+            'created_at' => fake()->dateTimeBetween('-1 year')
         ];
     }
 }

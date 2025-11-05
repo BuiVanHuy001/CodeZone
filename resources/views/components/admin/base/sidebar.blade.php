@@ -28,6 +28,7 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link menu-link"
+                       wire:current="active"
                        href="{{ route('admin.overview.index') }}"
                     >
                         <i class="ri-dashboard-2-line"></i>
@@ -37,6 +38,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link"
+                       wire:current="active"
                        href="{{ route('admin.courses.index') }}">
                         <i class="bx bxs-graduation"></i>
                         <span data-key="t-authentication">Courses</span>
@@ -44,18 +46,18 @@
                 </li>
 
                 <li class="nav-item">
-                    <a wire:navigate
-                       class="nav-link menu-link"
-                       href=""
+                    <a class="nav-link menu-link"
+                       wire:current="active"
+                       href="{{ route('admin.instructors.index') }}"
                     >
                         <i class="bx bxs-user-voice"></i>
                         <span data-key="t-authentication">Instructors</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a wire:navigate
-                       class="nav-link menu-link"
-                       href=""
+                    <a class="nav-link menu-link"
+                       wire:current="active"
+                       href="{{ route('admin.students.index') }}"
                     >
                         <i class="bx bxs-user-detail"></i>
                         <span data-key="t-students">Students</span>
@@ -72,7 +74,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a wire:navigate
+                    <a
+                        {{--                       wire:current="active"--}}
                        class="nav-link menu-link"
                        href=""
                     >
