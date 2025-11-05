@@ -128,6 +128,8 @@
 @push('scripts')
     <script src="{{ Vite::asset('resources/assets/admin/libs/apexcharts/apexcharts.min.js') }}"></script>
     <script>
+        let chartInstances = {};
+
         function getChartColorsArray(id) {
             const el = document.getElementById(id);
             if (!el) return null;
@@ -147,6 +149,12 @@
             const chartColors = getChartColorsArray(id);
             const element = document.querySelector(`#${id}`);
             if (!chartColors || !element) return;
+
+            // Destroy existing chart instance if it exists
+            if (chartInstances[id]) {
+                chartInstances[id].destroy();
+                delete chartInstances[id];
+            }
 
             const options = {
                 series: [{data: chartData.data}],
@@ -187,13 +195,21 @@
                 },
             };
 
-            new ApexCharts(element, options).render();
+            const chart = new ApexCharts(element, options);
+            chart.render();
+            chartInstances[id] = chart;
         }
 
         function initTreemapChart(id, chartData) {
             const chartColors = getChartColorsArray(id);
             const element = document.querySelector(`#${id}`);
             if (!chartColors || !element) return;
+
+            // Destroy existing chart instance if it exists
+            if (chartInstances[id]) {
+                chartInstances[id].destroy();
+                delete chartInstances[id];
+            }
 
             const seriesData = chartData.data.map((value, index) => ({
                 x: chartData.categories[index],
@@ -249,13 +265,21 @@
                 },
             };
 
-            new ApexCharts(element, options).render();
+            const chart = new ApexCharts(element, options);
+            chart.render();
+            chartInstances[id] = chart;
         }
 
         function initPlatformPerformanceChart(id, chartData) {
             const colors = getChartColorsArray(id);
             const element = document.querySelector(`#${id}`);
             if (!colors || !element) return;
+
+            // Destroy existing chart instance if it exists
+            if (chartInstances[id]) {
+                chartInstances[id].destroy();
+                delete chartInstances[id];
+            }
 
             const options = {
                 series: [
@@ -339,7 +363,9 @@
                 },
             };
 
-            new ApexCharts(element, options).render();
+            const chart = new ApexCharts(element, options);
+            chart.render();
+            chartInstances[id] = chart;
         }
 
         function initializeCharts() {
@@ -357,6 +383,16 @@
         // Reinitialize charts when navigating with Livewire
         document.addEventListener('livewire:navigated', function () {
             initializeCharts();
+        });
+
+        // Cleanup charts before navigating away
+        document.addEventListener('livewire:navigating', function () {
+            Object.keys(chartInstances).forEach(id => {
+                if (chartInstances[id]) {
+                    chartInstances[id].destroy();
+                    delete chartInstances[id];
+                }
+            });
         });
     </script>
 @endpush
