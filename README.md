@@ -1,6 +1,4 @@
-# 🎓 CodeZone - Online Programming Learning Platform
-
-<img src="https://hackatime-badge.hackclub.com/U098ESP1YH5/CodeZone" />
+# 🎓 CodeZone — Online Programming Learning Platform ![Hackatime Badge](https://hackatime-badge.hackclub.com/U098ESP1YH5/CodeZone)
 
 ## 🚀 Project Overview
 
@@ -22,47 +20,40 @@ management, interactive learning, and real-time engagement.
 ## 🛠️ Features
 
 ### 🎓 Course Management
-
 * Create courses with multiple modules and lessons.
 * Support for video lessons, text content, and coding assessments.
 
 ### 👨‍🏫 Instructor System
-
 * Dedicated instructor profiles with ratings, bio, and statistics.
 * Instructor earnings and analytics (revenue, student count, course rating).
 
 ### 💻 Learning Experience
 
-* Interactive lesson player with previous/next navigation.
-* Auto progress tracking and completion detection.
-* Integrated quizzes and coding assessments.
+* Integrated quiz engine with multiple question types (MCQ, coding).
+* Auto grading for programming exercises with sandbox execution.
+* Result tracking and pass/fail logic per user attempt.
 
 ### 💬 Community & Engagement
-
 * Nested comment system (up to 3 levels).
 * Reactions (like/dislike) for reviews and comments.
 * Real-time updates via Livewire.
 * Review and rating system per course/instructor.
 
 ### 🔍 Catalog & Filtering
-
 * Advanced filtering by category, instructor, price, and level.
 * Sorting by popularity, latest, rating, or price.
 * Search across titles, descriptions, and skills.
 
 ### 👤 User & Enrollment
-
 * Role-based access (Student / Instructor / Admin).
 * Secure authentication and enrollment management.
 * Student dashboard to track progress and completed courses.
 
-### 🧰 Admin Panel *(Planned Features)*
-
-> ⚠️ **Not yet implemented**
-
+### 🧰 Admin Panel
 * Admin dashboard (Vuexy template).
-* Manage users, courses, categories, and settings.
-* Review reports, monitor metrics, and course approval workflow.
+* Manage users, courses status.
+* Visualized data using ApexCharts.
+* Metrics: revenue, enrollments, course ratings, instructor performance.
 
 ---
 
@@ -86,7 +77,6 @@ management, interactive learning, and real-time engagement.
 | `spatie/laravel-markdown`      | Render Markdown for lessons          |
 | `james-heinrich/getid3`        | Media metadata analysis              |
 | `buivanhuy/sweetalert-laravel` | SweetAlert2 integration              |
-| `ext-curl`                     | PHP cURL extension for HTTP requests |
 
 ---
 
@@ -134,13 +124,21 @@ php artisan migrate
 # (Optional) Import sample data
 php artisan db:seed
 
-# Replace the public folder in storage/app with the one from Google Drive:
+# Copy the public folder from the linked Google Drive to storage/app/public:
 # https://drive.google.com/drive/folders/1goptWKpEjREzeQdbbpVFHoQiBXGrM9TH?usp=sharing
 
 # Start development servers
 php artisan serve & npm run dev
 ```
 ---
+
+### Test Accounts
+
+| Role       | Email / Username          | Password |
+|------------|---------------------------|----------|
+| Instructor | taylorotwell@codezone.com | password |
+| Student    | tu@example.com            | password |
+| Admin      | admin                     | password |
 
 ## 👨‍💻 Author
 
