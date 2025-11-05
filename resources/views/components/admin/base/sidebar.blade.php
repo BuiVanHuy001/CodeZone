@@ -1,6 +1,6 @@
 <div class="app-menu navbar-menu">
     <div class="navbar-brand-box">
-        <a href="{{ route('admin.overview.index') }}" class="logo logo-dark">
+        <a wire:navigate href="{{ route('admin.overview.index') }}" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="{{ asset('images/logo/logo-dark.png') }}" alt=""/>
             </span>
@@ -9,7 +9,7 @@
             </span>
         </a>
 
-        <a href="{{ route('admin.overview.index') }}" class="logo logo-light">
+        <a wire:navigate href="{{ route('admin.overview.index') }}" class="logo logo-light">
             <span class="logo-sm">
                 <img src="{{ asset('images/logo/logo-light.png') }}" alt=""/>
             </span>
@@ -28,6 +28,7 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link menu-link"
+                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.overview.index') }}"
                     >
@@ -38,6 +39,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link"
+                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.courses.index') }}">
                         <i class="bx bxs-graduation"></i>
@@ -47,6 +49,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link"
+                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.instructors.index') }}"
                     >
@@ -56,6 +59,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link"
+                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.students.index') }}"
                     >

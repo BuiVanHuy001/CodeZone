@@ -15,6 +15,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/images/favicon.ico') }}">
     @vite(['resources/css/admin/app.css', 'resources/js/admin/app.js'])
     @include('swal::index')
+    @livewireStyles
     @stack('styles')
 </head>
 <body>
@@ -65,6 +66,7 @@
         <i class="ri-arrow-up-line"></i>
     </button>
 </div>
+@livewireScripts
 @stack('scripts')
 <script src="{{ Vite::asset('resources/assets/admin/libs/simplebar/simplebar.min.js') }}"></script>
 <script>

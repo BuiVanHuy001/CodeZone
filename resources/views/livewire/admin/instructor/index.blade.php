@@ -186,10 +186,23 @@
     <script src="{{ Vite::asset('resources/assets/admin/libs/jszip/3.1.3/jszip.min.js') }}"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        let activeInstructorTableInstance = null;
+        let pendingInstructorTableInstance = null;
+
+        function initDataTables() {
+            // Destroy existing instances if they exist
+            if (activeInstructorTableInstance) {
+                activeInstructorTableInstance.destroy();
+                activeInstructorTableInstance = null;
+            }
+            if (pendingInstructorTableInstance) {
+                pendingInstructorTableInstance.destroy();
+                pendingInstructorTableInstance = null;
+            }
+
             var activeInstructorTable = $('#activeInstructorTable');
             if (activeInstructorTable.length) {
-                activeInstructorTable.DataTable({
+                activeInstructorTableInstance = activeInstructorTable.DataTable({
                     dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6 d-flex align-items-center"li><"col-sm-12 col-md-6"p>>',
                     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
                     pageLength: 10,
@@ -206,12 +219,11 @@
                         paginate: {previous: 'Prev', next: 'Next'}
                     },
                 });
-
             }
 
             var pendingInstructorTable = $('#pendingInstructorTable');
             if (pendingInstructorTable.length) {
-                pendingInstructorTable.DataTable({
+                pendingInstructorTableInstance = pendingInstructorTable.DataTable({
                     dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6 d-flex align-items-center"li><"col-sm-12 col-md-6"p>>',
                     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
                     pageLength: 10,
@@ -226,6 +238,27 @@
                         paginate: {previous: 'Prev', next: 'Next'}
                     },
                 });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            initDataTables();
+        });
+
+        // Reinitialize DataTables when navigating with Livewire
+        document.addEventListener('livewire:navigated', function () {
+            initDataTables();
+        });
+
+        // Cleanup DataTables before navigating away
+        document.addEventListener('livewire:navigating', function () {
+            if (activeInstructorTableInstance) {
+                activeInstructorTableInstance.destroy();
+                activeInstructorTableInstance = null;
+            }
+            if (pendingInstructorTableInstance) {
+                pendingInstructorTableInstance.destroy();
+                pendingInstructorTableInstance = null;
             }
         });
     </script>
