@@ -12,8 +12,7 @@ management, interactive learning, and real-time engagement.
 ## 🎨 UI Templates Used
 
 * **Client**: [HiStudy - Online Courses & Education Template](https://rainbowit.net/html/histudy/)
-* **Admin
-  **: [Vuexy - Admin Dashboard Template](https://demos.pixinvent.com/vuexy-html-admin-template/html/vertical-menu-template/)
+* **Admin**: [Vuexy - Admin Dashboard Template](https://demos.pixinvent.com/vuexy-html-admin-template/html/vertical-menu-template/)
 
 ---
 
