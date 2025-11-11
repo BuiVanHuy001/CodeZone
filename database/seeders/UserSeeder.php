@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
     {
         $users = User::factory(500)->create();
         foreach ($users as $user) {
+            $user->assignRole('student');
             $user->update([
                 'avatar' => 'https://avatar.iran.liara.run/public/' . random_int(1, 70),
             ]);
@@ -24,11 +25,11 @@ class UserSeeder extends Seeder
         }
 
         $approvedInstructors = User::factory(40)->create([
-            'role' => 'instructor',
             'status' => 'active',
         ]);
 
         foreach ($approvedInstructors as $user) {
+            $user->assignRole('instructor');
             $user->update([
                 'avatar' => 'https://static.generated.photos/vue-static/face-generator/landing/wall/' . random_int(1, 24) . '.jpg'
             ]);
@@ -46,11 +47,11 @@ class UserSeeder extends Seeder
         }
 
         $pendingInstructors = User::factory(20)->create([
-            'role' => 'instructor',
             'status' => 'pending',
         ]);
 
         foreach ($pendingInstructors as $user) {
+            $user->assignRole('instructor');
             $user->instructorProfile()->create();
         }
     }

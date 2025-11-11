@@ -96,27 +96,24 @@ class CodeRunnerService
         $callerCode = '';
 
         switch ($language) {
-            case 'python':
-                $callerCode = "solution = {$entrypoint['className']}()\n";
-                $callerCode .= "result = solution.{$entrypoint['methodName']}($inputVariables)\n";
-                $callerCode .= "import json\n";
-                $callerCode .= "print(json.dumps(result))\n";
-                break;
+        case 'python':
+            $callerCode = "solution = {$entrypoint['className']}()\n";
+            $callerCode .= "result = solution.{$entrypoint['methodName']}($inputVariables)\n";
+            $callerCode .= "import json\n";
+            $callerCode .= "print(json.dumps(result))\n";
+            break;
 
-            case 'js':
-                $callerCode = "const solution = new {$entrypoint['className']}();\n";
-                $callerCode .= "const result = solution.{$entrypoint['methodName']}($inputVariables);\n";
-                $callerCode .= "console.log(JSON.stringify(result));\n";
-                break;
+        case 'js':
+            $callerCode = "const solution = new {$entrypoint['className']}();\n";
+            $callerCode .= "const result = solution.{$entrypoint['methodName']}($inputVariables);\n";
+            $callerCode .= "console.log(JSON.stringify(result));\n";
+            break;
 
-            case 'php':
-                $callerCode = "\$solution = new {$entrypoint['className']}();\n";
-                $callerCode .= "\$result = \$solution->{$entrypoint['methodName']}($inputVariables);\n";
-                $callerCode .= "echo json_encode(\$result);\n";
-                break;
-
-            case 'java':
-                break;
+        case 'php':
+            $callerCode = "\$solution = new {$entrypoint['className']}();\n";
+            $callerCode .= "\$result = \$solution->{$entrypoint['methodName']}($inputVariables);\n";
+            $callerCode .= "echo json_encode(\$result);\n";
+            break;
         }
         return $callerCode;
     }
@@ -129,21 +126,18 @@ class CodeRunnerService
             $value = $input['value'];
 
             switch ($language) {
-                case 'php':
-                    $phpValue = eval('return ' . $value . ';');
-                    $inputCode .= '$' . $name . ' = ' . var_export($phpValue, true) . ";\n";
-                    break;
+            case 'php':
+                $phpValue = eval('return ' . $value . ';');
+                $inputCode .= '$' . $name . ' = ' . var_export($phpValue, true) . ";\n";
+                break;
 
-                case 'python':
-                    $inputCode .= $name . ' = ' . $value . "\n";
-                    break;
+            case 'python':
+                $inputCode .= $name . ' = ' . $value . "\n";
+                break;
 
-                case 'js':
-                    $inputCode .= 'const ' . $name . ' = ' . $value . ";\n";
-                    break;
-
-                case 'java':
-                    break;
+            case 'js':
+                $inputCode .= 'const ' . $name . ' = ' . $value . ";\n";
+                break;
             }
         }
         return $inputCode;
@@ -155,7 +149,20 @@ class CodeRunnerService
         $clean = [];
 
         foreach ($lines as $line) {
-            if (preg_match('#^(/private)?/var/folders/.*/user_script_.*\.(?:js|py|php):\d+#', $line)) {
+            $line = preg_replace(
+                '#(/private)?/var/folders/[^/]+/[^/]+/T/user_script_\d+\.php#',
+                '[user_script].php',
+                $line
+            );
+
+            $line = preg_replace(
+                '#/tmp/user_script_[^ \t\n\r):]+\.(?:js|py|php):\d+(?::\d+)?#',
+                '[user_script]',
+                $line
+            );
+
+            if (preg_match('/(Parse|Fatal) error:\s*(.*?)\s+in\s+[^\s]+\s+on\s+line\s+\d+/', $line, $matches)) {
+                $clean[] = trim($matches[1] . ' error: ' . $matches[2]);
                 continue;
             }
 
@@ -164,13 +171,9 @@ class CodeRunnerService
                 '([user_script])',
                 $line
             );
+
             $line = preg_replace(
-                '#(?:/private)?/var/folders/[^ \t\n\r)]+user_script_[^ \t\n\r):]+\.(?:js|py|php):\d+(?::\d+)?#',
-                '[user_script]',
-                $line
-            );
-            $line = preg_replace(
-                '#/tmp/user_script_[^ \t\n\r):]+\.(?:js|py|php):\d+(?::\d+)?#',
+                '#(?:/private)?/var/folders/[^ \t\n\r)]+user_script_[^ \t\n\r):]+\.(?:js|py|php)#',
                 '[user_script]',
                 $line
             );
@@ -209,10 +212,6 @@ class CodeRunnerService
             'php' => [
                 'extension' => '.php',
                 'command' => 'php '
-            ],
-            'java' => [
-                'extension' => '.java',
-                'command' => 'javac '
             ],
         ];
         return $languageMap[$language];

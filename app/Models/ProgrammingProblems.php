@@ -11,8 +11,6 @@ class ProgrammingProblems extends Model
     public static array $SUPPORTED_LANGUAGES = [
         'python' => 'Python',
         'js' => 'JavaScript',
-        'java' => 'Java',
-        'cpp' => 'C++',
         'php' => 'PHP',
     ];
 }

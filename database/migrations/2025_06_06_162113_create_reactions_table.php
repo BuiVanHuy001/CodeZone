@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('action', Reaction::$ACTIONS);
             $table->timestamps();
 
-            $table->foreignUuid(User::class)->constrained('users');
+            $table->foreignUuid('user_id')->constrained('users');
         });
     }
 

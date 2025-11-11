@@ -65,7 +65,7 @@ class AuthenticationService {
         ]);
 
         if (auth()->attempt($credentials)) {
-            if (auth()->user()->hasRole('admin')) {
+            if (auth()->user()->role() === 'admin') {
                 return redirect()->route('admin.overview.index')->with('swal', [
                     'title' => 'Login Successful',
                     'text' => 'Welcome back, Admin!',

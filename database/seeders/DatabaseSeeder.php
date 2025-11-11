@@ -5,10 +5,10 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use Throwable;
 
-class DatabaseSeeder extends Seeder
-{
+class DatabaseSeeder extends Seeder {
     /**
      * Seed the application's database.
      * @throws Throwable
@@ -20,24 +20,24 @@ class DatabaseSeeder extends Seeder
             $sql = file_get_contents(database_path('codezone.sql'));
             \DB::unprepared($sql);
             $this->call(PermissionSeeder::class);
-            //            $this->call(UserSeeder::class);
-            //            $this->call(CourseSeeder::class);
-            //            $this->call(EnrollmentSeeder::class);
-            //            $this->call(CommentSeeder::class);
-            //            $this->call(ReactionSeeder::class);
-            //
-            //            $instructors = User::where('role', 'instructor')->get();
-            //            foreach ($instructors as $instructor) {
-            //                $instructorProfile = $instructor->instructorProfile;
-            //
-            //                if ($instructorProfile) {
-            //                    $instructorProfile->student_count = $instructor->courses->sum('enrollment_count');
-            //                    $instructorProfile->course_count = $instructor->courses->where('status', 'published')->count();
-            //                    $instructorProfile->review_count = $instructor->reviews->count();
-            //                    $instructorProfile->rating = $instructor->reviews->avg('rating') ?? 0;
-            //                    $instructorProfile->save();
-            //                }
-            //            }
+            $this->call(UserSeeder::class);
+            $this->call(CourseSeeder::class);
+            $this->call(EnrollmentSeeder::class);
+            $this->call(CommentSeeder::class);
+            $this->call(ReactionSeeder::class);
+
+            $instructors = Role::findByName('instructor')->users()->with(['instructorProfile', 'courses', 'reviews'])->get();
+            foreach ($instructors as $instructor) {
+                $instructorProfile = $instructor->instructorProfile;
+
+                if ($instructorProfile) {
+                    $instructorProfile->student_count = $instructor->courses->sum('enrollment_count');
+                    $instructorProfile->course_count = $instructor->courses->where('status', 'published')->count();
+                    $instructorProfile->review_count = $instructor->reviews->count();
+                    $instructorProfile->rating = $instructor->reviews->avg('rating') ?? 0;
+                    $instructorProfile->save();
+                }
+            }
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

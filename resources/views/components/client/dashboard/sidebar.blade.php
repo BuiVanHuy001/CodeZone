@@ -25,9 +25,13 @@
                     @endforeach
                     <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                         <li>
-                            <a href="{{ route('client.logout') }}">
-                                <i class="feather-log-out"></i><span>Logout</span>
-                            </a>
+                            <form class="menu-logout-form" action="{{ route('client.logout') }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <a class="menu-logout-btn" href="#">
+                                    <i class="feather-log-out"></i><span>Logout</span>
+                                </a>
+                            </form>
                         </li>
                     </ul>
                 </nav>

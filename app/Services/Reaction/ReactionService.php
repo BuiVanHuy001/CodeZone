@@ -58,6 +58,7 @@ class ReactionService
                     'action' => $type,
                 ]);
             }
+            dd($reactionable->reactions);
 
             $this->updateReactionCounters($reactionable, $type, $oldType, $removed);
             DB::commit();

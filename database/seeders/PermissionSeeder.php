@@ -18,27 +18,22 @@ class PermissionSeeder extends Seeder {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissions = [
-            // Quản lý Khóa học (Courses)
             'view_course',
             'create_course',
             'update_course',
             'delete_course',
 
-            // Quản lý Đăng ký (Enrollments)
             'enroll_course',
             'manage_enrollments',
 
-            // Quản lý Người dùng (Users)
             'view_users',
             'create_user',
             'update_user',
             'delete_user',
 
-            // Quản lý Nội dung (Lessons)
             'manage_lessons',
             'view_lesson',
 
-            // Quản lý Nội bộ (Internal)
             'view_internal_courses'
         ];
 
