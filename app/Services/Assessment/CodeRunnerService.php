@@ -44,7 +44,7 @@ class CodeRunnerService
 
     public function saveProgrammingAttempt(Assessment $assessment, bool $is_passed, string $user_code, string $language): void
     {
-        if (auth()->user()->isStudent()) {
+        if (auth()->user()->hasRole('student')) {
             $assessmentAttempt = AssessmentAttempt::updateOrCreate(
                 [
                     'user_id' => auth()->id(),

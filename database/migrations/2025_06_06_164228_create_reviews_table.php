@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedTinyInteger('rating');
             $table->unsignedInteger('like_count')->default(0);
             $table->unsignedInteger('dislike_count')->default(0);
-
-	        $table->foreignIdFor(User::class)->constrained();
+            // Fixed: explicit user_id foreign key
+            $table->foreignUuid('user_id')->constrained('users');
             $table->timestamps();
         });
     }

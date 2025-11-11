@@ -19,7 +19,7 @@ class BannerTop extends Component
 	public function __construct()
 	{
         $this->user = auth()->user();
-        $this->role = $this->user->role;
+        $this->role = $this->user->role();
 
 		$roleSettings = [
 			'instructor' => [

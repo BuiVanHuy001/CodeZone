@@ -29,7 +29,7 @@ class CommentPolicy
      */
     public function create(User $user): Response
     {
-        return $user->status === 'active' && ($user->isStudent() || $user->isInstructor()) ?
+        return $user->status === 'active' && ($user->hasRole('student') || $user->hasRole('instructor')) ?
             Response::allow() :
             Response::deny('You are not allowed to create comments.');
     }
@@ -47,7 +47,7 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment): bool
     {
-        return $comment->user_id === $user->id || $user->isAdmin();
+        return $comment->user_id === $user->id || $user->hasRole('admin');
     }
 
     /**

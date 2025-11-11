@@ -36,7 +36,7 @@ class CommentDisplayService
             $comment->replyCountText = $this->formatCount($replyCount, 'reply');
         }
 
-        if ($comment->user->isInstructor()) {
+        if ($comment->user->hasRole('instructor')) {
             $comment->user = $this->instructorService->prepareBasicDetails($comment->user);
         } else {
             $comment->user = $this->studentService->prepareBasicDetails($comment->user);
@@ -56,7 +56,7 @@ class CommentDisplayService
             ->map(function ($reply) {
                 $reply->content = $this->highlightMentions($reply);
 
-                $reply->user = $reply->user->isInstructor()
+                $reply->user = $reply->user->hasRole('instructor')
                     ? app(InstructorService::class)->prepareBasicDetails($reply->user)
                     : app(StudentService::class)->prepareBasicDetails($reply->user);
 
@@ -81,7 +81,7 @@ class CommentDisplayService
                 'user' => $user,
                 'name' => $name,
                 'norm' => $this->normalizeUsername($name),
-                'url' => $user->isInstructor()
+                'url' => $user->hasRole('instructor')
                     ? route('instructor.details', $user->slug)
                     : route('student.details', $user->slug),
             ];

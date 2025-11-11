@@ -28,10 +28,8 @@ readonly class CourseService
 
     public function prepareDataForCourseDetails(string $slug): ?Course
     {
-        $isAdmin = auth()->user()?->isAdmin() === true;
-
         $query = Course::query()->where('slug', $slug);
-        if (!$isAdmin) {
+        if (!auth()->user()?->hasRole('admin')) {
             $query->where('status', 'published');
         }
 

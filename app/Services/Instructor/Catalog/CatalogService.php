@@ -41,7 +41,6 @@ class CatalogService
         $instructor->reviewCountText = $this->formatCount($profile->review_count, 'review');
         $instructor->currentJob = $profile->current_job;
         $instructor->aboutMe = $profile->about_me;
-        $instructor->avatar = $instructor->getAvatarPath();
         return $instructor;
     }
 

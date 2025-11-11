@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class StudentProfile extends Model {
+    protected $primaryKey = 'user_id';
+    public $incrementing = false;
+
     protected $fillable = [
         'gender',
         'dob',
@@ -12,20 +15,13 @@ class StudentProfile extends Model {
         'user_id',
     ];
 
-    protected $primaryKey = 'user_id';
-    public $incrementing = false;
-
     protected $casts = [
         'addition_data' => 'array',
         'dob' => 'date:d-m-Y',
     ];
 
-    public static array $DEFAULT_COLUMNS = [
-        'MAIL' => 'mail',
-        'FULL NAME' => 'full_name',
-        'DATE OF BIRTH' => 'date_of_birth',
-        'GENDER' => 'gender',
-        'AVATAR URL' => 'avatar_url',
-        'PASSWORD' => 'password'
+    public static array $STUDENT_TYPES = [
+        'internal' => 'Internal',
+        'external' => 'External',
     ];
 }

@@ -41,7 +41,7 @@ class SettingsBase extends Component
         $this->user = auth()->user();
         $this->profile = $this->user->getProfile;
         if (!$this->profile) {
-            if ($this->user->isInstructor()) {
+            if ($this->user->hasRole('instructor')) {
                 $this->profile = InstructorProfile::create(
                     ['user_id' => $this->user->id]
                 );

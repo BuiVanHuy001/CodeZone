@@ -36,7 +36,7 @@ class ReviewService
         if ($model instanceof Course) {
             $currentRating = $model->rating;
             $currentCount = $model->review_count;
-        } elseif ($model instanceof User && $model->isInstructor()) {
+        } elseif ($model instanceof User && $model->hasRole('instructor')) {
             $currentRating = $model->instructorProfile->rating;
             $currentCount = $model->instructorProfile->review_count;
         } else {

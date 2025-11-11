@@ -13,13 +13,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('instructor_profiles', static function (Blueprint $table) {
-            $table->foreignIdFor(User::class)->primary();
+            $table->uuid('user_id')->primary();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+
 	        $table->text('bio')->nullable();
 	        $table->text('about_me')->nullable();
             $table->string('current_job', 100)->nullable();
-
             $table->json('social_links')->nullable();
-
             $table->mediumInteger('course_count')
                 ->default(0)
                 ->comment('Number of courses created by the instructor and max 65535 courses');

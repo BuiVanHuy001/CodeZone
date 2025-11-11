@@ -10,7 +10,7 @@ class EnsureUserIsInstructor
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->check() || !auth()->user()->isInstructor()) {
+        if (!auth()->check() || !auth()->user()->hasRole('instructor')) {
             return redirect()->route('page.forbidden');
         }
         return $next($request);

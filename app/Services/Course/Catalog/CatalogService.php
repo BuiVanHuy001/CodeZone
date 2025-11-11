@@ -199,7 +199,7 @@ class CatalogService
         }
 
         $enrolledCourseIds = collect();
-        if (auth()->check() && auth()->user()->isStudent()) {
+        if (auth()->check() && auth()->user()->hasRole('student')) {
             $enrolledCourseIds = auth()->user()->enrollments()->pluck('course_id');
         }
 

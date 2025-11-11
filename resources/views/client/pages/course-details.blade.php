@@ -188,7 +188,7 @@
                                     </div>
                                 @endif
 
-                                @if(auth()->user()->isAdmin())
+                                @if(auth()->user()->hasRole('admin'))
                                     <div class="mt-3">
                                         <button class="rbt-btn btn-outline w-100 d-block text-center">
                                             <span class="btn-text">{{ $course->status }}</span>

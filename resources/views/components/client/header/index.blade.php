@@ -121,7 +121,7 @@
                                 </div>
                             </li>
 
-                            @if(auth()->user()->isStudent())
+                            @if(auth()->user()->hasRole('student'))
                                 <livewire:client.shared.cart/>
                             @endif
                         @endauth

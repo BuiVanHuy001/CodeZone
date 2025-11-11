@@ -79,7 +79,7 @@ class QuizService
 
     public function saveAttempt(array $results): void
     {
-        if (auth()->user()->isStudent()) {
+        if (auth()->user()->hasRole('student')) {
             AssessmentAttempt::create([
                 'assessment_id' => $this->quiz->id,
                 'user_id' => auth()->id(),

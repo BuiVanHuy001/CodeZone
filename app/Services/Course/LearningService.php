@@ -17,7 +17,7 @@ class LearningService
     {
         $user = auth()->user();
 
-        if ($user->isStudent()) {
+        if ($user->hasRole('student')) {
             return $this->getCurrentLessonForStudent($course, $user);
         }
 
@@ -138,7 +138,7 @@ class LearningService
     public function markLessonComplete(string $lessonId): void
     {
         $user = auth()->user();
-        if (!$user->isStudent()) return;
+        if (!$user->hasRole('student')) return;
 
         TrackingProgress::updateOrCreate(
             ['user_id' => $user->id, 'lesson_id' => $lessonId],

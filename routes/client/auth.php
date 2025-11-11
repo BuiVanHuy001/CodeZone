@@ -6,14 +6,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('login', [AuthenticationController::class, 'showLoginForm'])
     ->name('client.login');
+
 Route::post('login', [AuthenticationController::class, 'login'])
     ->name('login.post');
-Route::post('logout', [AuthenticationController::class, 'logout'])
+
+Route::get('logout', [AuthenticationController::class, 'logout'])
     ->name('client.logout');
+
 Route::get('register', [AuthenticationController::class, 'showRegistrationForm'])
     ->name('client.register');
+
 Route::post('register', [AuthenticationController::class, 'studentRegister'])
-    ->name('student.register.post');
+    ->name('student.register');
+
 Route::get('login-help', [AuthenticationController::class, 'showForgotPasswordForm'])
     ->name('client.forgot-password');
 

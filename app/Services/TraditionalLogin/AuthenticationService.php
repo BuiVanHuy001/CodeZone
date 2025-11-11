@@ -2,16 +2,15 @@
 
 namespace App\Services\TraditionalLogin;
 
+use App\Http\Requests\StudentRequest;
 use App\Mail\PasswordResetMail;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Random\RandomException;
 
-class AuthenticationService
-{
-    public function studentRegister($request): RedirectResponse
+class AuthenticationService {
+    public function studentRegister(StudentRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
 
@@ -21,7 +20,11 @@ class AuthenticationService
             'password' => bcrypt($validatedData['password'])
         ]);
 
+        $user->assignRole('student');
+
         auth()->login($user);
+        $request->session()->regenerate();
+
         return redirect()
             ->route('page.home')
             ->with('swal', [
@@ -34,6 +37,10 @@ class AuthenticationService
     public function logout(): RedirectResponse
     {
         auth()->logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
         return redirect()
             ->route('page.home')
             ->with('swal', [
@@ -58,7 +65,7 @@ class AuthenticationService
         ]);
 
         if (auth()->attempt($credentials)) {
-            if (auth()->user()->isAdmin()) {
+            if (auth()->user()->hasRole('admin')) {
                 return redirect()->route('admin.overview.index')->with('swal', [
                     'title' => 'Login Successful',
                     'text' => 'Welcome back, Admin!',
@@ -73,7 +80,8 @@ class AuthenticationService
             ]);
         }
 
-        return back()->withErrors(['email' => 'Your credential is incorrect.'])
+        return back()
+            ->withErrors(['email' => 'Your credential is incorrect.'])
             ->withInput();
     }
 

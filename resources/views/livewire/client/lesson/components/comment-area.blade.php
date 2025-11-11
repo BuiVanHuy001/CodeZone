@@ -27,7 +27,7 @@
                                     <div class="comment-body">
                                         <div class="single-comment d-flex">
                                             <div class="comment-img position-relative me-3">
-                                                @if($comment->user->isInstructor())
+                                                @if($comment->user->hasRole('instructor'))
                                                     <span class="position-absolute top-0 translate-middle">
                                                        <svg class="text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.78552 9.5 12.7855 14l9-4.5-9-4.5-8.99998 4.5Zm0 0V17m3-6v6.2222c0 .3483 2 1.7778 5.99998 1.7778 4 0 6-1.3738 6-1.7778V11"/>
@@ -104,7 +104,7 @@
                                                             <div class="comment-body">
                                                             <div class="single-comment d-flex">
                                                                 <div class="comment-img position-relative">
-                                                                    @if($reply->user->isInstructor())
+                                                                    @if($reply->user->hasRole('instructor'))
                                                                         <span class="position-absolute top-0 translate-middle">
                                                                        <svg class="text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.78552 9.5 12.7855 14l9-4.5-9-4.5-8.99998 4.5Zm0 0V17m3-6v6.2222c0 .3483 2 1.7778 5.99998 1.7778 4 0 6-1.3738 6-1.7778V11"/>

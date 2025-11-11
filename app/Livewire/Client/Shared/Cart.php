@@ -36,7 +36,7 @@ class Cart extends Component
     {
         $this->items = collect();
 
-        if (auth()->check() && auth()->user()->isStudent()) {
+        if (auth()->check() && auth()->user()->hasRole('student')) {
             $this->cart = $this->cartService->getCart(auth()->user());
             $this->totalPrice = $this->cartService->formatPrice($this->cart?->total_price ?? 0);
             $this->items = $this->decorateItems($this->cart);
@@ -50,7 +50,7 @@ class Cart extends Component
             return redirect()->route('client.login')->with('error', 'You need to log in to add courses to cart');
         }
 
-        if (!auth()->user()->isStudent()) {
+        if (!auth()->user()->hasRole('student')) {
             $this->swalError('Only students can add courses to cart');
             return null;
         }

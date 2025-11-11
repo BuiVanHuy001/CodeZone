@@ -81,7 +81,7 @@
                                                                             <span>General</span>
                                                                         </a>
                                                                     </li>
-                                                                    @if (auth()->user()->isInstructor())
+                                                                    @if (auth()->user()->hasRole('instructor'))
                                                                         <li class="nav-item w-100" role="presentation">
                                                                             <a href="#"
                                                                                id="price-tab"
@@ -143,7 +143,7 @@
                                                                     />
                                                                 </div>
 
-                                                                @if (auth()->user()->isInstructor())
+                                                                @if (auth()->user()->hasRole('instructor'))
                                                                     <div @class([
                                                                             'tab-pane fade advance-tab-content-1',
                                                                             'active show' => $activeCourseSettingTab === 'price',

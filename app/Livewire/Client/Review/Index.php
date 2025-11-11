@@ -34,7 +34,7 @@ class Index extends Component
     {
         $user = auth()->user();
 
-        if (!$user->isStudent()) {
+        if (!$user->hasRole('student')) {
             return false;
         }
 
@@ -43,7 +43,7 @@ class Index extends Component
 
         if ($modelType === 'App\Models\Course') {
             $hasEnrolled = $user->enrollments()->where('course_id', $this->model->id)->exists();
-        } elseif ($modelType === 'App\Models\User' && $this->model->isInstructor()) {
+        } elseif ($modelType === 'App\Models\User' && $this->model->hasRole('instructor')) {
             $hasEnrolled = $user->enrollments()
                 ->whereHas('course', function ($query) {
                     $query->where('user_id', $this->model->id);
