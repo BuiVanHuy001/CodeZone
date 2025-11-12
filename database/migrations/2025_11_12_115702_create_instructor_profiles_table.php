@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Major;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,9 +15,10 @@ return new class extends Migration
         Schema::create('instructor_profiles', static function (Blueprint $table) {
             $table->uuid('user_id')->primary();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignIdFor(Major::class)->nullable()->constrained();
 
-	        $table->text('bio')->nullable();
-	        $table->text('about_me')->nullable();
+            $table->text('bio')->nullable();
+            $table->text('about_me')->nullable();
             $table->string('current_job', 100)->nullable();
             $table->json('social_links')->nullable();
             $table->mediumInteger('course_count')

@@ -55,6 +55,11 @@ class Course extends Model
         );
     }
 
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class, 'course_id');
+    }
+
     public function category(): belongsTo
     {
         return $this->belongsTo(Category::class);

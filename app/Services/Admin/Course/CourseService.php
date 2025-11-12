@@ -65,6 +65,18 @@ readonly class CourseService
         }
     }
 
+    public function restoreCourse(string|int $courseId): bool
+    {
+        $course = Course::find($courseId);
+        if ($course) {
+            $course->update([
+                'status' => 'pending_approval',
+            ]);
+            return true;
+        }
+        return false;
+    }
+
     public function deleteCourseAssets(Course $course): void
     {
         if ($course->thumbnail_url) {

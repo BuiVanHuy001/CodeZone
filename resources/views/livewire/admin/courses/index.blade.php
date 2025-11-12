@@ -1,5 +1,5 @@
 <div class="row">
-    <div wire:loading wire:target="approveCourse, rejectCourse, suspendCourse">
+    <div wire:loading wire:target="approve, reject, suspend">
         <x-client.share-ui.loading-effect/>
     </div>
     <div class="col-lg-12">
@@ -8,7 +8,7 @@
                 <h5 class="card-title mb-0">Active Courses</h5>
             </div>
             <div class="card-body">
-                <div wire:ignore.self>
+                <div>
                     <table id="activeCourseTable" class="table nowrap align-middle" style="width:100%">
                         <thead>
                         <tr>
@@ -36,7 +36,7 @@
                                 <td>
                                     <div class="d-flex align-items-center fw-medium">
                                         <a href="{{ $course->authorInfo['profileUrl'] }}" class="currency_name">
-                                            <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" class="rounded-circle avatar-xxs me-2">
+                                            <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" loading="lazy" class="rounded-circle avatar-xxs me-2">
                                             {{ $course->authorInfo['name'] }}
                                         </a>
                                     </div>
@@ -59,7 +59,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <button wire:click="suspend('{{ $course->id }}')" class="dropdown-item text-warning">
+                                                <button onclick="showSuspendedConfirm('{{ $course->id }}')" class="dropdown-item text-warning">
                                                     <i class="ri-pause-circle-line align-bottom me-2"></i> Suspend
                                                 </button>
                                             </li>
@@ -81,7 +81,7 @@
                 <h5 class="card-title mb-0">Pending Courses</h5>
             </div>
             <div class="card-body">
-                <div wire:ignore.self>
+                <div>
                     <table id="pendingCourseTable" class="table align-middle" style="width:100%">
                         <thead>
                         <tr>
@@ -106,7 +106,7 @@
                                 <td>
                                     <div class="d-flex align-items-center fw-medium">
                                         <a href="{{ $course->authorInfo['profileUrl'] }}" class="currency_name">
-                                            <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" class="rounded-circle avatar-xxs me-2">
+                                            <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" loading="lazy" class="rounded-circle avatar-xxs me-2">
                                             {{ $course->authorInfo['name'] }}
                                         </a>
                                     </div>
@@ -120,12 +120,12 @@
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li>
-                                                <button wire:click="approve('{{ $course->id }}')" class="btn btn-xl dropdown-item text-success">
+                                                <button onclick="showApprovedConfirm('{{ $course->id }}')" class="btn btn-xl dropdown-item text-success">
                                                     <i class="ri-checkbox-circle-line align-bottom me-2 text-success"></i>Approve
                                                 </button>
                                             </li>
                                             <li>
-                                                <button wire:click="reject('{{ $course->id }}')" class="btn btn-xl dropdown-item text-danger">
+                                                <button onlick="showRejectedConfirm('{{ $course->id }}')" class="btn btn-xl dropdown-item text-danger">
                                                     <i class="ri-close-circle-fill align-bottom me-2"></i>Reject
                                                 </button>
                                             </li>
@@ -147,7 +147,7 @@
                 <h5 class="card-title mb-0">Suspended Courses</h5>
             </div>
             <div class="card-body">
-                <div wire:ignore.self>
+                <div>
                     <table id="suspendedCourseTable" class="table align-middle" style="width:100%">
                         <thead>
                         <tr>
@@ -172,7 +172,7 @@
                                 <td>
                                     <div class="d-flex align-items-center fw-medium">
                                         <a href="{{ $course->authorInfo['profileUrl'] }}" class="currency_name">
-                                            <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" class="rounded-circle avatar-xxs me-2">
+                                            <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" loading="lazy" class="rounded-circle avatar-xxs me-2">
                                             {{ $course->authorInfo['name'] }}
                                         </a>
                                     </div>
@@ -186,7 +186,7 @@
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
                                             <li>
-                                                <button wire:click="approveCourse('{{ $course->id }}')" class="btn btn-xl dropdown-item text-success">
+                                                <button onclick="showRestoredConfirm('{{ $course->id }}')" class="btn btn-xl dropdown-item text-success">
                                                     <i class="ri-checkbox-circle-line align-bottom me-2"></i> Re-Active
                                                 </button>
                                             </li>
@@ -303,27 +303,78 @@
                             opts: {
                                 scrollY: 500
                             }
+                        },
+                        {
+                            selector: '#suspendedCourseTable',
+                            opts: {
+                                scrollY: 500
+                            }
                         }
                     ];
 
                     tableDefinitions.forEach(({selector, opts}) => initTable(selector, opts));
                 }, 100);
             }
-
             document.addEventListener('DOMContentLoaded', initializeDataTables);
+
             document.addEventListener('livewire:navigated', initializeDataTables);
 
-            document.addEventListener('livewire:initialized', function () {
-                window.Livewire.on('course-change', () => {
-                    setTimeout(initializeDataTables, 200);
+            document.addEventListener('livewire:initialized', () => {
+                Livewire.on('course-change', () => {
+                    console.log('Course changed, reinitializing tables...');
+                    initializeDataTables();
                 });
-
-                window.Livewire.hook('morph.updated', () => {
-                    setTimeout(initializeDataTables, 200);
-                });
-
-
             });
         })();
+    </script>
+
+    <script>
+        function showSuspendedConfirm(courseId) {
+            swalConfirm(
+                'Are you sure?',
+                'You are about to suspend this course.',
+                () => {
+                    @this.
+                    suspend(courseId);
+                },
+                'Yes, suspend it!'
+            );
+        }
+
+        function showApprovedConfirm(courseId) {
+            swalConfirm(
+                'Are you sure?',
+                'This action will approve and publish the course.',
+                () => {
+                    @this.
+                    approveCourse(courseId);
+                },
+                'Yes, approve it!'
+            );
+        }
+
+        function showRejectedConfirm(courseId) {
+            swalConfirm(
+                'Are you sure?',
+                'This action will reject the course submission.',
+                () => {
+                    @this.
+                    rejectCourse(courseId);
+                },
+                'Yes, reject it!'
+            );
+        }
+
+        function showRestoredConfirm(courseId) {
+            swalConfirm(
+                'Are you sure?',
+                'You are about to re-activate this course.',
+                () => {
+                    @this.
+                    restore(courseId);
+                },
+                'Yes, re-activate it!'
+            );
+        }
     </script>
 @endpush

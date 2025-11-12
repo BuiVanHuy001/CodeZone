@@ -14,6 +14,7 @@ return new class extends Migration {
         Schema::create('majors', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->string('code')->unique();
             $table->foreignIdFor(Faculty::class)->constrained('faculties')->cascadeOnDelete();
             $table->timestamps();

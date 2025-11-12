@@ -31,9 +31,10 @@ class UserSeeder extends Seeder
         foreach ($approvedInstructors as $user) {
             $user->assignRole('instructor');
             $user->update([
-                'avatar' => 'https://static.generated.photos/vue-static/face-generator/landing/wall/' . random_int(1, 24) . '.jpg'
+                'avatar' => 'https://static.generated.photos/vue-static/face-generator/landing/wall/' . random_int(1, 24) . '.jpg',
             ]);
             $user->instructorProfile()->create([
+                'major_id' => random_int(1, 17),
                 'bio' => fake()->paragraph(),
                 'about_me' => fake()->paragraphs(3, true),
                 'current_job' => fake()->jobTitle(),

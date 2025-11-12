@@ -138,7 +138,7 @@ INSERT INTO codezone.faculties (name, code, created_at, updated_at)
 VALUES ('KHOA QUẢN TRỊ', 'QT', NOW(), NOW()),
        ('KHOA NGÔN NGỮ', 'NN', NOW(), NOW()),
        ('KHOA SỨC KHOẺ', 'SK', NOW(), NOW()),
-       ('KHOA CÔNG NGHỆ', 'CN', NOW(), NOW()),
+       ('KHOA CÔNG NGHỆ', 'CNTT', NOW(), NOW()),
        ('KHOA THIẾT KẾ', 'TK', NOW(), NOW());
 
 INSERT INTO codezone.majors (name, code, faculty_id, created_at, updated_at)

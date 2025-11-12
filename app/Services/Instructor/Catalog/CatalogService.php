@@ -8,9 +8,9 @@ use App\Services\Course\CourseService;
 use App\Support\UserStatusMapping;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
+use Spatie\Permission\Models\Role;
 
-class CatalogService
-{
+class CatalogService {
     use HasNumberFormat;
 
     public function getDetails(User $instructor): User
@@ -68,10 +68,15 @@ class CatalogService
 
     public function getDetailsForAdminList(string $status): Collection
     {
-        $instructors = User::where('role', 'instructor')
-            ->where('status', $status)
-            ->with('instructorProfile')
-            ->get();
+        $instructors = Role::findByName('instructor')->users()->with([
+            'instructorProfile',
+            'instructorProfile.major',
+            'instructorProfile.major.faculty',
+            'courses',
+            'courses.orderItems',
+            'reviews'
+        ])->where('status', $status)
+                           ->get();
 
         return $instructors->map(function (User $instructor) {
             return $this->prepareDetailsForAdminList($instructor);
@@ -80,12 +85,18 @@ class CatalogService
 
     private function prepareDetailsForAdminList(User $instructor): User
     {
-        $publishedCourses = app(\App\Services\Course\Catalog\CatalogService::class)->getCoursesByAuthor($instructor);
+        $publishedCourses = $instructor->courses;
+        $profile = $instructor->instructorProfile;
         $this->prepareBasicDetails($instructor);
         $instructor->totalEarningsText = $this->calculateTotalEarnings($publishedCourses);
         $instructor->joinedDateText = $instructor->created_at->diffForHumans();
-        $instructor->status = UserStatusMapping::$STATUSES[$instructor->status];
-        $profile = $instructor->instructorProfile;
+        if ($profile && $profile->major) {
+            $majorName = $profile->major->name ?? 'N/A';
+            $facultyCode = $profile->major->faculty->code ?? ($profile->faculty->code ?? 'N/A');
+            $instructor->majorText = $majorName . ' (' . $facultyCode . ')';
+        } else {
+            $instructor->majorText = 'N/A';
+        }
         if ($profile) {
             $instructor->studentCountText = $this->formatCount($profile->student_count, 'student');
             $instructor->courseCountText = $this->formatCount($profile->course_count, 'course');
@@ -96,13 +107,13 @@ class CatalogService
 
     private function calculateTotalEarnings(Collection $publishedCourses): string
     {
-        $courseIds = $publishedCourses->pluck('id');
+        $publishedCourses->load('orderItems');
 
-        if ($courseIds->isEmpty()) {
-            return '0';
-        }
-
-        $totalEarnings = OrderItem::whereIn('course_id', $courseIds)->sum('current_price');
+        $totalEarnings = $publishedCourses
+            ->flatMap(function ($course) {
+                return $course->orderItems ?? collect();
+            })
+            ->sum('current_price');
 
         return $this->formatCurrency($totalEarnings);
     }

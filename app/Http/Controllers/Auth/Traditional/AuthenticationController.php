@@ -28,8 +28,14 @@ class AuthenticationController
         return $this->authService->login();
     }
 
-    public function showLoginForm(?string $userEmail = null): Factory|Application|View
+    public function showLoginForm(?string $userEmail = null): Factory|View|Application|\Illuminate\View\View|RedirectResponse
     {
+        if (auth()->check()) {
+            return redirect()->route('page.home')->with('swal', [
+                'icon' => 'info',
+                'title' => 'You are already logged in!',
+            ]);
+        }
         return view('client.auth.login', ['email' => $userEmail]);
     }
 

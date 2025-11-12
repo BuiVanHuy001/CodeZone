@@ -65,19 +65,31 @@ class AuthenticationService {
         ]);
 
         if (auth()->attempt($credentials)) {
-            if (auth()->user()->role() === 'admin') {
-                return redirect()->route('admin.overview.index')->with('swal', [
+            $user = auth()->user();
+            if ($user->status === 'active') {
+                if ($user->hasRole('admin')) {
+                    return redirect()->route('admin.overview.index')->with('swal', [
+                        'title' => 'Login Successful',
+                        'text' => 'Welcome back, Admin!',
+                        'icon' => 'success',
+                    ]);
+                }
+
+                return redirect()->intended()->with('swal', [
                     'title' => 'Login Successful',
-                    'text' => 'Welcome back, Admin!',
+                    'text' => 'Welcome back!',
                     'icon' => 'success',
                 ]);
             }
-
-            return redirect()->intended()->with('swal', [
-                'title' => 'Login Successful',
-                'text' => 'Welcome back!',
-                'icon' => 'success',
-            ]);
+            auth()->logout();
+            return back()
+                ->with('swal', [
+                    'title' => 'Account Inactive',
+                    'text' => 'Your account is not active. Please contact support.',
+                    'icon' => 'error',
+                ])
+                ->withErrors(['email' => 'Your account is not active. Please contact support.'])
+                ->withInput();
         }
 
         return back()

@@ -2,9 +2,14 @@ import "../bootstrap";
 
 import "../../assets/admin/libs/bootstrap/js/bootstrap.bundle.min.js";
 import "../../assets/admin/libs/feather-icons/feather.min.js";
-import "../../assets/admin/js/pages/plugins/lord-icon-2.1.0.js";
+import {swalSuccess, swalError, swalConfirm} from "../../assets/admin/js/pages/sweetalerts.utils.js";
 
 import "../../assets/admin/js/app.js";
+
+
+window.swalSuccess = swalSuccess;
+window.swalError = swalError;
+window.swalConfirm = swalConfirm;
 
 window.getChartColorsArray = function (id) {
     const el = document.getElementById(id);
