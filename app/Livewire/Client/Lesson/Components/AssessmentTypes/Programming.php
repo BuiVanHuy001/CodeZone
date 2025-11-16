@@ -3,8 +3,8 @@
 namespace App\Livewire\Client\Lesson\Components\AssessmentTypes;
 
 use App\Models\AssessmentAttempt;
-use App\Services\Assessment\CodeRunnerService;
-use App\Services\Course\LearningService;
+use App\Services\Client\Assessment\CodeRunnerService;
+use App\Services\Client\Course\LearningService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;

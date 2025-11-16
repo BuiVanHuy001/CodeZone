@@ -3,8 +3,8 @@
 namespace App\Livewire\Client\Shared;
 
 use App\Models\Order;
-use App\Services\Cart\CartService;
-use App\Services\Course\Catalog\CourseDecorator;
+use App\Services\Client\Cart\CartService;
+use App\Services\Client\Course\Catalog\CourseDecorator;
 use App\Traits\WithSwal;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

@@ -129,7 +129,7 @@
                         @guest
                             <li class="access-icon rbt-user-wrapper right-align-dropdown gap-2">
                                 <a class="rbt-btn btn-sm btn-border" href="{{ route('client.login') }}">Login</a>
-                                <a class="rbt-btn btn-sm" href="{{ route('client.register') }}">Register</a>
+                                <a class="rbt-btn btn-sm" href="{{ route('student.register') }}">Register</a>
                             </li>
                         @endguest
 

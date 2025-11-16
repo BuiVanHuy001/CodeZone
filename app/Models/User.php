@@ -36,7 +36,10 @@ class User extends Authenticatable
         'dob',
         'addition_data',
         'avatar',
-        'status'
+        'status',
+        'headline',
+        'bio',
+        'major_id'
     ];
 
     protected $hidden = ['password', 'remember_token',];

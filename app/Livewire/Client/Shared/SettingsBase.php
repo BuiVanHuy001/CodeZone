@@ -4,7 +4,7 @@ namespace App\Livewire\Client\Shared;
 
 use App\Models\InstructorProfile;
 use App\Models\StudentProfile;
-use App\Services\TraditionalLogin\AuthenticationService;
+use App\Services\Client\TraditionalLogin\AuthenticationService;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Attributes\Title;
 use Livewire\Component;

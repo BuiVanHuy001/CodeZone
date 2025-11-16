@@ -5,13 +5,11 @@ namespace App\Livewire\Admin\Courses;
 use App\Services\Admin\Course\CourseService;
 use App\Traits\WithSwal;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Title('Courses')]
-class Index extends Component
-{
+class Index extends Component {
     use WithSwal;
 
     private CourseService $adminCourseService;
@@ -26,17 +24,18 @@ class Index extends Component
 
     public function suspend(string $courseId): void
     {
+        $this->loadData();
         if ($this->adminCourseService->suspendCourse($courseId)) {
-            $this->dispatch('course-change');
+            $this->swal('The course has been suspended successfully.');
         } else {
-            Log::info('Failed to suspend course', ['course_id' => $courseId]);
+            $this->swalError('An error occurred while suspending the course.');
         }
     }
 
     public function approve(string|int $courseId): void
     {
+        $this->loadData();
         if ($this->adminCourseService->approveCourse($courseId)) {
-            $this->dispatch('course-change');
             $this->swal('The course has been approved and published.');
         } else {
             $this->swalError('An error occurred while approving the course.');
@@ -45,8 +44,8 @@ class Index extends Component
 
     public function reject(string|int $courseId): void
     {
+        $this->loadData();
         if ($this->adminCourseService->rejectCourse($courseId)) {
-            $this->dispatch('course-change');
             $this->swal('The course has been rejected.');
         } else {
             $this->swalError('An error occurred while rejecting the course.');
@@ -55,11 +54,18 @@ class Index extends Component
 
     public function restore(string|int $courseId): void
     {
+        $this->loadData();
         if ($this->adminCourseService->restoreCourse($courseId)) {
-            $this->dispatch('swalSuccess', '');
+            $this->swal('The course has been restored successfully.');
         } else {
             $this->swalError('An error occurred while restoring the course.');
         }
+    }
+
+    private function loadData(): void
+    {
+        $this->courses = $this->adminCourseService->prepareDataForCourseList();
+        $this->dispatch('course-change');
     }
 
     public function render(): View

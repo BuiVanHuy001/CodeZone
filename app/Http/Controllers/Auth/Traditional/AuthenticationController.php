@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth\Traditional;
 
 use App\Http\Requests\StudentRequest;
-use App\Services\TraditionalLogin\AuthenticationService;
+use App\Services\Client\TraditionalLogin\AuthenticationService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;

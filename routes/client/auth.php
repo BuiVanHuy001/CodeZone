@@ -8,13 +8,13 @@ Route::get('login', [AuthenticationController::class, 'showLoginForm'])
     ->name('client.login');
 
 Route::post('login', [AuthenticationController::class, 'login'])
-    ->name('login.post');
+    ->name('auth.login');
 
 Route::delete('logout', [AuthenticationController::class, 'logout'])
-    ->name('client.logout');
+    ->name('auth.logout');
 
 Route::get('register', [AuthenticationController::class, 'showRegistrationForm'])
-    ->name('client.register');
+    ->name('student.register');
 
 Route::post('register', [AuthenticationController::class, 'studentRegister'])
     ->name('student.register');

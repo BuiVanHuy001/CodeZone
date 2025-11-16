@@ -131,7 +131,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <form action="{{ route('client.logout') }}" method="POST">
+                    <form action="{{ route('auth.logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="nav-link menu-link">
                             <i class="bx bx-log-out"></i>

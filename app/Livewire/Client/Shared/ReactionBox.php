@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Client\Shared;
 
-use App\Services\Reaction\ReactionService;
+use App\Services\Client\Reaction\ReactionService;
 use App\Traits\HasNumberFormat;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;

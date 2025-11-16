@@ -3,7 +3,7 @@
 namespace App\Livewire\Client\CourseCreation;
 
 use App\Models\Course;
-use App\Services\Course\CourseService;
+use App\Services\Client\Course\CourseService;
 use App\Validator\CourseInfoValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -18,7 +18,6 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
-use Throwable;
 
 #[Title('Create New Course')]
 class Index extends Component

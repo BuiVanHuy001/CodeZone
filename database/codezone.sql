@@ -134,89 +134,99 @@ When I’m not creating new features for Laravel, I enjoy sharing knowledge with
     "linkedin": null
 }', 3, 0, 0.00, 0, '2025-08-09 15:10:24', '2025-09-25 11:32:00');
 
-INSERT INTO codezone.faculties (name, code, created_at, updated_at)
-VALUES ('KHOA QUẢN TRỊ', 'QT', NOW(), NOW()),
-       ('KHOA NGÔN NGỮ', 'NN', NOW(), NOW()),
-       ('KHOA SỨC KHOẺ', 'SK', NOW(), NOW()),
-       ('KHOA CÔNG NGHỆ', 'CNTT', NOW(), NOW()),
-       ('KHOA THIẾT KẾ', 'TK', NOW(), NOW());
+INSERT INTO codezone.faculties (name, code, created_at, updated_at, slug)
+VALUES ('KHOA QUẢN TRỊ', 'QT', NOW(), NOW(), 'khoa-quan-tri'),
+       ('KHOA NGÔN NGỮ', 'NN', NOW(), NOW(), 'khoa-ngon-ngu'),
+       ('KHOA SỨC KHOẺ', 'SK', NOW(), NOW(), 'khoa-suc-khoe'),
+       ('KHOA CÔNG NGHỆ', 'CNTT', NOW(), NOW(), 'khoa-cong-nghe'),
+       ('KHOA THIẾT KẾ', 'TK', NOW(), NOW(), 'khoa-thiet-ke');
 
-INSERT INTO codezone.majors (name, code, faculty_id, created_at, updated_at)
-VALUES ('Quan hệ công chúng', 'QHCC', 1, NOW(), NOW()),
-       ('Quản trị Dịch vụ Du lịch và Lữ hành', 'DLH', 1, NOW(), NOW()),
-       ('Quản trị Khách sạn', 'QTKS', 1, NOW(), NOW()),
-       ('Quản trị Bán hàng', 'QTBH', 1, NOW(), NOW()),
-       ('Marketing thương mại', 'MRTM', 1, NOW(), NOW()),
+INSERT INTO codezone.majors (name, code, faculty_id, created_at, updated_at, slug)
+VALUES ('Quan hệ công chúng', 'QHCC', 1, NOW(), NOW(), 'quan-he-cong-chung'),
+       ('Quản trị Dịch vụ Du lịch và Lữ hành', 'DLH', 1, NOW(), NOW(), 'quan-tri-dich-vu-du-lich-va-lu-hanh'),
+       ('Quản trị Khách sạn', 'QTKS', 1, NOW(), NOW(), 'quan-tri-khach-san'),
+       ('Quản trị Bán hàng', 'QTBH', 1, NOW(), NOW(), 'quan-tri-ban-hang'),
+       ('Marketing thương mại', 'MRTM', 1, NOW(), NOW(), 'marketing-thuong-mai'),
 
-       ('Tiếng Trung Quốc', 'TQ', 2, NOW(), NOW()),
-       ('TIẾNG HÀN QUỐC', 'HQ', 2, NOW(), NOW()),
-       ('Phiên dịch tiếng Nhật kinh tế thương mại', 'TN', 2, NOW(), NOW()),
-       ('Phiên dịch Tiếng Anh Thương mại', 'TA', 2, NOW(), NOW()),
+       ('Tiếng Trung Quốc', 'TQ', 2, NOW(), NOW(), 'tieng-trung-quoc'),
+       ('TIẾNG HÀN QUỐC', 'HQ', 2, NOW(), NOW(), 'tieng-han-quoc'),
+       ('Phiên dịch tiếng Nhật kinh tế thương mại', 'TN', 2, NOW(), NOW(), 'phien-dien-tieng-nhat-kinh-te-thuong-mai'),
+       ('Phiên dịch Tiếng Anh Thương mại', 'TA', 2, NOW(), NOW(), 'phien-dich-tieng-anh-thuong-mai'),
 
-       ('Dược', 'DUOC', 3, NOW(), NOW()),
-       ('Điều dưỡng', 'DD', 3, NOW(), NOW()),
+       ('Dược', 'DUOC', 3, NOW(), NOW(), 'duoc'),
+       ('Điều dưỡng', 'DD', 3, NOW(), NOW(), 'dieu-duong'),
 
-       ('Công nghệ Kỹ thuật Ô tô', 'OTO', 4, NOW(), NOW()),
-       ('Ứng dụng phần mền', 'UDPM', 4, NOW(), NOW()),
-       ('Thiết kế Website', 'TKW', 4, NOW(), NOW()),
+       ('Công nghệ Kỹ thuật Ô tô', 'OTO', 4, NOW(), NOW(), 'cong-nghe-ky-thuat-oto'),
+       ('Ứng dụng phần mền', 'UDPM', 4, NOW(), NOW(), 'ung-dung-phan-men'),
+       ('Thiết kế Website', 'TKW', 4, NOW(), NOW(), 'thiet-ke-website'),
 
-       ('Thiết kế Đồ họa', 'TKDH', 5, NOW(), NOW()),
-       ('Thiết kế Nội thất', 'TKNT', 5, NOW(), NOW()),
-       ('Thiết kế thời trang', 'TKTT', 5, NOW(), NOW());
-INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at)
+       ('Thiết kế Đồ họa', 'TKDH', 5, NOW(), NOW(), 'thiet-ke-do-hoa'),
+       ('Thiết kế Nội thất', 'TKNT', 5, NOW(), NOW(), 'thiet-ke-noi-that'),
+       ('Thiết kế thời trang', 'TKTT', 5, NOW(), NOW(), 'thiet-ke-thoi-trang');
+INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at, slug)
 VALUES ('Lớp Quan hệ công chúng K23 Gò Vấp', '523QHCC01G', (SELECT id FROM codezone.majors WHERE code = 'QHCC'), NOW(),
-        NOW()),
+        NOW(), 'lop-quan-he-cong-chung-k23-go-vap'),
        ('Lớp Quan hệ công chúng K24 Trung Sơn', '524QHCC01T', (SELECT id FROM codezone.majors WHERE code = 'QHCC'),
-        NOW(), NOW()),
+        NOW(), NOW(), 'lop-quan-he-cong-chung-k24-trung-son'),
        ('Lớp Du lịch lữ hành K23 Gò Vấp', '523DLH01G', (SELECT id FROM codezone.majors WHERE code = 'DLH'), NOW(),
-        NOW()),
+        NOW(), 'lop-du-lich-lu-hanh-k23-go-vap'),
        ('Lớp Quản trị Khách sạn K23 Trung Sơn', '523QTKS01T', (SELECT id FROM codezone.majors WHERE code = 'QTKS'),
-        NOW(), NOW()),
+        NOW(), NOW(), 'lop-quan-tri-khach-san-k23-trung-son'),
        ('Lớp Quản trị Khách sạn K24 Gò Vấp', '524QTKS01G', (SELECT id FROM codezone.majors WHERE code = 'QTKS'), NOW(),
-        NOW()),
+        NOW(), 'lop-quan-tri-khach-san-k24-go-vap'),
        ('Lớp Quản trị Bán hàng K23 Gò Vấp', '523QTBH01G', (SELECT id FROM codezone.majors WHERE code = 'QTBH'), NOW(),
-        NOW()),
+        NOW(), 'lop-quan-tri-ban-hang-k23-go-vap'),
        ('Lớp Marketing thương mại K24', '524MRTM01G', (SELECT id FROM codezone.majors WHERE code = 'MRTM'), NOW(),
-        NOW());
-INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at)
-VALUES ('Lớp Tiếng Trung K23 Gò Vấp', '523TQ01G', (SELECT id FROM codezone.majors WHERE code = 'TQ'), NOW(), NOW()),
-       ('Lớp Tiếng Hàn K23 Trung Sơn', '523HQ01T', (SELECT id FROM codezone.majors WHERE code = 'HQ'), NOW(), NOW()),
-       ('Lớp Tiếng Nhật K24 Gò Vấp', '524TN01G', (SELECT id FROM codezone.majors WHERE code = 'TN'), NOW(), NOW()),
+        NOW(), 'lop-marketing-thuong-mai-k24');
+INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at, slug)
+VALUES ('Lớp Tiếng Trung K23 Gò Vấp', '523TQ01G', (SELECT id FROM codezone.majors WHERE code = 'TQ'), NOW(), NOW(),
+        'lop-tieng-trung-k23-go-vap'),
+       ('Lớp Tiếng Hàn K23 Trung Sơn', '523HQ01T', (SELECT id FROM codezone.majors WHERE code = 'HQ'), NOW(), NOW(),
+        'lop-tieng-han-k23-trung-son'),
+       ('Lớp Tiếng Nhật K24 Gò Vấp', '524TN01G', (SELECT id FROM codezone.majors WHERE code = 'TN'), NOW(), NOW(),
+        'lop-tieng-nhat-k24-go-vap'),
        ('Lớp Tiếng Anh Thương mại K23 Gò Vấp', '523TA01G', (SELECT id FROM codezone.majors WHERE code = 'TA'), NOW(),
-        NOW()),
+        NOW(), 'lop-tieng-anh-thuong-mai-k23-go-vap'),
        ('Lớp Tiếng Anh Thương mại K23 Lớp 02', '523TA02G', (SELECT id FROM codezone.majors WHERE code = 'TA'), NOW(),
-        NOW());
-INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at)
-VALUES ('Lớp Dược K23 Gò Vấp', '523DUOC01G', (SELECT id FROM codezone.majors WHERE code = 'DUOC'), NOW(), NOW()),
-       ('Lớp Dược K24 Gò Vấp', '524DUOC01G', (SELECT id FROM codezone.majors WHERE code = 'DUOC'), NOW(), NOW()),
-       ('Lớp Điều dưỡng K23 Trung Sơn', '523DD01T', (SELECT id FROM codezone.majors WHERE code = 'DD'), NOW(), NOW()),
-       ('Lớp Điều dưỡng K24 Gò Vấp', '524DD01G', (SELECT id FROM codezone.majors WHERE code = 'DD'), NOW(), NOW());
-INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at)
-VALUES ('Lớp Công nghệ Ô tô K23 Gò Vấp', '523OTO01G', (SELECT id FROM codezone.majors WHERE code = 'OTO'), NOW(),
-        NOW()),
-       ('Lớp Công nghệ Ô tô K24 Gò Vấp', '524OTO01G', (SELECT id FROM codezone.majors WHERE code = 'OTO'), NOW(),
-        NOW()),
+        NOW(), 'lop-tieng-anh-thuong-mai-k23-lop-02');
+
+INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at, slug)
+VALUES ('Lớp Dược K23 Gò Vấp', '523DUOC01G', (SELECT id FROM codezone.majors WHERE code = 'DUOC'), NOW(), NOW(),
+        'lop-duoc-k23-go-vap'),
+       ('Lớp Dược K24 Gò Vấp', '524DUOC01G', (SELECT id FROM codezone.majors WHERE code = 'DUOC'), NOW(), NOW(),
+        'lop-duoc-k24-go-vap'),
+       ('Lớp Điều dưỡng K23 Trung Sơn', '523DD01T', (SELECT id FROM codezone.majors WHERE code = 'DD'), NOW(), NOW(),
+        'lop-dieu-duong-k23-trung-son'),
+       ('Lớp Điều dưỡng K24 Gò Vấp', '524DD01G', (SELECT id FROM codezone.majors WHERE code = 'DD'), NOW(), NOW(),
+        'lop-dieu-duong-k24-go-vap');
+
+INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at, slug)
+VALUES ('Lớp Công nghệ Ô tô K23 Gò Vấp', '523OTO01G', (SELECT id FROM codezone.majors WHERE code = 'OTO'), NOW(), NOW(),
+        'lop-cong-nghe-o-to-k23-go-vap'),
+       ('Lớp Công nghệ Ô tô K24 Gò Vấp', '524OTO01G', (SELECT id FROM codezone.majors WHERE code = 'OTO'), NOW(), NOW(),
+        'lop-cong-nghe-o-to-k24-go-vap'),
        ('Lớp Ứng dụng phần mềm K22 Gò Vấp', '522UDPM01G', (SELECT id FROM codezone.majors WHERE code = 'UDPM'), NOW(),
-        NOW()),
+        NOW(), 'lop-ung-dung-phan-mem-k22-go-vap'),
        ('Lớp Ứng dụng phần mềm K23 Gò Vấp', '523UDPM01G', (SELECT id FROM codezone.majors WHERE code = 'UDPM'), NOW(),
-        NOW()),
+        NOW(), 'lop-ung-dung-phan-mem-k23-go-vap'),
        ('Lớp Ứng dụng phần mềm K23 Trung Sơn', '523UDPM01T', (SELECT id FROM codezone.majors WHERE code = 'UDPM'),
-        NOW(), NOW()),
+        NOW(), NOW(), 'lop-ung-dung-phan-mem-k23-trung-son'),
        ('Lớp Thiết kế Website K23 Gò Vấp', '523TKW01G', (SELECT id FROM codezone.majors WHERE code = 'TKW'), NOW(),
-        NOW()),
+        NOW(), 'lop-thiet-ke-website-k23-go-vap'),
        ('Lớp Thiết kế Website K24 Gò Vấp', '524TKW01G', (SELECT id FROM codezone.majors WHERE code = 'TKW'), NOW(),
-        NOW());
-INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at)
+        NOW(), 'lop-thiet-ke-website-k24-go-vap');
+
+INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at, slug)
 VALUES ('Lớp Thiết kế Đồ họa K23 Gò Vấp', '523TKDH01G', (SELECT id FROM codezone.majors WHERE code = 'TKDH'), NOW(),
-        NOW()),
+        NOW(), 'lop-thiet-ke-do-hoa-k23-go-vap'),
        ('Lớp Thiết kế Đồ họa K23 Trung Sơn', '523TKDH01T', (SELECT id FROM codezone.majors WHERE code = 'TKDH'), NOW(),
-        NOW()),
+        NOW(), 'lop-thiet-ke-do-hoa-k23-trung-son'),
        ('Lớp Thiết kế Đồ họa K24 Gò Vấp', '524TKDH01G', (SELECT id FROM codezone.majors WHERE code = 'TKDH'), NOW(),
-        NOW()),
+        NOW(), 'lop-thiet-ke-do-hoa-k24-go-vap'),
        ('Lớp Thiết kế Nội thất K23 Gò Vấp', '523TKNT01G', (SELECT id FROM codezone.majors WHERE code = 'TKNT'), NOW(),
-        NOW()),
+        NOW(), 'lop-thiet-ke-noi-that-k23-go-vap'),
        ('Lớp Thiết kế Thời trang K24 Gò Vấp', '524TKTT01G', (SELECT id FROM codezone.majors WHERE code = 'TKTT'), NOW(),
-        NOW());
+        NOW(), 'lop-thiet-ke-thoi-trang-k24-go-vap');
 
 INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)

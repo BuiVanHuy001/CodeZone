@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Client\Instructor;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Services\Instructor\InstructorService;
+use App\Services\Client\Instructor\InstructorService;
 
 class InstructorController extends Controller
 {

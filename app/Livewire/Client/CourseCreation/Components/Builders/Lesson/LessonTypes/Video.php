@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Client\CourseCreation\Components\Builders\Lesson\LessonTypes;
 
-use App\Services\Course\Create\Builders\LessonTypes\VideoService;
+use App\Services\Client\Course\Create\Builders\LessonTypes\VideoService;
 use App\Validator\NewLessonValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;

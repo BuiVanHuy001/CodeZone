@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->slug('slug')->unique();
+            $table->string('slug')->unique();
             $table->string('code')->unique();
             $table->foreignIdFor(Major::class)->constrained('majors')->cascadeOnDelete();
             $table->timestamps();

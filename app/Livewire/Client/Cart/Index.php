@@ -3,13 +3,11 @@
 namespace App\Livewire\Client\Cart;
 
 use App\Models\Order;
-use App\Services\Cart\CartService;
-use App\Services\Course\Catalog\CourseDecorator;
-use App\Services\Course\CourseService;
+use App\Services\Client\Cart\CartService;
+use App\Services\Client\Course\Catalog\CourseDecorator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;

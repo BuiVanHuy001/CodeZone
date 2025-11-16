@@ -3,7 +3,7 @@
 @section('content')
     <div class="rbt-contact-form contact-form-style-1 max-width-auto mx-auto my-5 w-50">
         <h3 class="title text-center">Login</h3>
-        <form class="max-width-auto" action="{{ route('client.login') }}" method="POST">
+        <form class="max-width-auto" action="{{ route('auth.login') }}" method="POST">
             @csrf
             <div @class(['form-group', 'focused' => old('email')])>
                 <input name="email" type="text" value="{{ request('email') ?? old('email') ?? $email }}" @class(['border-danger' => $errors->has('email')])/>
@@ -42,7 +42,8 @@
         </form>
 
         <div class="text-center mb-3">
-            <p class="description">Don't have an account? <a class="rbt-btn-link" href="{{ route('client.register') }}"><strong>Register here</strong></a></p>
+            <p class="description">Don't have an account?
+                <a class="rbt-btn-link" href="{{ route('student.register') }}"><strong>Register here</strong></a></p>
         </div>
 
         <div class="row">

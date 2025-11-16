@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Client\Student;
 
 use App\Models\User;
-use App\Services\Student\StudentService;
+use App\Services\Client\Student\StudentService;
 
 class StudentController
 {

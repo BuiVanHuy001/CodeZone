@@ -5,7 +5,8 @@ namespace App\Services\Admin\Course;
 use App\Models\Course;
 use App\Notifications\CourseApprovedNotification;
 use App\Notifications\CourseRejectedNotification;
-use App\Services\Course\Catalog\CatalogService;
+use App\Notifications\CourseRestoredNotification;
+use App\Services\Client\Course\Catalog\CatalogService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -70,8 +71,9 @@ readonly class CourseService
         $course = Course::find($courseId);
         if ($course) {
             $course->update([
-                'status' => 'pending_approval',
+                'status' => 'active',
             ]);
+            $course->author->notify(new CourseRestoredNotification($course));
             return true;
         }
         return false;

@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Client\CourseCreation\Components\Builders\Assessment;
 
-use App\Services\Course\Create\Builders\AssessmentTypes\QuizImportService;
+use App\Services\Client\Course\Create\Builders\AssessmentTypes\QuizImportService;
 use App\Traits\WithSwal;
 use App\Validator\QuizValidator;
 use Illuminate\Contracts\View\Factory;

@@ -3,8 +3,6 @@
 namespace App\View\Components\Client\Dashboard;
 
 use App\Models\User;
-use App\Services\Instructor\InstructorService;
-use App\Services\Student\StudentService;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;

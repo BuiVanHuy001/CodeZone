@@ -3,7 +3,7 @@ import "../bootstrap";
 import "../../assets/admin/libs/bootstrap/js/bootstrap.bundle.min.js";
 import "../../assets/admin/libs/feather-icons/feather.min.js";
 import {swalSuccess, swalError, swalConfirm} from "../../assets/admin/js/pages/sweetalerts.utils.js";
-
+import '../../assets/admin/js/pages/datatable-init.js';
 import "../../assets/admin/js/app.js";
 
 

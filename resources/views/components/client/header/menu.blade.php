@@ -18,7 +18,7 @@
 
     <ul class="user-list-wrapper">
         <li>
-            <form class="menu-logout-form" action="{{ route('client.logout') }}" method="POST">
+            <form class="menu-logout-form" action="{{ route('auth.logout') }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <a class="menu-logout-btn" href="#">

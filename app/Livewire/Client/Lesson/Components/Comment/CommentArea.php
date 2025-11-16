@@ -4,7 +4,7 @@ namespace App\Livewire\Client\Lesson\Components\Comment;
 
 use App\Models\Comment;
 use App\Models\Lesson;
-use App\Services\Comment\CommentService;
+use App\Services\Client\Comment\CommentService;
 use App\Traits\HasNumberFormat;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;

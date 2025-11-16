@@ -1,133 +1,190 @@
 <div class="row">
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Active Instructor</h5>
-            </div>
-            <div class="card-body">
-                <table id="activeInstructorTable" class="table nowrap align-middle" style="width:100%">
-                    <thead>
-                    <tr>
-                        <th data-ordering="false">Instructor ID</th>
-                        <th>Full Name</th>
-                        <th>Average Rating</th>
-                        <th>Courses Offered</th>
-                        <th>Students Enrolled</th>
-                        <th>Account Status</th>
-                        <th>Total Earnings</th>
-                        <th>Joined On</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($instructors['active'] as $instructor)
-                        <tr>
-                            <td>{{ $instructor->id }}</td>
-                            <td>
-                                <div class="d-flex align-items-center fw-medium">
-                                    <a href="{{ $instructor['profileUrl'] }}" class="currency_name" target="_blank">
-                                        <img src="{{ $instructor->avatar }}" alt="Instructor profile" class="rounded-circle avatar-xxs me-2">
-                                        {{ $instructor->name }}
-                                    </a>
-                                </div>
-                            </td>
-                            <td>{{ $instructor->ratingText }}</td>
-                            <td>{{ $instructor->courseCountText }}</td>
-                            <td>{{ $instructor->studentCountText }}</td>
-                            <td>
-                                <span class="badge {{ $instructor->status['class'] }}">{{ $instructor->status['label'] }}</span>
-                            </td>
-                            <td>{{ $instructor->totalEarningsText }}</td>
-                            <td>{{ $instructor->joinedDateText }}</td>
-                            <td>
-                                <div class="dropdown d-inline-block">
-                                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="ri-more-fill align-middle"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a href="#!" class="dropdown-item"><i class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                View</a></li>
-                                        <li>
-                                            <a class="dropdown-item edit-item-btn"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                Edit</a></li>
-                                        <li>
-                                            <a class="dropdown-item remove-item-btn">
-                                                <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                <h4 class="mb-sm-0">Instructor</h4>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Pending review Instructor</h5>
+    <div wire:loading wire:target="approve, reject, suspend">
+        <x-client.share-ui.loading-effect/>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card crm-widget">
+                <div class="card-body p-0">
+                    <div class="row row-cols-md-3 row-cols-1">
+                        <x-admin.shared-ui.counter-card
+                            title="Active Instructors"
+                            count="197"
+                            icon="ri-checkbox-circle-line"
+                            color="success"
+                            :border="true"
+                        />
+
+                        <x-admin.shared-ui.counter-card
+                            title="Suspended Instructors"
+                            count="489"
+                            icon="ri-pause-circle-line"
+                            color="info"
+                            :border="true"
+                        />
+
+                        <x-admin.shared-ui.counter-card
+                            title="Pending Review Instructors"
+                            :count="count($instructors['pending'])"
+                            icon="ri-trophy-line"
+                            color="warning"
+                            :border="true"
+                        />
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <table id="pendingInstructorTable" class="table nowrap align-middle" style="width:100%">
-                    <thead>
-                    <tr>
-                        <th data-ordering="false">Instructor ID</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Joined On</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($instructors['pending'] as $instructor)
-                        <tr>
-                            <td>{{ $instructor->id }}</td>
-                            <td>{{ $instructor->name }}</td>
-                            <td><a href="mailto:{{ $instructor->email }}">{{ $instructor->email }}</a></td>
-                            <td>
-                                <span class="badge {{ $instructor->status['class'] }}">{{ $instructor->status['label'] }}</span>
-                            </td>
-                            <td>{{ $instructor->joinedDateText }}</td>
-                            <td>
-                                <div class="dropdown d-inline-block">
-                                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="ri-more-fill align-middle"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a class="dropdown-item">
-                                                <button class="btn btn-xl">
-                                                    <span class="badge bg-success-subtle">
-                                                        <i class="ri-checkbox-circle-line align-bottom me-2 text-success"></i>Approve
-                                                    </span>
-                                                </button>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item">
-                                                <button class="btn btn-xl">
-                                                    <span class="badge bg-danger-subtle text-danger">
-                                                        <i class="ri-close-circle-fill align-bottom me-2 text-danger"></i>Reject
-                                                    </span>
-                                                </button>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+            <button type="button"
+                    class="btn btn-success btn-label waves-effect waves-light mb-3 float-end"
+                    data-bs-toggle="modal"
+                    data-bs-target="#create-instructor-modal"
+            >
+                <i class="ri-user-add-line label-icon align-middle fs-16 me-2"></i> Add Instructor
+            </button>
         </div>
     </div>
+
+    <x-admin.shared-ui.data-table-card tableTitle="Active Instructor" tableId="activeInstructorTable">
+        <x-slot:tableHeader>
+            <tr>
+                <th>Full Name</th>
+                <th>Average Rating</th>
+                <th>Major (Faculty)</th>
+                <th>Courses Offered</th>
+                <th>Students Enrolled</th>
+                <th>Total Earnings</th>
+                <th>Joined On</th>
+                <th>Actions</th>
+            </tr>
+        </x-slot:tableHeader>
+
+        <x-slot:tableBody>
+            @foreach($instructors['active'] as $instructor)
+                <tr>
+                    <td>
+                        <div class="d-flex align-items-center fw-medium">
+                            <a href="{{ $instructor['profileUrl'] }}" class="currency_name" target="_blank">
+                                <img src="{{ $instructor->avatar }}" alt="Instructor profile" loading="lazy" class="rounded-circle avatar-xxs me-2">
+                                {{ $instructor->name }}
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{ $instructor->ratingText }}</td>
+                    <td>{{ $instructor->majorText }}</td>
+                    <td>{{ $instructor->courseCountText }}</td>
+                    <td>{{ $instructor->studentCountText }}</td>
+                    <td>{{ $instructor->totalEarningsText }}</td>
+                    <td>{{ $instructor->createdAtText }}</td>
+                    <td>
+                        <div class="dropdown d-inline-block">
+                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ri-more-fill align-middle"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a href="{{ $instructor->profileUrl }}" class="btn btn-xl dropdown-item text-secondary">
+                                        <i class="ri-eye-line align-bottom me-2"></i> View Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <button onclick="showSuspendedConfirm('{{ $instructor->id }}')" class="btn btn-xl dropdown-item text-warning">
+                                        <i class="ri-pause-circle-line align-bottom me-2"></i> Suspend
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </x-slot:tableBody>
+    </x-admin.shared-ui.data-table-card>
+
+    <x-admin.shared-ui.data-table-card tableTitle="Suspended Instructor" tableId="suspendedInstructorTable">
+        <x-slot:tableHeader>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Major (Faculty)</th>
+                <th>Pended At</th>
+                <th>Actions</th>
+            </tr>
+        </x-slot:tableHeader>
+
+        <x-slot:tableBody>
+            @foreach($instructors['suspended'] as $instructor)
+                <tr>
+                    <td>{{ $instructor->name }}</td>
+                    <td><a href="mailto:{{ $instructor->email }}">{{ $instructor->email }}</a></td>
+                    <td>{{ $instructor->majorText }}</td>
+                    <td>{{ $instructor->updatedAtText }}</td>
+                    <td>
+                        <div class="dropdown d-inline-block">
+                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ri-more-fill align-middle"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <button onclick="showReActiveConfirm('{{ $instructor->id }}')" class="btn btn-xl text-success dropdown-item">
+                                        <i class="ri-checkbox-circle-line align-bottom me-2"></i>Re-active
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </x-slot:tableBody>
+    </x-admin.shared-ui.data-table-card>
+
+    <x-admin.shared-ui.data-table-card tableTitle="Pending review Instructor" tableId="pendingInstructorTable">
+        <x-slot:tableHeader>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Suspended At</th>
+                <th>Actions</th>
+            </tr>
+        </x-slot:tableHeader>
+
+        <x-slot:tableBody>
+            @foreach($instructors['pending'] as $instructor)
+                <tr>
+                    <td>{{ $instructor->name }}</td>
+                    <td><a href="mailto:{{ $instructor->email }}">{{ $instructor->email }}</a></td>
+                    <td>{{ $instructor->updatedAtText }}</td>
+                    <td>
+                        <div class="dropdown d-inline-block">
+                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ri-more-fill align-middle"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <button onclick="showApprovedConfirm('{{ $instructor->id }}')" class="btn btn-xl text-success dropdown-item">
+                                        <i class="ri-checkbox-circle-line align-bottom me-2"></i>Approve
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="showRejectedConfirm('{{ $instructor->id }}')" class="btn btn-xl text-danger dropdown-item">
+                                        <i class="ri-close-circle-fill align-bottom me-2"></i>Reject
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </x-slot:tableBody>
+    </x-admin.shared-ui.data-table-card>
+
+    <livewire:admin.instructor.components.create-modal/>
 </div>
 
 @assets
@@ -186,89 +243,184 @@
     <script src="{{ Vite::asset('resources/assets/admin/libs/jszip/3.1.3/jszip.min.js') }}"></script>
 
     <script>
-        (function () {
-            let initializedTables = {};
-
-            function initTable(selector, opts = {}) {
-                if (typeof $ === 'undefined' || typeof $.fn === 'undefined') {
-                    console.warn('jQuery not loaded yet, skipping DataTable initialization');
-                    return null;
-                }
-
-                const el = $(selector);
-                if (!el.length) return null;
-
-                if (typeof $.fn.DataTable === 'undefined') {
-                    console.warn('DataTables plugin not loaded yet');
-                    return null;
-                }
-
-                if ($.fn.DataTable.isDataTable(selector)) {
-                    $(selector).DataTable().destroy();
-                }
-
-                const defaultOptions = {
-                    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-                    pageLength: 10,
-                    searching: true,
-                    order: [],
-                    dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6 d-flex align-items-center"li><"col-sm-12 col-md-6"p>>',
-                    language: {
-                        info: "Displaying items _START_ to _END_ out of _TOTAL_ total instructors",
-                        infoEmpty: "No instructors found to display",
-                        lengthMenu: "Show _MENU_ instructors",
-                        search: "Search instructors:",
-                        zeroRecords: "No matching instructors found",
-                        paginate: {previous: 'Prev', next: 'Next'}
-                    },
-                };
-                const config = Object.assign({}, defaultOptions, opts);
-
-                const table = el.DataTable(config);
-
-                initializedTables[selector] = table;
-                return table;
-            }
-
-            function initializeDataTables() {
-                setTimeout(() => {
-                    const tableDefinitions = [
-                        {
-                            selector: '#activeInstructorTable',
-                            opts: {
-                                fixedHeader: true,
-                                scrollX: true,
-                                scrollY: 500,
-                            }
-                        },
-                        {
-                            selector: '#pendingInstructorTable',
-                            opts: {
-                                scrollY: 500,
-                                language: {
-                                    info: "Displaying items _START_ to _END_ out of _TOTAL_ total instructors",
-                                    infoEmpty: "No pending instructors found to display",
+        function initializeInstructorDataTables() {
+            const tableDefinitions = [
+                {
+                    selector: '#activeInstructorTable',
+                    opts: {
+                        buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                text: '<i class="ri-file-excel-2-fill me-1 align-bottom"></i>Export to Excel',
+                                className: 'btn btn-outline-secondary',
+                                titleAttr: 'Excel',
+                                filename: 'Active_Instructors_' + new Date().toISOString().split('T')[0],
+                                exportOptions: {
+                                    columns: ':not(:last-child)'
+                                }
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                text: '<i class="ri-file-pdf-fill me-1 align-bottom"></i>Export to PDF',
+                                className: 'btn btn-outline-secondary',
+                                titleAttr: 'PDF',
+                                filename: 'Active_Instructors_' + new Date().toISOString().split('T')[0],
+                                exportOptions: {
+                                    columns: ':not(:last-child)'
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                text: '<i class="ri-printer-fill me-1 align-bottom"></i>Print',
+                                className: 'btn btn-outline-secondary',
+                                titleAttr: 'Print',
+                                exportOptions: {
+                                    columns: ':not(:last-child)'
                                 }
                             }
-                        }
-                    ];
-
-                    tableDefinitions.forEach(({selector, opts}) => initTable(selector, opts));
-                }, 100);
+                        ]
+                    }
+                },
+                {
+                    selector: '#pendingInstructorTable',
+                    opts: {
+                        buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                text: '<i class="ri-file-excel-2-fill me-1 align-bottom"></i>Export to Excel',
+                                className: 'btn btn-outline-secondary',
+                                titleAttr: 'Excel',
+                                filename: 'Pending_Instructors_' + new Date().toISOString().split('T')[0],
+                                exportOptions: {
+                                    columns: ':not(:last-child)'
+                                }
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                text: '<i class="ri-file-pdf-fill me-1 align-bottom"></i>Export to PDF',
+                                className: 'btn btn-outline-secondary',
+                                titleAttr: 'PDF',
+                                filename: 'Pending_Instructors_' + new Date().toISOString().split('T')[0],
+                                exportOptions: {
+                                    columns: ':not(:last-child)'
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                text: '<i class="ri-printer-fill me-1 align-bottom"></i>Print',
+                                className: 'btn btn-outline-secondary',
+                                titleAttr: 'Print',
+                                exportOptions: {
+                                    columns: ':not(:last-child)'
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    selector: '#suspendedInstructorTable',
+                    opts: {
+                        buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                text: '<i class="ri-file-excel-2-fill me-1 align-bottom"></i>Export to Excel',
+                                className: 'btn btn-outline-secondary',
+                                titleAttr: 'Excel',
+                                filename: 'Suspended_Instructors_' + new Date().toISOString().split('T')[0],
+                                exportOptions: {
+                                    columns: ':not(:last-child)'
+                                }
+                            },
+                            {
+                                extend: 'pdfHtml5',
+                                text: '<i class="ri-file-pdf-fill me-1 align-bottom"></i>Export to PDF',
+                                className: 'btn btn-outline-secondary',
+                                titleAttr: 'PDF',
+                                filename: 'Suspended_Instructors_' + new Date().toISOString().split('T')[0],
+                                exportOptions: {
+                                    columns: ':not(:last-child)'
+                                }
+                            },
+                            {
+                                extend: 'print',
+                                text: '<i class="ri-printer-fill me-1 align-bottom"></i>Print',
+                                className: 'btn btn-outline-secondary',
+                                titleAttr: 'Print',
+                                exportOptions: {
+                                    columns: ':not(:last-child)'
+                                }
+                            }
+                        ]
+                    }
+                }
+            ];
+            if (window.AppDataTableHelper && window.AppDataTableHelper.initializeDataTables) {
+                window.AppDataTableHelper.initializeDataTables(tableDefinitions);
+            } else {
+                console.error('DataTable initializer (AppDataTableHelper) not found.');
             }
+        }
 
-            document.addEventListener('DOMContentLoaded', initializeDataTables);
-            document.addEventListener('livewire:navigated', initializeDataTables);
+        function setupPageEventListeners() {
+            initializeInstructorDataTables();
+        }
 
-            document.addEventListener('livewire:initialized', function () {
-                window.Livewire.on('instructor-approved', () => {
-                    setTimeout(initializeDataTables, 200);
-                });
-
-                window.Livewire.hook('morph.updated', ({el, component}) => {
-                    setTimeout(initializeDataTables, 200);
-                });
+        document.addEventListener('DOMContentLoaded', setupPageEventListeners);
+        document.addEventListener('livewire:navigated', setupPageEventListeners);
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('instructor-updated', () => {
+                setupPageEventListeners();
             });
-        })();
+        });
+    </script>
+
+    <script>
+        function showSuspendedConfirm(instructorId) {
+            swalConfirm(
+                'Are you sure you want to suspend this instructor?',
+                'This action will suspend the instructor account.',
+                () => {
+                    @this.
+                    call('suspend', instructorId);
+                },
+                'Yes, suspend this instructor!'
+            )
+        }
+
+        function showReActiveConfirm(instructorId) {
+            swalConfirm(
+                'Are you sure you want to re-active this instructor?',
+                'This action will re-active the instructor account.',
+                () => {
+                    @this.
+                    call('restore', instructorId);
+                },
+                'Yes, re-active this instructor!'
+            )
+        }
+
+        function showApprovedConfirm(instructorId) {
+            swalConfirm(
+                'Are you sure you want to approve this instructor?',
+                'This action will approve the instructor account.',
+                () => {
+                    @this.
+                    call('approve', instructorId);
+                },
+                'Yes, approve this instructor!'
+            )
+        }
+
+        function showRejectedConfirm(instructorId) {
+            swalConfirm(
+                'Are you sure you want to reject this instructor?',
+                'This action will reject the instructor account.',
+                () => {
+                    @this.
+                    call('reject', instructorId);
+                },
+                'Yes, reject this instructor!'
+            )
+        }
     </script>
 @endpush
