@@ -13,20 +13,19 @@ class Index extends Component {
     use WithSwal;
 
     private CourseService $adminCourseService;
-
     public array $courses = [];
 
     public function boot(): void
     {
         $this->adminCourseService = app(CourseService::class);
-        $this->courses = $this->adminCourseService->prepareDataForCourseList();
+        $this->loadData();
     }
 
     public function suspend(string $courseId): void
     {
-        $this->loadData();
         if ($this->adminCourseService->suspendCourse($courseId)) {
             $this->swal('The course has been suspended successfully.');
+            $this->loadData();
         } else {
             $this->swalError('An error occurred while suspending the course.');
         }
@@ -34,9 +33,9 @@ class Index extends Component {
 
     public function approve(string|int $courseId): void
     {
-        $this->loadData();
         if ($this->adminCourseService->approveCourse($courseId)) {
             $this->swal('The course has been approved and published.');
+            $this->loadData();
         } else {
             $this->swalError('An error occurred while approving the course.');
         }
@@ -44,9 +43,9 @@ class Index extends Component {
 
     public function reject(string|int $courseId): void
     {
-        $this->loadData();
         if ($this->adminCourseService->rejectCourse($courseId)) {
             $this->swal('The course has been rejected.');
+            $this->loadData();
         } else {
             $this->swalError('An error occurred while rejecting the course.');
         }
@@ -54,9 +53,9 @@ class Index extends Component {
 
     public function restore(string|int $courseId): void
     {
-        $this->loadData();
         if ($this->adminCourseService->restoreCourse($courseId)) {
             $this->swal('The course has been restored successfully.');
+            $this->loadData();
         } else {
             $this->swalError('An error occurred while restoring the course.');
         }

@@ -1,69 +1,63 @@
 <div class="row">
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Instructor</h4>
-            </div>
+    <div class="col-12">
+        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+            <h4 class="mb-sm-0">Instructor</h4>
         </div>
     </div>
 
-    <div wire:loading wire:target="approve, reject, suspend">
+    <div wire:loading wire:target="approve, reject, suspend, restore">
         <x-client.share-ui.loading-effect/>
     </div>
 
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card crm-widget">
-                <div class="card-body p-0">
-                    <div class="row row-cols-md-3 row-cols-1">
-                        <x-admin.shared-ui.counter-card
-                            title="Active Instructors"
-                            count="197"
-                            icon="ri-checkbox-circle-line"
-                            color="success"
-                            :border="true"
-                        />
+    <div class="col-xl-12">
+        <div class="card crm-widget">
+            <div class="card-body p-0">
+                <div class="row row-cols-md-3 row-cols-1">
+                    <x-admin.shared-ui.counter-card
+                        title="Active Instructors"
+                        count="197"
+                        icon="ri-checkbox-circle-line"
+                        color="success"
+                        :border="true"
+                    />
 
-                        <x-admin.shared-ui.counter-card
-                            title="Suspended Instructors"
-                            count="489"
-                            icon="ri-pause-circle-line"
-                            color="info"
-                            :border="true"
-                        />
+                    <x-admin.shared-ui.counter-card
+                        title="Suspended Instructors"
+                        count="489"
+                        icon="ri-pause-circle-line"
+                        color="info"
+                        :border="true"
+                    />
 
-                        <x-admin.shared-ui.counter-card
-                            title="Pending Review Instructors"
-                            :count="count($instructors['pending'])"
-                            icon="ri-trophy-line"
-                            color="warning"
-                            :border="true"
-                        />
-                    </div>
+                    <x-admin.shared-ui.counter-card
+                        title="Pending Review Instructors"
+                        :count="count($instructors['pending'])"
+                        icon="ri-trophy-line"
+                        color="warning"
+                        :border="true"
+                    />
                 </div>
             </div>
-            <button type="button"
-                    class="btn btn-success btn-label waves-effect waves-light mb-3 float-end"
-                    data-bs-toggle="modal"
-                    data-bs-target="#create-instructor-modal"
-            >
-                <i class="ri-user-add-line label-icon align-middle fs-16 me-2"></i> Add Instructor
-            </button>
         </div>
+        <button type="button"
+                class="btn btn-success btn-label waves-effect waves-light mb-3 float-end"
+                data-bs-toggle="modal"
+                data-bs-target="#create-instructor-modal"
+        >
+            <i class="ri-user-add-line label-icon align-middle fs-16 me-2"></i> Add Instructor
+        </button>
     </div>
 
     <x-admin.shared-ui.data-table-card tableTitle="Active Instructor" tableId="activeInstructorTable">
         <x-slot:tableHeader>
-            <tr>
-                <th>Full Name</th>
-                <th>Average Rating</th>
-                <th>Major (Faculty)</th>
-                <th>Courses Offered</th>
-                <th>Students Enrolled</th>
-                <th>Total Earnings</th>
-                <th>Joined On</th>
-                <th>Actions</th>
-            </tr>
+            <th>Full Name</th>
+            <th>Average Rating</th>
+            <th>Major (Faculty)</th>
+            <th>Courses Offered</th>
+            <th>Students Enrolled</th>
+            <th>Total Earnings</th>
+            <th>Joined On</th>
+            <th>Actions</th>
         </x-slot:tableHeader>
 
         <x-slot:tableBody>
@@ -95,7 +89,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <button onclick="showSuspendedConfirm('{{ $instructor->id }}')" class="btn btn-xl dropdown-item text-warning">
+                                    <button onclick="showSuspendedConfirm(@this, '{{ $instructor->id }}', 'Confirm Suspension', 'Are you sure you want to suspend instructor {{ $instructor->name }}?')" class="btn btn-xl dropdown-item text-warning">
                                         <i class="ri-pause-circle-line align-bottom me-2"></i> Suspend
                                     </button>
                                 </li>
@@ -109,13 +103,11 @@
 
     <x-admin.shared-ui.data-table-card tableTitle="Suspended Instructor" tableId="suspendedInstructorTable">
         <x-slot:tableHeader>
-            <tr>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Major (Faculty)</th>
-                <th>Pended At</th>
-                <th>Actions</th>
-            </tr>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Major (Faculty)</th>
+            <th>Pended At</th>
+            <th>Actions</th>
         </x-slot:tableHeader>
 
         <x-slot:tableBody>
@@ -132,8 +124,8 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <button onclick="showReActiveConfirm('{{ $instructor->id }}')" class="btn btn-xl text-success dropdown-item">
-                                        <i class="ri-checkbox-circle-line align-bottom me-2"></i>Re-active
+                                    <button onclick="showRestoredConfirm(@this, '{{ $instructor->id }}', 'Confirm Re-activation', 'Do you want to re-activate instructor {{ $instructor->name }}?')" class="btn btn-xl text-success dropdown-item">
+                                        <i class="ri-checkbox-circle-line align-bottom me-2"></i> Re-active
                                     </button>
                                 </li>
                             </ul>
@@ -167,13 +159,13 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <button onclick="showApprovedConfirm('{{ $instructor->id }}')" class="btn btn-xl text-success dropdown-item">
-                                        <i class="ri-checkbox-circle-line align-bottom me-2"></i>Approve
+                                    <button onclick="showApprovedConfirm(@this, '{{ $instructor->id }}', 'Confirm Approval', 'Do you want to approve instructor {{ $instructor->name }}?')" class="btn btn-xl text-success dropdown-item">
+                                        <i class="ri-checkbox-circle-line align-bottom me-2"></i> Approve
                                     </button>
                                 </li>
                                 <li>
-                                    <button onclick="showRejectedConfirm('{{ $instructor->id }}')" class="btn btn-xl text-danger dropdown-item">
-                                        <i class="ri-close-circle-fill align-bottom me-2"></i>Reject
+                                    <button onclick="showRejectedConfirm(@this, '{{ $instructor->id }}', 'Confirm Rejection', 'Do you want to reject instructor {{ $instructor->name }}?')" class="btn btn-xl text-danger dropdown-item">
+                                        <i class="ri-close-circle-fill align-bottom me-2"></i> Reject
                                     </button>
                                 </li>
                             </ul>
@@ -362,65 +354,25 @@
         }
 
         function setupPageEventListeners() {
+            if ($.fn.DataTable.isDataTable('#activeInstructorTable')) {
+                $('#activeInstructorTable').DataTable().destroy();
+            }
+            if ($.fn.DataTable.isDataTable('#pendingInstructorTable')) {
+                $('#pendingInstructorTable').DataTable().destroy();
+            }
+            if ($.fn.DataTable.isDataTable('#suspendedInstructorTable')) {
+                $('#suspendedInstructorTable').DataTable().destroy();
+            }
             initializeInstructorDataTables();
         }
 
         document.addEventListener('DOMContentLoaded', setupPageEventListeners);
         document.addEventListener('livewire:navigated', setupPageEventListeners);
+
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('instructor-updated', () => {
                 setupPageEventListeners();
             });
         });
-    </script>
-
-    <script>
-        function showSuspendedConfirm(instructorId) {
-            swalConfirm(
-                'Are you sure you want to suspend this instructor?',
-                'This action will suspend the instructor account.',
-                () => {
-                    @this.
-                    call('suspend', instructorId);
-                },
-                'Yes, suspend this instructor!'
-            )
-        }
-
-        function showReActiveConfirm(instructorId) {
-            swalConfirm(
-                'Are you sure you want to re-active this instructor?',
-                'This action will re-active the instructor account.',
-                () => {
-                    @this.
-                    call('restore', instructorId);
-                },
-                'Yes, re-active this instructor!'
-            )
-        }
-
-        function showApprovedConfirm(instructorId) {
-            swalConfirm(
-                'Are you sure you want to approve this instructor?',
-                'This action will approve the instructor account.',
-                () => {
-                    @this.
-                    call('approve', instructorId);
-                },
-                'Yes, approve this instructor!'
-            )
-        }
-
-        function showRejectedConfirm(instructorId) {
-            swalConfirm(
-                'Are you sure you want to reject this instructor?',
-                'This action will reject the instructor account.',
-                () => {
-                    @this.
-                    call('reject', instructorId);
-                },
-                'Yes, reject this instructor!'
-            )
-        }
     </script>
 @endpush

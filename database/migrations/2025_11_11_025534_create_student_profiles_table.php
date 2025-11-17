@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\ClassRoom;
+use App\Models\Major;
 use App\Models\StudentProfile;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,6 +16,7 @@ return new class extends Migration {
         Schema::create('student_profiles', static function (Blueprint $table) {
             $table->uuid('user_id')->primary();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignIdFor(Major::class)->nullable()->constrained('majors')->nullOnDelete();
 
             $table->string('gender', 10)->nullable();
             $table->date('dob')->comment('Date of Birth')->nullable();

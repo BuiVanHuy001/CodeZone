@@ -74,3 +74,67 @@ export function swalAutoClose(title = "Processing...", timeout = 2000) {
         },
     });
 }
+
+export function showSuspendedConfirm(
+    livewireComponent,
+    id,
+    title = 'Are you sure?',
+    text = 'You are about to suspend this item.'
+) {
+    swalConfirm(
+        title,
+        text,
+        () => {
+            livewireComponent.call('suspend', id);
+        },
+        'Yes, suspend it!'
+    );
+}
+
+export function showApprovedConfirm(
+    livewireComponent,
+    id,
+    title = 'Are you sure?',
+    text = 'This action will approve and publish this item.'
+) {
+    swalConfirm(
+        title,
+        text,
+        () => {
+            livewireComponent.call('approve', id);
+        },
+        'Yes, approve it!'
+    );
+}
+
+export function showRejectedConfirm(
+    livewireComponent,
+    id,
+    title = 'Are you sure?',
+    text = 'This action will reject this submission.'
+) {
+    swalConfirm(
+        title,
+        text,
+        () => {
+            livewireComponent.call('reject', id);
+        },
+        'Yes, reject it!'
+    );
+}
+
+export function showRestoredConfirm(
+    livewireComponent,
+    id,
+    title = 'Are you sure?',
+    text = 'You are about to re-activate this item.'
+) {
+    swalConfirm(
+        title,
+        text,
+        () => {
+            livewireComponent.call('restore', id);
+        },
+        'Yes, re-activate it!'
+    );
+}

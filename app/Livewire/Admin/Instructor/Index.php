@@ -17,24 +17,22 @@ class Index extends Component {
     public function boot(): void
     {
         $this->adminInstructorService = app(InstructorService::class);
-        foreach (User::$STATUSES as $status) {
-            $this->instructors[$status] = $this->adminInstructorService->getInstructorsByStatus($status);
-        }
+        $this->loadInstructorsData();
     }
 
-    public function loadInstructors(): void
+    public function loadInstructorsData(): void
     {
         foreach (User::$STATUSES as $status) {
             $this->instructors[$status] = $this->adminInstructorService->getInstructorsByStatus($status);
         }
-        $this->dispatch('instructor-updated');
     }
 
     public function suspend(string|int $instructorId): void
     {
-        $this->loadInstructors();
         if ($this->adminInstructorService->suspendInstructor($instructorId)) {
             $this->swal('Instructor suspended successfully.');
+            $this->loadInstructorsData();
+            $this->dispatch('instructor-updated');
         } else {
             $this->swalError('Failed to suspend instructor. Please try again.');
         }
@@ -42,9 +40,10 @@ class Index extends Component {
 
     public function approve(string|int $instructorId): void
     {
-        $this->loadInstructors();
         if ($this->adminInstructorService->approveInstructor($instructorId)) {
             $this->swal('Instructor approved successfully.');
+            $this->loadInstructorsData();
+            $this->dispatch('instructor-updated');
         } else {
             $this->swalError('Failed to approve instructor. Please try again.');
         }
@@ -52,9 +51,10 @@ class Index extends Component {
 
     public function reject(string|int $instructorId): void
     {
-        $this->loadInstructors();
         if ($this->adminInstructorService->rejectInstructor($instructorId)) {
             $this->swal('Instructor rejected successfully.');
+            $this->loadInstructorsData();
+            $this->dispatch('instructor-updated');
         } else {
             $this->swalError('Failed to reject instructor. Please try again.');
         }
@@ -62,9 +62,10 @@ class Index extends Component {
 
     public function restore(string|int $instructorId): void
     {
-        $this->loadInstructors();
         if ($this->adminInstructorService->restoreInstructor($instructorId)) {
             $this->swal('Instructor restored successfully.');
+            $this->loadInstructorsData();
+            $this->dispatch('instructor-updated');
         } else {
             $this->swalError('Failed to restore instructor. Please try again.');
         }

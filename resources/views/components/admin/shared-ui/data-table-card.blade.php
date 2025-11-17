@@ -5,7 +5,11 @@
         </div>
         <div class="card-body">
             <table id="{{ $tableId }}" class="table nowrap align-middle" style="width:100%">
-                <thead>{{ $tableHeader }}</thead>
+                <thead>
+                <tr>
+                    {{ $tableHeader }}
+                </tr>
+                </thead>
 
                 <tbody>{{ $tableBody }}</tbody>
             </table>

@@ -71,7 +71,7 @@ readonly class CourseService
         $course = Course::find($courseId);
         if ($course) {
             $course->update([
-                'status' => 'active',
+                'status' => 'published',
             ]);
             $course->author->notify(new CourseRestoredNotification($course));
             return true;

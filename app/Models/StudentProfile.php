@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StudentProfile extends Model {
     protected $primaryKey = 'user_id';
@@ -24,4 +25,14 @@ class StudentProfile extends Model {
         'internal' => 'Internal',
         'external' => 'External',
     ];
+
+    public function major(): BelongsTo
+    {
+        return $this->belongsTo(Major::class, 'major_id');
+    }
+
+    public function classRoom(): BelongsTo
+    {
+        return $this->belongsTo(ClassRoom::class, 'class_room_id');
+    }
 }

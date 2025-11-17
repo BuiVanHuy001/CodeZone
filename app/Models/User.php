@@ -44,9 +44,7 @@ class User extends Authenticatable
 
     protected $hidden = ['password', 'remember_token',];
 
-    public static array $ROLES = ['student', 'admin', 'instructor', 'super_admin'];
-
-    public static array $STATUSES = ['active', 'pending', 'banned', 'suspended', 'rejected', 'deleted'];
+    public static array $STATUSES = ['active', 'pending', 'suspended', 'rejected'];
 
     protected function casts(): array
     {

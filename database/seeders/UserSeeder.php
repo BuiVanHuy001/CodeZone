@@ -2,17 +2,18 @@
 
 namespace Database\Seeders;
 
+use App\Models\ClassRoom;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
-{
+class UserSeeder extends Seeder {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $users = User::factory(500)->create();
+        $users = User::factory(600)->create();
+        $classRooms = ClassRoom::all();
         foreach ($users as $user) {
             $user->assignRole('student');
             $user->update([
@@ -22,6 +23,25 @@ class UserSeeder extends Seeder
                 'gender' => fake()->boolean(),
                 'dob' => fake()->date(),
             ]);
+
+            if (fake()->boolean(80)) {
+                $user->studentProfile()->update([
+                    'student_type' => 'internal',
+                    'major_id' => random_int(1, 17),
+                    'student_code' => 'S' . str_pad((string)random_int(1, 999999), 6, '0', STR_PAD_LEFT),
+                    'enrollment_year' => fake()->dateTimeBetween('-4 years', 'now')->format('Y-m-d'),
+                    'class_room_id' => random_int(1, 28),
+                ]);
+            } else {
+                $user->studentProfile()->update([
+                    'student_type' => 'external',
+                ]);
+            }
+            if (fake()->boolean(30)) {
+                $user->update([
+                    'status' => fake()->randomElement(User::$STATUSES)
+                ]);
+            }
         }
 
         $approvedInstructors = User::factory(40)->create([
@@ -55,5 +75,6 @@ class UserSeeder extends Seeder
             $user->assignRole('instructor');
             $user->instructorProfile()->create();
         }
+
     }
 }

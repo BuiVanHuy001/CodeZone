@@ -1,5 +1,5 @@
 <div class="row">
-    <div wire:loading wire:target="approve, reject, suspend">
+    <div wire:loading wire:target="approve, reject, suspend, restore" class="loading-overlay">
         <x-client.share-ui.loading-effect/>
     </div>
 
@@ -54,7 +54,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <button onclick="showSuspendedConfirm('{{ $course->id }}')" class="dropdown-item text-warning">
+                                    <button onclick="showSuspendedConfirm(@this, '{{ $course->id }}', 'Confirm Course Suspension', 'Are you sure you want to suspend the course &quot;{{ $course->title }}&quot;? This will make it unavailable to students.')" class="dropdown-item text-warning">
                                         <i class="ri-pause-circle-line align-bottom me-2"></i> Suspend
                                     </button>
                                 </li>
@@ -105,12 +105,12 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <button onclick="showApprovedConfirm('{{ $course->id }}')" class="btn btn-xl dropdown-item text-success">
+                                    <button onclick="showApprovedConfirm(@this, '{{ $course->id }}', 'Confirm Course Approval', 'Do you want to approve and publish the course &quot;{{ $course->title }}&quot;? It will become available to students.')" class="btn btn-xl dropdown-item text-success">
                                         <i class="ri-checkbox-circle-line align-bottom me-2 text-success"></i>Approve
                                     </button>
                                 </li>
                                 <li>
-                                    <button onclick="showRejectedConfirm('{{ $course->id }}')" class="btn btn-xl dropdown-item text-danger">
+                                    <button onclick="showRejectedConfirm(@this, '{{ $course->id }}', 'Confirm Course Rejection', 'Do you want to reject the course &quot;{{ $course->title }}&quot;? The instructor will be notified.')" class="btn btn-xl dropdown-item text-danger">
                                         <i class="ri-close-circle-fill align-bottom me-2"></i>Reject
                                     </button>
                                 </li>
@@ -161,7 +161,7 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <button onclick="showRestoredConfirm('{{ $course->id }}')" class="btn btn-xl dropdown-item text-success">
+                                    <button onclick="showRestoredConfirm(@this, '{{ $course->id }}', 'Confirm Course Re-activation', 'Do you want to re-activate the course &quot;{{ $course->title }}&quot;? It will be available to students again.')" class="btn btn-xl dropdown-item text-success">
                                         <i class="ri-checkbox-circle-line align-bottom me-2"></i> Re-Active
                                     </button>
                                 </li>
@@ -232,8 +232,7 @@
                                 exportOptions: {
                                     columns: ':not(:last-child)',
                                 },
-                            },
-                            {
+                            }, {
                                 extend: 'pdfHtml5',
                                 text: '<i class="ri-file-pdf-line"></i> PDF',
                                 titleAttr: 'Export to PDF',
@@ -242,8 +241,7 @@
                                 exportOptions: {
                                     columns: ':not(:last-child)',
                                 },
-                            },
-                            {
+                            }, {
                                 extend: 'print',
                                 text: '<i class="ri-printer-line"></i> Print',
                                 titleAttr: 'Print Table',
@@ -254,8 +252,7 @@
                             }
                         ]
                     },
-                },
-                {
+                }, {
                     selector: '#pendingCourseTable',
                     opts: {
                         buttons: [
@@ -268,8 +265,8 @@
                                 exportOptions: {
                                     columns: ':not(:last-child)',
                                 },
-                            },
-                            {
+
+                            }, {
                                 extend: 'pdfHtml5',
                                 text: '<i class="ri-file-pdf-line"></i> PDF',
                                 titleAttr: 'Export to PDF',
@@ -278,8 +275,7 @@
                                 exportOptions: {
                                     columns: ':not(:last-child)',
                                 },
-                            },
-                            {
+                            }, {
                                 extend: 'print',
                                 text: '<i class="ri-printer-line"></i> Print',
                                 titleAttr: 'Print Table',
@@ -290,8 +286,7 @@
                             }
                         ]
                     },
-                },
-                {
+                }, {
                     selector: '#suspendedCourseTable',
                     opts: {
                         buttons: [
@@ -304,8 +299,7 @@
                                 exportOptions: {
                                     columns: ':not(:last-child)',
                                 },
-                            },
-                            {
+                            }, {
                                 extend: 'pdfHtml5',
                                 text: '<i class="ri-file-pdf-line"></i> PDF',
                                 titleAttr: 'Export to PDF',
@@ -314,8 +308,7 @@
                                 exportOptions: {
                                     columns: ':not(:last-child)',
                                 },
-                            },
-                            {
+                            }, {
                                 extend: 'print',
                                 text: '<i class="ri-printer-line"></i> Print',
                                 titleAttr: 'Print Table',
@@ -336,62 +329,29 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', initializeCourseDataTables);
-        document.addEventListener('livewire:navigated', initializeCourseDataTables);
+        function setupCoursePage() {
+            if ($.fn.DataTable.isDataTable('#activeCourseTable')) {
+                $('#activeCourseTable').DataTable().destroy();
+            }
+            if ($.fn.DataTable.isDataTable('#pendingCourseTable')) {
+                $('#pendingCourseTable').DataTable().destroy();
+            }
+            if ($.fn.DataTable.isDataTable('#suspendedCourseTable')) {
+                $('#suspendedCourseTable').DataTable().destroy();
+            }
+
+            initializeCourseDataTables();
+        }
+
+
+        document.addEventListener('DOMContentLoaded', setupCoursePage);
+        document.addEventListener('livewire:navigated', setupCoursePage);
+
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('course-change', () => {
-                initializeCourseDataTables();
+                // Gọi hàm setup để hủy và khởi tạo lại
+                setupCoursePage();
             });
         });
-    </script>
-
-    <script>
-        function showSuspendedConfirm(courseId) {
-            swalConfirm(
-                'Are you sure?',
-                'You are about to suspend this course.',
-                () => {
-                    @this.
-                    suspend(courseId);
-                },
-                'Yes, suspend it!'
-            );
-        }
-
-        function showApprovedConfirm(courseId) {
-            swalConfirm(
-                'Are you sure?',
-                'This action will approve and publish the course.',
-                () => {
-                    @this.
-                    approve(courseId);
-                },
-                'Yes, approve it!'
-            );
-        }
-
-        function showRejectedConfirm(courseId) {
-            swalConfirm(
-                'Are you sure?',
-                'This action will reject the course submission.',
-                () => {
-                    @this.
-                    reject(courseId);
-                },
-                'Yes, reject it!'
-            );
-        }
-
-        function showRestoredConfirm(courseId) {
-            swalConfirm(
-                'Are you sure?',
-                'You are about to re-activate this course.',
-                () => {
-                    @this.
-                    restore(courseId);
-                },
-                'Yes, re-activate it!'
-            );
-        }
     </script>
 @endpush
