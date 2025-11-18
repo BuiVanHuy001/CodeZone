@@ -28,7 +28,6 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link menu-link"
-                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.overview.index') }}"
                     >
@@ -39,7 +38,6 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link"
-                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.courses.index') }}">
                         <i class="bx bxs-graduation"></i>
@@ -49,7 +47,6 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link"
-                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.instructors.index') }}"
                     >
@@ -59,7 +56,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link"
-                       wire:navigate
                        wire:current="active"
                        href="{{ route('admin.students.index') }}"
                     >
@@ -67,6 +63,49 @@
                         <span data-key="t-students">Students</span>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link menu-link"
+                        href="#academicSidebar"
+                        data-bs-toggle="collapse"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="academicSidebar"
+                    >
+                        <i class="ri-graduation-cap-line"></i>
+                        <span data-key="t-settings">Academic</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="academicSidebar">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.faculties.index') }}"
+                                   class="nav-link"
+                                   data-key="t-general"
+                                >
+                                    Faculties
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.majors.index') }}"
+                                   class="nav-link"
+                                   data-key="t-roles"
+                                >
+                                    Majors
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.classrooms.index') }}"
+                                   class="nav-link"
+                                   data-key="t-email"
+                                >
+                                    Classrooms
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
 
                 <li class="nav-item">
                     <a class="nav-link menu-link"
@@ -79,9 +118,8 @@
 
                 <li class="nav-item">
                     <a
-                        {{--                       wire:current="active"--}}
-                       class="nav-link menu-link"
-                       href=""
+                        class="nav-link menu-link"
+                        href=""
                     >
                         <i class="bx bx-news"></i>
                         <span data-key="t-content">Content</span>

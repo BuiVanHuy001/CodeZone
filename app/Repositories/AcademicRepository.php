@@ -2,36 +2,45 @@
 
 namespace App\Repositories;
 
+use App\Models\ClassRoom;
 use App\Models\Faculty;
 use App\Models\Major;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 
 class AcademicRepository {
-    public const CACHE_KEY_ALL = 'faculties_with_majors';
-    public const CACHE_KEY_FACULTIES_ONLY = 'faculties_only';
-    public const CACHE_KEY_MAJORS_ONLY = 'majors_only';
+    private const CACHE_KEY_ALL = 'faculties_with_majors';
+    private const CACHE_KEY_FACULTIES_ONLY = 'faculties_only';
+    private const CACHE_KEY_MAJORS_ONLY = 'majors_only';
+    private const CACHE_KEY_CLASSROOM = 'classrooms';
 
-    protected int $cacheTime = 86400;
+    protected static int $cacheTime = 86400;
 
-    public function getCachedFacultiesWithMajors(): Collection
+    public static function getCachedFacultiesWithMajors(): Collection
     {
-        return Cache::remember(self::CACHE_KEY_ALL, $this->cacheTime, function () {
+        return Cache::remember(self::CACHE_KEY_ALL, self::$cacheTime, function () {
             return Faculty::with('majors')->get();
         });
     }
 
-    public function getCachedFacultiesOnly(): Collection
+    public static function getCachedFacultiesOnly(): Collection
     {
-        return Cache::remember(self::CACHE_KEY_FACULTIES_ONLY, $this->cacheTime, function () {
+        return Cache::remember(self::CACHE_KEY_FACULTIES_ONLY, self::$cacheTime, function () {
             return Faculty::all();
         });
     }
 
-    public function getCachedMajorsOnly(): Collection
+    public static function getCachedMajorsOnly(): Collection
     {
-        return Cache::remember(self::CACHE_KEY_MAJORS_ONLY, $this->cacheTime, function () {
+        return Cache::remember(self::CACHE_KEY_MAJORS_ONLY, self::$cacheTime, function () {
             return Major::all();
+        });
+    }
+
+    public static function getCachedClassroom()
+    {
+        return Cache::remember(self::CACHE_KEY_CLASSROOM, self::$cacheTime, function () {
+            return ClassRoom::all();
         });
     }
 

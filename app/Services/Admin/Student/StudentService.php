@@ -2,9 +2,13 @@
 
 namespace App\Services\Admin\Student;
 
+use App\Factories\InternalStudentFactory;
+use App\Imports\StudentImport;
 use App\Models\User;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 use Spatie\Permission\Models\Role;
 
 class StudentService {
@@ -114,5 +118,55 @@ class StudentService {
             app(StudentDecorate::class)->decorateData($student);
             return $student;
         });
+    }
+
+    public function importStudent($files): array
+    {
+        $totalImported = 0;
+        $allErrors = [];
+        $fileResults = [];
+
+        foreach ($files as $file) {
+            try {
+                $fileName = $file->getClientOriginalName();
+                $filePath = $file->getRealPath();
+
+                $import = new StudentImport();
+                Excel::import($import, $filePath);
+
+                $importedStudents = $import->getImportedStudents();
+
+                InternalStudentFactory::createMany($importedStudents);
+
+                $importedCount = count($importedStudents);
+                $errors = $import->getErrors();
+                $totalImported += $importedCount;
+
+                if (!empty($errors)) {
+                    $allErrors = array_merge($allErrors, $errors);
+                }
+
+                $fileResults[] = [
+                    'file' => $fileName,
+                    'imported' => $importedCount,
+                    'errors' => count($errors),
+                ];
+
+            } catch (ValidationException $e) {
+                $failures = $e->failures();
+                foreach ($failures as $failure) {
+                    $allErrors[] = "File: {$fileName}, Row {$failure->row()}: " . implode(', ', $failure->errors());
+                }
+            } catch (\Exception $e) {
+                $allErrors[] = "File: {$fileName} - Error: " . $e->getMessage();
+            }
+            \File::delete($file->getRealPath());
+        }
+
+        return [
+            'totalImported' => $totalImported,
+            'errors' => $allErrors,
+            'fileResults' => $fileResults,
+        ];
     }
 }

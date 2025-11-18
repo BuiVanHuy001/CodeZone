@@ -8,9 +8,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('student_profiles', static function (Blueprint $table) {
@@ -18,7 +15,7 @@ return new class extends Migration {
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignIdFor(Major::class)->nullable()->constrained('majors')->nullOnDelete();
 
-            $table->string('gender', 10)->nullable();
+            $table->boolean('gender')->nullable()->comment('Women are true, because they are always right :)');
             $table->date('dob')->comment('Date of Birth')->nullable();
 
             $table->enum('student_type', array_keys(StudentProfile::$STUDENT_TYPES))->nullable();
@@ -40,9 +37,6 @@ return new class extends Migration {
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('student_profiles');

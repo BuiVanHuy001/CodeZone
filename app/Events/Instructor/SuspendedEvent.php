@@ -8,7 +8,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class InstructorRestored {
+class SuspendedEvent {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public function __construct(

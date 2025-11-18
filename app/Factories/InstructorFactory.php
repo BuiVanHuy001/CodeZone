@@ -10,7 +10,6 @@ class InstructorFactory {
     public function store(array $data): ?User
     {
         try {
-            dd($data['avatar']);
             \DB::transaction(function () use ($data) {
                 if ($data['avatar'] && empty($data['avatarLink'])) {
                     $this->storeAvatar($data['avatar']);

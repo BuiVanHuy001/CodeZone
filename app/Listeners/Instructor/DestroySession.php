@@ -3,14 +3,14 @@
 namespace App\Listeners\Instructor;
 
 
-use App\Events\Instructor\InstructorSuspended;
+use App\Events\Instructor\SuspendedEvent;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
-class DestroyInstructorSession {
+class DestroySession {
     public function __construct() {}
 
-    public function handle(InstructorSuspended $event): void
+    public function handle(SuspendedEvent $event): void
     {
         $driver = Config::get('session.driver');
 

@@ -14,6 +14,11 @@ class StudentProfile extends Model {
         'dob',
         'addition_data',
         'user_id',
+        'major_id',
+        'class_room_id',
+        'student_code',
+        'enrollment_year',
+        'student_type',
     ];
 
     protected $casts = [

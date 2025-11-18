@@ -2,10 +2,10 @@
 
 namespace App\Services\Admin\Instructor;
 
-use App\Events\Instructor\InstructorApproved;
-use App\Events\Instructor\InstructorRejected;
-use App\Events\Instructor\InstructorRestored;
-use App\Events\Instructor\InstructorSuspended;
+use App\Events\Instructor\ApprovedEvent;
+use App\Events\Instructor\RejectedEvent;
+use App\Events\Instructor\RestoredEvent;
+use App\Events\Instructor\SuspendedEvent;
 use App\Factories\InstructorFactory;
 use App\Services\Client\Instructor\Catalog\CatalogService;
 use Illuminate\Database\Eloquent\Model;
@@ -38,7 +38,7 @@ readonly class InstructorService {
                     'remember_token' => Str::random(60),
                 ])->save();
 
-                InstructorSuspended::dispatch($instructor);
+                SuspendedEvent::dispatch($instructor);
             });
 
             return true;
@@ -54,7 +54,7 @@ readonly class InstructorService {
             $instructor->update([
                 'status' => 'active',
             ]);
-            InstructorApproved::dispatch($instructor);
+            ApprovedEvent::dispatch($instructor);
             return true;
         }
         return false;
@@ -67,7 +67,7 @@ readonly class InstructorService {
             $instructor->update([
                 'status' => 'active',
             ]);
-            InstructorRestored::dispatch($instructor);
+            RestoredEvent::dispatch($instructor);
             return true;
         }
         return false;
@@ -81,7 +81,7 @@ readonly class InstructorService {
             $instructor->update([
                 'status' => 'rejected',
             ]);
-            InstructorRejected::dispatch($instructor);
+            RejectedEvent::dispatch($instructor);
 
             return true;
         }

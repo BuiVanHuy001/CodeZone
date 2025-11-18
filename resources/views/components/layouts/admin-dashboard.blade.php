@@ -13,6 +13,7 @@
     <title>Codezone admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/images/favicon.ico') }}">
+    <title>{{ $title ?? 'Codezone admin' }}</title>
     @vite(['resources/css/admin/app.css', 'resources/js/admin/app.js'])
     @include('swal::index')
     @stack('styles')

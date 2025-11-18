@@ -20,6 +20,16 @@
         id="external_dist_chart" :title="$externalDistributionChart['title']"
     />
 
+    <div class="col-12">
+        <button type="button"
+                class="btn btn-primary btn-label waves-effect waves-light mb-3 float-end"
+                data-bs-toggle="modal"
+                data-bs-target="#import-student-modal"
+        >
+            <i class="ri-upload-cloud-2-line label-icon align-middle fs-16 me-2"></i> Import Student
+        </button>
+    </div>
+
     <x-admin.shared-ui.data-table-card tableTitle="Internal Students" tableId="internalStudentsTable">
         <x-slot:tableHeader>
             <th>Student code</th>
@@ -125,7 +135,13 @@
             @endforeach
         </x-slot:tableBody>
     </x-admin.shared-ui.data-table-card>
+
+    <livewire:admin.student.components.import-modal/>
 </div>
+
+@assets
+<link rel="stylesheet" href="{{ Vite::asset('resources/assets/admin/libs/dropzone/dropzone.css') }}"/>
+@endassets
 
 @push('scripts')
     <script src="{{ Vite::asset('resources/assets/admin/libs/apexcharts/apexcharts.min.js') }}"></script>
@@ -139,7 +155,6 @@
     <script src="{{ Vite::asset('resources/assets/admin/libs/pdfmake/0.1.53/vfs_fonts.js') }}"></script>
     <script src="{{ Vite::asset('resources/assets/admin/libs/pdfmake/0.1.53/pdfmake.min.js') }}"></script>
     <script src="{{ Vite::asset('resources/assets/admin/libs/jszip/3.1.3/jszip.min.js') }}"></script>
-
     <script>
         window.__studentCharts = window.__studentCharts || {};
 

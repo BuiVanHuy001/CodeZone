@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Events\Instructor;
+namespace App\Events\Course;
 
-use App\Models\User;
+use App\Models\Course;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class InstructorRejected {
+class ApprovedEvent {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public function __construct(
-        public readonly User $instructor,
+        public Course $course,
     ) {}
 
     public function broadcastOn(): array
