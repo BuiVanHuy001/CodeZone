@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Order;
 use App\Models\User;
 use App\Traits\HasNumberFormat;
+use Spatie\Permission\Models\Role;
 
 class MetricService
 {
@@ -93,18 +94,13 @@ class MetricService
 
     private function getActiveStudents(): array
     {
-        $studentCurrent = User::where('role', 'student')
-            ->where('status', 'active')
-            ->whereBetween('created_at', [now()->startOfMonth(), now()])
-            ->count();
+        $activeStudents = Role::findByName('student')->users()->where('status', 'active')->get();
+        $studentCurrent = $activeStudents->whereBetween('created_at', [now()->startOfMonth(), now()])->count();
 
-        $studentPrev = User::where('role', 'student')
-            ->where('status', 'active')
-            ->whereBetween('created_at', [now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth()])
-            ->count();
+        $studentPrev = $activeStudents->whereBetween('created_at', [now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
 
         $studentChange = $this->calculateChange($studentCurrent, $studentPrev);
-        $totalStudents = User::where('role', 'student')->where('status', 'active')->count();
+        $totalStudents = $activeStudents->count();
         $formattedParts = $this->getFormattedParts($totalStudents);
 
         return $this->formatMetricResult(

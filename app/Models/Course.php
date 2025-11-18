@@ -24,7 +24,13 @@ class Course extends Model
 
     public static array $STATUSES = ['draft', 'published', 'pending', 'rejected', 'suspended'];
 
-    public static array $LEVELS = ['beginner', 'intermediate', 'advanced'];
+    public static array $LEVELS = ['beginner', 'intermediate', 'advanced', 'all_levels'];
+
+    public static array $TYPES = [
+        'free' => 'free',
+        'paid' => 'paid',
+        'internal' => 'Internal',
+    ];
 
     protected $casts = [
         'requirements' => 'array',
@@ -47,6 +53,11 @@ class Course extends Model
             'id',
             'id'
         );
+    }
+
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class, 'course_id');
     }
 
     public function category(): belongsTo

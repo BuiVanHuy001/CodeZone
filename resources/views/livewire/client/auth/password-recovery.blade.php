@@ -37,7 +37,7 @@
         </form>
         <div class="text-center mb-3">
             <p class="description">Don't have an account?
-                <a class="rbt-btn-link" href="{{ route('client.register') }}"><strong>Register here</strong></a>
+                <a class="rbt-btn-link" href="{{ route('student.register') }}"><strong>Register here</strong></a>
             </p>
         </div>
     @endif

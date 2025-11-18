@@ -2,10 +2,14 @@
 
 namespace App\Services\Admin\Course;
 
+use App\Events\Course\ApprovedEvent;
+use App\Events\Course\RejectedEvent;
+use App\Events\Course\RestoredEvent;
 use App\Models\Course;
-use App\Notifications\CourseApprovedNotification;
-use App\Notifications\CourseRejectedNotification;
-use App\Services\Course\Catalog\CatalogService;
+use App\Notifications\Course\CourseApprovedNotification;
+use App\Notifications\Course\CourseRejectedNotification;
+use App\Notifications\Course\CourseRestoredNotification;
+use App\Services\Client\Course\Catalog\CatalogService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,7 +26,7 @@ readonly class CourseService
     {
         $result = [];
 
-        if (auth()->check() && auth()->user()->isAdmin()) {
+        if (auth()->check() && auth()->user()->hasRole('admin')) {
             foreach (Course::$STATUSES as $status) {
                 $courses = $this->catalogService->getCoursesByStatus($status);
                 $result[$status] = $courses;
@@ -39,7 +43,7 @@ readonly class CourseService
             $course->update([
                 'status' => 'published',
             ]);
-            $course->author->notify(new CourseApprovedNotification($course));
+            ApprovedEvent::dispatch($course);
             return true;
         }
         return false;
@@ -50,13 +54,8 @@ readonly class CourseService
         try {
             return DB::transaction(function () use ($courseId) {
                 $course = Course::findOrFail($courseId);
-
                 $course->update(['status' => 'rejected']);
-
-                $this->deleteCourseAssets($course);
-
-                $course->author->notify(new CourseRejectedNotification($course));
-
+                RejectedEvent::dispatch($course);
                 return true;
             });
         } catch (\Throwable $e) {
@@ -65,24 +64,17 @@ readonly class CourseService
         }
     }
 
-    public function deleteCourseAssets(Course $course): void
+    public function restoreCourse(string|int $courseId): bool
     {
-        if ($course->thumbnail_url) {
-            $this->deleteThumbnail($course->thumbnail_url);
+        $course = Course::find($courseId);
+        if ($course) {
+            $course->update([
+                'status' => 'published',
+            ]);
+            RestoredEvent::dispatch($course);
+            return true;
         }
-        $this->deleteModule($course);
-    }
-
-    private function deleteThumbnail(string $thumbnail_url): void
-    {
-        if (Storage::disk('public')->exists('course/thumbnails/' . $thumbnail_url)) {
-            Storage::disk('public')->delete('course/thumbnails/' . $thumbnail_url);
-        }
-    }
-
-    private function deleteModule(Course $course): void
-    {
-        $course->modules()->delete();
+        return false;
     }
 
     public function suspendCourse(string|int $courseId): bool

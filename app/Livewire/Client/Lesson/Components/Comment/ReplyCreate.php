@@ -3,7 +3,7 @@
 namespace App\Livewire\Client\Lesson\Components\Comment;
 
 use App\Models\Comment;
-use App\Services\Comment\CommentService;
+use App\Services\Client\Comment\CommentService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Validate;

@@ -13,7 +13,7 @@ return new class extends Migration {
     {
         Schema::create('enrollments', static function (Blueprint $table) {
             $table->foreignUuid('course_id')->constrained('courses');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignUuid('user_id')->constrained('users');
             $table->primary(['course_id', 'user_id']);
 
             $table->enum('status', array_keys(Enrollment::$STATUSES))->default('not_started');

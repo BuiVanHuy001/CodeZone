@@ -4,10 +4,10 @@ namespace App\Services\Admin\Dashboard\Chart;
 
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
-class ChartService
-{
+class ChartService {
     public function getCharts(): array
     {
         return [
@@ -100,7 +100,6 @@ class ChartService
             ->reverse()
             ->values();
 
-        // Revenue theo tháng
         $revenues = DB::table('orders')
             ->selectRaw('DATE_FORMAT(created_at, "%b %Y") as month, SUM(total_price) as total')
             ->where('status', 'completed')
@@ -114,19 +113,17 @@ class ChartService
             ->groupBy('month')
             ->pluck('total', 'month');
 
-        $students = DB::table('users')
-            ->selectRaw('DATE_FORMAT(created_at, "%b %Y") as month, COUNT(*) as total')
-            ->where('created_at', '>=', now()->subYear())
-            ->where('role', 'student') // tuỳ hệ thống của bạn
-            ->groupBy('month')
-            ->pluck('total', 'month');
+        $students = User::selectRaw('DATE_FORMAT(created_at, "%b %Y") as month, COUNT(*) as total')
+                        ->where('created_at', '>=', now()->subYear())
+                        ->role('student')
+                        ->groupBy('month')
+                        ->pluck('total', 'month');
 
-        $instructors = DB::table('users')
-            ->selectRaw('DATE_FORMAT(created_at, "%b %Y") as month, COUNT(*) as total')
-            ->where('created_at', '>=', now()->subYear())
-            ->where('role', 'instructor')
-            ->groupBy('month')
-            ->pluck('total', 'month');
+        $instructors = User::selectRaw('DATE_FORMAT(created_at, "%b %Y") as month, COUNT(*) as total')
+                           ->where('created_at', '>=', now()->subYear())
+                           ->role('instructor')
+                           ->groupBy('month')
+                           ->pluck('total', 'month');
 
         $approvedCourses = DB::table('courses')
             ->selectRaw('DATE_FORMAT(created_at, "%b %Y") as month, COUNT(*) as total')

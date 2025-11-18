@@ -16,7 +16,7 @@ return new class extends Migration {
 			$table->string('certificate_url');
 			$table->string('verification_code')->unique();
 
-			$table->foreignIdFor(User::class)->constrained();
+            $table->foreignUuid(User::class)->constrained('users');
 			$table->foreignUuid('course_id')->constrained('courses');
 			$table->timestamps();
 		});

@@ -31,6 +31,7 @@
         "@codemirror/view": "^6.38.1",
         "alpinejs": "^3.14.9",
         "codemirror": "^6.0.2",
+        "filepond-plugin-file-validate-type": "^1.2.9",
         "plyr": "^3.7.8",
         "shiki": "^3.8.0"
     }

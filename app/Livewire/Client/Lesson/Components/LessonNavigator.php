@@ -2,13 +2,13 @@
 
 namespace App\Livewire\Client\Lesson\Components;
 
+use App\Models\AssessmentAttempt;
 use App\Models\Lesson;
-use App\Services\Course\LearningService;
+use App\Services\Client\Course\LearningService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Livewire\Component;
-use App\Models\AssessmentAttempt;
 
 class LessonNavigator extends Component
 {

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tracking_progresses', static function (Blueprint $table) {
             $table->id();
             $table->boolean('is_completed')->default(false);
-	        $table->foreignIdFor(User::class)->constrained();
+            $table->foreignUuid('user_id')->constrained('users');
             $table->foreignIdFor(Lesson::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

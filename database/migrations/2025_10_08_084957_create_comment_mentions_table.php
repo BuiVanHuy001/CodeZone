@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('comment_mentions', static function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Comment::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -2,9 +2,21 @@ import "../bootstrap";
 
 import "../../assets/admin/libs/bootstrap/js/bootstrap.bundle.min.js";
 import "../../assets/admin/libs/feather-icons/feather.min.js";
-import "../../assets/admin/js/pages/plugins/lord-icon-2.1.0.js";
+import {
+    showSuspendedConfirm,
+    showApprovedConfirm,
+    showRejectedConfirm,
+    showRestoredConfirm,
 
+} from "../../assets/admin/js/pages/sweetalerts.utils.js";
+import '../../assets/admin/js/pages/datatable-init.js';
 import "../../assets/admin/js/app.js";
+
+
+window.showSuspendedConfirm = showSuspendedConfirm;
+window.showApprovedConfirm = showApprovedConfirm;
+window.showRejectedConfirm = showRejectedConfirm;
+window.showRestoredConfirm = showRestoredConfirm;
 
 window.getChartColorsArray = function (id) {
     const el = document.getElementById(id);

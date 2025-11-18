@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('payment_method', 10)->nullable();
             $table->json('payment_info')->nullable();
 
-	        $table->foreignIdFor(User::class)->constrained();
+            $table->foreignUuid('user_id')->constrained('users');
             $table->timestamps();
         });
     }

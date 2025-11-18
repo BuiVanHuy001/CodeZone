@@ -1,75 +1,80 @@
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, status, avatar,
                             created_at, updated_at)
-VALUES (99999, 'Admin User', 'admin-user', 'admin@codezone.com', '2025-07-16 07:57:22',
+VALUES ('0908ca6b-76a3-33d1-a617-e73f7c774d4f', 'Admin User', 'admin-user', 'admin@codezone.com', '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG',
-        'aNewRandomTokenString', 'admin', 'active',
+        'aNewRandomTokenString', 'active',
         NULL, '2025-07-16 07:57:22', '2025-07-16 07:57:22');
 
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, status, avatar,
                             created_at, updated_at)
-VALUES (1, 'Taylor Otwell', 'taylorotwell', 'taylorotwell@codezone.com', '2025-07-16 07:57:22',
+VALUES ('09b92350-0988-318b-b457-737c86df9a7b', 'Taylor Otwell', 'taylorotwell', 'taylorotwell@codezone.com',
+        '2025-07-16 07:57:22',
         '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG',
-        '5pTVG004RfwiXNSD1stvkNOefoYdBHAk2aXCVE6UyVmMZ7ZzODlHrp7sdID6', 'instructor', 'active',
+        '5pTVG004RfwiXNSD1stvkNOefoYdBHAk2aXCVE6UyVmMZ7ZzODlHrp7sdID6', 'active',
         'https://avatars.githubusercontent.com/u/463230?v=4', '2025-07-16 07:57:22', '2025-07-16 07:57:22');
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, status, avatar,
                             created_at, updated_at)
-VALUES (2, 'Nguyễn Hoàng Bảo Quân', 'nguyen-hoang-bao-quan', 'baoquan@example.com', '2025-07-16 07:57:22',
-        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'UhBpv0OLwa', 'student', 'active',
+VALUES ('0c7d38e4-10f9-371a-aef3-401c8e19ffdb', 'Nguyễn Hoàng Bảo Quân', 'nguyen-hoang-bao-quan', 'baoquan@example.com',
+        '2025-07-16 07:57:22',
+        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'UhBpv0OLwa', 'active',
         'https://s120-ava-talk.zadn.vn/e/b/c/4/14/120/46ccb5a6f617d44a0deb5b7c78cc57dd.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, status, avatar,
                             created_at, updated_at)
-VALUES (3, 'Kim Oanh', 'kim-oanh', 'oanh@example.com', '2025-07-16 07:57:22',
-        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '32ZwAnKIxo', 'student', 'active',
+VALUES ('0cda723f-b8c9-37ff-ae9b-4169e61923ce', 'Kim Oanh', 'kim-oanh', 'oanh@example.com', '2025-07-16 07:57:22',
+        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '32ZwAnKIxo', 'active',
         'https://s120-ava-talk.zadn.vn/f/7/3/9/16/120/cb49ec6773223cb8ec670fa5809cf03c.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, status, avatar,
                             created_at, updated_at)
-VALUES (4, 'Nhã Linh', 'nha-linh', 'nhalinh@example.com', '2025-07-16 07:57:22',
-        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'FFPlAw1Qus', 'student', 'active',
+VALUES ('1740648d-e063-325e-8fc7-d7a54772e5be', 'Nhã Linh', 'nha-linh', 'nhalinh@example.com', '2025-07-16 07:57:22',
+        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'FFPlAw1Qus', 'active',
         'https://s120-ava-talk.zadn.vn/c/9/f/9/7/120/38b60c8ee3e418225e8271febf7ca1c2.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, status, avatar,
                             created_at, updated_at)
-VALUES (5, 'Bảo Anh', 'bao-anh', 'baoanh@example.com', '2025-07-16 07:57:22',
-        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'zozbCI3VAl', 'student', 'active',
+VALUES ('189932b6-626c-3455-8fdf-f2b27765436b', 'Bảo Anh', 'bao-anh', 'baoanh@example.com', '2025-07-16 07:57:22',
+        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'zozbCI3VAl', 'active',
         'https://s120-ava-talk.zadn.vn/5/5/f/c/9/120/52e2d7d39ba0a7df493334af72c494b4.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, status, avatar,
                             created_at, updated_at)
-VALUES (6, 'Thanh Thúy', 'thanh-thuy', 'thanhthuy@example.com', '2025-07-16 07:57:22',
-        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'JEnfFjxjIV', 'student', 'active',
+VALUES ('194af828-2b26-378b-b188-06dd6071bc0e', 'Thanh Thúy', 'thanh-thuy', 'thanhthuy@example.com',
+        '2025-07-16 07:57:22',
+        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'JEnfFjxjIV', 'active',
         'https://s120-ava-talk.zadn.vn/f/d/3/f/11/120/bf87c651c9479056f13f557e64a813e3.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, status, avatar,
                             created_at, updated_at)
-VALUES (7, 'Lê Thị Mỹ Hằng', 'le-thi-my-hang', 'lethimyhang@example.com', '2025-07-16 07:57:22',
-        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'bhyS6IuZDt', 'student', 'active',
+VALUES ('217e071c-1cdd-3339-892f-868cfd7bb7e5', 'Lê Thị Mỹ Hằng', 'le-thi-my-hang', 'lethimyhang@example.com',
+        '2025-07-16 07:57:22',
+        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'bhyS6IuZDt', 'active',
         'https://s120-ava-talk.zadn.vn/5/6/f/8/14/120/0c08f5c75cd695f3344a653c392efdf7.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, status, avatar,
                             created_at, updated_at)
-VALUES (8, 'Tu Pham', 'tu-pham', 'tu@example.com', '2025-07-16 07:57:22',
-        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'CBLQxl6CO0', 'student', 'active',
+VALUES ('230a5b73-e6e8-30a1-8dcf-b7779a55d496', 'Tu Pham', 'tu-pham', 'tu@example.com', '2025-07-16 07:57:22',
+        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', 'CBLQxl6CO0', 'active',
         'https://s120-ava-talk.zadn.vn/f/5/c/e/9/120/02c783d24913b12cb949206f4bbafe31.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, status, avatar,
                             created_at, updated_at)
-VALUES (9, 'Rylee John', 'rylee-john', 'berge.thurman@example.com', '2025-07-16 07:57:22',
-        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '99xmuytpg1', 'student', 'active',
+VALUES ('23670677-ad80-49df-b199-4b1918acc562', 'Rylee John', 'rylee-john', 'berge.thurman@example.com',
+        '2025-07-16 07:57:22',
+        '$2y$12$HoljsOWAgseg.FvcYlPUb.4xG9kbSh0RI791dPgB/gsqG.glziGPG', '99xmuytpg1', 'active',
         'https://s120-ava-talk.zadn.vn/a/e/d/7/143/120/c5546614ce8d2fe81cc02eda9fff2d40.jpg', '2025-07-16 07:57:22',
         '2025-07-16 07:57:22');
 
-INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, role, status, avatar,
+INSERT INTO codezone.users (id, name, slug, email, email_verified_at, password, remember_token, status, avatar,
                             created_at, updated_at)
-VALUES (11, 'Bùi Văn Huy', 'bui-van-huy', 'work.buivanhuy@gmail.com', null,
+VALUES ('2a103d4c-7da1-36e1-818b-aa305b5d1ba2', 'Bùi Văn Huy', 'bui-van-huy', 'work.buivanhuy@gmail.com', null,
         '$2y$12$9NhmMntQNhq/YtUAMtUIBuQxSfUAZtCPxOAIUdN7mveLkjfT1QVdS',
-        'AWldtr0y1i9ECS3FFgv3gQDqfJ0dFOqhoPn33qiN6h3h3EJrux3c63auriWo', 'student', 'active',
+        'AWldtr0y1i9ECS3FFgv3gQDqfJ0dFOqhoPn33qiN6h3h3EJrux3c63auriWo', 'active',
         'https://avatars.githubusercontent.com/u/11849?v=4', '2025-09-25 09:57:16', '2025-09-25 09:57:16');
 
 INSERT INTO codezone.instructor_profiles (user_id, bio, about_me, current_job, social_links, course_count,
                                           student_count, rating, review_count, created_at, updated_at)
-VALUES (1, '## **Taylor Otwell – Laravel Creator Profile**
+VALUES ('09b92350-0988-318b-b457-737c86df9a7b', '## **Taylor Otwell – Laravel Creator Profile**
 
 ### 🚀 **Professional Summary**
 
@@ -128,6 +133,100 @@ When I’m not creating new features for Laravel, I enjoy sharing knowledge with
     "facebook": null,
     "linkedin": null
 }', 3, 0, 0.00, 0, '2025-08-09 15:10:24', '2025-09-25 11:32:00');
+
+INSERT INTO codezone.faculties (name, code, created_at, updated_at, slug)
+VALUES ('KHOA QUẢN TRỊ', 'QT', NOW(), NOW(), 'khoa-quan-tri'),
+       ('KHOA NGÔN NGỮ', 'NN', NOW(), NOW(), 'khoa-ngon-ngu'),
+       ('KHOA SỨC KHOẺ', 'SK', NOW(), NOW(), 'khoa-suc-khoe'),
+       ('KHOA CÔNG NGHỆ', 'CNTT', NOW(), NOW(), 'khoa-cong-nghe'),
+       ('KHOA THIẾT KẾ', 'TK', NOW(), NOW(), 'khoa-thiet-ke');
+
+INSERT INTO codezone.majors (name, code, faculty_id, created_at, updated_at, slug)
+VALUES ('Quan hệ công chúng', 'QHCC', 1, NOW(), NOW(), 'quan-he-cong-chung'),
+       ('Quản trị Dịch vụ Du lịch và Lữ hành', 'DLH', 1, NOW(), NOW(), 'quan-tri-dich-vu-du-lich-va-lu-hanh'),
+       ('Quản trị Khách sạn', 'QTKS', 1, NOW(), NOW(), 'quan-tri-khach-san'),
+       ('Quản trị Bán hàng', 'QTBH', 1, NOW(), NOW(), 'quan-tri-ban-hang'),
+       ('Marketing thương mại', 'MRTM', 1, NOW(), NOW(), 'marketing-thuong-mai'),
+
+       ('Tiếng Trung Quốc', 'TQ', 2, NOW(), NOW(), 'tieng-trung-quoc'),
+       ('TIẾNG HÀN QUỐC', 'HQ', 2, NOW(), NOW(), 'tieng-han-quoc'),
+       ('Phiên dịch tiếng Nhật kinh tế thương mại', 'TN', 2, NOW(), NOW(), 'phien-dien-tieng-nhat-kinh-te-thuong-mai'),
+       ('Phiên dịch Tiếng Anh Thương mại', 'TA', 2, NOW(), NOW(), 'phien-dich-tieng-anh-thuong-mai'),
+
+       ('Dược', 'DUOC', 3, NOW(), NOW(), 'duoc'),
+       ('Điều dưỡng', 'DD', 3, NOW(), NOW(), 'dieu-duong'),
+
+       ('Công nghệ Kỹ thuật Ô tô', 'OTO', 4, NOW(), NOW(), 'cong-nghe-ky-thuat-oto'),
+       ('Ứng dụng phần mền', 'UDPM', 4, NOW(), NOW(), 'ung-dung-phan-men'),
+       ('Thiết kế Website', 'TKW', 4, NOW(), NOW(), 'thiet-ke-website'),
+
+       ('Thiết kế Đồ họa', 'TKDH', 5, NOW(), NOW(), 'thiet-ke-do-hoa'),
+       ('Thiết kế Nội thất', 'TKNT', 5, NOW(), NOW(), 'thiet-ke-noi-that'),
+       ('Thiết kế thời trang', 'TKTT', 5, NOW(), NOW(), 'thiet-ke-thoi-trang');
+INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at, slug)
+VALUES ('Lớp Quan hệ công chúng K23 Gò Vấp', '523QHCC01G', (SELECT id FROM codezone.majors WHERE code = 'QHCC'), NOW(),
+        NOW(), 'lop-quan-he-cong-chung-k23-go-vap'),
+       ('Lớp Quan hệ công chúng K24 Trung Sơn', '524QHCC01T', (SELECT id FROM codezone.majors WHERE code = 'QHCC'),
+        NOW(), NOW(), 'lop-quan-he-cong-chung-k24-trung-son'),
+       ('Lớp Du lịch lữ hành K23 Gò Vấp', '523DLH01G', (SELECT id FROM codezone.majors WHERE code = 'DLH'), NOW(),
+        NOW(), 'lop-du-lich-lu-hanh-k23-go-vap'),
+       ('Lớp Quản trị Khách sạn K23 Trung Sơn', '523QTKS01T', (SELECT id FROM codezone.majors WHERE code = 'QTKS'),
+        NOW(), NOW(), 'lop-quan-tri-khach-san-k23-trung-son'),
+       ('Lớp Quản trị Khách sạn K24 Gò Vấp', '524QTKS01G', (SELECT id FROM codezone.majors WHERE code = 'QTKS'), NOW(),
+        NOW(), 'lop-quan-tri-khach-san-k24-go-vap'),
+       ('Lớp Quản trị Bán hàng K23 Gò Vấp', '523QTBH01G', (SELECT id FROM codezone.majors WHERE code = 'QTBH'), NOW(),
+        NOW(), 'lop-quan-tri-ban-hang-k23-go-vap'),
+       ('Lớp Marketing thương mại K24', '524MRTM01G', (SELECT id FROM codezone.majors WHERE code = 'MRTM'), NOW(),
+        NOW(), 'lop-marketing-thuong-mai-k24');
+INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at, slug)
+VALUES ('Lớp Tiếng Trung K23 Gò Vấp', '523TQ01G', (SELECT id FROM codezone.majors WHERE code = 'TQ'), NOW(), NOW(),
+        'lop-tieng-trung-k23-go-vap'),
+       ('Lớp Tiếng Hàn K23 Trung Sơn', '523HQ01T', (SELECT id FROM codezone.majors WHERE code = 'HQ'), NOW(), NOW(),
+        'lop-tieng-han-k23-trung-son'),
+       ('Lớp Tiếng Nhật K24 Gò Vấp', '524TN01G', (SELECT id FROM codezone.majors WHERE code = 'TN'), NOW(), NOW(),
+        'lop-tieng-nhat-k24-go-vap'),
+       ('Lớp Tiếng Anh Thương mại K23 Gò Vấp', '523TA01G', (SELECT id FROM codezone.majors WHERE code = 'TA'), NOW(),
+        NOW(), 'lop-tieng-anh-thuong-mai-k23-go-vap'),
+       ('Lớp Tiếng Anh Thương mại K23 Lớp 02', '523TA02G', (SELECT id FROM codezone.majors WHERE code = 'TA'), NOW(),
+        NOW(), 'lop-tieng-anh-thuong-mai-k23-lop-02');
+
+INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at, slug)
+VALUES ('Lớp Dược K23 Gò Vấp', '523DUOC01G', (SELECT id FROM codezone.majors WHERE code = 'DUOC'), NOW(), NOW(),
+        'lop-duoc-k23-go-vap'),
+       ('Lớp Dược K24 Gò Vấp', '524DUOC01G', (SELECT id FROM codezone.majors WHERE code = 'DUOC'), NOW(), NOW(),
+        'lop-duoc-k24-go-vap'),
+       ('Lớp Điều dưỡng K23 Trung Sơn', '523DD01T', (SELECT id FROM codezone.majors WHERE code = 'DD'), NOW(), NOW(),
+        'lop-dieu-duong-k23-trung-son'),
+       ('Lớp Điều dưỡng K24 Gò Vấp', '524DD01G', (SELECT id FROM codezone.majors WHERE code = 'DD'), NOW(), NOW(),
+        'lop-dieu-duong-k24-go-vap');
+
+INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at, slug)
+VALUES ('Lớp Công nghệ Ô tô K23 Gò Vấp', '523OTO01G', (SELECT id FROM codezone.majors WHERE code = 'OTO'), NOW(), NOW(),
+        'lop-cong-nghe-o-to-k23-go-vap'),
+       ('Lớp Công nghệ Ô tô K24 Gò Vấp', '524OTO01G', (SELECT id FROM codezone.majors WHERE code = 'OTO'), NOW(), NOW(),
+        'lop-cong-nghe-o-to-k24-go-vap'),
+       ('Lớp Ứng dụng phần mềm K22 Gò Vấp', '522UDPM01G', (SELECT id FROM codezone.majors WHERE code = 'UDPM'), NOW(),
+        NOW(), 'lop-ung-dung-phan-mem-k22-go-vap'),
+       ('Lớp Ứng dụng phần mềm K23 Gò Vấp', '523UDPM01G', (SELECT id FROM codezone.majors WHERE code = 'UDPM'), NOW(),
+        NOW(), 'lop-ung-dung-phan-mem-k23-go-vap'),
+       ('Lớp Ứng dụng phần mềm K23 Trung Sơn', '523UDPM01T', (SELECT id FROM codezone.majors WHERE code = 'UDPM'),
+        NOW(), NOW(), 'lop-ung-dung-phan-mem-k23-trung-son'),
+       ('Lớp Thiết kế Website K23 Gò Vấp', '523TKW01G', (SELECT id FROM codezone.majors WHERE code = 'TKW'), NOW(),
+        NOW(), 'lop-thiet-ke-website-k23-go-vap'),
+       ('Lớp Thiết kế Website K24 Gò Vấp', '524TKW01G', (SELECT id FROM codezone.majors WHERE code = 'TKW'), NOW(),
+        NOW(), 'lop-thiet-ke-website-k24-go-vap');
+
+INSERT INTO codezone.class_rooms (name, code, major_id, created_at, updated_at, slug)
+VALUES ('Lớp Thiết kế Đồ họa K23 Gò Vấp', '523TKDH01G', (SELECT id FROM codezone.majors WHERE code = 'TKDH'), NOW(),
+        NOW(), 'lop-thiet-ke-do-hoa-k23-go-vap'),
+       ('Lớp Thiết kế Đồ họa K23 Trung Sơn', '523TKDH01T', (SELECT id FROM codezone.majors WHERE code = 'TKDH'), NOW(),
+        NOW(), 'lop-thiet-ke-do-hoa-k23-trung-son'),
+       ('Lớp Thiết kế Đồ họa K24 Gò Vấp', '524TKDH01G', (SELECT id FROM codezone.majors WHERE code = 'TKDH'), NOW(),
+        NOW(), 'lop-thiet-ke-do-hoa-k24-go-vap'),
+       ('Lớp Thiết kế Nội thất K23 Gò Vấp', '523TKNT01G', (SELECT id FROM codezone.majors WHERE code = 'TKNT'), NOW(),
+        NOW(), 'lop-thiet-ke-noi-that-k23-go-vap'),
+       ('Lớp Thiết kế Thời trang K24 Gò Vấp', '524TKTT01G', (SELECT id FROM codezone.majors WHERE code = 'TKTT'), NOW(),
+        NOW(), 'lop-thiet-ke-thoi-trang-k24-go-vap');
 
 INSERT INTO codezone.categories (id, name, slug, parent_id, icon, thumbnail, position, deleted_at, created_at,
                                  updated_at)
@@ -273,7 +372,7 @@ Hãy bắt đầu hành trình cùng **Docker 2025: Từ Cơ Bản Đến Thành
         '"[{\\"name\\":\\"Không cần kiến thức về Container trước đây – khóa học này dành cho người mới hoàn toàn.\\"},{\\"name\\":\\"Máy tính Windows, macOS hoặc Linux có kết nối Internet.\\"},{\\"name\\":\\"Kỹ năng cơ bản về máy tính như sử dụng trình duyệt và cài đặt phần mềm.\\"},{\\"name\\":\\"Tinh thần học hỏi và tư duy logic.\\"}]"',
         '"{\\"0\\":{\\"name\\":\\"Không cần kiến thức về Container trước đây – khóa học này dành cho người mới hoàn toàn.\\"},\\"2\\":{\\"name\\":\\"Máy tính Windows, macOS hoặc Linux có kết nối Internet.\\"},\\"4\\":{\\"name\\":\\"Kỹ năng cơ bản về máy tính như sử dụng trình duyệt và cài đặt phần mềm.\\"},\\"6\\":{\\"name\\":\\"Tinh thần học hỏi và tư duy logic.\\"}}"',
         '"{\\"0\\":{\\"name\\":\\"Người mới bắt đầu Chưa biết gì về Container nhưng muốn học Docker từ đầu.\\"},\\"2\\":{\\"name\\":\\"Lập trình viên & Người học DevOps Muốn container hóa ứng dụng để triển khai nhanh chóng và dễ dàng.\\"},\\"4\\":{\\"name\\":\\"Người muốn chuyển nghề Từ lĩnh vực khác sang IT hoặc Cloud\\\\/DevOps.\\"},\\"6\\":{\\"name\\":\\"Người yêu công nghệ Bất kỳ ai muốn hiểu Docker để tự động hóa và triển khai ứng dụng hiệu quả hơn.\\"},\\"8\\":{\\"name\\":\\"Nhóm & Doanh nghiệp Muốn chuẩn hóa môi trường dev\\\\/test\\\\/prod và cải thiện quy trình CI\\\\/CD.\\"}}"',
-        1, '2025-09-25 09:41:19', '2025-09-25 09:58:25');
+        '09b92350-0988-318b-b457-737c86df9a7b', '2025-09-25 09:41:19', '2025-09-25 09:58:25');
 
 INSERT INTO codezone.courses (id, title, slug, heading, description, thumbnail, price, enrollment_count, review_count,
                               lesson_count, rating, duration, level, status, category_id, skills, requirements,
@@ -305,7 +404,7 @@ Ready to start your journey? Let\'s transform your potential into a career you\'
         '"[{\\"name\\":\\"Master Python Basics: Learn Python programming fundamentals, including variables, data types, loops, and Object-Oriented Programming.\\"},{\\"name\\":\\"Work with Real-World Data: Gain hands-on experience using Python libraries like Flask, Requests and Shutil.\\"},{\\"name\\":\\"Learn to code in the AI Era with tools like Cursor AI, GitHub Copilot to skyrocket your Productivity in Python.\\"},{\\"name\\":\\"Build Projects from Scratch: Develop practical Python projects, such as calculators, games, and automation scripts.\\"},{\\"name\\":\\"Create VidSnapAI — an AI-powered SaaS project using ElevenLabs, FFmpeg, and Python. A real-world project you can proudly add to your resume.\\"},{\\"name\\":\\"Understand Object-Oriented Programming (OOP): Learn how to design classes, objects, and implement inheritance in Python.\\"},{\\"name\\":\\"Automate Tasks with Python: Use Python to simplify repetitive tasks, including file handling and web scraping.\\"},{\\"name\\":\\"Learn to Build Full Stack Applications using Python Flask as your Backend\\"}]"',
         '"[{\\"name\\":\\"No prior programming experience is required – this course is designed for complete beginners.\\"},{\\"name\\":\\"A computer (Windows, macOS, or Linux) with an internet connection.\\"},{\\"name\\":\\"Basic computer skills, such as using a web browser and installing software.\\"},{\\"name\\":\\"A willingness to learn and a curious mindset!\\"}]"',
         '"[{\\"name\\":\\"Complete Beginners: Individuals with no prior programming experience who want to start their journey in Python and coding.\\"},{\\"name\\":\\"Aspiring Programmers: Students and professionals looking to build a strong foundation in Python for academic or career purposes.\\"},{\\"name\\":\\"Career Changers: People from non-technical backgrounds who want to transition into tech or software development.\\"},{\\"name\\":\\"Hobbyists and Enthusiasts: Anyone interested in learning Python to automate tasks, build projects, or explore programming as a hobby.\\"},{\\"name\\":\\"Future Data Scientists and Developers: Those aiming to use Python for data analysis, web development, or machine learning in the future.\\"}]"',
-        1, '2025-09-25 08:56:48', '2025-09-25 09:58:25');
+        '09b92350-0988-318b-b457-737c86df9a7b', '2025-09-25 08:56:48', '2025-09-25 09:58:25');
 INSERT INTO codezone.courses (id, title, slug, heading, description, thumbnail, price, enrollment_count, review_count,
                               lesson_count, rating, duration, level, status, category_id, skills, requirements,
                               target_audiences, user_id, created_at, updated_at)
@@ -359,7 +458,7 @@ By the end of this course, you’ll not only understand **how JavaScript, HTML, 
         '"[{\\"name\\":\\"Master the art of writing clean and maintainable JavaScript code, a valuable skill for any developer.\\"},{\\"name\\":\\"Harness the power of pure JavaScript, HTML5, and CSS3 to create responsive and visually appealing projects.\\"},{\\"name\\":\\"Develop a strong foundation in web development, allowing you to confidently pursue a career as a web developer or freelancer.\\"},{\\"name\\":\\"Dive into the world of web development with in-depth tutorials and practical coding.\\"},{\\"name\\":\\"Gain hands-on experience by building 20 real-world web applications from scratch.\\"},{\\"name\\":\\"Gain hands-on experience by building 20 real-world web applications from scratch.\\"},{\\"name\\":\\"The confidence to pursue a career as a web developer or explore freelancing opportunities in the field.\\"},{\\"name\\":\\"The art of writing clean and maintainable JavaScript code.\\"}]"',
         '"[{\\"name\\":\\"A basic understanding of HTML, CSS, and JavaScript fundamentals.\\"},{\\"name\\":\\"Access to a computer or laptop with a reliable internet connection.\\"},{\\"name\\":\\"A text editor for writing and editing code (e.g., Visual Studio Code, Sublime Text).\\"},{\\"name\\":\\"No prior experience is required, making this course suitable for beginners.\\"},{\\"name\\":\\"Willingness to commit time and effort to practice and complete course projects.\\"},{\\"name\\":\\"A desire to enhance your coding skills and build a strong foundation in web development.\\"}]"',
         '"[{\\"name\\":\\"Aspiring web developers seeking to master JavaScript and build a robust portfolio.\\"},{\\"name\\":\\"Career changers looking to transition into web development.\\"},{\\"name\\":\\"Junior developers aiming to strengthen their JavaScript skills.\\"},{\\"name\\":\\"Programmers interested in expanding their knowledge to include web development.\\"},{\\"name\\":\\"Individuals wanting to enrich their portfolios or resumes with diverse web projects.\\"}]"',
-        1, '2025-09-25 11:32:00', '2025-09-25 11:32:00');
+        '09b92350-0988-318b-b457-737c86df9a7b', '2025-09-25 11:32:00', '2025-09-25 11:32:00');
 INSERT INTO codezone.modules (id, title, lesson_count, position, duration, course_id, created_at, updated_at)
 VALUES ('072d510c-785f-4e38-9b31-cf1be7198dc3', 'Quản lý và cập nhật Containers', 3, 3, 1307,
         '23670677-ad80-49df-b199-4b1918acc562', '2025-09-25 09:41:19', '2025-09-25 09:41:19');
@@ -2397,7 +2496,7 @@ VALUES ('392ecdc3-e577-416e-9d31-f8890104cd80', 658000.000, 'completed', 'momo',
     "resultCode": "0",
     "partnerCode": "MOMOBKUN20180529",
     "responseTime": "1758794302496"
-}', 11, '2025-09-25 09:57:21', '2025-09-25 09:58:25');
+}', '2a103d4c-7da1-36e1-818b-aa305b5d1ba2', '2025-09-25 09:57:21', '2025-09-25 09:58:25');
 INSERT INTO codezone.order_items (id, current_price, order_id, course_id, created_at, updated_at)
 VALUES (1, 389000.000, '392ecdc3-e577-416e-9d31-f8890104cd80', '23670677-ad80-49df-b199-4b1918acc562',
         '2025-09-25 09:57:21', '2025-09-25 09:57:21');
@@ -2405,6 +2504,8 @@ INSERT INTO codezone.order_items (id, current_price, order_id, course_id, create
 VALUES (2, 269000.000, '392ecdc3-e577-416e-9d31-f8890104cd80', '37803ab9-7e43-4cad-93e2-a7e60b5e5c87',
         '2025-09-25 09:57:23', '2025-09-25 09:57:23');
 INSERT INTO codezone.enrollments (course_id, user_id, status, created_at, updated_at)
-VALUES ('23670677-ad80-49df-b199-4b1918acc562', 11, 'not_started', '2025-09-25 09:58:25', '2025-09-25 09:58:25');
+VALUES ('23670677-ad80-49df-b199-4b1918acc562', '2a103d4c-7da1-36e1-818b-aa305b5d1ba2', 'not_started',
+        '2025-09-25 09:58:25', '2025-09-25 09:58:25');
 INSERT INTO codezone.enrollments (course_id, user_id, status, created_at, updated_at)
-VALUES ('37803ab9-7e43-4cad-93e2-a7e60b5e5c87', 11, 'not_started', '2025-09-25 09:58:25', '2025-09-25 09:58:25');
+VALUES ('37803ab9-7e43-4cad-93e2-a7e60b5e5c87', '2a103d4c-7da1-36e1-818b-aa305b5d1ba2', 'not_started',
+        '2025-09-25 09:58:25', '2025-09-25 09:58:25');

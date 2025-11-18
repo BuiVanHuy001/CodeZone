@@ -17,15 +17,15 @@ class CoursePolicy
 
     public function access(User $user, Course $course): bool
     {
-        if ($user->role === 'instructor') {
+        if ($user->role() === 'instructor') {
             return $course->user_id === $user->id;
         }
 
-        if ($user->role === 'student') {
+        if ($user->role() === 'student') {
             return $course->enrollments()->where('user_id', $user->id)->exists();
         }
 
-        if ($user->role === 'admin') {
+        if ($user->role() === 'admin') {
             return true;
         }
 

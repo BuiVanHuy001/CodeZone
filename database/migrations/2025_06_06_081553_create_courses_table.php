@@ -34,6 +34,7 @@ return new class extends Migration {
 
             $table->enum('level', Course::$LEVELS);
             $table->enum('status', Course::$STATUSES);
+            $table->enum('type', array_values(Course::$TYPES))->default(Course::$TYPES['free']);
 
             $table->foreignIdFor(Category::class);
 
@@ -41,7 +42,7 @@ return new class extends Migration {
             $table->json('requirements')->nullable();
             $table->json('target_audiences')->nullable();
 
-            $table->foreignIdFor(User::class)->constrained('users');
+            $table->foreignUuid('user_id')->constrained('users');
             $table->softDeletes();
             $table->timestamps();
         });

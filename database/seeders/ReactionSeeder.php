@@ -17,7 +17,7 @@ class ReactionSeeder extends Seeder
     {
         $users = User::all();
         $this->generateReactionForReviews($users);
-        $this->generateReactionForComments($users);
+        $this->generateReactionForComments();
     }
 
     private function generateReactionForReviews(Collection $users): void
@@ -52,7 +52,7 @@ class ReactionSeeder extends Seeder
         }
     }
 
-    private function generateReactionForComments(Collection $users): void
+    private function generateReactionForComments(): void
     {
         $comments = Comment::all();
 
@@ -68,7 +68,7 @@ class ReactionSeeder extends Seeder
         }
     }
 
-    private function createReaction(string $action, Model $modelable, int $userId): void
+    private function createReaction(string $action, Model $modelable, string|int $userId): void
     {
         Reaction::create([
             'reactionable_id' => $modelable->id,

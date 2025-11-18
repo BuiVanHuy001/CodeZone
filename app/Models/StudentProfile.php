@@ -3,29 +3,41 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StudentProfile extends Model {
+    protected $primaryKey = 'user_id';
+    public $incrementing = false;
+
     protected $fillable = [
         'gender',
         'dob',
         'addition_data',
         'user_id',
+        'major_id',
+        'class_room_id',
+        'student_code',
+        'enrollment_year',
+        'student_type',
     ];
-
-    protected $primaryKey = 'user_id';
-    public $incrementing = false;
 
     protected $casts = [
         'addition_data' => 'array',
         'dob' => 'date:d-m-Y',
     ];
 
-    public static array $DEFAULT_COLUMNS = [
-        'MAIL' => 'mail',
-        'FULL NAME' => 'full_name',
-        'DATE OF BIRTH' => 'date_of_birth',
-        'GENDER' => 'gender',
-        'AVATAR URL' => 'avatar_url',
-        'PASSWORD' => 'password'
+    public static array $STUDENT_TYPES = [
+        'internal' => 'Internal',
+        'external' => 'External',
     ];
+
+    public function major(): BelongsTo
+    {
+        return $this->belongsTo(Major::class, 'major_id');
+    }
+
+    public function classRoom(): BelongsTo
+    {
+        return $this->belongsTo(ClassRoom::class, 'class_room_id');
+    }
 }

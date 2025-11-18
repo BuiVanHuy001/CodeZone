@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Client\Instructor\Dashboard;
 
-use App\Services\Instructor\InstructorService;
+use App\Services\Client\Instructor\InstructorService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;

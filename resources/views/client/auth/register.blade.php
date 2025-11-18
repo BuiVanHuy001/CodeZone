@@ -3,7 +3,7 @@
 @section('content')
     <div class="rbt-contact-form contact-form-style-1 max-width-auto mx-auto my-5 w-50">
         <h3 class="title text-center">Register</h3>
-        <form class="max-width-auto" action="{{ route('student.register.post') }}" method="POST">
+        <form class="max-width-auto" action="{{ route('student.register') }}" method="POST">
             @csrf
             <div  @class(['form-group', 'focused' => old('name')])>
                 <input name="name" type="text" @class(['border-danger' => $errors->has('name')]) value="{{ old('name') }}"/>

@@ -10,7 +10,7 @@ class EnsureUserIsStudent
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || !auth()->user()->isStudent()) {
+        if (!auth()->check() || !auth()->user()->hasRole('student')) {
             return redirect()->route('page.forbidden');
         }
         return $next($request);

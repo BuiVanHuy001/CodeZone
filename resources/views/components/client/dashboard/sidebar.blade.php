@@ -6,7 +6,7 @@
                     <h6 class="rbt-title-style-2">Welcome, {{ auth()->user()->name }} back</h6>
                 </div>
                 <nav class="mainmenu-nav">
-                    @foreach(auth()->user()->getDashboardMenu() as $section)
+                    @foreach(\App\Support\ClientMenuMapping::getMenuForRole() as $section)
                         <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                             @foreach($section as $label => $item)
                                 <li>
@@ -25,9 +25,9 @@
                     @endforeach
                     <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                         <li>
-                            <form class="menu-logout-form" action="{{ route('client.logout') }}" method="POST">
+                            <form class="menu-logout-form" action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
-                                @method('POST')
+                                @method('DELETE')
                                 <a class="menu-logout-btn" href="#">
                                     <i class="feather-log-out"></i><span>Logout</span>
                                 </a>

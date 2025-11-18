@@ -10,6 +10,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
 use JsonException;
 use Random\RandomException;
+use Spatie\Permission\Models\Role;
 use Throwable;
 
 class CourseSeeder extends Seeder
@@ -270,7 +271,8 @@ class CourseSeeder extends Seeder
 
     public function run(): void
     {
-        $instructors = User::where('role', 'instructor')->get();
+        $instructorRole = Role::findByName('instructor');
+        $instructors = $instructorRole->users;
 
         $courseStates = [
             ['count' => 100, 'status' => 'published'],

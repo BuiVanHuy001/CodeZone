@@ -3,7 +3,7 @@
 namespace App\View\Components\Client\CourseDetails;
 
 use App\Models\User;
-use App\Services\Course\Catalog\CatalogService;
+use App\Services\Client\Course\Catalog\CatalogService;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;

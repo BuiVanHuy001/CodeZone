@@ -59,7 +59,7 @@ class CourseInfoValidator {
 
     public static function rules(): array
     {
-        $rules = [
+        return [
             'title' => 'required|min:3|max:255',
             'slug' => 'required|min:3|max:255|unique:courses,slug',
             'heading' => 'required|min:3|max:255',
@@ -73,6 +73,5 @@ class CourseInfoValidator {
             'modules.*.lessons.*.title' => 'required|min:3|max:255',
             'modules.*.lessons.*.type' => 'required|in:' . implode(',', array_keys(Lesson::$TYPES)),
         ];
-        return $rules;
     }
 }

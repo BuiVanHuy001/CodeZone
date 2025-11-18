@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Client\CourseCreation\Components\Builders\Assessment;
 
-use App\Services\Course\Create\Builders\AssessmentTypes\ProgrammingService;
+use App\Services\Client\Course\Create\Builders\AssessmentTypes\ProgrammingService;
 use App\Traits\WithSwal;
 use App\Validator\ProgrammingPracticeValidator;
 use Exception;

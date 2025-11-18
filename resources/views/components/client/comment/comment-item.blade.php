@@ -10,7 +10,7 @@
     <div class="comment-body">
         <div class="single-comment d-flex">
             <div class="comment-img position-relative">
-                @if($comment->user->isInstructor())
+                @if($comment->user->hasRole('instructor'))
                     <span class="position-absolute top-0 translate-middle">
                        <svg class="text-primary" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             viewBox="0 0 24 24">

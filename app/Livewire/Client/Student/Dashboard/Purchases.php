@@ -2,8 +2,7 @@
 
 namespace App\Livewire\Client\Student\Dashboard;
 
-use App\Models\Order;
-use App\Services\Student\StudentService;
+use App\Services\Client\Student\StudentService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;

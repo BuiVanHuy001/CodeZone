@@ -5,10 +5,10 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use Throwable;
 
-class DatabaseSeeder extends Seeder
-{
+class DatabaseSeeder extends Seeder {
     /**
      * Seed the application's database.
      * @throws Throwable
@@ -19,13 +19,14 @@ class DatabaseSeeder extends Seeder
         try {
             $sql = file_get_contents(database_path('codezone.sql'));
             \DB::unprepared($sql);
+            $this->call(PermissionSeeder::class);
             $this->call(UserSeeder::class);
             $this->call(CourseSeeder::class);
             $this->call(EnrollmentSeeder::class);
             $this->call(CommentSeeder::class);
             $this->call(ReactionSeeder::class);
 
-            $instructors = User::where('role', 'instructor')->get();
+            $instructors = Role::findByName('instructor')->users()->with(['instructorProfile', 'courses', 'reviews'])->get();
             foreach ($instructors as $instructor) {
                 $instructorProfile = $instructor->instructorProfile;
 

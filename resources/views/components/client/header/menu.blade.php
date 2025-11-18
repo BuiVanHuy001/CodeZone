@@ -1,5 +1,5 @@
 <div>
-    @foreach(auth()->user()->getDashboardMenu() as $section => $items)
+    @foreach(\App\Support\ClientMenuMapping::getMenuForRole() as $section => $items)
         <ul class="user-list-wrapper">
             @foreach($items as $label => $item)
                 <li>
@@ -18,9 +18,9 @@
 
     <ul class="user-list-wrapper">
         <li>
-            <form class="menu-logout-form" action="{{ route('client.logout') }}" method="POST">
+            <form class="menu-logout-form" action="{{ route('auth.logout') }}" method="POST">
                 @csrf
-                @method('POST')
+                @method('DELETE')
                 <a class="menu-logout-btn" href="#">
                     <i class="feather-log-out"></i><span>Logout</span>
                 </a>

@@ -3,20 +3,28 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasSlug;
+    use HasFactory, Notifiable, HasSlug, HasUuids, HasRoles;
+
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     protected $fillable = [
         'name',
@@ -24,17 +32,13 @@ class User extends Authenticatable
         'password',
         'slug',
         'user_id',
-        'gender',
-        'dob',
-        'addition_data',
-        'avatar'
+        'avatar',
+        'status',
     ];
 
     protected $hidden = ['password', 'remember_token',];
 
-    public static array $ROLES = ['student', 'admin', 'instructor', 'super_admin'];
-
-    public static array $STATUSES = ['active', 'pending', 'banned', 'suspended', 'rejected', 'deleted'];
+    public static array $STATUSES = ['active', 'pending', 'suspended', 'rejected'];
 
     protected function casts(): array
     {
@@ -81,7 +85,7 @@ class User extends Authenticatable
 
     public function getProfile(): HasOne
     {
-        if ($this->isStudent()) {
+        if ($this->hasRole('student')) {
             return $this->studentProfile();
         }
 
@@ -91,21 +95,6 @@ class User extends Authenticatable
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class, 'user_id');
-    }
-
-    public function isInstructor(): bool
-    {
-        return $this->role === 'instructor';
-    }
-
-    public function isStudent(): bool
-    {
-        return $this->role === 'student';
-    }
-
-    public function isAdmin(): bool
-    {
-        return in_array($this->role, ['admin', 'super_admin']);
     }
 
     public function getAvatarPath(): string
@@ -123,9 +112,9 @@ class User extends Authenticatable
         return asset('images/team/temp-avatar.webp');
     }
 
-    public function getDashboardMenu(): array
+    public function role(): string
     {
-        return config("menus.$this->role", []);
+        return $this->getRoleNames()->first() ?? 'guest';
     }
 
     public function slugSourceField(): string

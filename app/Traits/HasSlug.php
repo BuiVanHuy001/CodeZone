@@ -11,7 +11,7 @@ trait HasSlug
     {
         static::creating(static function (Model $model) {
             if (empty($model->slug)) {
-                $slug = Str::slug($model->slugSourceField());
+                $slug = Str::slug($model->slugSourceField() ?? $this->name);
                 $originalSlug = $slug;
                 $count = 1;
 

@@ -9,6 +9,7 @@ use App\Models\TrackingProgress;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Random\RandomException;
+use Spatie\Permission\Models\Role;
 
 class EnrollmentSeeder extends Seeder
 {
@@ -18,10 +19,7 @@ class EnrollmentSeeder extends Seeder
      */
     public function run(): void
     {
-        $students = User::where([
-            'role' => 'student',
-            'status' => 'active',
-        ])->get();
+        $students = Role::findByName('student')->users()->where(['status' => 'active'])->get();
 
         $courses = Course::whereNotIn('status', ['rejected', 'draft', 'pending'])->get();
 
@@ -108,7 +106,7 @@ class EnrollmentSeeder extends Seeder
             ]);
         }
 
-        $instructors = User::where('role', 'instructor')->get();
+        $instructors = Role::findByName('instructor')->users()->get();
         foreach ($instructors as $instructor) {
             if ($instructor->instructorProfile) {
                 $instructor->instructorProfile->update([

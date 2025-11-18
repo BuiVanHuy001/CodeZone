@@ -2,13 +2,9 @@
 
 namespace App\Imports;
 
-use AllowDynamicProperties;
 use App\Models\QuizQuestion;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
-use Maatwebsite\Excel\Concerns\SkipsErrors;
-use Maatwebsite\Excel\Concerns\SkipsFailures;
-use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;

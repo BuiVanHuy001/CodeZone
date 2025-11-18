@@ -3,8 +3,8 @@
 namespace App\Livewire\Client\Lesson\Components\AssessmentTypes;
 
 use App\Models\AssessmentAttempt;
-use App\Services\Assessment\CodeRunnerService;
-use App\Services\Course\LearningService;
+use App\Services\Client\Assessment\CodeRunnerService;
+use App\Services\Client\Course\LearningService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -92,18 +92,17 @@ class Programming extends Component
                     user_code: $this->userCode,
                     language: $this->languageSelected
                 );
-
-                $course = $this->problem->lesson->course;
                 $courseService->markLessonComplete($this->problem->lesson_id);
-                $this->redirect(route('course.learn.lesson', [
-                    'slug' => $course->slug,
-                    'id' => $courseService->getAdjacentLessonId($course, $this->problem->lesson_id)
-                ]));
 
-                $this->swal('Success', 'Your code passed the test cases.');
+                $this->swal('Success', 'Your code passed the test cases. You can proceed to the next lesson.');
             } else {
                 $this->executionErrors = $result['errors'];
             }
+        } elseif (empty($this->userCode)) {
+            $this->swal(
+                title: 'You cannot submit an empty code.',
+                icon: 'warning'
+            );
         } elseif ($this->attemptProgrammings->firstWhere('language', $this->languageSelected)->user_code === $this->userCode) {
             $this->swal(
                 title: 'You have already submitted this code.',

@@ -1,206 +1,177 @@
 <div class="row">
-    <div wire:loading wire:target="approveCourse, rejectCourse, suspendCourse">
+    <div wire:loading wire:target="approve, reject, suspend, restore" class="loading-overlay">
         <x-client.share-ui.loading-effect/>
     </div>
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Active Courses</h5>
-            </div>
-            <div class="card-body">
-                <div wire:ignore.self>
-                    <table id="activeCourseTable" class="table nowrap align-middle" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th data-ordering="false">ID</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Author</th>
-                            <th>Status</th>
-                            <th>Students</th>
-                            <th>Rating</th>
-                            <th>Create At</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($courses['published'] as $course)
-                            <tr>
-                                <td>{{ $course->id }}</td>
-                                <td>
-                                    <a href="{{ $course->detailsPageUrl }}" target="_blank" class="fw-bold">{{ $course->title }}</a>
-                                </td>
-                                <td>{{ $course->categoryName }}</td>
-                                <td>{{ $course->priceFormatted }}</td>
-                                <td>
-                                    <div class="d-flex align-items-center fw-medium">
-                                        <a href="{{ $course->authorInfo['profileUrl'] }}" class="currency_name">
-                                            <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" class="rounded-circle avatar-xxs me-2">
-                                            {{ $course->authorInfo['name'] }}
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="badge {{ $course->status['bg-color'] }}">{{ $course->status['label'] }}</span>
-                                </td>
-                                <td>{{ $course->enrollmentCountText }}</td>
-                                <td>{{ $course->ratingText }}</td>
-                                <td>{{ $course->createdAtText }}</td>
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                <a href="{{ route('course.learn', $course->slug) }}" class="dropdown-item text-secondary" target="_blank">
-                                                    <i class="ri-eye-line align-bottom me-2"></i> View Course Content
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <button wire:click="suspend('{{ $course->id }}')" class="dropdown-item text-warning">
-                                                    <i class="ri-pause-circle-line align-bottom me-2"></i> Suspend
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Pending Courses</h5>
-            </div>
-            <div class="card-body">
-                <div wire:ignore.self>
-                    <table id="pendingCourseTable" class="table align-middle" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th data-ordering="false">ID</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Author</th>
-                            <th>Duration</th>
-                            <th>Create At</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($courses['pending'] as $course)
-                            <tr>
-                                <td>{{ $course->id }}</td>
-                                <td><a href="{{ $course->detailsPageUrl }}" class="fw-bold">{{ $course->title }}</a>
-                                </td>
-                                <td>{{ $course->categoryName }}</td>
-                                <td>{{ $course->priceFormatted }}</td>
-                                <td>
-                                    <div class="d-flex align-items-center fw-medium">
-                                        <a href="{{ $course->authorInfo['profileUrl'] }}" class="currency_name">
-                                            <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" class="rounded-circle avatar-xxs me-2">
-                                            {{ $course->authorInfo['name'] }}
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>{{ $course->durationText }}</td>
-                                <td>{{ $course->createdAtText }}</td>
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                <button wire:click="approve('{{ $course->id }}')" class="btn btn-xl dropdown-item text-success">
-                                                    <i class="ri-checkbox-circle-line align-bottom me-2 text-success"></i>Approve
-                                                </button>
-                                            </li>
-                                            <li>
-                                                <button wire:click="reject('{{ $course->id }}')" class="btn btn-xl dropdown-item text-danger">
-                                                    <i class="ri-close-circle-fill align-bottom me-2"></i>Reject
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+    <x-admin.shared-ui.data-table-card tableTitle="Active Courses" tableId="activeCourseTable">
+        <x-slot:tableHeader>
+            <tr>
+                <th data-ordering="false">ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Author</th>
+                <th>Status</th>
+                <th>Students</th>
+                <th>Rating</th>
+                <th>Create At</th>
+                <th>Action</th>
+            </tr>
+        </x-slot>
 
-    <div class="col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Suspended Courses</h5>
-            </div>
-            <div class="card-body">
-                <div wire:ignore.self>
-                    <table id="suspendedCourseTable" class="table align-middle" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th data-ordering="false">ID</th>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                            <th>Author</th>
-                            <th>Duration</th>
-                            <th>Create At</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($courses['suspended'] as $course)
-                            <tr>
-                                <td>{{ $course->id }}</td>
-                                <td><a href="{{ $course->detailsPageUrl }}" class="fw-bold">{{ $course->title }}</a>
-                                </td>
-                                <td>{{ $course->categoryName }}</td>
-                                <td>{{ $course->priceFormatted }}</td>
-                                <td>
-                                    <div class="d-flex align-items-center fw-medium">
-                                        <a href="{{ $course->authorInfo['profileUrl'] }}" class="currency_name">
-                                            <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" class="rounded-circle avatar-xxs me-2">
-                                            {{ $course->authorInfo['name'] }}
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>{{ $course->durationText }}</td>
-                                <td>{{ $course->createdAtText }}</td>
-                                <td>
-                                    <div class="dropdown d-inline-block">
-                                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="ri-more-fill align-middle"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end">
-                                            <li>
-                                                <button wire:click="approveCourse('{{ $course->id }}')" class="btn btn-xl dropdown-item text-success">
-                                                    <i class="ri-checkbox-circle-line align-bottom me-2"></i> Re-Active
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+        <x-slot:tableBody>
+            @foreach($courses['published'] as $course)
+                <tr>
+                    <td>{{ $course->id }}</td>
+                    <td>
+                        <a href="{{ $course->detailsPageUrl }}" target="_blank" class="fw-bold">{{ $course->title }}</a>
+                    </td>
+                    <td>{{ $course->categoryName }}</td>
+                    <td>{{ $course->priceFormatted }}</td>
+                    <td>
+                        <div class="d-flex align-items-center fw-medium">
+                            <a href="{{ $course->authorInfo['profileUrl'] }}" class="currency_name">
+                                <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" loading="lazy" class="rounded-circle avatar-xxs me-2">
+                                {{ $course->authorInfo['name'] }}
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="badge {{ $course->status['bg-color'] }}">{{ $course->status['label'] }}</span>
+                    </td>
+                    <td>{{ $course->enrollmentCountText }}</td>
+                    <td>{{ $course->ratingText }}</td>
+                    <td>{{ $course->createdAtText }}</td>
+                    <td>
+                        <div class="dropdown d-inline-block">
+                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ri-more-fill align-middle"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a href="{{ route('course.learn', $course->slug) }}" class="dropdown-item text-secondary" target="_blank">
+                                        <i class="ri-eye-line align-bottom me-2"></i> View Course Content
+                                    </a>
+                                </li>
+                                <li>
+                                    <button onclick="showSuspendedConfirm(@this, '{{ $course->id }}', 'Confirm Course Suspension', 'Are you sure you want to suspend the course &quot;{{ $course->title }}&quot;? This will make it unavailable to students.')" class="dropdown-item text-warning">
+                                        <i class="ri-pause-circle-line align-bottom me-2"></i> Suspend
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </x-slot>
+    </x-admin.shared-ui.data-table-card>
+
+    <x-admin.shared-ui.data-table-card tableTitle="Pending Courses" tableId="pendingCourseTable">
+        <x-slot:tableHeader>
+            <tr>
+                <th data-ordering="false">ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Author</th>
+                <th>Duration</th>
+                <th>Create At</th>
+                <th>Action</th>
+            </tr>
+        </x-slot>
+
+        <x-slot:tableBody>
+            @foreach($courses['pending'] as $course)
+                <tr>
+                    <td>{{ $course->id }}</td>
+                    <td><a href="{{ $course->detailsPageUrl }}" class="fw-bold">{{ $course->title }}</a>
+                    </td>
+                    <td>{{ $course->categoryName }}</td>
+                    <td>{{ $course->priceFormatted }}</td>
+                    <td>
+                        <div class="d-flex align-items-center fw-medium">
+                            <a href="{{ $course->authorInfo['profileUrl'] }}" class="currency_name">
+                                <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" loading="lazy" class="rounded-circle avatar-xxs me-2">
+                                {{ $course->authorInfo['name'] }}
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{ $course->durationText }}</td>
+                    <td>{{ $course->createdAtText }}</td>
+                    <td>
+                        <div class="dropdown d-inline-block">
+                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ri-more-fill align-middle"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <button onclick="showApprovedConfirm(@this, '{{ $course->id }}', 'Confirm Course Approval', 'Do you want to approve and publish the course &quot;{{ $course->title }}&quot;? It will become available to students.')" class="btn btn-xl dropdown-item text-success">
+                                        <i class="ri-checkbox-circle-line align-bottom me-2 text-success"></i>Approve
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="showRejectedConfirm(@this, '{{ $course->id }}', 'Confirm Course Rejection', 'Do you want to reject the course &quot;{{ $course->title }}&quot;? The instructor will be notified.')" class="btn btn-xl dropdown-item text-danger">
+                                        <i class="ri-close-circle-fill align-bottom me-2"></i>Reject
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </x-slot>
+    </x-admin.shared-ui.data-table-card>
+
+    <x-admin.shared-ui.data-table-card tableTitle="Suspended Courses" tableId="suspendedCourseTable">
+        <x-slot:tableHeader>
+            <tr>
+                <th data-ordering="false">ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Author</th>
+                <th>Duration</th>
+                <th>Suspended At</th>
+                <th>Action</th>
+            </tr>
+        </x-slot>
+
+        <x-slot:tableBody>
+            @foreach($courses['suspended'] as $course)
+                <tr>
+                    <td>{{ $course->id }}</td>
+                    <td><a href="{{ $course->detailsPageUrl }}" class="fw-bold">{{ $course->title }}</a>
+                    </td>
+                    <td>{{ $course->categoryName }}</td>
+                    <td>{{ $course->priceFormatted }}</td>
+                    <td>
+                        <div class="d-flex align-items-center fw-medium">
+                            <a href="{{ $course->authorInfo['profileUrl'] }}" class="currency_name">
+                                <img src="{{ $course->authorInfo['avatar'] }}" alt="Instructor profile" loading="lazy" class="rounded-circle avatar-xxs me-2">
+                                {{ $course->authorInfo['name'] }}
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{ $course->durationText }}</td>
+                    <td>{{ $course->updatedAtText }}</td>
+                    <td>
+                        <div class="dropdown d-inline-block">
+                            <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ri-more-fill align-middle"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <button onclick="showRestoredConfirm(@this, '{{ $course->id }}', 'Confirm Course Re-activation', 'Do you want to re-activate the course &quot;{{ $course->title }}&quot;? It will be available to students again.')" class="btn btn-xl dropdown-item text-success">
+                                        <i class="ri-checkbox-circle-line align-bottom me-2"></i> Re-Active
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </x-slot>
+    </x-admin.shared-ui.data-table-card>
 </div>
 @assets
 <link href="{{ Vite::asset('resources/assets/admin/libs/datatables.net/1.11.5/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" type="text/css"/>
@@ -246,84 +217,141 @@
     <script src="{{ Vite::asset('resources/assets/admin/libs/jszip/3.1.3/jszip.min.js') }}"></script>
 
     <script>
-        (function () {
-            let initializedTables = {};
-
-            function initTable(selector, opts = {}) {
-                if (typeof $ === 'undefined' || typeof $.fn === 'undefined') {
-                    console.warn('jQuery not loaded yet, skipping DataTable initialization');
-                    return null;
-                }
-
-                const el = $(selector);
-                if (!el.length) return null;
-
-                if (typeof $.fn.DataTable === 'undefined') {
-                    console.warn('DataTables plugin not loaded yet');
-                    return null;
-                }
-
-                if ($.fn.DataTable.isDataTable(selector)) {
-                    $(selector).DataTable().destroy();
-                }
-
-                const defaultOptions = {
-                    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-                    pageLength: 10,
-                    searching: true,
-                    order: [],
-                    language: {
-                        info: "Displaying items _START_ to _END_ out of _TOTAL_ total courses.",
-                        infoEmpty: "No courses found to display",
-                        lengthMenu: "Show _MENU_ courses",
-                        search: "Search courses:",
+        function initializeCourseDataTables() {
+            const tableDefinitions = [
+                {
+                    selector: '#activeCourseTable',
+                    opts: {
+                        buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                text: '<i class="ri-file-excel-2-line"></i> Excel',
+                                titleAttr: 'Export to Excel',
+                                filename: 'active-courses-export-' + new Date().toISOString().split('T')[0],
+                                className: 'btn btn-outline-secondary',
+                                exportOptions: {
+                                    columns: ':not(:last-child)',
+                                },
+                            }, {
+                                extend: 'pdfHtml5',
+                                text: '<i class="ri-file-pdf-line"></i> PDF',
+                                titleAttr: 'Export to PDF',
+                                filename: 'active-courses-export-' + new Date().toISOString().split('T')[0],
+                                className: 'btn btn-outline-secondary',
+                                exportOptions: {
+                                    columns: ':not(:last-child)',
+                                },
+                            }, {
+                                extend: 'print',
+                                text: '<i class="ri-printer-line"></i> Print',
+                                titleAttr: 'Print Table',
+                                className: 'btn btn-outline-secondary',
+                                exportOptions: {
+                                    columns: ':not(:last-child)',
+                                },
+                            }
+                        ]
                     },
-                };
+                }, {
+                    selector: '#pendingCourseTable',
+                    opts: {
+                        buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                text: '<i class="ri-file-excel-2-line"></i> Excel',
+                                titleAttr: 'Export to Excel',
+                                className: 'btn btn-outline-secondary',
+                                filename: 'pending-courses-export-' + new Date().toISOString().split('T')[0],
+                                exportOptions: {
+                                    columns: ':not(:last-child)',
+                                },
 
-                const config = Object.assign({}, defaultOptions, opts);
-                const table = el.DataTable(config);
-                initializedTables[selector] = table;
-                return table;
+                            }, {
+                                extend: 'pdfHtml5',
+                                text: '<i class="ri-file-pdf-line"></i> PDF',
+                                titleAttr: 'Export to PDF',
+                                filename: 'pending-courses-export-' + new Date().toISOString().split('T')[0],
+                                className: 'btn btn-outline-secondary',
+                                exportOptions: {
+                                    columns: ':not(:last-child)',
+                                },
+                            }, {
+                                extend: 'print',
+                                text: '<i class="ri-printer-line"></i> Print',
+                                titleAttr: 'Print Table',
+                                className: 'btn btn-outline-secondary',
+                                exportOptions: {
+                                    columns: ':not(:last-child)',
+                                },
+                            }
+                        ]
+                    },
+                }, {
+                    selector: '#suspendedCourseTable',
+                    opts: {
+                        buttons: [
+                            {
+                                extend: 'excelHtml5',
+                                text: '<i class="ri-file-excel-2-line"></i> Excel',
+                                titleAttr: 'Export to Excel',
+                                className: 'btn btn-outline-secondary',
+                                filename: 'suspended-courses-export-' + new Date().toISOString().split('T')[0],
+                                exportOptions: {
+                                    columns: ':not(:last-child)',
+                                },
+                            }, {
+                                extend: 'pdfHtml5',
+                                text: '<i class="ri-file-pdf-line"></i> PDF',
+                                titleAttr: 'Export to PDF',
+                                filename: 'suspended-courses-export-' + new Date().toISOString().split('T')[0],
+                                className: 'btn btn-outline-secondary',
+                                exportOptions: {
+                                    columns: ':not(:last-child)',
+                                },
+                            }, {
+                                extend: 'print',
+                                text: '<i class="ri-printer-line"></i> Print',
+                                titleAttr: 'Print Table',
+                                className: 'btn btn-outline-secondary',
+                                exportOptions: {
+                                    columns: ':not(:last-child)',
+                                },
+                            }
+                        ]
+                    },
+                }
+            ];
+
+            if (window.AppDataTableHelper && window.AppDataTableHelper.initializeDataTables) {
+                window.AppDataTableHelper.initializeDataTables(tableDefinitions);
+            } else {
+                console.error('DataTable initializer (AppDataTableHelper) not found.');
+            }
+        }
+
+        function setupCoursePage() {
+            if ($.fn.DataTable.isDataTable('#activeCourseTable')) {
+                $('#activeCourseTable').DataTable().destroy();
+            }
+            if ($.fn.DataTable.isDataTable('#pendingCourseTable')) {
+                $('#pendingCourseTable').DataTable().destroy();
+            }
+            if ($.fn.DataTable.isDataTable('#suspendedCourseTable')) {
+                $('#suspendedCourseTable').DataTable().destroy();
             }
 
-            function initializeDataTables() {
-                setTimeout(() => {
-                    const tableDefinitions = [
-                        {
-                            selector: '#activeCourseTable',
-                            opts: {
-                                dom: '<"row"<"col-sm-12 col-md-6"B><"col-sm-12 col-md-6"f>>rt<"row"<"col-sm-12 col-md-6 d-flex align-items-center"li><"col-sm-12 col-md-6"p>>',
-                                fixedHeader: true,
-                                scrollX: true,
-                                scrollY: 500,
-                            }
-                        },
-                        {
-                            selector: '#pendingCourseTable',
-                            opts: {
-                                scrollY: 500
-                            }
-                        }
-                    ];
-
-                    tableDefinitions.forEach(({selector, opts}) => initTable(selector, opts));
-                }, 100);
-            }
-
-            document.addEventListener('DOMContentLoaded', initializeDataTables);
-            document.addEventListener('livewire:navigated', initializeDataTables);
-
-            document.addEventListener('livewire:initialized', function () {
-                window.Livewire.on('course-change', () => {
-                    setTimeout(initializeDataTables, 200);
-                });
-
-                window.Livewire.hook('morph.updated', () => {
-                    setTimeout(initializeDataTables, 200);
-                });
+            initializeCourseDataTables();
+        }
 
 
+        document.addEventListener('DOMContentLoaded', setupCoursePage);
+        document.addEventListener('livewire:navigated', setupCoursePage);
+
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('course-change', () => {
+                // Gọi hàm setup để hủy và khởi tạo lại
+                setupCoursePage();
             });
-        })();
+        });
     </script>
 @endpush
