@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Services\Client\Course\CourseService;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Permission\Models\Role;
 
 class CatalogService {
@@ -51,17 +52,21 @@ class CatalogService {
 
     public function getOverviewData(User $instructor): array
     {
-        $publishedCourses = app(\App\Services\Client\Course\Catalog\CatalogService::class)->getCoursesByAuthor($instructor);
-        $totalEarnings = $this->calculateTotalEarnings($publishedCourses);
-        $studentsEnrolled = $instructor->instructorProfile->student_count;
-        $rating = $instructor->instructorProfile->rating;
-        return [
-            'publishedCourses' => $publishedCourses->count(),
-            'totalEarnings' => $totalEarnings,
-            'studentsEnrolled' => $studentsEnrolled,
-            'rating' => number_format($rating, 1),
-            'reviewCount' => $instructor->instructorProfile->review_count
-        ];
+        $cacheKey = 'instructor_overview_' . $instructor->id;
+
+        return Cache::remember($cacheKey, now()->addMinutes(30), function () use ($instructor) {
+            $publishedCourses = app(\App\Services\Client\Course\Catalog\CatalogService::class)->getCoursesByAuthor($instructor);
+            $totalEarnings = $this->calculateTotalEarnings($publishedCourses);
+            $studentsEnrolled = $instructor->instructorProfile->student_count;
+            $rating = $instructor->instructorProfile->rating;
+            return [
+                'publishedCourses' => $publishedCourses->count(),
+                'totalEarnings' => $totalEarnings,
+                'studentsEnrolled' => $studentsEnrolled,
+                'rating' => number_format($rating, 1),
+                'reviewCount' => $instructor->instructorProfile->review_count
+            ];
+        });
     }
 
     public function getDetailsForAdminList(string $status): Collection

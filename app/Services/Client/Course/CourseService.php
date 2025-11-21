@@ -9,9 +9,9 @@ use App\Services\Client\Course\Catalog\CatalogService;
 use App\Services\Client\Course\Create\CreateService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
-readonly class CourseService
-{
+readonly class CourseService {
     private CatalogService $catalogService;
     private CreateService $createService;
 
@@ -28,14 +28,19 @@ readonly class CourseService
 
     public function prepareDataForCourseDetails(string $slug): ?Course
     {
-        $query = Course::query()->where('slug', $slug);
-        if (!auth()->user()?->hasRole('admin')) {
-            $query->where('status', 'published');
-        }
+        $cacheKey = "course_details_{$slug}";
 
-        $course = $query->first();
+        return Cache::remember($cacheKey, 36000, function () use ($slug) {
+            $query = Course::query()->where('slug', $slug);
+            if (!auth()->user()?->hasRole('admin')) {
+                $query->where('status', 'published');
+            }
 
-        return $course ? $this->catalogService->prepareCourseDetails($course) : null;
+            $course = $query->first();
+
+            return $course ? $this->catalogService->prepareCourseDetails($course) : null;
+
+        });
     }
 
     public function getCoursesByAuthor(User $author): Collection

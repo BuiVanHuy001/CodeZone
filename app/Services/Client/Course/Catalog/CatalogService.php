@@ -10,8 +10,7 @@ use App\Traits\HasNumberFormat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
-class CatalogService
-{
+class CatalogService {
     use HasNumberFormat;
 
     private CourseFilter $courseFilter;
@@ -47,99 +46,120 @@ class CatalogService
 
     public function getPopularCourses(int $amount = 10): Collection
     {
-        $order = [
-            ['enrollment_count', 'desc'],
-            ['review_count', 'desc'],
-            ['rating', 'desc'],
-        ];
+        $cacheKey = "courses:popular:{$amount}";
 
-        return $this->fetchCourses($amount, $order);
+        return \Cache::remember($cacheKey, 3600, function () use ($amount) {
+            $order = [
+                ['enrollment_count', 'desc'],
+                ['review_count', 'desc'],
+                ['rating', 'desc'],
+            ];
+
+            return $this->fetchCourses($amount, $order);
+        });
     }
 
     public function getHotCourses(int $amount = 5): Collection
     {
-        $order = [
-            ['rating', 'desc'],
-            ['review_count', 'desc'],
-            ['enrollment_count', 'desc'],
-        ];
+        $cacheKey = "courses:hot:{$amount}";
 
-        return $this->fetchCourses($amount, $order);
+        return \Cache::remember($cacheKey, 3600, function () use ($amount) {
+            $order = [
+                ['created_at', 'desc'],
+                ['enrollment_count', 'desc'],
+            ];
+
+            return $this->fetchCourses($amount, $order);
+        });
     }
 
     public function getRelatedCourses(User $author, string $currentCourseId, int $amount = 2): Collection
     {
-        $order = [
-            ['rating', 'desc'],
-            ['review_count', 'desc'],
-        ];
+        $cacheKey = "courses:related:{$author->id}:{$currentCourseId}:{$amount}";
 
-        $query = $author->courses()
-            ->where('status', 'published')
-            ->where('id', '!=', $currentCourseId);
+        return \Cache::remember($cacheKey, 3600, function () use ($author, $currentCourseId, $amount) {
+            $order = [
+                ['rating', 'desc'],
+                ['review_count', 'desc'],
+            ];
 
-        foreach ($order as [$col, $dir]) {
-            $query->orderBy($col, $dir);
-        }
+            $query = $author
+                ->courses()
+                ->where('status', 'published')
+                ->where('id', '!=', $currentCourseId);
 
-        return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, collect()));
+            foreach ($order as [$col, $dir]) {
+                $query->orderBy($col, $dir);
+            }
+
+            return $query->take($amount)->get()->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, collect()));
+        });
     }
 
     public function getCoursesByAuthor(User $author): Collection
     {
-        $order = [
-            ['enrollment_count', 'desc'],
-            ['review_count', 'desc'],
-            ['rating', 'desc'],
-        ];
+        $cacheKey = "courses:author:{$author->id}";
 
-        $query = Course::query()
-            ->where('user_id', $author->id);
+        return \Cache::remember($cacheKey, 3600, function () use ($author) {
+            $order = [
+                ['enrollment_count', 'desc'],
+                ['review_count', 'desc'],
+                ['rating', 'desc'],
+            ];
 
-        foreach ($order as [$col, $dir]) {
-            $query->orderBy($col, $dir);
-        }
+            $query = Course::query()->where('user_id', $author->id);
 
-        return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForInstructorDashboard($course, $author));
+            foreach ($order as [$col, $dir]) {
+                $query->orderBy($col, $dir);
+            }
+
+            return $query->get()->map(fn(Course $course) => $this->courseDecorator->decorateForInstructorDashboard($course, $author));
+        });
     }
 
     public function getCoursesByStudent(User $student): Collection
     {
-        $enrollmentsMap = $student->enrollments()
-            ->get()
-            ->keyBy('course_id');
+        $cacheKey = "courses:student:{$student->id}";
 
-        if ($enrollmentsMap->isEmpty()) {
-            return collect();
-        }
+        return \Cache::remember($cacheKey, 3600, function () use ($student) {
+            $enrollmentsMap = $student
+                ->enrollments()
+                ->get()
+                ->keyBy('course_id');
 
-        $enrolledCourseIds = $enrollmentsMap->keys();
+            if ($enrollmentsMap->isEmpty()) {
+                return collect();
+            }
 
-        $courses = Course::whereIn('id', $enrolledCourseIds)
-            ->where('status', 'published')
-            ->with(['author', 'reviews', 'category'])
-            ->withCount([
-                'modules as completed_lessons_count' => function ($query) use ($student) {
-                    $query->selectRaw('count(distinct tracking_progresses.id)')
-                        ->from('tracking_progresses')
-                        ->join('lessons', 'lessons.id', '=', 'tracking_progresses.lesson_id')
-                        ->join('modules', 'modules.id', '=', 'lessons.module_id')
-                        ->whereColumn('modules.course_id', 'courses.id')
-                        ->where('tracking_progresses.user_id', $student->id)
-                        ->where('tracking_progresses.is_completed', true);
-                }
-            ])
-            ->get();
+            $enrolledCourseIds = $enrollmentsMap->keys();
 
-        $courses->each(function ($course) use ($enrollmentsMap) {
-            $course->enrollmentStatus = $enrollmentsMap[$course->id]->status;
+            $courses = Course::whereIn('id', $enrolledCourseIds)
+                             ->where('status', 'published')
+                             ->with(['author', 'reviews', 'category'])
+                             ->withCount([
+                                 'modules as completed_lessons_count' => function ($query) use ($student) {
+                                     $query
+                                         ->selectRaw('count(distinct tracking_progresses.id)')
+                                         ->from('tracking_progresses')
+                                         ->join('lessons', 'lessons.id', '=', 'tracking_progresses.lesson_id')
+                                         ->join('modules', 'modules.id', '=', 'lessons.module_id')
+                                         ->whereColumn('modules.course_id', 'courses.id')
+                                         ->where('tracking_progresses.user_id', $student->id)
+                                         ->where('tracking_progresses.is_completed', true);
+                                 }
+                             ])
+                             ->get();
 
-            $totalLessons = max($course->lesson_count, 1);
-            $completedCount = $course->completed_lessons_count;
-            $course->progressPercentage = round(($completedCount / $totalLessons) * 100, 2);
+            $courses->each(function ($course) use ($enrollmentsMap) {
+                $course->enrollmentStatus = $enrollmentsMap[$course->id]->status;
+
+                $totalLessons = max($course->lesson_count, 1);
+                $completedCount = $course->completed_lessons_count;
+                $course->progressPercentage = round(($completedCount / $totalLessons) * 100, 2);
+            });
+
+            return $courses->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, $enrolledCourseIds));
         });
-
-        return $courses->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, $enrolledCourseIds));
     }
 
     public function getCoursesByStatus(string $status): Collection

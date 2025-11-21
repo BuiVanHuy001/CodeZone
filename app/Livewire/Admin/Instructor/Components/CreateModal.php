@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Admin\Instructor\Components;
 
-use App\Repositories\AcademicRepository;
 use App\Services\Admin\Instructor\InstructorService;
+use App\Services\Cache\AcademicCache;
 use App\Validator\InstructorValidator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -26,7 +26,7 @@ class CreateModal extends Component {
 
     public function mount(): void
     {
-        $this->faculties = app(AcademicRepository::class)->getCachedFacultiesWithMajors();
+        $this->faculties = app(AcademicCache::class)->getCachedFacultiesWithMajors();
     }
 
     protected function rules(): array

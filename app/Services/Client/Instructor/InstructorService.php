@@ -7,9 +7,10 @@ use App\Services\Client\Course\CourseService;
 use App\Services\Client\Instructor\Catalog\CatalogService;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
+use Spatie\Permission\Models\Role;
 
-readonly class InstructorService
-{
+readonly class InstructorService {
     use HasNumberFormat;
 
     private CourseService $courseService;
@@ -23,20 +24,25 @@ readonly class InstructorService
 
     public function prepareDetailData(string $slug): ?User
     {
-        $instructor = User::where([
-            'slug' => $slug,
-            'role' => 'instructor',
-            'status' => 'active'
-        ])->first();
+        $cacheKey = "instructor_detail_{$slug}";
 
-        if ($instructor) {
-            return $this->catalogService->getDetails($instructor);
-        }
+        return Cache::remember($cacheKey, now()->addHours(2), function () use ($slug) {
+            $instructor = Role::findByName('instructor')->users()
+                              ->where([
+                                  'slug' => $slug,
+                                  'status' => 'active'
+                              ])->first();
 
-        return null;
+            if ($instructor) {
+                return $this->catalogService->getDetails($instructor);
+            }
+
+            return null;
+        });
+
     }
 
-    public function prepareDetails(User $instructor): Collection
+    public function prepareDetails(User $instructor): User
     {
         return $this->catalogService->getDetails($instructor);
     }

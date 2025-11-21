@@ -89,7 +89,12 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <button onclick="showSuspendedConfirm(@this, '{{ $instructor->id }}', 'Confirm Suspension', 'Are you sure you want to suspend instructor {{ $instructor->name }}?')" class="btn btn-xl dropdown-item text-warning">
+                                    <button onclick="showConfirmAction(@this, '{{ $instructor->id }}', 'suspend', {
+                                            title: 'Suspend Instructor?',
+                                            text: 'Are you sure you want to suspend {{ $instructor->name }}? Their access will be restricted.',
+                                            confirmButtonText: 'Yes, suspend!',
+                                            confirmButtonColor: '#f1b44c'
+                                        })" class="btn btn-xl dropdown-item text-warning">
                                         <i class="ri-pause-circle-line align-bottom me-2"></i> Suspend
                                     </button>
                                 </li>
@@ -124,7 +129,12 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <button onclick="showRestoredConfirm(@this, '{{ $instructor->id }}', 'Confirm Re-activation', 'Do you want to re-activate instructor {{ $instructor->name }}?')" class="btn btn-xl text-success dropdown-item">
+                                    <button onclick="showConfirmAction(@this, '{{ $instructor->id }}', 'restore', {
+                                            title: 'Re-activate Instructor?',
+                                            text: 'Do you want to re-activate {{ $instructor->name }}? They will regain access.',
+                                            confirmButtonText: 'Yes, re-active!',
+                                            confirmButtonColor: '#0ab39c'
+                                        })" class="btn btn-xl text-success dropdown-item">
                                         <i class="ri-checkbox-circle-line align-bottom me-2"></i> Re-active
                                     </button>
                                 </li>
@@ -159,12 +169,22 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <button onclick="showApprovedConfirm(@this, '{{ $instructor->id }}', 'Confirm Approval', 'Do you want to approve instructor {{ $instructor->name }}?')" class="btn btn-xl text-success dropdown-item">
+                                    <button onclick="showConfirmAction(@this, '{{ $instructor->id }}', 'approve', {
+                                            title: 'Approve Instructor?',
+                                            text: 'Approve {{ $instructor->name }} account? They will be able to log in.',
+                                            confirmButtonText: 'Yes, approve!',
+                                            confirmButtonColor: '#0ab39c'
+                                        })" class="btn btn-xl text-success dropdown-item">
                                         <i class="ri-checkbox-circle-line align-bottom me-2"></i> Approve
                                     </button>
                                 </li>
                                 <li>
-                                    <button onclick="showRejectedConfirm(@this, '{{ $instructor->id }}', 'Confirm Rejection', 'Do you want to reject instructor {{ $instructor->name }}?')" class="btn btn-xl text-danger dropdown-item">
+                                    <button onclick="showConfirmAction(@this, '{{ $instructor->id }}', 'reject', {
+                                            title: 'Reject Instructor?',
+                                            text: 'Reject {{ $instructor->name }} application? This cannot be undone.',
+                                            confirmButtonText: 'Yes, reject!',
+                                            confirmButtonColor: '#f06548'
+                                        })" class="btn btn-xl text-danger dropdown-item">
                                         <i class="ri-close-circle-fill align-bottom me-2"></i> Reject
                                     </button>
                                 </li>
@@ -223,17 +243,6 @@
 @endassets
 
 @push('scripts')
-    <script src="{{ Vite::asset('resources/assets/admin/libs/jquery/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/1.11.5/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/1.11.5/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/buttons/2.2.2/js/buttons.print.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/buttons/2.2.2/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/pdfmake/0.1.53/vfs_fonts.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/pdfmake/0.1.53/pdfmake.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/jszip/3.1.3/jszip.min.js') }}"></script>
-
     <script>
         function initializeInstructorDataTables() {
             const tableDefinitions = [

@@ -8,16 +8,17 @@ use App\Models\Lesson;
 use App\Models\TrackingProgress;
 use App\Models\User;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
-class LearningService
-{
-    private ?Collection $orderedLessonsCache = null;
+class LearningService {
+    private ?Collection $orderedLessonsLocalCache = null;
+    private const CACHE_TTL = 86400;
 
     public function getLesson(Course $course): ?string
     {
         $user = auth()->user();
 
-        if ($user->hasRole('student')) {
+        if ($user && $user->hasRole('student')) {
             return $this->getCurrentLessonForStudent($course, $user);
         }
 
@@ -27,6 +28,11 @@ class LearningService
     private function getCurrentLessonForStudent(Course $course, User $user): ?string
     {
         $lessons = $this->getOrderedLessons($course);
+
+        if ($lessons->isEmpty()) {
+            return null;
+        }
+
         $lessonIds = $lessons->pluck('id');
 
         $progress = TrackingProgress::where('user_id', $user->id)
@@ -123,39 +129,48 @@ class LearningService
 
     private function getOrderedLessons(Course $course): Collection
     {
-        if ($this->orderedLessonsCache !== null) {
-            return $this->orderedLessonsCache;
+        if ($this->orderedLessonsLocalCache !== null) {
+            return $this->orderedLessonsLocalCache;
         }
 
-        $lessons = $course->modules
-            ->sortBy('position')
-            ->flatMap(fn($module) => $module->lessons->sortBy('position'))
-            ->values();
+        $cacheKey = "course_lessons_ordered_{$course->id}";
 
-        return $this->orderedLessonsCache = $lessons;
+        $lessons = Cache::remember($cacheKey, self::CACHE_TTL, function () use ($course) {
+            return $course
+                ->modules()
+                ->with(['lessons' => function ($query) {
+                    $query->orderBy('position');
+                }])
+                ->orderBy('position')
+                ->get()
+                ->flatMap(fn($module) => $module->lessons)
+                ->values();
+        });
+
+        return $this->orderedLessonsLocalCache = $lessons;
     }
 
     public function markLessonComplete(string $lessonId): void
     {
         $user = auth()->user();
-        if (!$user->hasRole('student')) return;
+        if (!$user || !$user->hasRole('student')) return;
 
         TrackingProgress::updateOrCreate(
             ['user_id' => $user->id, 'lesson_id' => $lessonId],
             ['is_completed' => true]
         );
+        $lesson = Lesson::find($lessonId);
 
-        $lesson = Lesson::with('course')->find($lessonId);
-        if (!$lesson || !$lesson->course) {
-            return;
-        }
+        if (!$lesson) return;
 
-        $enrollment = Enrollment::where('course_id', $lesson->course->id)
-            ->where('user_id', $user->id)
-            ->first();
+        $course = $lesson->course;
+        if (!$course) return;
 
+        $enrollment = Enrollment::where('course_id', $course->id)
+                                ->where('user_id', $user->id)
+                                ->first();
 
-        if ($this->areAllLessonsCompleted($lesson->course)) {
+        if ($this->areAllLessonsCompleted($course)) {
             $enrollment?->update(['status' => 'completed']);
             return;
         }

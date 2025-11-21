@@ -54,7 +54,12 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <button onclick="showSuspendedConfirm(@this, '{{ $course->id }}', 'Confirm Course Suspension', 'Are you sure you want to suspend the course &quot;{{ $course->title }}&quot;? This will make it unavailable to students.')" class="dropdown-item text-warning">
+                                    <button onclick="showConfirmAction(@this, '{{ $course->id }}', 'suspend', {
+                                            title: 'Suspend Course',
+                                            text: 'Are you sure you want to suspend &quot;{{ $course->title }}&quot;? It will be hidden from students.',
+                                            confirmButtonText: 'Yes, suspend it!',
+                                            confirmButtonColor: '#f1b44c'
+                                        })" class="dropdown-item text-warning">
                                         <i class="ri-pause-circle-line align-bottom me-2"></i> Suspend
                                     </button>
                                 </li>
@@ -105,13 +110,23 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <button onclick="showApprovedConfirm(@this, '{{ $course->id }}', 'Confirm Course Approval', 'Do you want to approve and publish the course &quot;{{ $course->title }}&quot;? It will become available to students.')" class="btn btn-xl dropdown-item text-success">
-                                        <i class="ri-checkbox-circle-line align-bottom me-2 text-success"></i>Approve
+                                    <button onclick="showConfirmAction(@this, '{{ $course->id }}', 'approve', {
+                                            title: 'Approve Course',
+                                            text: 'Publish &quot;{{ $course->title }}&quot;? It will be visible to everyone.',
+                                            confirmButtonText: 'Yes, approve!',
+                                            confirmButtonColor: '#0ab39c'
+                                        })" class="btn btn-xl dropdown-item text-success">
+                                        <i class="ri-checkbox-circle-line align-bottom me-2"></i> Approve
                                     </button>
                                 </li>
                                 <li>
-                                    <button onclick="showRejectedConfirm(@this, '{{ $course->id }}', 'Confirm Course Rejection', 'Do you want to reject the course &quot;{{ $course->title }}&quot;? The instructor will be notified.')" class="btn btn-xl dropdown-item text-danger">
-                                        <i class="ri-close-circle-fill align-bottom me-2"></i>Reject
+                                    <button onclick="showConfirmAction(@this, '{{ $course->id }}', 'reject', {
+                                            title: 'Reject Course',
+                                            text: 'Reject &quot;{{ $course->title }}&quot;? The instructor will be notified.',
+                                            confirmButtonText: 'Yes, reject!',
+                                            confirmButtonColor: '#f06548'
+                                        })" class="btn btn-xl dropdown-item text-danger">
+                                        <i class="ri-close-circle-fill align-bottom me-2"></i> Reject
                                     </button>
                                 </li>
                             </ul>
@@ -161,7 +176,12 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <button onclick="showRestoredConfirm(@this, '{{ $course->id }}', 'Confirm Course Re-activation', 'Do you want to re-activate the course &quot;{{ $course->title }}&quot;? It will be available to students again.')" class="btn btn-xl dropdown-item text-success">
+                                    <button onclick="showConfirmAction(@this, '{{ $course->id }}', 'restore', {
+                                            title: 'Re-activate Course',
+                                            text: 'Re-activate &quot;{{ $course->title }}&quot;? It will be visible again.',
+                                            confirmButtonText: 'Yes, re-active!',
+                                            confirmButtonColor: '#0ab39c'
+                                        })" class="btn btn-xl dropdown-item text-success">
                                         <i class="ri-checkbox-circle-line align-bottom me-2"></i> Re-Active
                                     </button>
                                 </li>
@@ -205,17 +225,6 @@
 @endassets
 
 @push('scripts')
-    <script src="{{ Vite::asset('resources/assets/admin/libs/jquery/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/1.11.5/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/1.11.5/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/buttons/2.2.2/js/buttons.print.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/datatables.net/buttons/2.2.2/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/pdfmake/0.1.53/vfs_fonts.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/pdfmake/0.1.53/pdfmake.min.js') }}"></script>
-    <script src="{{ Vite::asset('resources/assets/admin/libs/jszip/3.1.3/jszip.min.js') }}"></script>
-
     <script>
         function initializeCourseDataTables() {
             const tableDefinitions = [
