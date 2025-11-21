@@ -25,7 +25,6 @@
                                 <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            {{-- 2. Tên & Mã --}}
                             <div class="col-md-8">
                                 <label class="form-label">Tên Lớp <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
@@ -42,7 +41,6 @@
                                 <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            {{-- 3. Danh sách Sinh viên chưa có lớp --}}
                             <div class="col-12">
                                 <label class="form-label d-flex justify-content-between">
                                     <span>Thêm Sinh viên vào lớp (Tùy chọn)</span>

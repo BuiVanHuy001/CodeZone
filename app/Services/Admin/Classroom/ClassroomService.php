@@ -90,23 +90,15 @@ class ClassroomService {
     {
         return StudentProfile::with('user')
                              ->where('student_type', 'internal')
-            // Nhóm điều kiện quan trọng nhất
                              ->where(function ($q) use ($majorId, $currentClassId) {
-
-                // TRƯỜNG HỢP 1: Sinh viên CHƯA CÓ LỚP (Theo yêu cầu của bạn)
-                // Lấy tất cả SV chưa có lớp, BẤT KỂ major_id là gì (null, khác ngành, cùng ngành đều lấy)
-                $q
-                    ->whereNull('class_room_id')
-
-                    // TRƯỜNG HỢP 2: Sinh viên ĐANG Ở LỚP KHÁC (để chuyển lớp)
-                    // Trường hợp này thì BẮT BUỘC phải CÙNG NGÀNH mới cho chuyển
-                    ->orWhere(function ($subQ) use ($majorId, $currentClassId) {
-                        $subQ
-                            ->where('major_id', $majorId)
-                            ->where('class_room_id', '!=', $currentClassId);
-                    });
-            })
-                             ->whereHas('user')
+                                 $q
+                                     ->whereNull('class_room_id')
+                                     ->orWhere(function ($subQ) use ($majorId, $currentClassId) {
+                                         $subQ
+                                             ->where('major_id', $majorId)
+                                             ->where('class_room_id', '!=', $currentClassId);
+                                     });
+                             })->whereHas('user')
                              ->latest('created_at')
                              ->get()
                              ->map(function ($profile) use ($majorId) {
@@ -115,13 +107,9 @@ class ClassroomService {
                                      'name' => $profile->user->name,
                                      'email' => $profile->user->email,
                                      'code' => $profile->student_code,
-                                     // Chú ý: kiểm tra lại tên hàm getAvatarPath() trong model User của bạn
                                      'avatar' => $profile->user->getAvatarPath(),
                                      'current_class_code' => $profile->classRoom ? $profile->classRoom->code : null,
-
-                                     // Cờ báo chưa có ngành
                                      'no_major' => is_null($profile->major_id),
-
                                      'is_diff_major' => $profile->major_id && $profile->major_id != $majorId,
                                  ];
                              });
@@ -139,5 +127,20 @@ class ClassroomService {
                           'class_room_id' => $classId,
                           'major_id' => $classroom->major_id
                       ]);
+    }
+
+    public function delete(int $id): bool
+    {
+        return ClassRoom::destroy($id) > 0;
+    }
+
+    public function transferAndDelete(int $sourceClassId, int $targetClassId): void
+    {
+        DB::transaction(function () use ($sourceClassId, $targetClassId) {
+            StudentProfile::where('class_room_id', $sourceClassId)
+                          ->update(['class_room_id' => $targetClassId]);
+
+            ClassRoom::findOrFail($sourceClassId)->delete();
+        });
     }
 }

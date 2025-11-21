@@ -381,17 +381,7 @@
                                                 <li>
                                                     <button type="button"
                                                             class="btn btn-xl text-danger dropdown-item"
-                                                            onclick="showConfirmAction(
-                                                                @this,
-                                                                '{{ $class->id }}',
-                                                                'deleteClassroom',
-                                                                {
-                                                                    title: 'Xóa Lớp {{ $class->code }}?',
-                                                                    text: 'Sinh viên thuộc lớp này sẽ bị mất thông tin lớp học.',
-                                                                    confirmButtonText: 'Xóa ngay',
-                                                                    confirmButtonColor: '#d33'
-                                                                }
-                                                            )">
+                                                            wire:click="$dispatch('init-delete-classroom', { id: {{ $class->id }} })">
                                                         <i class="ri-delete-bin-fill align-bottom me-2"></i> Xóa
                                                     </button>
                                                 </li>
@@ -421,6 +411,7 @@
     <livewire:admin.academic.components.classroom.create-classroom/>
     <livewire:admin.academic.components.classroom.classroom-detail/>
     <livewire:admin.academic.components.classroom.edit-classroom/>
+    <livewire:admin.academic.components.classroom.delete-classroom/>
 </div>
 
 @push('scripts')
@@ -448,6 +439,7 @@
                 'open-delete-major-modal': 'delete-major-modal',
                 'open-classroom-detail-modal': 'classroom-detail-modal',
                 'open-edit-classroom-modal': 'edit-classroom-modal',
+                'open-delete-classroom-modal': 'delete-classroom-modal',
             };
 
             Object.entries(openEvents).forEach(([event, id]) => {
@@ -489,6 +481,26 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Livewire.dispatch('delete-empty-major-confirmed', {id: id});
+                    }
+                });
+            });
+
+            Livewire.on('swal-confirm-delete-empty-classroom', (event) => {
+                let id = null;
+                if (Array.isArray(event) && event[0]?.id) id = event[0].id;
+                else if (event && event.id) id = event.id;
+                else id = event;
+
+                Swal.fire({
+                    title: 'Xóa Lớp này?',
+                    text: "Lớp học này chưa có sinh viên. Xóa ngay?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    confirmButtonText: 'Xóa luôn!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('delete-empty-classroom-confirmed', {id: id});
                     }
                 });
             });

@@ -62,15 +62,9 @@ class CreateClassroom extends Component {
 
             $this->dispatch('faculty-updated');
             $this->dispatch('close-modal', modalId: '#create-classroom-modal');
-
-            $this->dispatch('swal', [
-                'title' => 'Thành công!',
-                'text' => 'Đã tạo lớp học và thêm sinh viên thành công.',
-                'icon' => 'success'
-            ]);
-
+            $this->swal('Thành công!', 'Đã tạo lớp học và thêm sinh viên thành công.');
         } catch (\Exception $e) {
-            $this->dispatch('swal', ['title' => 'Lỗi', 'text' => $e->getMessage(), 'icon' => 'error']);
+            $this->swalError('Lỗi!', $e->getMessage());
         }
     }
 
