@@ -22,4 +22,28 @@ class Faculty extends Model {
         return $this->hasManyThrough(
             InstructorProfile::class, Major::class);
     }
+
+    public function studentProfiles(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            StudentProfile::class,
+            Major::class,
+            'faculty_id',
+            'major_id',
+            'id',
+            'id'
+        );
+    }
+
+    public function instructorProfiles(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            InstructorProfile::class,
+            Major::class,
+            'faculty_id',
+            'major_id',
+            'id',
+            'id'
+        );
+    }
 }

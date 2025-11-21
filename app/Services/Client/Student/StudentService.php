@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Traits\HasNumberFormat;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 readonly class StudentService
 {
@@ -24,24 +25,27 @@ readonly class StudentService
 
     public function prepareProfile(User $user): array
     {
-        $infos = [
-            'Full Name' => $user->name,
-            'Email' => $user->email,
-            'Register Date' => $user->created_at->diffForHumans(),
-        ];
-        if ($user->studentProfile) {
-            $infos = array_merge($infos, [
-                'Date Of Birth' => $user->studentProfile->dob ? $user->studentProfile->dob->format('d/m/Y') : 'N/A',
-                'Gender' => $user->studentProfile->gender === 0 ? 'Male' : 'Female',
-                'Enrolled Course Amount' => $user->studentProfile->enrolled_count,
-                'Completed Course Amount' => $user->studentProfile->completed_count,
-            ]);
+        $cacheKey = "student_profile_{$user->id}";
+        return Cache::remember($cacheKey, now()->addHours(1), function () use ($user) {
+            $infos = [
+                'Full Name' => $user->name,
+                'Email' => $user->email,
+                'Register Date' => $user->created_at->diffForHumans(),
+            ];
+            if ($user->studentProfile) {
+                $infos = array_merge($infos, [
+                    'Date Of Birth' => $user->studentProfile->dob ? $user->studentProfile->dob->format('d/m/Y') : 'N/A',
+                    'Gender' => $user->studentProfile->gender === 0 ? 'Male' : 'Female',
+                    'Enrolled Course Amount' => $user->studentProfile->enrolled_count,
+                    'Completed Course Amount' => $user->studentProfile->completed_count,
+                ]);
 
-            if ($user->studentProfile->addition_data) {
-                $infos = array_merge($infos, $user->studentProfile->addition_data);
+                if ($user->studentProfile->addition_data) {
+                    $infos = array_merge($infos, $user->studentProfile->addition_data);
+                }
             }
-        }
-        return $infos;
+            return $infos;
+        });
     }
 
     public function prepareBasicDetails(User $student): User
@@ -52,17 +56,22 @@ readonly class StudentService
 
     public function getPurchases(): Collection
     {
-        $orders = Order::where('user_id', auth()->id())
-            ->whereNot('status', 'cart')
-            ->with('items.course')
-            ->latest()->get();
-        $orders->map(function (Order $order) { $this->decorateData($order); });
-        return $orders;
+        $cacheKey = 'student_purchases_' . auth()->id();
+
+        return Cache::remember($cacheKey, 86400, function () {
+            $orders = Order::where('user_id', auth()->id())
+                           ->whereNot('status', 'cart')
+                           ->with('items.course')
+                           ->latest()->get();
+            $orders->map(function (Order $order) {
+                $this->decorateData($order);
+            });
+            return $orders;
+        });
     }
 
     private function decorateData(Order $order): void
     {
-
         $order->totalPriceText = $this->formatCurrency($order->total_price);
         $order->status = ucfirst($order->status);
         $order->courses = $order->items->map(fn($item) => $item->course)->filter();

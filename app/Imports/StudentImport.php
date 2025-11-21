@@ -2,8 +2,8 @@
 
 namespace App\Imports;
 
-use App\Repositories\AcademicRepository;
-use App\Repositories\StudentRepository;
+use App\Services\Cache\AcademicCache;
+use App\Services\Cache\StudentCache;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -24,10 +24,10 @@ class StudentImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
 
     public function __construct()
     {
-        $this->classrooms = AcademicRepository::getCachedClassroom();
-        $this->majors = AcademicRepository::getCachedMajorsOnly();
-        $this->existingEmails = StudentRepository::getExistingEmails();
-        $this->existingStudentCodes = StudentRepository::getExistingStudentCodes();
+        $this->classrooms = AcademicCache::getCachedClassroom();
+        $this->majors = AcademicCache::getCachedMajorsOnly();
+        $this->existingEmails = StudentCache::getExistingEmails();
+        $this->existingStudentCodes = StudentCache::getExistingStudentCodes();
     }
 
     public function collection(Collection $collection): void

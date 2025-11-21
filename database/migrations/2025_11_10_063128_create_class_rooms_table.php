@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->string('code')->unique();
+            $table->string('code', 15)->unique();
             $table->foreignIdFor(Major::class)->constrained('majors')->cascadeOnDelete();
             $table->timestamps();
         });

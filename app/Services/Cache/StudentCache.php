@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Services\Cache;
 
 use App\Models\StudentProfile;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 
-class StudentRepository {
+class StudentCache {
     public static function getExistingEmails()
     {
         return Cache::remember('existing_student_emails', 86400, function () {

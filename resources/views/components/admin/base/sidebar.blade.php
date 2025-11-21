@@ -32,7 +32,7 @@
                        href="{{ route('admin.overview.index') }}"
                     >
                         <i class="ri-dashboard-2-line"></i>
-                        <span data-key="t-dashboards">Overview</span>
+                        <span data-key="t-dashboards">Tổng Quan</span>
                     </a>
                 </li>
 
@@ -41,7 +41,7 @@
                        wire:current="active"
                        href="{{ route('admin.courses.index') }}">
                         <i class="bx bxs-graduation"></i>
-                        <span data-key="t-authentication">Courses</span>
+                        <span data-key="t-authentication">Khóa Học</span>
                     </a>
                 </li>
 
@@ -51,7 +51,7 @@
                        href="{{ route('admin.instructors.index') }}"
                     >
                         <i class="bx bxs-user-voice"></i>
-                        <span data-key="t-authentication">Instructors</span>
+                        <span data-key="t-authentication">Giảng Viên</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -60,50 +60,18 @@
                        href="{{ route('admin.students.index') }}"
                     >
                         <i class="bx bxs-user-detail"></i>
-                        <span data-key="t-students">Students</span>
+                        <span data-key="t-students">Học Viên</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a
-                        class="nav-link menu-link"
-                        href="#academicSidebar"
-                        data-bs-toggle="collapse"
-                        role="button"
-                        aria-expanded="false"
-                        aria-controls="academicSidebar"
+                    <a class="nav-link menu-link"
+                       wire:current="active"
+                       href="{{ route('admin.academic.index') }}"
                     >
                         <i class="ri-graduation-cap-line"></i>
-                        <span data-key="t-settings">Academic</span>
+                        <span data-key="t-settings">Khoa/Ngành/Lớp</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="academicSidebar">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="{{ route('admin.faculties.index') }}"
-                                   class="nav-link"
-                                   data-key="t-general"
-                                >
-                                    Faculties
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.majors.index') }}"
-                                   class="nav-link"
-                                   data-key="t-roles"
-                                >
-                                    Majors
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.classrooms.index') }}"
-                                   class="nav-link"
-                                   data-key="t-email"
-                                >
-                                    Classrooms
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
                 </li>
 
 
@@ -112,7 +80,7 @@
                        href=""
                     >
                         <i class="bx bx-credit-card-front"></i>
-                        <span data-key="t-transactions">Transactions</span>
+                        <span data-key="t-transactions">Giao dịch</span>
                     </a>
                 </li>
 
@@ -136,7 +104,7 @@
                         aria-controls="sidebarSettings"
                     >
                         <i class="bx bx-cog"></i>
-                        <span data-key="t-settings">Settings</span>
+                        <span data-key="t-settings">Cài đặt</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarSettings">
                         <ul class="nav nav-sm flex-column">
@@ -153,15 +121,7 @@
                                    class="nav-link"
                                    data-key="t-roles"
                                 >
-                                    Roles & Permissions
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href=""
-                                   class="nav-link"
-                                   data-key="t-email"
-                                >
-                                    Email & Notifications
+                                    Phân quyền
                                 </a>
                             </li>
                         </ul>
@@ -173,7 +133,7 @@
                         @csrf
                         <button type="submit" class="nav-link menu-link">
                             <i class="bx bx-log-out"></i>
-                            <span data-key="t-logout">Logout</span>
+                            <span data-key="t-logout">Đăng xuất</span>
                         </button>
                     </form>
                 </li>

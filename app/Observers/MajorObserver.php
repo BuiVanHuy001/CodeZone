@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Major;
-use App\Repositories\AcademicRepository;
+use App\Services\Cache\AcademicCache;
 
 class MajorObserver {
     /**
@@ -11,7 +11,7 @@ class MajorObserver {
      */
     public function created(Major $major): void
     {
-        AcademicRepository::clearCache();
+        AcademicCache::clearCache();
     }
 
     /**
@@ -19,7 +19,7 @@ class MajorObserver {
      */
     public function updated(Major $major): void
     {
-        AcademicRepository::clearCache();
+        AcademicCache::clearCache();
     }
 
     /**
@@ -27,7 +27,7 @@ class MajorObserver {
      */
     public function deleted(Major $major): void
     {
-        AcademicRepository::clearCache();
+        AcademicCache::clearCache();
     }
 
     /**
@@ -35,7 +35,7 @@ class MajorObserver {
      */
     public function restored(Major $major): void
     {
-        AcademicRepository::clearCache();
+        AcademicCache::clearCache();
     }
 
     /**
@@ -43,6 +43,6 @@ class MajorObserver {
      */
     public function forceDeleted(Major $major): void
     {
-        AcademicRepository::clearCache();
+        AcademicCache::clearCache();
     }
 }

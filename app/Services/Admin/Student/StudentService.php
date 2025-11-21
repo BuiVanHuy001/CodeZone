@@ -104,7 +104,7 @@ class StudentService {
             return $student->studentProfile &&
                 $student->studentProfile->student_type === 'internal';
         })->map(function ($student) {
-            app(StudentDecorate::class)->decorateData($student);
+            app(StudentPreparation::class)->decorateData($student);
             return $student;
         });
     }
@@ -115,7 +115,7 @@ class StudentService {
             return $student->studentProfile &&
                 $student->studentProfile->student_type === 'external';
         })->map(function ($student) {
-            app(StudentDecorate::class)->decorateData($student);
+            app(StudentPreparation::class)->decorateData($student);
             return $student;
         });
     }

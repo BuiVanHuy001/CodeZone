@@ -40,4 +40,9 @@ class StudentProfile extends Model {
     {
         return $this->belongsTo(ClassRoom::class, 'class_room_id');
     }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
