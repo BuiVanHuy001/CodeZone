@@ -148,7 +148,7 @@ class StudentImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
         ];
     }
 
-    public function prepareForValidation($data, $index): array
+    public function prepareForValidation(array $data): array
     {
         if (isset($data['mssv']) && is_numeric($data['mssv'])) {
             $data['mssv'] = (string)$data['mssv'];
