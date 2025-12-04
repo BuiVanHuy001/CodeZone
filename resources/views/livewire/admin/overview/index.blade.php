@@ -186,225 +186,225 @@
                 destroyChart(id);
 
                 const options = {
-                series: [{data: chartData.data}],
-                chart: {type: "bar", height: 350, toolbar: {show: false}},
-                plotOptions: {
-                    bar: {
-                        horizontal: true,
-                        distributed: true,
-                        barHeight: "100%",
-                        dataLabels: {position: "bottom"},
+                    series: [{data: chartData.data}],
+                    chart: {type: "bar", height: 350, toolbar: {show: false}},
+                    plotOptions: {
+                        bar: {
+                            horizontal: true,
+                            distributed: true,
+                            barHeight: "100%",
+                            dataLabels: {position: "bottom"},
+                        },
                     },
-                },
-                colors: chartColors,
-                dataLabels: {
-                    enabled: true,
-                    textAnchor: "start",
-                    style: {colors: ["#fff"]},
-                    formatter: (val, opts) => `${opts.w.globals.labels[opts.dataPointIndex]}: ${val}`,
-                    offsetX: 0,
-                    dropShadow: {enabled: false},
-                },
-                stroke: {width: 1, colors: ["#fff"]},
-                xaxis: {categories: chartData.categories},
-                yaxis: {labels: {show: false}},
-                title: {
-                    text: chartData.title,
-                    align: "center",
-                    style: {fontWeight: 600},
-                },
-                subtitle: {
-                    text: chartData.subtitle,
-                    align: "center",
-                },
-                tooltip: {
-                    theme: "dark",
-                    x: {show: false},
-                    y: {title: {formatter: () => ""}},
-                },
-            };
+                    colors: chartColors,
+                    dataLabels: {
+                        enabled: true,
+                        textAnchor: "start",
+                        style: {colors: ["#fff"]},
+                        formatter: (val, opts) => `${opts.w.globals.labels[opts.dataPointIndex]}: ${val}`,
+                        offsetX: 0,
+                        dropShadow: {enabled: false},
+                    },
+                    stroke: {width: 1, colors: ["#fff"]},
+                    xaxis: {categories: chartData.categories},
+                    yaxis: {labels: {show: false}},
+                    title: {
+                        text: chartData.title,
+                        align: "center",
+                        style: {fontWeight: 600},
+                    },
+                    subtitle: {
+                        text: chartData.subtitle,
+                        align: "center",
+                    },
+                    tooltip: {
+                        theme: "dark",
+                        x: {show: false},
+                        y: {title: {formatter: () => ""}},
+                    },
+                };
 
                 chartInstances[id] = new ApexCharts(element, options);
                 chartInstances[id].render();
-        }
-
-        function initTreemapChart(id, chartData) {
-            if (typeof ApexCharts === 'undefined') {
-                console.warn('ApexCharts not loaded yet, skipping chart initialization');
-                return;
             }
 
-            const chartColors = getChartColorsArray(id);
-            const element = document.querySelector(`#${id}`);
-            if (!chartColors || !element) return;
+            function initTreemapChart(id, chartData) {
+                if (typeof ApexCharts === 'undefined') {
+                    console.warn('ApexCharts not loaded yet, skipping chart initialization');
+                    return;
+                }
 
-            if (!chartData || !chartData.data || !Array.isArray(chartData.data) || chartData.data.length === 0) {
-                console.warn(`Invalid chart data for ${id}`);
-                return;
-            }
+                const chartColors = getChartColorsArray(id);
+                const element = document.querySelector(`#${id}`);
+                if (!chartColors || !element) return;
 
-            destroyChart(id);
+                if (!chartData || !chartData.data || !Array.isArray(chartData.data) || chartData.data.length === 0) {
+                    console.warn(`Invalid chart data for ${id}`);
+                    return;
+                }
 
-            const seriesData = chartData.data.map((value, index) => ({
-                x: chartData.categories[index],
-                y: value,
-            }));
+                destroyChart(id);
 
-            const options = {
-                series: [{data: seriesData}],
-                chart: {
-                    type: 'treemap',
-                    height: 400,
-                    toolbar: {show: false},
-                },
-                colors: chartColors,
-                plotOptions: {
-                    treemap: {
-                        distributed: true,
-                        enableShades: false,
+                const seriesData = chartData.data.map((value, index) => ({
+                    x: chartData.categories[index],
+                    y: value,
+                }));
+
+                const options = {
+                    series: [{data: seriesData}],
+                    chart: {
+                        type: 'treemap',
+                        height: 400,
+                        toolbar: {show: false},
                     },
-                },
-                legend: {show: false},
-                dataLabels: {
-                    enabled: true,
-                    style: {
-                        fontSize: '13px',
-                        fontWeight: 500,
-                    },
-                    formatter: function (text, opts) {
-                        const value = opts.value;
-                        if (chartData.isRevenue) {
-                            return `${text}\n₫${new Intl.NumberFormat('vi-VN').format(value)}`;
-                        }
-                        return `${text}\n${value}`;
-                    },
-                },
-                title: {
-                    text: chartData.title || "Treemap Chart",
-                    align: 'center',
-                    style: {
-                        fontWeight: 600,
-                    },
-                },
-                subtitle: {
-                    text: chartData.subtitle || "",
-                    align: 'center',
-                },
-                tooltip: {
-                    y: {
-                        formatter: val => chartData.isRevenue
-                            ? '₫' + new Intl.NumberFormat('vi-VN').format(val)
-                            : val + ' courses',
-                    },
-                },
-            };
-
-            chartInstances[id] = new ApexCharts(element, options);
-            chartInstances[id].render();
-        }
-
-        function initPlatformPerformanceChart(id, chartData) {
-            if (typeof ApexCharts === 'undefined') {
-                console.warn('ApexCharts not loaded yet, skipping chart initialization');
-                return;
-            }
-
-            const colors = getChartColorsArray(id);
-            const element = document.querySelector(`#${id}`);
-            if (!colors || !element) return;
-
-            if (!chartData || !chartData.revenue || !chartData.orders || !chartData.students) {
-                console.warn(`Invalid chart data for ${id}`);
-                return;
-            }
-
-            destroyChart(id);
-
-            const options = {
-                series: [
-                    {name: "Revenue", type: "column", data: chartData.revenue},
-                    {name: "Orders", type: "line", data: chartData.orders},
-                    {name: "Students", type: "line", data: chartData.students},
-                    {name: "Instructors", type: "line", data: chartData.instructors},
-                    {name: "Approved Courses", type: "line", data: chartData.courses},
-                ],
-                chart: {
-                    height: 420,
-                    type: "line",
-                    stacked: false,
-                    toolbar: {show: false},
-                },
-                stroke: {
-                    width: [0, 3, 3, 3, 3],
-                    curve: "smooth",
-                },
-                fill: {
-                    opacity: [1, 0.3, 1, 1, 1],
-                },
-                labels: chartData.months,
-                markers: {size: 0, hover: {size: 6}},
-                yaxis: [
-                    {
-                        title: {text: "Revenue (₫)"},
-                        labels: {
-                            formatter: val => new Intl.NumberFormat('vi-VN').format(val),
+                    colors: chartColors,
+                    plotOptions: {
+                        treemap: {
+                            distributed: true,
+                            enableShades: false,
                         },
                     },
-                    {
-                        opposite: true,
-                        title: {text: "Count"},
-                        labels: {
-                            formatter: val => Math.round(val),
+                    legend: {show: false},
+                    dataLabels: {
+                        enabled: true,
+                        style: {
+                            fontSize: '13px',
+                            fontWeight: 500,
                         },
-                    },
-                ],
-                colors: colors,
-                legend: {
-                    position: "top",
-                    horizontalAlign: "center",
-                    fontSize: "13px",
-                    markers: {width: 10, height: 10, radius: 12},
-                },
-                tooltip: {
-                    shared: true,
-                    intersect: false,
-                    y: {
-                        formatter: function (val, {seriesIndex}) {
-                            switch (seriesIndex) {
-                                case 0:
-                                    return "₫" + new Intl.NumberFormat("vi-VN").format(val);
-                                case 1:
-                                    return Math.round(val) + " orders";
-                                case 2:
-                                    return Math.round(val) + " students";
-                                case 3:
-                                    return Math.round(val) + " instructors";
-                                case 4:
-                                    return Math.round(val) + " courses";
-                                default:
-                                    return val;
+                        formatter: function (text, opts) {
+                            const value = opts.value;
+                            if (chartData.isRevenue) {
+                                return `${text}\n₫${new Intl.NumberFormat('vi-VN').format(value)}`;
                             }
+                            return `${text}\n${value}`;
                         },
                     },
-                },
-                title: {
-                    text: chartData.title,
-                    align: "center",
-                    style: {fontWeight: 600},
-                },
-                subtitle: {
-                    text: chartData.subtitle,
-                    align: "center",
-                },
-                grid: {
-                    borderColor: "#f1f1f1",
-                    strokeDashArray: 4,
-                },
-            };
+                    title: {
+                        text: chartData.title || "Treemap Chart",
+                        align: 'center',
+                        style: {
+                            fontWeight: 600,
+                        },
+                    },
+                    subtitle: {
+                        text: chartData.subtitle || "",
+                        align: 'center',
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: val => chartData.isRevenue
+                                ? '₫' + new Intl.NumberFormat('vi-VN').format(val)
+                                : val + ' courses',
+                        },
+                    },
+                };
 
-            chartInstances[id] = new ApexCharts(element, options);
-            chartInstances[id].render();
-        }
+                chartInstances[id] = new ApexCharts(element, options);
+                chartInstances[id].render();
+            }
+
+            function initPlatformPerformanceChart(id, chartData) {
+                if (typeof ApexCharts === 'undefined') {
+                    console.warn('ApexCharts not loaded yet, skipping chart initialization');
+                    return;
+                }
+
+                const colors = getChartColorsArray(id);
+                const element = document.querySelector(`#${id}`);
+                if (!colors || !element) return;
+
+                if (!chartData || !chartData.revenue || !chartData.orders || !chartData.students) {
+                    console.warn(`Invalid chart data for ${id}`);
+                    return;
+                }
+
+                destroyChart(id);
+
+                const options = {
+                    series: [
+                        {name: "Revenue", type: "column", data: chartData.revenue},
+                        {name: "Orders", type: "line", data: chartData.orders},
+                        {name: "Students", type: "line", data: chartData.students},
+                        {name: "Instructors", type: "line", data: chartData.instructors},
+                        {name: "Approved Courses", type: "line", data: chartData.courses},
+                    ],
+                    chart: {
+                        height: 420,
+                        type: "line",
+                        stacked: false,
+                        toolbar: {show: false},
+                    },
+                    stroke: {
+                        width: [0, 3, 3, 3, 3],
+                        curve: "smooth",
+                    },
+                    fill: {
+                        opacity: [1, 0.3, 1, 1, 1],
+                    },
+                    labels: chartData.months,
+                    markers: {size: 0, hover: {size: 6}},
+                    yaxis: [
+                        {
+                            title: {text: "Revenue (₫)"},
+                            labels: {
+                                formatter: val => new Intl.NumberFormat('vi-VN').format(val),
+                            },
+                        },
+                        {
+                            opposite: true,
+                            title: {text: "Count"},
+                            labels: {
+                                formatter: val => Math.round(val),
+                            },
+                        },
+                    ],
+                    colors: colors,
+                    legend: {
+                        position: "top",
+                        horizontalAlign: "center",
+                        fontSize: "13px",
+                        markers: {width: 10, height: 10, radius: 12},
+                    },
+                    tooltip: {
+                        shared: true,
+                        intersect: false,
+                        y: {
+                            formatter: function (val, {seriesIndex}) {
+                                switch (seriesIndex) {
+                                    case 0:
+                                        return "₫" + new Intl.NumberFormat("vi-VN").format(val);
+                                    case 1:
+                                        return Math.round(val) + " orders";
+                                    case 2:
+                                        return Math.round(val) + " students";
+                                    case 3:
+                                        return Math.round(val) + " instructors";
+                                    case 4:
+                                        return Math.round(val) + " courses";
+                                    default:
+                                        return val;
+                                }
+                            },
+                        },
+                    },
+                    title: {
+                        text: chartData.title,
+                        align: "center",
+                        style: {fontWeight: 600},
+                    },
+                    subtitle: {
+                        text: chartData.subtitle,
+                        align: "center",
+                    },
+                    grid: {
+                        borderColor: "#f1f1f1",
+                        strokeDashArray: 4,
+                    },
+                };
+
+                chartInstances[id] = new ApexCharts(element, options);
+                chartInstances[id].render();
+            }
 
             function initCharts() {
                 setTimeout(() => {

@@ -1,5 +1,7 @@
 @extends('layouts.client')
 
+@section('title', $course->title)
+
 @section('content')
     <div class="rbt-breadcrumb-default rbt-breadcrumb-style-3">
         <div class="breadcrumb-inner breadcrumb-dark">

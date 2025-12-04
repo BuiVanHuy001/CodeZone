@@ -2,10 +2,13 @@
 
 namespace App\Support;
 
+use Illuminate\Support\Facades\Log;
+
 class ClientMenuMapping {
     public static function getMenuForRole(): array
     {
         $role = auth()->user()->getRoleNames()->first();
+        Log::info($role, [auth()->user()->getRoleNames()]);
         $instance = new self();
         return $instance->menuMapping[$role] ?? [];
     }
@@ -65,6 +68,26 @@ class ClientMenuMapping {
                     'icon' => 'feather-settings',
                     'route' => 'student.dashboard.settings',
                 ],
+            ]
+        ],
+        'admin' => [
+            0 => [
+                'Overview' => [
+                    'icon' => 'feather-home',
+                    'route' => 'admin.overview.index',
+                ],
+                'Instructor' => [
+                    'icon' => 'feather-users',
+                    'route' => 'admin.instructors.index',
+                ],
+                'Student' => [
+                    'icon' => 'feather-users',
+                    'route' => 'admin.students.index',
+                ],
+                'Quản lý khoa' => [
+                    'icon' => 'feather-users',
+                    'route' => 'admin.academic.index',
+                ]
             ]
         ]
     ];

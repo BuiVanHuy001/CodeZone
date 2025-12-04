@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasSlug;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,8 +20,7 @@ use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
     use HasFactory, Notifiable, HasSlug, HasUuids, HasRoles;
 
     protected $keyType = 'string';
@@ -36,9 +36,51 @@ class User extends Authenticatable
         'status',
     ];
 
-    protected $hidden = ['password', 'remember_token',];
+    protected $hidden = ['password', 'remember_token'];
 
-    public static array $STATUSES = ['active', 'pending', 'suspended', 'rejected'];
+    const STATUS_ACTIVE = 'active';
+    const STATUS_SUSPENDED = 'suspended';
+
+    public static array $COMMON_STATUSES = [
+        self::STATUS_ACTIVE => 'Đang hoạt động',
+        self::STATUS_SUSPENDED => 'Bị khóa',
+    ];
+
+    public static function getStatusesByRole(string $role): array
+    {
+        $statuses = self::$COMMON_STATUSES;
+
+        if ($role === 'student') {
+            $statuses += StudentProfile::$SPECIFIC_STATUSES;
+        } elseif ($role === 'instructor') {
+            $statuses += InstructorProfile::$SPECIFIC_STATUSES;
+        }
+
+        return $statuses;
+    }
+
+    public function getAvailableStatuses(): array
+    {
+        $statuses = self::$COMMON_STATUSES;
+
+        if ($this->hasRole('student')) {
+            $statuses += StudentProfile::$SPECIFIC_STATUSES;
+        } elseif ($this->hasRole('instructor')) {
+            $statuses += InstructorProfile::$SPECIFIC_STATUSES;
+        }
+
+        return $statuses;
+    }
+
+    protected function statusLabel(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $list = $this->getAvailableStatuses();
+                return $list[$this->status] ?? ucfirst($this->status);
+            }
+        );
+    }
 
     protected function casts(): array
     {
@@ -58,7 +100,7 @@ class User extends Authenticatable
         return $this->hasMany(TrackingProgress::class);
     }
 
-    public function enrollments(): User|HasMany
+    public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class, 'user_id');
     }
@@ -78,9 +120,18 @@ class User extends Authenticatable
         return $this->hasOne(InstructorProfile::class, 'user_id');
     }
 
-    public function studentProfile(): HasOne|User
+    public function studentProfile(): HasOne
     {
         return $this->hasOne(StudentProfile::class, 'user_id');
+    }
+
+    public function getProfileUrl(): string
+    {
+        if ($this->hasRole('student')) {
+            return route('student.details', $this->slug);
+        }
+
+        return route('instructor.details', $this->slug);
     }
 
     public function getProfile(): HasOne
@@ -110,11 +161,6 @@ class User extends Authenticatable
         }
 
         return asset('images/team/temp-avatar.webp');
-    }
-
-    public function role(): string
-    {
-        return $this->getRoleNames()->first() ?? 'guest';
     }
 
     public function slugSourceField(): string

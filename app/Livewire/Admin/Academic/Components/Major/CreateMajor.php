@@ -7,6 +7,7 @@ use App\Services\Cache\AcademicCache;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
@@ -25,6 +26,13 @@ class CreateMajor extends Component {
 
     public function mount(): void
     {
+        $this->loadFaculties();
+    }
+
+    #[On('faculty-created')]
+    #[On('faculty-updated')]
+    public function loadFaculties(): void
+    {
         $this->faculties = AcademicCache::getCachedFacultiesOnly();
     }
 
@@ -42,11 +50,10 @@ class CreateMajor extends Component {
 
             $this->reset(['name', 'code', 'faculty_id']);
 
-            $this->dispatch('faculty-updated');
+            $this->dispatch('major-created');
             $this->dispatch('close-modal', modalId: '#create-major-modal');
 
             $this->swal('Thành công!', 'Đã thêm chuyên ngành mới.');
-
         } catch (\Exception $e) {
             $this->swalError('Lỗi!', 'Đã xảy ra lỗi khi thêm chuyên ngành mới.');
             report($e);

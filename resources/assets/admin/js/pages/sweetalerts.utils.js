@@ -86,7 +86,6 @@ export function showConfirmAction(livewireComponent, id, method, options = {}) {
         title,
         text,
         () => {
-            // Gọi dynamic method name
             livewireComponent.call(method, id);
         },
         confirmButtonText

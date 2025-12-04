@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\InstructorProfile;
+use App\Models\StudentProfile;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,7 +22,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->enum('status', User::$STATUSES)->default('active');
+            $table->enum('status', array_unique(array_merge(
+                array_keys(User::$COMMON_STATUSES),
+                array_keys(StudentProfile::$SPECIFIC_STATUSES),
+                array_keys(InstructorProfile::$SPECIFIC_STATUSES)
+            )))->default('active');
             $table->string('avatar')->nullable();
 
             $table->timestamps();

@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Services\Cache\AcademicCache;
 use App\Services\Cache\StudentCache;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -17,10 +18,10 @@ class StudentImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
     public array $importedStudents = [];
     public array $errors = [];
 
-    private $classrooms;
-    private $majors;
-    private $existingEmails;
-    private $existingStudentCodes = [];
+    private mixed $classrooms;
+    private Collection $majors;
+    private mixed $existingEmails;
+    private mixed $existingStudentCodes = [];
 
     public function __construct()
     {
@@ -37,10 +38,7 @@ class StudentImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
         }
 
         $firstRow = $collection->first();
-        \Log::info('StudentImport: First row data', $firstRow ? $firstRow->toArray() : []);
-
         $headers = array_keys($firstRow->toArray());
-
         $missing = array_diff($this->REQUIRED_COLUMNS, $headers);
 
         if (!empty($missing)) {
@@ -60,7 +58,6 @@ class StudentImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
             throw new \Exception("File Excel thiếu các cột: " . implode(', ', $missingReadable));
         }
 
-
         foreach ($collection as $index => $row) {
             $rowNumber = $index + 2;
 
@@ -70,9 +67,9 @@ class StudentImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
             $classroomCode = $row['lop'];
             $majorName = $row['nganh'];
             $gender = $row['gioi_tinh'];
-            $dobValue = $row['ngay_sinh'];
-            $enrollmentYearValue = $row['nam_nhap_hoc'];
-            $password = !empty($row['mat_khau']) ? $row['mat_khau'] : 'password123';
+            $dobValue = $this->transformDate($row['ngay_sinh']);
+            $enrollmentYearValue = $this->transformDate($row['nam_nhap_hoc']);
+            $password = $row['mat_khau'];
 
             try {
                 if (isset($this->existingEmails[$email])) {
@@ -186,6 +183,30 @@ class StudentImport implements ToCollection, WithHeadingRow, SkipsEmptyRows, Wit
         $data['nganh'] = trim($data['nganh'] ?? '');
 
         return $data;
+    }
+
+    private function transformDate($value): ?string
+    {
+        if (empty($value)) return null;
+
+        try {
+            if (is_numeric($value)) {
+                return Date::excelToDateTimeObject($value)->format('Y-m-d');
+            }
+
+            if (preg_match('/\d{1,2}\/\d{1,2}\/\d{4}/', $value)) {
+                return Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+            }
+
+            if (preg_match('/\d{1,2}-\d{1,2}-\d{4}/', $value)) {
+                return Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d');
+            }
+
+            return Carbon::parse($value)->format('Y-m-d');
+
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     public function getImportedStudents(): array

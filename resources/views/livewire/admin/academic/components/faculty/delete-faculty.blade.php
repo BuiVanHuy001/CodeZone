@@ -1,5 +1,5 @@
 <div>
-    <div class="modal fade" id="delete-faculty-modal" tabindex="-1" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="deleteFacultyModal" tabindex="-1" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-danger-subtle">

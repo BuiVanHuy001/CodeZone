@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CourseBatch extends Model {
     protected $guarded = [];
@@ -11,9 +12,10 @@ class CourseBatch extends Model {
         'upcoming' => 'Upcoming',
         'ongoing' => 'Ongoing',
         'completed' => 'Completed',
+        'cancelled' => 'Cancelled'
     ];
 
-    public function course(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
     }

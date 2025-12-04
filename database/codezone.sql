@@ -157,7 +157,7 @@ VALUES ('Quan hệ công chúng', 'QHCC', 1, NOW(), NOW(), 'quan-he-cong-chung')
        ('Điều dưỡng', 'DD', 3, NOW(), NOW(), 'dieu-duong'),
 
        ('Công nghệ Kỹ thuật Ô tô', 'OTO', 4, NOW(), NOW(), 'cong-nghe-ky-thuat-oto'),
-       ('Ứng dụng phần mền', 'UDPM', 4, NOW(), NOW(), 'ung-dung-phan-men'),
+       ('Ứng dụng phần mềm', 'UDPM', 4, NOW(), NOW(), 'ung-dung-phan-men'),
        ('Thiết kế Website', 'TKW', 4, NOW(), NOW(), 'thiet-ke-website'),
 
        ('Thiết kế Đồ họa', 'TKDH', 5, NOW(), NOW(), 'thiet-ke-do-hoa'),

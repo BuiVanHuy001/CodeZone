@@ -1,9 +1,9 @@
 <div>
-    <div class="modal fade" id="create-faculty-modal" tabindex="-1" aria-labelledby="create-faculty-modalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="createFacultyModal" tabindex="-1" aria-labelledby="createFacultyModalLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="create-faculty-modalLabel">Thêm khoa mới</h5>
+                    <h5 class="modal-title" id="createFacultyModalLabel">Thêm khoa mới</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 

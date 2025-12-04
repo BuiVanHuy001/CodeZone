@@ -2,130 +2,133 @@
 
 namespace App\Livewire\Admin\Student\Components;
 
-use App\Imports\StudentImport;
 use App\Services\Admin\Student\StudentService;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Validators\ValidationException;
+use Log;
 
 class ImportModal extends Component {
     use WithFileUploads;
 
     public $files = [];
-    public array $uploadedFiles = [];
+    public bool $showResult = false;
+    public array $importedStudents = [];
+    public array $importErrors = [];
 
-    protected $listeners = ['closeModal'];
+    protected function rules(): array
+    {
+        return [
+            'files' => 'required|array|min:1',
+            'files.*' => 'required|file|mimes:csv,xls,xlsx|max:10240',
+        ];
+    }
+
+    protected $messages = [
+        'files.*.mimes' => 'File phải có định dạng: csv, xls, xlsx',
+        'files.*.max' => 'File không được vượt quá 10MB',
+    ];
 
     public function updatedFiles(): void
     {
-        $this->validate([
-            'files.*' => 'required|file|mimes:csv,xls,xlsx|max:10240',
-        ], [
-            'files.*.required' => 'File không được để trống',
-            'files.*.file' => 'File không hợp lệ',
-            'files.*.mimes' => 'File phải có định dạng: csv, xls, xlsx',
-            'files.*.max' => 'File không được vượt quá 10MB',
-        ]);
+        $this->validate($this->rules(), $this->messages);
     }
 
     public function importStudents(): void
     {
-        \Log::info('ImportModal: importStudents() called');
+        $this->validate();
 
-        $this->validate([
-            'files' => 'required|array|min:1',
-            'files.*' => 'required|file|mimes:csv,xls,xlsx|max:10240',
-        ]);
+        try {
+            $result = app(StudentService::class)->importStudent($this->files);
+            $this->files = [];
+            if ($result->count > 0) {
+                $this->importedStudents = $result->importedData;
+                $this->showResult = true;
+            }
+            $this->dispatch('student-imported');
+            $this->handleImportResponse($result);
+        } catch (\Exception $e) {
+            $this->swal('error', 'Lỗi hệ thống', 'Đã xảy ra lỗi trong quá trình xử lý. Vui lòng thử lại.');
+        }
+    }
 
-        \Log::info('ImportModal: Validation passed, files count: ' . count($this->files));
-
-        foreach ($this->files as $index => $file) {
-            \Log::info("ImportModal: File {$index} - Name: {$file->getClientOriginalName()}, Size: {$file->getSize()}, Path: {$file->getRealPath()}");
+    private function handleImportResponse($result): void
+    {
+        if ($result->hasErrors()) {
+            $this->importErrors = $result->errors;
         }
 
-        $result = app(StudentService::class)->importStudent($this->files);
-
-        \Log::info('ImportModal: Import completed', $result);
-
-        $totalImported = $result['totalImported'];
-        $allErrors = $result['errors'];
-        $fileResults = $result['fileResults'];
-
-        $this->reset(['files']);
-
-        if ($totalImported > 0) {
-            $message = "Successfully imported {$totalImported} student(s) from " . count($fileResults) . " file(s).";
-
-            if (!empty($allErrors)) {
-                $message .= " However, there were " . count($allErrors) . " error(s).";
-
-                // Build an HTML list of errors (escape each error). Limit visible errors to 20.
-                $visibleErrors = array_slice($allErrors, 0, 20);
-                $errorItems = '';
-                foreach ($visibleErrors as $err) {
-                    $errorItems .= '<li>' . e($err) . '</li>';
-                }
-                if (count($allErrors) > 20) {
-                    $errorItems .= '<li>... and ' . (count($allErrors) - 20) . ' more errors.</li>';
-                }
-                $errorHtml = '<br><small>Errors:</small><ul style="text-align:left;margin:0.5rem 0 0 1rem;">' . $errorItems . '</ul>';
-
-                $this->dispatch('swal', [
-                    'icon' => 'warning',
-                    'title' => 'Import Completed with Warnings',
-                    'html' => $message . $errorHtml,
-                    'confirmButtonText' => 'OK',
-                ]);
-
-                logger()->error('Student import errors:', $allErrors);
-            } else {
-                $this->dispatch('swal', [
-                    'icon' => 'success',
-                    'title' => 'Import Successful',
-                    'text' => $message,
-                    'timer' => 3000,
-                    'showConfirmButton' => false,
-                ]);
-            }
-
-            // Refresh parent component data
-            $this->dispatch('students-imported');
-
-        } else {
-            $errorMessage = "No students were imported.";
-            if (!empty($allErrors)) {
-                $errorMessage .= "\n\nErrors:\n" . implode("\n", array_slice($allErrors, 0, 5));
-                if (count($allErrors) > 5) {
-                    $errorMessage .= "\n... and " . (count($allErrors) - 5) . " more errors.";
-                }
-            }
-
-            $this->dispatch('swal', [
-                'icon' => 'error',
-                'title' => 'Import Failed',
-                'html' => nl2br($errorMessage),
-            ]);
-
-            logger()->error('Student import failed:', $allErrors);
+        if ($result->isSuccess()) {
+            $this->swal('Import thành công', 'Tất cả sinh viên đã được import thành công.');
+            return;
         }
 
-        $this->dispatch('close-modal');
+        $message = $result->count > 0
+            ? "Đã import {$result->count} sinh viên, nhưng có một số lỗi:"
+            : "Không thể import sinh viên. Vui lòng kiểm tra lỗi sau:";
+
+        $errorHtml = $this->buildErrorHtml($result->errors);
+
+        $this->swal(
+            title: 'Kết quả Import',
+            icon: $result->count > 0 ? 'warning' : 'error',
+            html: $message . $errorHtml,
+            showCloseButton: true,
+        );
+    }
+
+    private function buildErrorHtml(array $errors): string
+    {
+        $limit = 10;
+        $visibleErrors = array_slice($errors, 0, $limit);
+
+        $listItems = collect($visibleErrors)
+            ->map(fn($err) => "<li class='text-start'>" . e($err) . "</li>")
+            ->join('');
+
+        if (count($errors) > $limit) {
+            $listItems .= "<li>... và " . (count($errors) - $limit) . " lỗi khác.</li>";
+        }
+
+        return "<ul style='margin-top:10px; max-height: 200px; overflow-y: auto;'>{$listItems}</ul>";
     }
 
     public function removeFile(int $index): void
     {
         if (isset($this->files[$index])) {
+            $file = $this->files[$index];
+
+            if ($file && method_exists($file, 'delete')) {
+                try {
+                    $file->delete();
+                } catch (\Exception $e) {
+                    Log::warning('Không thể xóa file tạm: ' . $e->getMessage());
+                }
+            }
+
             unset($this->files[$index]);
-            $this->files = array_values($this->files); // Re-index array
+            $this->files = array_values($this->files);
         }
     }
 
     public function closeModal(): void
     {
-        $this->reset(['files', 'uploadedFiles']);
+        if ($this->files) {
+            foreach ($this->files as $file) {
+                if ($file && method_exists($file, 'delete')) {
+                    try {
+                        $file->delete();
+                    } catch (\Exception $e) {
+                        Log::warning('Không thể xóa file tạm: ' . $e->getMessage());
+                    }
+                }
+            }
+        }
+
+        $this->reset(['showResult', 'importedStudents', 'importErrors', 'files']);
         $this->resetValidation();
+
+        $this->dispatch('close-modal', id: 'importStudentModal');
     }
 
     public function render(): View

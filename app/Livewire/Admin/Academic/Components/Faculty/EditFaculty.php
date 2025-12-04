@@ -30,7 +30,7 @@ class EditFaculty extends Component {
         ];
     }
 
-    #[On('edit-faculty')]
+    #[On('show-edit')]
     public function setEditFaculty(int $id): void
     {
         $faculty = Faculty::find($id);
@@ -42,7 +42,9 @@ class EditFaculty extends Component {
 
             $this->resetValidation();
 
-            $this->dispatch('open-edit-modal');
+            $this->dispatch('open-modal', id: 'editFacultyModal');
+        } else {
+            $this->swalError('Lỗi', 'Không tìm thấy khoa');
         }
     }
 
@@ -61,7 +63,7 @@ class EditFaculty extends Component {
             ]);
             $this->dispatch('faculty-updated');
 
-            $this->dispatch('close-modal', modalId: '#edit-faculty-modal');
+            $this->dispatch('close-modal', id: 'editFacultyModal');
             $this->dispatch('swal', [
                 'title' => 'Thành công!',
                 'text' => 'Cập nhật khoa thành công.',

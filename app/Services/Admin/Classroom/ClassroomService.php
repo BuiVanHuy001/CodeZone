@@ -12,11 +12,6 @@ use Illuminate\Support\Facades\DB;
 class ClassroomService {
     use HasCodeNormalization;
 
-    public function getAll(): Collection
-    {
-        return AcademicCache::getCachedClassroomList();
-    }
-
     public function getById(int $id): ?ClassRoom
     {
         return AcademicCache::getCachedClassroomDetail($id);

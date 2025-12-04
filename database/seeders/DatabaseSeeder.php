@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder {
             $this->call(EnrollmentSeeder::class);
             $this->call(CommentSeeder::class);
             $this->call(ReactionSeeder::class);
+            User::find('0908ca6b-76a3-33d1-a617-e73f7c774d4f')->assignRole('admin');
 
             $instructors = Role::findByName('instructor')->users()->with(['instructorProfile', 'courses', 'reviews'])->get();
             foreach ($instructors as $instructor) {

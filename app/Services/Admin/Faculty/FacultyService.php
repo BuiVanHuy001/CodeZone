@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin\Faculty;
 
+use App\DTOs\Instructor\InstructorTableRowDTO;
 use App\Models\Faculty;
 use App\Models\Major;
 use App\Services\Cache\AcademicCache;
@@ -34,7 +35,12 @@ class FacultyService {
 
     public function getById(int|string $id): ?Faculty
     {
-        return AcademicCache::getCachedFacultiesWithMajors()->firstWhere('id', $id);
+        $faculty = AcademicCache::getCachedFacultiesWithMajors()->firstWhere('id', $id);
+
+        if (!$faculty) {
+            return null;
+        }
+        return $faculty;
     }
 
     public function delete(int $id): bool

@@ -27,7 +27,7 @@ readonly class CourseService
         $result = [];
 
         if (auth()->check() && auth()->user()->hasRole('admin')) {
-            foreach (Course::$STATUSES as $status) {
+            foreach (array_keys(Course::$STATUSES) as $status) {
                 $courses = $this->catalogService->getCoursesByStatus($status);
                 $result[$status] = $courses;
             }
