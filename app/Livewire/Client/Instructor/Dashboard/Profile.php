@@ -11,7 +11,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('My Profile')]
+#[Title('Hồ sơ cá nhân')]
 class Profile extends Component
 {
     private InstructorService $instructorService;

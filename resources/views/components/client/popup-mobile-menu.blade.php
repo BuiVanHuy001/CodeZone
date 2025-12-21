@@ -5,13 +5,13 @@
                 <div class="logo">
                     <div class="logo logo-dark">
                         <a href="">
-                            <img src="{{ asset('images/logo/logo-dark.png') }}" alt="CodeZone Logo">
+                            <img src="{{ asset('images/logo/logo-dark.webp') }}" alt="CodeZone Logo">
                         </a>
                     </div>
 
                     <div class="logo d-none logo-light">
                         <a href="">
-                            <img src="{{ asset('images/logo/logo-light.png') }}" alt="CodeZone Logo">
+                            <img src="{{ asset('images/logo/logo-light.webp') }}" alt="CodeZone Logo">
                         </a>
                     </div>
                 </div>
@@ -33,30 +33,7 @@
         <nav class="mainmenu-nav">
             <ul class="mainmenu">
                 <li>
-                    <a href="#">Home</a>
-                </li>
-
-                <li class="with-megamenu has-menu-child-item position-static">
-                    <a href="#">Categories</a>
-                    <ul class="rbt-megamenu rbt-vertical-nav-list-wrapper vertical-nav-menu">
-                        <h6 class="rbt-short-title">Explore by Goal</h6>
-                        @foreach ($categories as $category)
-                            <li class="vertical-nav-item with-megamenu has-menu-child-item position-static">
-                                <a href="#">{{ $category->name }}</a>
-                                <div class="vartical-nav-content-menu-wrapper">
-                                    <div class="vartical-nav-content-menu">
-                                        <ul class="rbt-vertical-nav-list-wrapper">
-                                            @forelse($category->children as $child)
-                                                <li><a href="#">{{ $child->name }}</a></li>
-                                            @empty
-                                                <li><a href="#">No Subcategories</a></li>
-                                            @endforelse
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
+                    <a href="#">Trang chủ</a>
                 </li>
 
                 <li>

@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="rbt-contact-form contact-form-style-1 max-width-auto mx-auto my-5 w-50">
-        <h3 class="title text-center">Login</h3>
+        <h3 class="title text-center">Đăng nhập</h3>
         <form class="max-width-auto" action="{{ route('auth.login') }}" method="POST">
             @csrf
             <div @class(['form-group', 'focused' => old('email')])>
                 <input name="email" type="text" value="{{ request('email') ?? old('email') ?? $email }}" @class(['border-danger' => $errors->has('email')])/>
-                <label>Email address *</label>
+                <label>Email *</label>
                 <span class="focus-border"></span>
                 @error('email')
                     <span class="text-danger">{{ $message }}</span>
@@ -16,7 +16,7 @@
 
             <div class="form-group">
                 <input name="password" type="password">
-                <label>Password *</label>
+                <label>Mật khẩu *</label>
                 <span class="focus-border"></span>
                 @error('password')
                     <span class="text-danger">{{ $message }}</span>
@@ -27,28 +27,28 @@
                 <div class="col-lg-6">
                     <div class="rbt-checkbox">
                         <input type="checkbox" id="rememberme" name="rememberme">
-                        <label for="rememberme">Remember me</label>
+                        <label for="rememberme">Duy trì đăng nhập</label>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="rbt-lost-password text-end">
-                        <a class="rbt-btn-link" href="{{ route('client.forgot-password') }}">Lost your password?</a>
+                        <a class="rbt-btn-link" href="{{ route('client.forgot-password') }}">Quên mật khẩu?</a>
                     </div>
                 </div>
             </div>
             <div class="d-flex justify-content-center mb-5">
-                <button class="rbt-btn w-50 mx-auto">Login</button>
+                <button class="rbt-btn w-50 mx-auto">Đăng nhập</button>
             </div>
         </form>
 
         <div class="text-center mb-3">
-            <p class="description">Don't have an account?
-                <a class="rbt-btn-link" href="{{ route('student.register') }}"><strong>Register here</strong></a></p>
+            <p class="description">Không có tài khoản?
+                <a class="rbt-btn-link" href="{{ route('student.register') }}"><strong>Đăng ký tại đây</strong></a></p>
         </div>
 
         <div class="row">
             <div class="col-12 d-flex justify-content-center mb-3">
-                <span class="rbt-badge">Or login by</span>
+                <span class="rbt-badge">Hoặc đăng nhập bằng</span>
             </div>
 
             <div class="d-flex justify-content-center gap-3 mb-3">

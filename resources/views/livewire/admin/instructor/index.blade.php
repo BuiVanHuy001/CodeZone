@@ -141,7 +141,7 @@
                                                     <ul class="dropdown-menu dropdown-menu-end">
                                                         <li>
                                                             <button class="dropdown-item text-warning"
-                                                                    onclick="showConfirmAction(this, '{{ $instructor->id }}', 'suspend', { title: 'Đình chỉ?', confirmButtonText: 'Đình chỉ', confirmButtonColor: '#ffc107' })">
+                                                                    onclick="showConfirmAction(@this, '{{ $instructor->id }}', 'suspend', { title: 'Đình chỉ?', confirmButtonText: 'Đình chỉ', confirmButtonColor: '#ffc107' })">
                                                                 <i class="ri-prohibited-line me-2"></i> Đình chỉ
                                                             </button>
                                                         </li>
@@ -216,11 +216,11 @@
                                             <td class="text-end">
                                                 <div class="d-flex justify-content-end gap-2">
                                                     <button class="btn btn-sm btn-soft-success"
-                                                            onclick="showConfirmAction(this, '{{ $instructor->id }}', 'approve', { title: 'Duyệt giảng viên?', confirmButtonText: 'Chấp thuận', confirmButtonColor: '#0ab39c' })">
+                                                            onclick="showConfirmAction(@this, '{{ $instructor->id }}', 'approve', { title: 'Duyệt giảng viên?', confirmButtonText: 'Chấp thuận', confirmButtonColor: '#0ab39c' })">
                                                         <i class="ri-check-double-line"></i> Duyệt
                                                     </button>
                                                     <button class="btn btn-sm btn-soft-danger"
-                                                            onclick="showConfirmAction(this, '{{ $instructor->id }}', 'reject', { title: 'Từ chối?', confirmButtonText: 'Từ chối', confirmButtonColor: '#f06548' })">
+                                                            onclick="showConfirmAction(@this, '{{ $instructor->id }}', 'reject', { title: 'Từ chối?', confirmButtonText: 'Từ chối', confirmButtonColor: '#f06548' })">
                                                         <i class="ri-close-line"></i> Từ chối
                                                     </button>
                                                 </div>
@@ -291,7 +291,7 @@
 
                                             <td class="text-end">
                                                 <button class="btn btn-sm btn-outline-primary"
-                                                        onclick="showConfirmAction(this, '{{ $instructor->id }}', 'restore', { title: 'Khôi phục?', confirmButtonText: 'Khôi phục ngay', confirmButtonColor: '#0ab39c' })">
+                                                        onclick="showConfirmAction(@this, '{{ $instructor->id }}', 'restore', { title: 'Khôi phục?', confirmButtonText: 'Khôi phục ngay', confirmButtonColor: '#0ab39c' })">
                                                     <i class="ri-refresh-line align-bottom me-1"></i> Khôi phục
                                                 </button>
                                             </td>
@@ -316,12 +316,3 @@
     <livewire:admin.instructor.components.create-modal/>
     <livewire:admin.instructor.components.instructor-detail/>
 </div>
-
-@push('scripts')
-    <script>
-        function initTooltips() {
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-            [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-        }
-    </script>
-@endpush

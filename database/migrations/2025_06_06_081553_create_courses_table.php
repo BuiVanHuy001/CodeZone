@@ -32,7 +32,7 @@ return new class extends Migration {
             $table->unsignedMediumInteger('duration')
                 ->comment('Duration in seconds; max 16777215 seconds (~194 days)');
 
-            $table->enum('level', Course::$LEVELS);
+            $table->enum('level', array_keys(Course::$LEVELS));
             $table->enum('status', array_keys(Course::$STATUSES));
             $table->enum('type', array_values(Course::$TYPES))->default(Course::$TYPES['free']);
 

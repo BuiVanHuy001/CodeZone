@@ -2,19 +2,19 @@
     <div class="navbar-brand-box">
         <a href="{{ route('admin.overview.index') }}" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{ asset('images/logo/logo-dark.png') }}" alt=""/>
+                <img src="{{ asset('images/logo/logo-dark.webp') }}" alt=""/>
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('images/logo/logo-dark.png') }}" alt=""/>
+                <img src="{{ asset('images/logo/logo-dark.webp') }}" alt=""/>
             </span>
         </a>
 
         <a href="{{ route('admin.overview.index') }}" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{ asset('images/logo/logo-light.png') }}" alt=""/>
+                <img src="{{ asset('images/logo/logo-light.webp') }}" alt=""/>
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('images/logo/logo-light.png') }}" alt=""/>
+                <img src="{{ asset('images/logo/logo-light.webp') }}" alt=""/>
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">

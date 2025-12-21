@@ -47,7 +47,7 @@
                     @endforeach
                 @else
                     @foreach ($options as $key => $label)
-                        <option value="{{ $key }}">{{ ucfirst($label) }}</option>
+                        <option value="{{ $key }}">a</option>
                     @endforeach
                 @endif
             </select>
@@ -61,7 +61,7 @@
         >
             <option value="">Select lesson type</option>
             @foreach($options  as $key => $type)
-                <option value="{{ $key }}">{{ ucfirst($type) }}</option>
+                <option value="{{ $key }}">a</option>
             @endforeach
         </select>
     @endif

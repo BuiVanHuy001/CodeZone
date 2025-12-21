@@ -3,7 +3,7 @@
         <div class="content-item-content">
             <div class="rbt-default-sidebar-wrapper">
                 <div class="section-title mb--20">
-                    <h6 class="rbt-title-style-2">Welcome, {{ auth()->user()->name }} back</h6>
+                    <h6 class="rbt-title-style-2">Hello, {{ auth()->user()->name }}</h6>
                 </div>
                 <nav class="mainmenu-nav">
                     @foreach(\App\Support\ClientMenuMapping::getMenuForRole() as $section)
@@ -19,7 +19,7 @@
                         </ul>
                         @unless($loop->last)
                             <div class="section-title mt--40 mb--20">
-                                <h6 class="rbt-title-style-2">User</h6>
+                                <h6 class="rbt-title-style-2">Người dùng</h6>
                             </div>
                         @endunless
                     @endforeach
@@ -29,7 +29,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <a class="menu-logout-btn" href="#">
-                                    <i class="feather-log-out"></i><span>Logout</span>
+                                    <i class="feather-log-out"></i><span>Đăng xuất</span>
                                 </a>
                             </form>
                         </li>

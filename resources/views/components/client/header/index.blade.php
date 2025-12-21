@@ -6,89 +6,37 @@
                 <div class="header-left d-flex align-items-center">
                     <div class="logo logo-dark">
                         <a href="{{ route('page.home') }}">
-                            <img src="{{ asset('images/logo/logo-dark.png') }}" alt="Education Logo Images">
+                            <img src="{{ asset('images/logo/logo-light.webp') }}" alt="Education Logo Images">
                         </a>
                     </div>
 
                     <div class="logo d-none logo-light">
                         <a href="{{ route('page.home') }}">
-                            <img src="{{ asset('images/logo/logo-light.png') }}" alt="Education Logo Images">
+                            <img src="{{ asset('images/logo/logo-dark.webp') }}" alt="Education Logo Images">
                         </a>
-                    </div>
-
-                    <div class="d-none d-xl-block ms-4">
-                        <div class="rbt-category-menu-wrapper">
-                            <div class="rbt-category-btn rbt-side-offcanvas-activation">
-                                <div class="rbt-offcanvas-trigger md-size icon">
-                                        <span class="d-none d-xl-block">
-                                    <i class="feather-grid"></i>
-                                </span>
-                                    <i title="Category" class="feather-grid d-block d-xl-none"></i>
-                                </div>
-                                <span class="category-text">Category</span>
-                            </div>
-
-                            <div class="category-dropdown-menu d-none d-xl-block">
-                                <div class="category-menu-item">
-                                    <div class="rbt-vertical-nav">
-                                        <ul class="rbt-vertical-nav-list-wrapper vertical-nav-menu">
-                                            <h3 class="rbt-short-title">Explore by Goal</h3>
-                                            @foreach($categories as $category)
-                                                <li class="vertical-nav-item active">
-                                                    <a href="#tab{{ $loop->iteration }}">{{ $category->name }}</a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                    <div class="rbt-vertical-nav-content">
-                                        @foreach($categories as $category)
-                                            <div class="rbt-vertical-inner tab-content" id="tab{{ $loop->iteration }}" @if($loop->iteration === 1)style="display:block" @endif>
-                                                <div class="rbt-vertical-single">
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <div class="vartical-nav-content-menu">
-                                                                <ul class="rbt-vertical-nav-list-wrapper">
-                                                                    @forelse($category->children as $categoryChildren)
-                                                                        <li>
-                                                                            <a href="#">{{ $categoryChildren->name }}</a>
-                                                                        </li>
-                                                                    @empty
-                                                                        <li><a href="#">No Subcategories</a></li>
-                                                                    @endforelse
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="rbt-main-navigation d-none d-xl-block">
                     <nav class="mainmenu-nav">
                         <ul class="mainmenu">
                             <li>
-                                <a href="#">Home</a>
+                                <a href="#">Trang chủ</a>
                             </li>
 
                             <li>
-                                <a href="#">About us</a>
+                                <a href="#">Giới thiệu</a>
                             </li>
 
                             <li>
-                                <a href="#">Courses</a>
+                                <a href="#">Khóa học</a>
                             </li>
 
                             <li>
-                                <a href="#">Blogs</a>
+                                <a href="#">Bài viết</a>
                             </li>
 
                             <li>
-                                <a href="#">Contact</a>
+                                <a href="#">Liên hệ</a>
                             </li>
                         </ul>
                     </nav>
@@ -128,8 +76,8 @@
 
                         @guest
                             <li class="access-icon rbt-user-wrapper right-align-dropdown gap-2">
-                                <a class="rbt-btn btn-sm btn-border" href="{{ route('client.login') }}">Login</a>
-                                <a class="rbt-btn btn-sm" href="{{ route('student.register') }}">Register</a>
+                                <a class="rbt-btn btn-sm btn-border" href="{{ route('client.login') }}">Đăng nhập</a>
+                                <a class="rbt-btn btn-sm" href="{{ route('student.register') }}">Đăng ký</a>
                             </li>
                         @endguest
 
@@ -138,12 +86,12 @@
                                 <ul>
                                     <li>
                                         <a href="javascript: void(0);" data-theme="light" class="setColor light">
-                                            <img src="{{ asset('images/icons/sun-01.svg') }}" alt="Sun images"><span title="Light Mode"> Light</span>
+                                            <img src="{{ asset('images/icons/sun-01.svg') }}" alt="Sun images"><span title="Light Mode"> Sáng</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="javascript: void(0);" data-theme="dark" class="setColor dark">
-                                            <img src="{{ asset('images/icons/vector.svg') }}" alt="Vector Images"><span title="Dark Mode"> Dark</span>
+                                            <img src="{{ asset('images/icons/vector.svg') }}" alt="Vector Images"><span title="Dark Mode"> Tối</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -171,7 +119,7 @@
                                 <input type="text" placeholder="What are you looking for?">
                             </label>
                             <div class="submit-btn">
-                                <a class="rbt-btn btn-gradient btn-md" href="#">Search</a>
+                                <a class="rbt-btn btn-gradient btn-md" href="#">Tìm kiếm</a>
                             </div>
                         </form>
                     </div>

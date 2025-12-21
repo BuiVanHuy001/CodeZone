@@ -18,6 +18,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
+use Spatie\LaravelMarkdown\MarkdownRenderer;
 
 #[Title('Create New Course')]
 class Index extends Component
@@ -56,12 +57,6 @@ class Index extends Component
     public function mount(): void
     {
         $this->messages = CourseInfoValidator::$MESSAGES;
-    }
-
-    #[Layout('components.layouts.app')]
-    public function render(): Factory|Application|View
-    {
-        return view('livewire.client.course-creation.index');
     }
 
     #[On('thumbnail-upload-error')]
@@ -159,5 +154,26 @@ class Index extends Component
         }
 
         return redirect()->back();
+    }
+
+    public function renderMarkdownPreview(string $propertyName): string
+    {
+        if (!property_exists($this, $propertyName)) {
+            return '<p class="text-danger">Lỗi: Thuộc tính không tồn tại trong component.</p>';
+        }
+
+        $markdownContent = $this->{$propertyName};
+
+        if (empty($markdownContent)) {
+            return '<p class="text-muted">Nội dung xem trước trống. Vui lòng nhập nội dung Markdown.</p>';
+        }
+
+        return app(MarkdownRenderer::class)->toHtml($markdownContent);
+    }
+
+    #[Layout('components.layouts.app')]
+    public function render(): Factory|Application|View
+    {
+        return view('livewire.client.course-creation.index');
     }
 }

@@ -10,7 +10,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('My Dashboard')]
+#[Title('Tổng quan')]
 class Overview extends Component
 {
     public string $publishedCourses;

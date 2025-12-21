@@ -20,7 +20,7 @@ class CourseFactory extends Factory
             'id' => fake()->uuid(),
             'description' => fake()->paragraphs(3, true),
             'price' => fake()->randomFloat(2, 100_000, 1_000_000),
-            'level' => fake()->randomElement(Course::$LEVELS),
+            'level' => fake()->randomElement(array_keys(Course::$LEVELS)),
             'category_id' => fake()->randomElement(DB::table('categories')->pluck('id')->toArray()),
             'review_count' => 0,
             'lesson_count' => 0,

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\CourseBatch;
 use App\Models\Enrollment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,12 +13,12 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('enrollments', static function (Blueprint $table) {
+            $table->id();
             $table->foreignUuid('course_id')->constrained('courses');
             $table->foreignUuid('user_id')->constrained('users');
-            $table->primary(['course_id', 'user_id']);
+            $table->foreignIdFor(CourseBatch::class)->nullable();
 
             $table->enum('status', array_keys(Enrollment::$STATUSES))->default('not_started');
-
             $table->timestamps();
         });
     }
