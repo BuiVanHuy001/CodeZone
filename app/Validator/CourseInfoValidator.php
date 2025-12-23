@@ -7,54 +7,35 @@ use App\Models\Lesson;
 
 class CourseInfoValidator {
     public static array $MESSAGES = [
-        'title.required' => 'Course title is required to identify this course.',
-        'title.min' => 'Course title must be at least :min characters for clarity.',
-        'title.max' => 'Course title cannot exceed :max characters to ensure proper display.',
+        'title.required' => 'Vui lòng nhập tiêu đề để định danh khóa học/môn học này.',
+        'title.min' => 'Tiêu đề phải có ít nhất :min ký tự để đảm bảo tính rõ ràng.',
+        'title.max' => 'Tiêu đề không được vượt quá :max ký tự để hiển thị tốt nhất.',
 
-        'slug.required' => 'Course URL slug is required for web accessibility.',
-        'slug.min' => 'Course slug must be at least :min characters.',
-        'slug.max' => 'Course slug cannot exceed :max characters.',
-        'slug.unique' => 'This course URL already exists. Please choose a different slug.',
+        'slug.required' => 'Đường dẫn khóa học không được để trống.',
+        'slug.min' => 'Đường dẫn phải có ít nhất :min ký tự.',
+        'slug.max' => 'Đường dẫn không được vượt quá :max ký tự.',
+        'slug.unique' => 'Đường dẫn này đã tồn tại trên hệ thống. Vui lòng chọn tiêu đề khác.',
 
-        'heading.required' => 'Course heading is required for course presentation.',
-        'heading.min' => 'Course heading must be at least :min characters for clarity.',
-        'heading.max' => 'Course heading cannot exceed :max characters to ensure proper display.',
+        'heading.required' => 'Vui lòng nhập mô tả tóm tắt cho khóa học.',
+        'heading.min' => 'Mô tả tóm tắt phải có ít nhất :min ký tự.',
+        'heading.max' => 'Mô tả tóm tắt không được vượt quá :max ký tự.',
 
-        'description.max' => 'Course description cannot exceed :max characters.',
+        'price.required_if' => 'Học phí là bắt buộc đối với loại hình khóa học có thu phí.',
+        'price.integer' => 'Học phí phải là một số nguyên.',
+        'price.min' => 'Học phí cho khóa học có phí phải lớn hơn 0.',
 
-        'price.required' => 'Course price must be specified.',
-        'price.numeric' => 'Course price must be a valid number.',
-        'price.min' => 'Course price cannot be negative.',
+        'category.required' => 'Vui lòng chọn danh mục phù hợp cho khóa học.',
+        'category.exists' => 'Danh mục đã chọn không hợp lệ hoặc không tồn tại.',
 
-        'category.required' => 'Course category must be selected.',
-        'category.exists' => 'Selected category does not exist. Please choose a valid category.',
+        'level.required' => 'Vui lòng xác định cấp độ khó của khóa học.',
+        'level.in' => 'Vui lòng chọn một cấp độ hợp lệ từ danh sách có sẵn.',
 
-        'level.required' => 'Course difficulty level must be specified.',
-        'level.in' => 'Please select a valid course level from the available options.',
-
-        'startDate.required' => 'Course start date is required.',
-        'startDate.date' => 'Please enter a valid start date.',
-        'startDate.after_or_equal' => 'Course start date cannot be in the past.',
-
-        'endDate.required' => 'Course end date is required.',
-        'endDate.date' => 'Please enter a valid end date.',
-        'endDate.after_or_equal' => 'Course end date must be after or equal to the start date.',
-
-        'thumbnail.string' => 'Please enter a valid image URL.',
-
-        'modules.required' => 'At least one module must be created for this course.',
-        'modules.min' => 'Course must contain at least :min module.',
-        'modules.*.title.required' => 'Module title is required for each learning section.',
-        'modules.*.title.min' => 'Module title must be at least :min characters for clarity.',
-        'modules.*.title.max' => 'Module title cannot exceed :max characters to ensure proper display.',
-
-        'modules.*.lessons.required' => 'Each module must contain at least one lesson.',
-        'modules.*.lessons.min' => 'Each module must have at least :min lesson.',
-        'modules.*.lessons.*.title.required' => 'Lesson title is required for each learning unit.',
-        'modules.*.lessons.*.title.min' => 'Lesson title must be at least :min characters for clarity.',
-        'modules.*.lessons.*.title.max' => 'Lesson title cannot exceed :max characters to ensure proper display.',
-        'modules.*.lessons.*.type.required' => 'Lesson type must be selected to define the content format.',
-        'modules.*.lessons.*.type.in' => 'Please select a valid lesson type from the available options.',
+        'modules.required' => 'Bạn cần tạo ít nhất một chương nội dung cho khóa học này.',
+        'modules.min' => 'Khóa học phải chứa ít nhất :min chương.',
+        'modules.*.title.required' => 'Mỗi chương học đều phải có tiêu đề.',
+        'modules.*.lessons.required' => 'Mỗi chương phải chứa ít nhất một bài học.',
+        'modules.*.lessons.*.title.required' => 'Vui lòng nhập tiêu đề cho từng bài học.',
+        'modules.*.lessons.*.type.required' => 'Vui lòng chọn định dạng nội dung cho bài học.',
     ];
 
     public static function rules(): array
@@ -63,7 +44,9 @@ class CourseInfoValidator {
             'title' => 'required|min:3|max:255',
             'slug' => 'required|min:3|max:255|unique:courses,slug',
             'heading' => 'required|min:3|max:255',
-            'price' => 'required|numeric|min:0',
+            'price' => 'exclude_unless:courseType,paid|required|integer|min:1',
+            'courseType' => 'required|in:' . implode(',', array_keys(Course::$TYPES)),
+
             'category' => 'required|exists:categories,id',
             'level' => 'required|in:' . implode(',', array_keys(Course::$LEVELS)),
             'thumbnail' => 'nullable|string',

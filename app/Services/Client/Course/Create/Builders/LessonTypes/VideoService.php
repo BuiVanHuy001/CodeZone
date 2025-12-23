@@ -3,52 +3,79 @@
 namespace App\Services\Client\Course\Create\Builders\LessonTypes;
 
 use getID3;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class VideoService {
     public function getDuration(string $absolutePath): int
     {
-        $getID3 = new getID3;
-        $info = $getID3->analyze($absolutePath);
-        return (int)($info['playtime_seconds'] ?? 0);
+        try {
+            $getID3 = new getID3;
+            $info = $getID3->analyze($absolutePath);
+            return (int)($info['playtime_seconds'] ?? 0);
+        } catch (\Exception $e) {
+            return 0;
+        }
     }
 
-    public function storeVideo($video): array
+    public function storeDraftVideo(UploadedFile $video): array
     {
-        $storedVideoRelPath = $video->storeAs(
-            path: 'course/videos',
-            options: 'public',
-            name: $video->getFileName()
+        $fileName = time() . '_' . uniqid() . '.' . $video->getClientOriginalExtension();
+
+        $relPath = $video->storeAs(
+            path: config('filesystems.paths.courses.videos.draft'),
+            name: $fileName,
+            options: 'public'
         );
 
-        $storedVideoAbsPath = $this->getVideoAbsPath($storedVideoRelPath);
+        $absPathOnDisk = Storage::disk('public')->path($relPath);
+        $duration = $this->getDuration($absPathOnDisk);
 
-        $duration = $this->getDuration(Storage::disk('public')->path($storedVideoRelPath));
-
-        File::delete($video->getRealPath());
-
-        $savedFileName = basename($storedVideoRelPath);
         return [
-            'videoFileName' => $savedFileName,
+            'videoFileName' => $fileName,
             'duration' => $duration,
-            'storedVideoAbsPath' => $storedVideoAbsPath,
+            'storedVideoAbsPath' => Storage::url($relPath),
+            'status' => 'draft'
         ];
     }
 
-    private function getVideoAbsPath(string $name): string
+    public function storePendingVideo(string $fileName): bool
     {
-        return Storage::url($name);
+        $draftPath = config('filesystems.paths.courses.videos.draft') . '/' . $fileName;
+        $pendingPath = config('filesystems.paths.courses.videos.pending') . '/' . $fileName;
+
+        if (Storage::disk('public')->exists($draftPath)) {
+            return Storage::disk('public')->move($draftPath, $pendingPath);
+        }
+
+        return false;
     }
 
-    public function destroyVideo(string $relPath): void
+    public function approveVideo(string $fileName): bool
     {
-        if (Storage::disk('local')->exists('livewire-tmp/' . $relPath)) {
-            Storage::disk('local')->delete('livewire-tmp/' . $relPath);
+        $pendingPath = config('filesystems.paths.courses.videos.pending') . '/' . $fileName;
+        $approvedPath = config('filesystems.paths.courses.videos.published') . '/' . $fileName;
+
+        if (Storage::disk('public')->exists($pendingPath)) {
+            return Storage::disk('public')->move($pendingPath, $approvedPath);
         }
 
-        if (Storage::disk('public')->exists('course/videos/' . $relPath)) {
-            Storage::disk('public')->delete('course/videos/' . $relPath);
+        return false;
+    }
+
+    public function destroyVideo(string|TemporaryUploadedFile $fileName): void
+    {
+        if (!is_string($fileName)) {
+            $fileName->delete();
+            return;
         }
+
+        Storage::disk('public')->delete([
+            config('filesystems.paths.courses.videos.draft') . '/' . $fileName,
+            config('filesystems.paths.courses.videos.pending') . '/' . $fileName,
+            config('filesystems.paths.courses.videos.published') . '/' . $fileName,
+        ]);
     }
 }

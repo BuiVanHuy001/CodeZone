@@ -34,7 +34,6 @@
             eduJs.transparentHeader();
             eduJs.categoryMenuHover();
             eduJs.filterClickButton();
-            eduJs.selectPicker();
             eduJs.headerTopActivation();
             eduJs.magnificPopupActivation();
             eduJs.showMoreBtn();
@@ -814,10 +813,6 @@
                 $(selected_tab).stop().fadeIn();
                 return false;
             });
-        },
-
-        selectPicker: function () {
-            $("select").selectpicker();
         },
 
         filterClickButton: function () {

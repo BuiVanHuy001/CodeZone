@@ -7,12 +7,6 @@ use App\Models\Module;
 
 readonly class ModuleService
 {
-    public function __construct(
-        private LessonService $lessonService,
-    )
-    {
-    }
-
     public function create(Course $course, array $modules): void
     {
         $lessonCount = 0;
@@ -28,7 +22,7 @@ readonly class ModuleService
                 'course_id' => $course->id,
             ]);
 
-            $this->lessonService->create($course, $module, $moduleData['lessons']);
+            app(LessonService::class)->create($course, $module, $moduleData['lessons']);
         }
 
         $course->update(['lesson_count' => $lessonCount,]);

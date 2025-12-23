@@ -1,10 +1,7 @@
 <div wire:ignore.self class="rbt-default-modal modal fade" id="addLesson" tabindex="-1" aria-labelledby="LessonLabel"
      data-bs-backdrop="static">
     <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div @class([
-            'modal-content',
-            'border border-danger' => $errors->has('lesson.*'),
-        ])>
+        <div class="modal-content">
             <div class="modal-header">
                 <button wire:click="cancel" type="button" class="rbt-round-btn">
                     <i class="feather-x"></i>
@@ -14,22 +11,21 @@
                 <div class="inner rbt-default-form">
                     <div class="row">
                         <div class="col-lg-12">
-                            <h5 class="modal-title mb--20" id="LessonLabel">Add Lesson</h5>
+                            <h5 class="modal-title mb--20" id="LessonLabel">Thêm bài học mới</h5>
                             <x-client.dashboard.inputs.text
                                 model="lesson.title"
                                 name="lesson.title"
-                                label="Lesson Title"
-                                placeholder="Enter lesson title"
-                                info="Enter a descriptive lesson title (visible publicly to students)."/>
+                                label="Tiêu đề bài học"
+                                placeholder="Ví dụ: Tổng quan về lập trình hướng đối tượng"
+                                info="Nhập tên bài học mô tả rõ nội dung để sinh viên dễ dàng theo dõi."/>
 
                             <x-client.dashboard.inputs.select
-                                model="lesson.type"
                                 name="lesson.type"
-                                label="Lesson Type"
-                                placeholder="Select lesson type"
+                                wire:model="lesson.type"
+                                label="Định dạng bài học"
+                                placeholder="-- Chọn loại bài học --"
                                 :options="\App\Models\Lesson::$TYPES"
-                                :isBoostrapSelect="false"
-                                info="Select the module this lesson belongs to."/>
+                                info="Chọn phương thức truyền tải nội dung phù hợp cho bài học này."/>
 
                             @if (!empty($lesson['type']))
                                 <div @class([
@@ -46,8 +42,14 @@
                                             @break
 
                                         @case('document')
-                                            <livewire:client.course-creation.components.builders.lesson.lesson-types.document
-                                                wire:model="lesson.document"/>
+                                            <livewire:client.shared.markdown-editor
+                                                wire:model.blur="lesson.document"
+                                                label="Nội dung bài học (Văn bản)"
+                                                name="lesson.document"
+                                                id="lesson-document-editor"
+                                                info="Hệ thống hỗ trợ định dạng Markdown. Đây là nội dung chi tiết sẽ được hiển thị trực tiếp cho sinh viên trong bài học này!"
+                                                :error-message="$errors->first('lesson.document')"
+                                            />
                                             @break
 
                                         @case('assessment')
@@ -60,13 +62,13 @@
 
                             @if ($lesson['type'] && $lesson['type'] !== 'assessment')
                                 <div class="course-field mb--20">
-                                    <h6 class="rbt-checkbox-wrapper mb--5 d-flex">
+                                    <h6 class="rbt-checkbox-wrapper mb--5 d-flex align-items-center">
                                         <input wire:model.lazy="lesson.preview" id="rbt-checkbox-11"
                                                name="rbt-checkbox-11" type="checkbox" value="yes">
-                                        <label for="rbt-checkbox-11">Enable Lesson Preview</label>
+                                        <label for="rbt-checkbox-11" class="ms-2">Cho phép học thử</label>
                                     </h6>
-                                    <small><i class="feather-info"></i> Allow students to preview this lesson content
-                                        before enrollment to help them make informed decisions about the course.</small>
+                                    <small><i class="feather-info"></i> Sinh viên có thể xem trước nội dung bài học này
+                                        để trải nghiệm phương pháp giảng dạy trước khi chính thức ghi danh.</small>
                                 </div>
                             @endif
                         </div>
@@ -75,10 +77,12 @@
             </div>
             <div class="top-circle-shape"></div>
             <div class="modal-footer pt--30 justify-content-between">
-                <div class="content">
-                    <button type="button" class="rbt-btn btn-md" wire:click="addLesson">Add Lesson
-                    </button>
-                </div>
+                <button type="button" class="rbt-btn btn-border btn-md radius-round-10" wire:click="cancel">
+                    Hủy bỏ
+                </button>
+                <button type="button" class="rbt-btn btn-md radius-round-10" wire:click="addLesson">
+                    Lưu bài học
+                </button>
             </div>
         </div>
     </div>

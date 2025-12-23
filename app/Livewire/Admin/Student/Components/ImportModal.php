@@ -3,13 +3,14 @@
 namespace App\Livewire\Admin\Student\Components;
 
 use App\Services\Admin\Student\StudentService;
+use App\Traits\WithSwal;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Log;
 
 class ImportModal extends Component {
-    use WithFileUploads;
+    use WithFileUploads, WithSwal;
 
     public $files = [];
     public bool $showResult = false;

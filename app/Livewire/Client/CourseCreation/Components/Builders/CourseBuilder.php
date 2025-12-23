@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Client\CourseCreation\Components\Builders;
 
+use App\Traits\WithSwal;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -11,6 +12,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CourseBuilder extends Component {
+    use WithSwal;
     #[Modelable]
     public array $modules;
 
@@ -48,11 +50,11 @@ class CourseBuilder extends Component {
     public function destroyModule(string|int $index): void
     {
         if (count($this->modules) <= 1) {
-            $this->swalWarning('Minimum Modules Required', 'You must have at least one module in your course.');
+            $this->swalWarning('Yêu cầu số lượng chương', 'Khóa học của bạn phải có ít nhất một chương nội dung.');
         } elseif (isset($this->modules[$index])) {
             unset($this->modules[$index]);
             $this->modules = array_values($this->modules);
-            $this->swal('Module Removed', 'The module has been successfully removed.');
+            $this->swal('Đã xóa chương', 'Chương học đã được gỡ bỏ thành công.');
         }
     }
 
@@ -77,7 +79,7 @@ class CourseBuilder extends Component {
     public function updateLesson(array $lesson, string|int $moduleIndex, string|int $lessonIndex): void
     {
         $this->modules[$moduleIndex]['lessons'][$lessonIndex] = $lesson;
-        $this->swal('Lesson Updated', 'The lesson has been successfully updated.');
+        $this->swal('Cập nhật bài học', 'Nội dung bài học đã được cập nhật thành công.');
         $this->dispatch('close-modal', id: 'updateLesson');
     }
 
@@ -85,13 +87,13 @@ class CourseBuilder extends Component {
     public function storeLesson(array $newLesson, string|int $moduleIndex): void
     {
         $this->modules[$moduleIndex]['lessons'][] = $newLesson;
-        $this->swal('Lesson Added', 'The lesson has been successfully added.');
+        $this->swal('Đã thêm bài học', 'Bài học mới đã được thêm vào chương.');
     }
 
     public function destroyLesson(string|int $moduleIndex, string|int $lessonIndex): void
     {
         if (count($this->modules[$moduleIndex]['lessons']) <= 1) {
-            $this->swalWarning('Minimum Lessons Required', 'You must have at least one lesson in your module.');
+            $this->swalWarning('Yêu cầu số lượng bài học', 'Mỗi chương cần có ít nhất một bài học.');
         } elseif (isset($this->modules[$moduleIndex]['lessons'][$lessonIndex])) {
             if ($this->modules[$moduleIndex]['lessons'][$lessonIndex]['type'] === 'video') {
                 Storage::disk('public')->delete('course/videos/' . $this->modules[$moduleIndex]['lessons'][$lessonIndex]['video_file_name']);
@@ -100,7 +102,7 @@ class CourseBuilder extends Component {
             unset($this->modules[$moduleIndex]['lessons'][$lessonIndex]);
 
             $this->modules[$moduleIndex]['lessons'] = array_values($this->modules[$moduleIndex]['lessons']);
-            $this->swal('Lesson Removed', 'The lesson has been successfully removed.');
+            $this->swal('Đã xóa bài học', 'Bài học đã được xóa khỏi chương.');
         }
     }
 

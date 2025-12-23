@@ -41,7 +41,6 @@
                                      data-bs-parent="#courseCreation">
                                     <div class="accordion-body card-body">
                                         <div class="rbt-course-field-wrapper rbt-default-form">
-
                                             <x-client.dashboard.inputs.text
                                                 model="title"
                                                 name="title"
@@ -58,169 +57,16 @@
                                                 info="Dòng giới thiệu ngắn (heading) rõ ràng để thu hút sinh viên."
                                             />
 
-                                            <x-client.dashboard.inputs.markdown-area
-                                                id="description"
+                                            <livewire:client.shared.markdown-editor
+                                                wire:model="description"
                                                 label="Nội dung chi tiết khóa học"
                                                 name="description"
-                                                :isError="$errors->has('description')"
-                                                info="Hỗ trợ Markdown. Sử dụng để mô tả chi tiết chương trình học, mục tiêu đầu ra."
-                                                :livewireComponentId="$this->getId()"
+                                                id="course-desc-editor"
+                                                info="Hỗ trợ Markdown. Viết thoải mái nhé!"
+                                                :error-message="$errors->first('description')"
                                             />
 
-                                            <div class="course-field mb--15 edu-bg-gray">
-                                                <h6>Cấu hình chung</h6>
-                                                <div class="rbt-course-settings-content">
-                                                    <div class="row g-5">
-                                                        <div class="col-lg-4">
-                                                            <div class="advance-tab-button advance-tab-button-1">
-                                                                <ul class="rbt-default-tab-button nav nav-tabs" id="courseSetting"
-                                                                    role="tablist">
-                                                                    <li class="nav-item w-100" role="presentation">
-                                                                        <a href="#"
-                                                                           @class(['active' => $activeCourseSettingTab === 'general'])
-                                                                           wire:click.prevent="setTab('general')"
-                                                                           id="general-tab"
-                                                                           data-bs-toggle="tab" data-bs-target="#general"
-                                                                           role="tab" aria-controls="general" aria-selected="true">
-                                                                            <span>Chung</span>
-                                                                        </a>
-                                                                    </li>
-
-                                                                    @if (auth()->user()->hasRole('instructor'))
-                                                                        <li class="nav-item w-100" role="presentation">
-                                                                            <a href="#"
-                                                                               id="price-tab"
-                                                                               @class(['active' => $activeCourseSettingTab === 'price'])
-                                                                               wire:click.prevent="setTab('price')"
-                                                                               data-bs-toggle="tab"
-                                                                               data-bs-target="#price"
-                                                                               role="tab"
-                                                                               aria-controls="price" aria-selected="true">
-                                                                                <span>Giá & Thanh toán</span>
-                                                                            </a>
-                                                                        </li>
-                                                                    @else
-                                                                        <li class="nav-item w-100" role="presentation">
-                                                                            <a href="#" id="batch-tab" data-bs-toggle="tab"
-                                                                               @class(['active' => $activeCourseSettingTab === 'batch'])
-                                                                               wire:click.prevent="setTab('batch')"
-                                                                               data-bs-target="#batch" role="tab"
-                                                                               aria-controls="batch" aria-selected="true">
-                                                                                <span>Thời gian học</span>
-                                                                            </a>
-                                                                        </li>
-                                                                    @endif
-
-                                                                    <li class="nav-item w-100" role="presentation">
-                                                                        <a href="#" id="information-tab" data-bs-toggle="tab"
-                                                                           data-bs-target="#information" role="tab"
-                                                                           @class(['active' => $activeCourseSettingTab === 'additional'])
-                                                                           wire:click.prevent="setTab('additional')"
-                                                                           aria-controls="information" aria-selected="true">
-                                                                            <span>Thông tin bổ sung</span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-lg-8">
-                                                            <div class="tab-content">
-
-                                                                <div @class([
-                                                                        'tab-pane fade advance-tab-content-1',
-                                                                        'active show' => $activeCourseSettingTab === 'general',
-                                                                    ])
-                                                                     id="general" role="tabpanel" aria-labelledby="general-tab">
-                                                                    <x-client.dashboard.inputs.select
-                                                                        wire:model="category"
-                                                                        placeholder="Chọn Khoa/Ngành"
-                                                                        label="Danh mục (Chuyên ngành)"
-                                                                        name="category"
-                                                                        info="Chọn Khoa hoặc Chuyên ngành chính của khóa học này."
-                                                                        :options="App\Models\Category::fetchCategoriesWithChildren()"
-                                                                    />
-
-                                                                    <x-client.dashboard.inputs.select
-                                                                        wire:model="level"
-                                                                        placeholder="Chọn Trình độ"
-                                                                        label="Cấp độ khóa học"
-                                                                        name="level"
-                                                                        info="Chọn cấp độ (Sơ cấp, Trung cấp, Nâng cao) của khóa học."
-                                                                        :options="App\Models\Course::$LEVELS"
-                                                                    />
-                                                                </div>
-
-                                                                @if (auth()->user()->hasRole('instructor'))
-                                                                    <div @class([
-                                                                            'tab-pane fade advance-tab-content-1',
-                                                                            'active show' => $activeCourseSettingTab === 'price',
-                                                                        ])
-                                                                         id="price"
-                                                                         role="tabpanel" aria-labelledby="price-tab">
-                                                                        <div class="course-field mb--15">
-                                                                            <x-client.dashboard.inputs.text
-                                                                                model="price"
-                                                                                label="Giá bán (VND)"
-                                                                                name="price"
-                                                                                placeholder="Giá bán khóa học"
-                                                                                type="number"
-                                                                                info="Giá tiền bán khóa học kỹ năng cho sinh viên/học viên ngoài."
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                @else
-                                                                    <div @class([
-                                                                            'tab-pane fade advance-tab-content-1',
-                                                                            'active show' => $activeCourseSettingTab === 'batch',
-                                                                        ])
-                                                                         id="batch"
-                                                                         role="tabpanel" aria-labelledby="batch-tab">
-                                                                        <div class="course-field mb--15">
-                                                                            <x-client.dashboard.inputs.text
-                                                                                model="startDate"
-                                                                                label="Ngày bắt đầu"
-                                                                                name="startDate"
-                                                                                info="Thời gian sinh viên bắt đầu học (00:00)."
-                                                                                type="date"
-                                                                            />
-
-                                                                            <x-client.dashboard.inputs.text
-                                                                                model="endDate"
-                                                                                label="Ngày kết thúc"
-                                                                                name="endDate"
-                                                                                info="Thời gian kết thúc môn học (23:59)."
-                                                                                type="date"
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-                                                                @endif
-
-                                                                <div @class([
-                                                                            'tab-pane fade advance-tab-content-1',
-                                                                            'active show' => $activeCourseSettingTab === 'additional',
-                                                                        ]) id="information"
-                                                                     role="tabpanel" aria-labelledby="information-tab">
-                                                                    <x-client.dashboard.inputs.text-area
-                                                                        wire:model="skills"
-                                                                        label="Kỹ năng đạt được" name="skills"
-                                                                        placeholder="Liệt kê các kỹ năng chính sinh viên sẽ làm chủ sau khi hoàn thành khóa học/môn học này."/>
-
-                                                                    <x-client.dashboard.inputs.text-area
-                                                                        wire:model="requirements"
-                                                                        label="Điều kiện tiên quyết" name="requirements"
-                                                                        placeholder="Chỉ rõ bất kỳ kiến thức/môn học nào cần phải học trước khi tham gia khóa này."/>
-
-                                                                    <x-client.dashboard.inputs.text-area
-                                                                        wire:model="targetAudiences"
-                                                                        label="Đối tượng phù hợp" name="requirements"
-                                                                        placeholder="Mô tả đối tượng sinh viên/học viên lý tưởng cho khóa học này."/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <x-client.dashboard.course-creation.components.course-settings :$courseType/>
 
                                             <livewire:client.course-creation.components.course-thumbnail wire:model="thumbnail"/>
                                         </div>

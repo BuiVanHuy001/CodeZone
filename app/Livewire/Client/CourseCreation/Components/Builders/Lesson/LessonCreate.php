@@ -52,7 +52,7 @@ class LessonCreate extends Component {
     {
         try {
             if (!empty($this->lesson['tmp_video_file_name'] ?? null) && empty($this->lesson['video_file_name'] ?? null)) {
-                $this->messages['lesson.video_file_name.required_if'] = 'You have a temporary uploaded video. Please save it before adding the lesson.';
+                $this->messages['lesson.video_file_name.required_if'] = 'Bạn đang có video tạm thời đã tải lên. Vui lòng lưu video trước khi thêm bài học.';
             }
             $this->validate();
 
@@ -61,8 +61,7 @@ class LessonCreate extends Component {
                 ($this->lesson['assessment']['type'] ?? null) === 'quiz' &&
                 $this->assessmentValid === false
             ) {
-                $this->swalError('Invalid Assessment', 'Please fix assessment errors before adding the lesson.');
-                $this->addError('lesson.assessment', 'Please fix quiz errors before adding the lesson.');
+                $this->addError('lesson.assessment', 'Vui lòng sửa lỗi bài trắc nghiệm trước khi thêm bài học.');
                 return;
             }
 
@@ -73,7 +72,11 @@ class LessonCreate extends Component {
 
             $this->reset('lesson');
         } catch (Exception $e) {
-            $this->swalError('Error', 'There was an error adding the lesson:', $e->getMessage());
+            $this->dispatch('swal', [
+                'icon' => 'error',
+                'title' => 'Lỗi hệ thống',
+                'text' => 'Có lỗi xảy ra khi thêm bài học: ' . $e->getMessage()
+            ]);
             throw $e;
         }
     }

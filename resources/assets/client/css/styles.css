@@ -9240,7 +9240,7 @@ input[type=number]:focus,
 input[type=tel]:focus,
 input[type=date]:focus,
 textarea:focus {
-    border-color: var(--color-primary);
+    border-color: var(--color-secondary);
 }
 
 .form-blank-input {

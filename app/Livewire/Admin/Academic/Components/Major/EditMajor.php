@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Academic\Components\Major;
 
 use App\Services\Admin\Major\MajorService;
 use App\Services\Cache\AcademicCache;
+use App\Traits\WithSwal;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -12,6 +13,8 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 
 class EditMajor extends Component {
+    use WithSwal;
+    
     public ?int $majorId = null;
     public string $name = '';
     public string $code = '';

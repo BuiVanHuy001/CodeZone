@@ -7,15 +7,15 @@ use Illuminate\Validation\Rule;
 
 class QuizValidator {
     public static array $MESSAGES = [
-        'quiz.title.required' => 'Quiz title is required to identify this assessment.',
-        'quiz.title.min' => 'Quiz title must be at least :min characters for clarity.',
-        'quiz.title.max' => 'Quiz title cannot exceed :max characters to ensure proper display.',
-        'quiz.assessments_questions.required' => 'At least one question must be added to create a valid quiz.',
-        'quiz.assessments_questions.*.content.required' => 'Question content is required for each quiz question.',
-        'quiz.assessments_questions.*.type.required' => 'Question type must be selected for each question.',
-        'quiz.assessments_questions.*.question_options.required' => 'At least two answer options are required for each question.',
-        'quiz.assessments_questions.*.question_options.*.content.required' => 'Answer option content cannot be empty.',
-        'quiz.assessments_questions.*.question_options.*.is_correct.required' => 'Each answer option must be marked as correct or incorrect.',
+        'quiz.title.required' => 'Tiêu đề bài trắc nghiệm không được để trống.',
+        'quiz.title.min' => 'Tiêu đề bài trắc nghiệm phải có ít nhất :min ký tự.',
+        'quiz.title.max' => 'Tiêu đề bài trắc nghiệm không được vượt quá :max ký tự.',
+        'quiz.assessments_questions.required' => 'Vui lòng thêm ít nhất một câu hỏi để tạo bài trắc nghiệm.',
+        'quiz.assessments_questions.*.content.required' => 'Nội dung câu hỏi không được để trống.',
+        'quiz.assessments_questions.*.type.required' => 'Vui lòng chọn loại câu hỏi.',
+        'quiz.assessments_questions.*.question_options.required' => 'Mỗi câu hỏi phải có ít nhất hai lựa chọn trả lời.',
+        'quiz.assessments_questions.*.question_options.*.content.required' => 'Nội dung lựa chọn trả lời không được để trống.',
+        'quiz.assessments_questions.*.question_options.*.is_correct.required' => 'Vui lòng xác định lựa chọn này là đúng hay sai.',
     ];
 
     public static function rules(): array
@@ -35,7 +35,7 @@ class QuizValidator {
                 'min:2',
                 function ($attribute, $options, $fail) {
                     if (!collect($options)->contains('is_correct', true)) {
-                        $fail('Each question must have at least one correct answer.');
+                        $fail('Mỗi câu hỏi phải có ít nhất một đáp án đúng.');
                     }
                 },
             ],

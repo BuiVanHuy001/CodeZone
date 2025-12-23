@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Academic\Components\Major;
 
 use App\Services\Admin\Major\MajorService;
 use App\Services\Cache\AcademicCache;
+use App\Traits\WithSwal;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -12,6 +13,7 @@ use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class CreateMajor extends Component {
+    use WithSwal;
     #[Rule('required|string|max:255|unique:majors,name')]
     public string $name = '';
 

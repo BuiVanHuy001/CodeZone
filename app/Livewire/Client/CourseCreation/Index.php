@@ -4,6 +4,7 @@ namespace App\Livewire\Client\CourseCreation;
 
 use App\Models\Course;
 use App\Services\Client\Course\CourseService;
+use App\Traits\WithSwal;
 use App\Validator\CourseInfoValidator;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -18,12 +19,11 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
-use Spatie\LaravelMarkdown\MarkdownRenderer;
 
-#[Title('Create New Course')]
+#[Title('Tạo khóa học mới')]
 class Index extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithSwal;
 
     private CourseService $courseService;
 
@@ -33,19 +33,14 @@ class Index extends Component
     public string $description = '';
     public $thumbnail;
 
+    public string $courseType = 'internal';
     public string $price = '0';
     public string $category = '';
     public string $level = '';
     public string $requirements = '';
     public string $skills = '';
-    public string $targetAudiences;
-    public array $membersAssigned = [];
-
-    public $startDate = '';
-    public $endDate = '';
+    public string $targetAudiences = '';
     public array $modules = [];
-
-    public string $activeCourseSettingTab = 'general';
 
     public array $messages;
 
@@ -62,7 +57,7 @@ class Index extends Component
     #[On('thumbnail-upload-error')]
     public function handleThumbnailUploadError(string $message): void
     {
-        $this->addError('thumbnail', $message);
+        $this->addError('thumbnail', 'Lỗi tải ảnh đại diện: ' . $message);
     }
 
     public function rules(): array
@@ -85,17 +80,12 @@ class Index extends Component
             $this->validate();
         } catch (ValidationException $e) {
             $this->swalError(
-                'Validation Failed',
-                'Please fix the errors and try again:',
-                $e->getMessage()
+                'Lỗi xác thực',
+                'Vui lòng kiểm tra lại các thông tin và thử lại:',
+                $e->errors()
             );
             throw $e;
         }
-    }
-
-    public function setTab(string $tab): void
-    {
-        $this->activeCourseSettingTab = $tab;
     }
 
     public function store(): void
@@ -113,15 +103,13 @@ class Index extends Component
                     'description' => $this->description,
                     'thumbnail' => $this->thumbnail,
                     'price' => $this->price,
+                    'courseType' => $this->courseType,
                     'category' => $this->category,
-                    'level' => Course::$LEVELS[$this->level],
+                    'level' => $this->level,
                     'requirements' => $this->requirements,
                     'targetAudiences' => $this->targetAudiences,
                     'skills' => $this->skills,
                     'modules' => $this->modules,
-                    'startDate' => $this->startDate,
-                    'endDate' => $this->endDate,
-                    'membersAssigned' => $this->membersAssigned,
                 ]
             );
             DB::commit();
@@ -131,8 +119,8 @@ class Index extends Component
         } catch (\Exception $e) {
             DB::rollBack();
             $this->swalError(
-                'Error',
-                'Something went wrong while creating the builders:',
+                'Lỗi hệ thống',
+                'Có lỗi xảy ra trong quá trình khởi tạo khóa học:',
                 $e->getMessage()
             );
 
@@ -146,29 +134,14 @@ class Index extends Component
             return redirect()
                 ->route('instructor.dashboard.index')
                 ->with('swal', [
-                    'title' => 'Course Created',
-                    'text' => 'Your course has been created successfully. You meed to wait for admin approval before it goes live.',
+                    'title' => 'Tạo khóa học thành công',
+                    'text' => 'Khóa học của bạn đã được khởi tạo thành công. Vui lòng chờ quản trị viên phê duyệt trước khi khóa học được hiển thị chính thức.',
                     'icon' => 'success',
-                    'timer' => 3000,
+                    'timer' => 5000,
                 ]);
         }
 
         return redirect()->back();
-    }
-
-    public function renderMarkdownPreview(string $propertyName): string
-    {
-        if (!property_exists($this, $propertyName)) {
-            return '<p class="text-danger">Lỗi: Thuộc tính không tồn tại trong component.</p>';
-        }
-
-        $markdownContent = $this->{$propertyName};
-
-        if (empty($markdownContent)) {
-            return '<p class="text-muted">Nội dung xem trước trống. Vui lòng nhập nội dung Markdown.</p>';
-        }
-
-        return app(MarkdownRenderer::class)->toHtml($markdownContent);
     }
 
     #[Layout('components.layouts.app')]

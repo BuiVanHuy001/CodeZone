@@ -39,9 +39,9 @@ class Course extends Model {
     ];
 
     public static array $TYPES = [
-        'free' => 'free',
-        'paid' => 'paid',
-        'internal' => 'Internal',
+        'free' => 'Miễn phí',
+        'paid' => 'Trả phí',
+        'internal' => 'Chính quy',
     ];
 
     protected $casts = [

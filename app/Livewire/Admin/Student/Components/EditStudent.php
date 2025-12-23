@@ -5,6 +5,7 @@ namespace App\Livewire\Admin\Student\Components;
 use App\Models\ClassRoom;
 use App\Models\User;
 use App\Services\Admin\Student\StudentService;
+use App\Traits\WithSwal;
 use Illuminate\Contracts\View\View;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Locked;
@@ -12,6 +13,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 
 class EditStudent extends Component {
+    use WithSwal;
     #[Locked]
     public ?string $studentId = null;
 

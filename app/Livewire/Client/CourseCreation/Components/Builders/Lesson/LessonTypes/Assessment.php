@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Client\CourseCreation\Components\Builders\Lesson\LessonTypes;
 
+use App\Traits\WithSwal;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -10,6 +11,8 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Assessment extends Component {
+    use WithSwal;
+
     #[Modelable]
     public array $assessment = [
         'title' => '',
@@ -25,13 +28,13 @@ class Assessment extends Component {
     #[On('assessment-saved')]
     public function assessmentSaved(): void
     {
-        $this->swal($this->assessment['title'] . ' Saved', 'The assessment has been saved successfully.');
+        $this->swal('Đã lưu ' . $this->assessment['title'], 'Thông tin đánh giá đã được lưu thành công.');
     }
 
     #[On('assessment-deleted')]
     public function assessmentDeleted(string $title): void
     {
-        $this->swal($title . ' Deleted', 'The assessment has been deleted successfully.');
+        $this->swal('Đã xóa ' . $title, 'Thông tin đánh giá đã được xóa thành công.');
     }
 
     public function render(): Factory|Application|View

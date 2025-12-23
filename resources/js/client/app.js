@@ -11,7 +11,6 @@ import "../../assets/client/js/vendor/odometer.js";
 import "../../assets/client/js/vendor/backtotop.js";
 import "../../assets/client/js/vendor/text-type.js";
 import "../../assets/client/js/vendor/jquery-one-page-nav.js";
-import "../../assets/client/js/vendor/bootstrap-select.min.js";
 import "../../assets/client/js/vendor/jquery-ui.js";
 import "../../assets/client/js/vendor/magnify-popup.min.js";
 import "../../assets/client/js/vendor/paralax-scroll.js";
