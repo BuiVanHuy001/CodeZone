@@ -6,48 +6,48 @@ use App\Models\ProgrammingProblems;
 
 class ProgrammingPracticeValidator {
     public static array $MESSAGES = [
-        'programming.title.required' => 'Title is required.',
-        'programming.title.min' => 'Title must be at least :min characters.',
-        'programming.title.max' => 'Title cannot exceed :max characters.',
-        'programming.description.required' => 'Description is required.',
+        'programming.title.required' => 'Tiêu đề bài thực hành không được để trống.',
+        'programming.title.min' => 'Tiêu đề phải có ít nhất :min ký tự.',
+        'programming.title.max' => 'Tiêu đề không được vượt quá :max ký tự.',
+        'programming.description.required' => 'Vui lòng nhập mô tả bài thực hành.',
 
-        'problem.function_name.required' => 'Function name is required.',
-        'problem.function_name.regex' => 'Function name must be camelCase (letters/numbers only).',
-        'problem.function_name.min' => 'Function name must be at least :min characters.',
-        'problem.function_name.max' => 'Function name cannot exceed :max characters.',
-        'problem.return_type.required' => 'Return type is required.',
-        'problem.return_type.in' => 'Invalid return type.',
-        'problem.allowed_languages.required' => 'At least one language is required.',
-        'problem.allowed_languages.in' => 'Invalid language.',
-        'problem.allowed_languages.min' => 'At least one language is required.',
+        'problem.function_name.required' => 'Tên hàm là bắt buộc.',
+        'problem.function_name.regex' => 'Tên hàm phải tuân theo định dạng camelCase (chỉ bao gồm chữ cái và số).',
+        'problem.function_name.min' => 'Tên hàm phải có ít nhất :min ký tự.',
+        'problem.function_name.max' => 'Tên hàm không được vượt quá :max ký tự.',
+        'problem.return_type.required' => 'Vui lòng chọn kiểu dữ liệu trả về.',
+        'problem.return_type.in' => 'Kiểu dữ liệu trả về không hợp lệ.',
+        'problem.allowed_languages.required' => 'Vui lòng chọn ít nhất một ngôn ngữ lập trình.',
+        'problem.allowed_languages.in' => 'Ngôn ngữ lập trình không hợp lệ.',
+        'problem.allowed_languages.min' => 'Phải có ít nhất một ngôn ngữ được cho phép.',
 
-        'problem.params.*.name.required' => 'Parameter name is required.',
-        'problem.params.*.name.min' => 'Parameter name must be at least :min characters.',
-        'problem.params.*.name.max' => 'Parameter name cannot exceed :max characters.',
-        'problem.params.*.type.required' => 'Parameter type is required.',
-        'problem.params.*.type.in' => 'Invalid parameter type.',
+        'problem.params.*.name.required' => 'Tên tham số không được để trống.',
+        'problem.params.*.name.min' => 'Tên tham số phải có ít nhất :min ký tự.',
+        'problem.params.*.name.max' => 'Tên tham số không được vượt quá :max ký tự.',
+        'problem.params.*.type.required' => 'Vui lòng chọn kiểu dữ liệu cho tham số.',
+        'problem.params.*.type.in' => 'Kiểu dữ liệu tham số không hợp lệ.',
 
-        'problem.test_cases.*.inputs.*.value.required' => 'Input value is required.',
-        'problem.test_cases.*.output.value.required' => 'Expected output is required.',
-        'problem.test_cases.*.inputs.*.type.required' => 'Input type is required.',
-        'problem.test_cases.*.inputs.*.type.in' => 'Invalid input type.',
-        'problem.test_cases.*.output.type.required' => 'Output type is required.',
-        'problem.test_cases.*.output.type.in' => 'Invalid output type.',
+        'problem.test_cases.*.inputs.*.value.required' => 'Giá trị đầu vào không được để trống.',
+        'problem.test_cases.*.output.value.required' => 'Kết quả đầu ra mong đợi là bắt buộc.',
+        'problem.test_cases.*.inputs.*.type.required' => 'Kiểu dữ liệu đầu vào là bắt buộc.',
+        'problem.test_cases.*.inputs.*.type.in' => 'Kiểu dữ liệu đầu vào không hợp lệ.',
+        'problem.test_cases.*.output.type.required' => 'Kiểu dữ liệu đầu ra là bắt buộc.',
+        'problem.test_cases.*.output.type.in' => 'Kiểu dữ liệu đầu ra không hợp lệ.',
 
-        'problem.code-template.required' => 'Code template is required.',
-        'problem.code-template.min' => 'Code template cannot be empty.',
+        'problem.code-template.required' => 'Mã nguồn mẫu là bắt buộc.',
+        'problem.code-template.min' => 'Mã nguồn mẫu không được để trống.',
 
-        'newParam.name.required' => 'Parameter name is required.',
-        'newParam.name.max' => 'Parameter name cannot exceed :max characters.',
-        'newParam.type.required' => 'Parameter type is required.',
-        'newParam.type.in' => 'Invalid parameter type.',
+        'newParam.name.required' => 'Tên tham số là bắt buộc.',
+        'newParam.name.max' => 'Tên tham số không được vượt quá :max ký tự.',
+        'newParam.type.required' => 'Kiểu dữ liệu tham số là bắt buộc.',
+        'newParam.type.in' => 'Kiểu dữ liệu tham số không hợp lệ.',
 
-        'newTestCase.inputs.*.value.required' => 'Input value is required.',
-        'newTestCase.inputs.*.type.required' => 'Input type is required.',
-        'newTestCase.inputs.*.type.in' => 'Invalid input type.',
-        'newTestCase.output.value.required' => 'Expected output is required.',
-        'newTestCase.output.type.required' => 'Output type is required.',
-        'newTestCase.output.type.in' => 'Invalid output type.',
+        'newTestCase.inputs.*.value.required' => 'Giá trị đầu vào là bắt buộc.',
+        'newTestCase.inputs.*.type.required' => 'Kiểu dữ liệu đầu vào là bắt buộc.',
+        'newTestCase.inputs.*.type.in' => 'Kiểu dữ liệu đầu vào không hợp lệ.',
+        'newTestCase.output.value.required' => 'Kết quả đầu ra mong đợi là bắt buộc.',
+        'newTestCase.output.type.required' => 'Kiểu dữ liệu đầu ra là bắt buộc.',
+        'newTestCase.output.type.in' => 'Kiểu dữ liệu đầu ra không hợp lệ.',
     ];
 
     public static function rules($newTestCase, array $typeMap): array
@@ -60,7 +60,7 @@ class ProgrammingPracticeValidator {
                 'required',
                 'string',
                 function ($attribute, $value, $fail) {
-                    self::validateIdentifier('function name', $value, $fail);
+                    self::validateIdentifier('Tên hàm', $value, $fail);
                 },
             ],
             'problem.return_type' => 'required|in:' . $allowedTypes,
@@ -69,7 +69,7 @@ class ProgrammingPracticeValidator {
             'problem.params' => [
                 function ($attribute, $value, $fail) {
                     if (empty($value) || count(array_filter($value, fn($p) => !empty($p['name']) && !empty($p['type']))) === 0) {
-                        $fail('At least one parameter is required.');
+                        $fail('Cần ít nhất một tham số cho bài tập này.');
                     }
                 }
             ],
@@ -88,19 +88,19 @@ class ProgrammingPracticeValidator {
     {
         $regex = $typeMap[$type]['regex'] ?? null;
         if ($regex && !preg_match($regex, $value)) {
-            $fail("Invalid format for {$type}. Expected: {$typeMap[$type]['example']}");
+            $fail("Định dạng không hợp lệ cho kiểu {$type}. Yêu cầu: {$typeMap[$type]['example']}");
         }
     }
 
     public static function validateIdentifier(string $attribute, string $value, \Closure $fail): void
     {
         if (!preg_match('/^[a-z][a-zA-Z0-9_]*$/', $value)) {
-            $fail("The {$attribute} must start with a lowercase letter and contain only letters, numbers, or underscores.");
+            $fail("{$attribute} phải bắt đầu bằng chữ cái viết thường và chỉ chứa chữ cái, chữ số hoặc dấu gạch dưới.");
             return;
         }
         $reserved = ['class', 'function', 'var', 'let', 'const', 'if', 'else', 'elseif', 'endif', 'switch', 'case', 'default', 'break', 'continue', 'return', 'for', 'foreach', 'while', 'do', 'endwhile', 'try', 'catch', 'finally', 'throw', 'new', 'public', 'private', 'protected', 'static', 'abstract', 'interface', 'extends', 'implements', 'trait', 'namespace', 'use', 'global', 'unset', 'true', 'false', 'null', 'void', 'int', 'float', 'string', 'bool', 'array', 'object', 'import', 'package', 'this', 'super', 'def', 'lambda', 'yield', 'await', 'async'];
         if (in_array(strtolower($value), $reserved, true)) {
-            $fail("The {$attribute} cannot be a reserved keyword.");
+            $fail("{$attribute} không được trùng với các từ khóa hệ thống.");
         }
     }
 
@@ -112,7 +112,7 @@ class ProgrammingPracticeValidator {
                 'min:1',
                 'max:20',
                 function ($attribute, $value, $fail) {
-                    ProgrammingPracticeValidator::validateIdentifier('parameter name', $value, $fail);
+                    ProgrammingPracticeValidator::validateIdentifier('Tên tham số', $value, $fail);
                 },
             ],
             'newParam.type' => 'required|in:' . implode(',', array_keys($typeMap)),
@@ -129,7 +129,7 @@ class ProgrammingPracticeValidator {
                 'min:1',
                 'max:20',
                 function ($attribute, $value, $fail) {
-                    ProgrammingPracticeValidator::validateIdentifier('input name', (string)$value, $fail);
+                    ProgrammingPracticeValidator::validateIdentifier('Tên đầu vào', (string)$value, $fail);
                 },
             ],
             'newTestCase.inputs.*.type' => [
@@ -141,14 +141,14 @@ class ProgrammingPracticeValidator {
 
                     $expectedType = data_get($problem, "params.$index.type");
                     if ($expectedType && $value !== $expectedType) {
-                        $fail("Input type must match the parameter type '{$expectedType}'.");
+                        $fail("Kiểu dữ liệu đầu vào phải khớp với kiểu tham số '{$expectedType}'.");
                     }
                 },
             ],
             'newTestCase.inputs.*.value' => [
                 'required',
                 function ($attribute, $value, $fail) use ($newTestCase, $typeMap) {
-                    $segments = explode('.', $attribute); // newTestCase, inputs, {index}, value
+                    $segments = explode('.', $attribute);
                     $index = (int)($segments[2] ?? -1);
 
                     $type = data_get($newTestCase, "inputs.$index.type");
@@ -160,16 +160,16 @@ class ProgrammingPracticeValidator {
             'newTestCase.output.type' => [
                 'required',
                 'in:' . $allowedTypes,
-                function ($attribute, $value, $fail) {
+                function ($attribute, $value, $fail) use ($problem) {
                     $returnType = $problem['return_type'] ?? null;
                     if ($returnType && $value !== $returnType) {
-                        $fail("Output type must match the return type '{$returnType}'.");
+                        $fail("Kiểu dữ liệu đầu ra phải khớp với kiểu trả về '{$returnType}'.");
                     }
                 },
             ],
             'newTestCase.output.value' => [
                 'required',
-                function ($attribute, $value, $fail) use ($newTestCase, $typeMap) {
+                function ($attribute, $value, $fail) use ($newTestCase, $typeMap, $problem) {
                     $type = data_get($newTestCase, 'output.type') ?: ($problem['return_type'] ?? null);
                     if ($type) {
                         ProgrammingPracticeValidator::validateValueByType($type, (string)$value, $fail, $typeMap);

@@ -3,7 +3,7 @@
         'course-field mb--20'
         ])
     }}>
-    <label for="{{ $name }}">{{ $label }}</label>
+    <label for="{{ $name }}">{!! $label !!}</label>
     <input
         wire:model.lazy="{{ $model }}"
         type="{{ $type }}"

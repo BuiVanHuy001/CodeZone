@@ -11,20 +11,24 @@ use Livewire\Component;
 
 class ModuleCreate extends Component {
     #[Validate]
-    public string $moduleTitle;
+    public string $moduleTitle = '';
 
     public array $rules;
     public array $message;
 
-    public function mount(): void
+    protected function rules(): array
     {
-        $this->rules = ModulesBuilderValidator::rules();
-        $this->message = ModulesBuilderValidator::$MESSAGES;
+        return ModulesBuilderValidator::rules();
+    }
+
+    protected function messages(): array
+    {
+        return ModulesBuilderValidator::$MESSAGES;
     }
 
     public function store(): void
     {
-        $this->validate();
+        $this->validate($this->rules(), $this->messages());
         $this->dispatch('module-created', title: $this->moduleTitle);
         $this->dispatch('close-modal', id: 'addModule');
         $this->reset('moduleTitle');

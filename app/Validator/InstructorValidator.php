@@ -4,37 +4,30 @@ namespace App\Validator;
 
 class InstructorValidator {
     public static array $MESSAGES = [
-        // Name rules
-        'name.required' => 'The instructor\'s full name is required.',
-        'name.string' => 'The name must be a valid text string.',
-        'name.min' => 'The name must be at least :min characters long.',
+        'name.required' => 'Họ và tên giảng viên không được để trống.',
+        'name.string' => 'Họ và tên phải là định dạng văn bản hợp lệ.',
+        'name.min' => 'Họ và tên phải có ít nhất :min ký tự.',
 
-        // Email rules
-        'email.required' => 'An email address is required.',
-        'email.email' => 'Please provide a valid email address format (e.g., user@example.com).',
-        'email.unique' => 'This email address is already associated with another account.',
+        'email.required' => 'Địa chỉ email là bắt buộc.',
+        'email.email' => 'Vui lòng nhập đúng định dạng email (Ví dụ: user@vietmy.edu.vn).',
+        'email.unique' => 'Địa chỉ email này đã được sử dụng bởi một tài khoản khác.',
 
-        // Password rules
-        'password.required' => 'A password is required for the account.',
-        'password.string' => 'The password must be a text string.',
-        'password.min' => 'The password must be at least :min characters long for security.',
+        'password.required' => 'Vui lòng thiết lập mật khẩu cho tài khoản.',
+        'password.string' => 'Mật khẩu phải là một chuỗi ký tự.',
+        'password.min' => 'Mật khẩu phải dài ít nhất :min ký tự để đảm bảo tính bảo mật.',
 
-        // Avatar (file upload) rules
-        'avatar.image' => 'The uploaded avatar must be a valid image file (jpeg, png, bmp, gif, or svg).',
-        'avatar.max' => 'The avatar image size cannot exceed :max kilobytes (5MB).',
-        'avatar.prohibits' => 'You cannot upload an avatar AND use an avatar link. Please choose one.',
+        'avatar.image' => 'Tệp tải lên phải là định dạng hình ảnh (jpeg, png, bmp, gif, hoặc svg).',
+        'avatar.max' => 'Dung lượng ảnh đại diện không được vượt quá :max kilobytes (5MB).',
+        'avatar.prohibits' => 'Bạn không thể vừa tải ảnh lên vừa sử dụng liên kết ảnh. Vui lòng chọn một trong hai.',
 
-        // Avatar (URL) rules
-        'avatarLink.url' => 'The provided avatar link must be a valid URL.',
-        'avatarLink.prohibits' => 'You cannot use an avatar link AND upload an avatar. Please choose one.',
+        'avatarLink.url' => 'Liên kết ảnh đại diện phải là một đường dẫn URL hợp lệ.',
+        'avatarLink.prohibits' => 'Bạn không thể vừa sử dụng liên kết ảnh vừa tải ảnh lên. Vui lòng chọn một trong hai.',
 
-        // Gender rules
-        'gender.required' => 'Please select a gender for the instructor.',
-        'gender.in' => 'The selected gender is invalid. Please choose from the provided options.',
+        'gender.required' => 'Vui lòng chọn giới tính của giảng viên.',
+        'gender.in' => 'Giới tính đã chọn không hợp lệ. Vui lòng chọn từ danh sách có sẵn.',
 
-        // Major ID rules
-        'major_id.required' => 'The instructor\'s major is required.',
-        'major_id.exists' => 'The selected major is invalid or does not exist in our records.',
+        'major_id.required' => 'Vui lòng xác định chuyên ngành giảng dạy.',
+        'major_id.exists' => 'Chuyên ngành đã chọn không tồn tại trong hệ thống dữ liệu.',
     ];
 
     public static function rules(): array

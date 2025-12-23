@@ -76,14 +76,12 @@
                                 </div>
                             </div>
 
-                            <x-client.dashboard.inputs.markdown-area
-                                id="bio-editor"
-                                label="Biography"
-                                name="bio"
-                                :isError="$errors->has('bio')"
+                            <livewire:client.shared.markdown-editor
+                                wire:model="bio"
+                                id="bio-markdown-editor"
+                                label="Detailed Biography"
+                                name="bio-markdown"
                                 info="This will be displayed on your public profile. Markdown is supported."
-                                :livewireComponentId="$this->getId()"
-                                :doc="$bio"
                             />
                         </div>
 

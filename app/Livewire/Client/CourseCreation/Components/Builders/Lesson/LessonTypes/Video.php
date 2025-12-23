@@ -5,11 +5,10 @@ namespace App\Livewire\Client\CourseCreation\Components\Builders\Lesson\LessonTy
 use App\Services\Client\Course\Create\Builders\LessonTypes\VideoService;
 use App\Validator\NewLessonValidator;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -17,24 +16,46 @@ class Video extends Component {
     use WithFileUploads;
 
     public $video;
-    public ?string $previewVideo;
-    public ?string $storedVideoAbsPath;
-    public ?string $storedVideoRelPath;
+
+    public ?string $previewVideoUrl = null;
+    public ?string $currentFileName = null;
+
     public int $duration = 0;
+
+    public bool $isDraft = false;
+    public bool $isPending = false;
+    public bool $hasTempFile = false;
+
     public array $rules;
     public array $messages;
 
     public function mount(): void
     {
         $this->rules = NewLessonValidator::rulesForAs('video_file_name', 'video');
-        $this->rules['video'] = 'mimes:mp4,mov,webm';
+        $this->rules['video'] = 'mimes:mp4,mov,webm|max:250000';
         $this->messages = NewLessonValidator::messagesForAs('video_file_name', 'video');
-        $this->messages['video.mimes'] = 'The video file must be in MP4, MOV, or WEBM format.';
 
-        if (!empty($this->storedVideoRelPath)) {
-            $this->storedVideoAbsPath = Storage::url('course/videos/' . $this->storedVideoRelPath);
-        } else {
-            $this->validate();
+        if (!empty($this->currentFileName)) {
+            $this->resolveStoredVideoPath();
+        }
+    }
+
+    private function resolveStoredVideoPath(): void
+    {
+        $disk = Storage::disk('public');
+        $draftPath = config('filesystems.paths.courses.videos.draft') . '/' . $this->currentFileName;
+        $pendingPath = config('filesystems.paths.courses.videos.pending') . '/' . $this->currentFileName;
+        $approvedPath = config('filesystems.paths.courses.videos.published') . '/' . $this->currentFileName;
+
+        if ($disk->exists($draftPath)) {
+            $this->previewVideoUrl = Storage::url($draftPath);
+            $this->isDraft = true;
+        } elseif ($disk->exists($pendingPath)) {
+            $this->previewVideoUrl = Storage::url($pendingPath);
+            $this->isPending = true;
+        } elseif ($disk->exists($approvedPath)) {
+            $this->previewVideoUrl = Storage::url($approvedPath);
+            $this->isPending = false;
         }
     }
 
@@ -43,38 +64,57 @@ class Video extends Component {
         try {
             $this->validate();
 
-            $this->previewVideo = $this->video->temporaryUrl();
-            $this->dispatch('tmp-video-uploaded', tmpVideoFileName: $this->video->getFilename());
+            $this->hasTempFile = true;
+            $this->isDraft = false;
+            $this->isPending = false;
+
         } catch (ValidationException $e) {
-            if ($this->video && is_object($this->video) && method_exists($this->video, 'getRealPath')) {
-                File::delete($this->video->getRealPath());
-            }
-            $this->reset('video', 'previewVideo');
+            $this->reset('video', 'hasTempFile');
             throw $e;
         }
     }
 
     public function saveVideo(VideoService $videoService): void
     {
-        $storedVideoResults = $videoService->storeVideo($this->video);
-        $this->reset('previewVideo');
+        if ($this->video && $this->hasTempFile) {
+            $result = $videoService->storeDraftVideo($this->video);
 
-        $this->storedVideoAbsPath = $storedVideoResults['storedVideoAbsPath'];
-        $this->storedVideoRelPath = $storedVideoResults['videoFileName'];
+            if ($this->currentFileName) {
+                $videoService->destroyVideo($this->currentFileName);
+            }
 
-        $this->dispatch('video-saved',
-            videoFileName: $storedVideoResults['videoFileName'],
-            duration: $storedVideoResults['duration'],
-        );
+            if ($this->video) {
+                $videoService->destroyVideo($this->video);
+            }
+
+            $this->currentFileName = $result['videoFileName'];
+            $this->duration = $result['duration'];
+            $this->previewVideoUrl = $result['storedVideoAbsPath'];
+
+            $this->isDraft = true;
+            $this->isPending = false;
+            $this->hasTempFile = false;
+
+            $this->reset('video');
+
+            $this->dispatch('video-saved',
+                videoFileName: $this->currentFileName,
+                duration: $this->duration,
+            );
+        }
     }
 
     public function changeOrChangeVideo(VideoService $videoService): void
     {
-        if ($this->storedVideoRelPath) {
-            $videoService->destroyVideo($this->storedVideoRelPath);
+        if ($this->currentFileName) {
+            $videoService->destroyVideo($this->currentFileName);
         }
 
-        $this->reset('video', 'previewVideo', 'duration', 'storedVideoRelPath', 'storedVideoAbsPath');
+        if ($this->video) {
+            $videoService->destroyVideo($this->video);
+        }
+
+        $this->reset('video', 'previewVideoUrl', 'duration', 'currentFileName', 'isDraft', 'isPending', 'hasTempFile');
 
         $this->dispatch('video-changed-or-deleted');
     }

@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Academic\Components\Classroom;
 
 use App\Models\ClassRoom;
+use App\Services\Admin\Classroom\ClassroomService;
 use App\Services\Cache\AcademicCache;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
@@ -38,7 +39,7 @@ class EditClassroom extends Component {
             $this->resetValidation();
             $this->dispatch('open-edit-classroom-modal');
         } else {
-            $this->dispatch('swal', ['title' => 'Lỗi', 'text' => 'Lớp học không tồn tại.', 'icon' => 'error']);
+            $this->swalError('Lỗi!', 'Lớp học không tồn tại.');
         }
     }
 
@@ -51,7 +52,7 @@ class EditClassroom extends Component {
         ]);
 
         try {
-            $this->classroomService->update($this->classroomId, [
+            app(ClassroomService::class)->update($this->classroomId, [
                 'name' => $this->name,
                 'code' => $this->code,
                 'slug' => Str::slug($this->name),
@@ -61,14 +62,9 @@ class EditClassroom extends Component {
             $this->dispatch('faculty-updated');
 
             $this->dispatch('close-modal', modalId: '#edit-classroom-modal');
-            $this->dispatch('swal', [
-                'title' => 'Thành công!',
-                'text' => 'Cập nhật lớp học thành công.',
-                'icon' => 'success'
-            ]);
-
+            $this->swal('Thành công!', 'Cập nhật lớp học thành công.');
         } catch (\Exception $e) {
-            $this->dispatch('swal', ['title' => 'Lỗi', 'text' => $e->getMessage(), 'icon' => 'error']);
+            $this->swalError('Lỗi!', $e->getMessage());
         }
     }
 

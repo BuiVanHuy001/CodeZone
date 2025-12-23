@@ -60,7 +60,7 @@ class ClassroomDetail extends Component {
     public function addSelectedStudents(): void
     {
         if (empty($this->selectedStudents)) {
-            $this->dispatch('swal', ['title' => 'Lỗi', 'text' => 'Vui lòng chọn ít nhất một sinh viên.', 'icon' => 'warning']);
+            $this->swal('Lỗi!', 'Vui lòng chọn ít nhất một sinh viên.', 'warning');
             return;
         }
 
@@ -68,11 +68,11 @@ class ClassroomDetail extends Component {
             $this->classroomService->assignStudents($this->classroom->id, $this->selectedStudents);
 
             $this->refreshData();
-            $this->resetAddingMode(); // Tắt form thêm
+            $this->resetAddingMode();
 
-            $this->dispatch('swal', ['title' => 'Thành công!', 'text' => 'Đã thêm sinh viên vào lớp.', 'icon' => 'success']);
+            $this->swal('Thành công!', 'Đã thêm sinh viên vào lớp.');
         } catch (\Exception $e) {
-            $this->dispatch('swal', ['title' => 'Lỗi', 'text' => $e->getMessage(), 'icon' => 'error']);
+            $this->swalError('Lỗi', $e->getMessage());
         }
     }
 
@@ -89,9 +89,9 @@ class ClassroomDetail extends Component {
             $this->classroomService->removeStudentFromClass($studentProfileId);
             $this->refreshData();
 
-            $this->dispatch('swal', ['title' => 'Đã xóa khỏi lớp!', 'icon' => 'success']);
+            $this->swal('Đã xóa khỏi lớp!');
         } catch (\Exception $e) {
-            $this->dispatch('swal', ['title' => 'Lỗi', 'text' => $e->getMessage(), 'icon' => 'error']);
+            $this->swalError('Lỗi', $e->getMessage());
         }
     }
 
@@ -100,10 +100,9 @@ class ClassroomDetail extends Component {
         try {
             $this->classroomService->transferStudent($studentProfileId, $targetClassId);
             $this->refreshData();
-
-            $this->dispatch('swal', ['title' => 'Đã chuyển lớp!', 'icon' => 'success']);
+            $this->swal('Thành công!', 'Đã chuyển sinh viên sang lớp khác.');
         } catch (\Exception $e) {
-            $this->dispatch('swal', ['title' => 'Lỗi', 'text' => $e->getMessage(), 'icon' => 'error']);
+            $this->swalError('Lỗi!', $e->getMessage());
         }
     }
 

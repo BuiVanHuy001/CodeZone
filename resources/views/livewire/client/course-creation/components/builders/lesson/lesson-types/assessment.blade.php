@@ -1,5 +1,5 @@
 <div>
-    <h6>Assessment</h6>
+    <h6>Bài kiếm tra</h6>
     <div class="radio-inputs my-3" :key="'radio-'.$index">
         @foreach(\App\Models\Assessment::$ASSESSMENT_PRACTICE_TYPES as $key => $label)
             <label class="radio">
@@ -15,6 +15,10 @@
             />
         @elseif($assessment['type'] === 'programming')
             <livewire:client.course-creation.components.builders.assessment.programming
+                wire:model="assessment"
+            />
+        @elseif($assessment['type'] === 'assignment')
+            <livewire:client.course-creation.components.builders.assessment.assignment
                 wire:model="assessment"
             />
         @endif

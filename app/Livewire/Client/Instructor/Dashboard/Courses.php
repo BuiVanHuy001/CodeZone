@@ -11,7 +11,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Title('My Courses')]
+#[Title('Khóa học của tôi')]
 class Courses extends Component
 {
     public Collection $allCourses;

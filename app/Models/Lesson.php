@@ -23,9 +23,9 @@ class Lesson extends Model
     protected $keyType = 'string';
 
     public static array $TYPES = [
-        'video' => 'Video',
-        'document' => 'Document',
-        'assessment' => 'Assessment',
+        'video' => 'Video Bài Giảng',
+        'document' => 'Tài Liệu',
+        'assessment' => 'Bài Kiểm Tra',
     ];
 
     protected static function booted(): void

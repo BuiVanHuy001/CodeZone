@@ -30,7 +30,7 @@ class Programming extends Component {
             'java' => 'int',
             'js' => 'number',
             'cpp' => 'int',
-            'label' => 'Integer',
+            'label' => 'Số nguyên (Integer)',
             'example' => '123',
             'regex' => '/^(0|-?[1-9]\d*)$/',
         ],
@@ -40,7 +40,7 @@ class Programming extends Component {
             'java' => 'double',
             'js' => 'number',
             'cpp' => 'double',
-            'label' => 'Float',
+            'label' => 'Số thực (Float)',
             'example' => '123.45',
             'regex' => '/^-?(?:\d+([.,]\d+)?|\d*[.,]\d+)$/',
         ],
@@ -50,8 +50,8 @@ class Programming extends Component {
             'java' => 'String',
             'js' => 'string',
             'cpp' => 'string',
-            'label' => 'String',
-            'example' => '"Hello, World!"',
+            'label' => 'Chuỗi (String)',
+            'example' => '"Xin chào!"',
             'regex' => null,
         ],
         'bool' => [
@@ -60,7 +60,7 @@ class Programming extends Component {
             'java' => 'boolean',
             'js' => 'boolean',
             'cpp' => 'bool',
-            'label' => 'Boolean',
+            'label' => 'Logic (Boolean)',
             'example' => 'true',
             'regex' => '/^(true|false)$/i',
         ],
@@ -70,7 +70,7 @@ class Programming extends Component {
             'java' => 'int[]',
             'js' => 'number[]',
             'cpp' => 'vector<int>',
-            'label' => 'Integer Array',
+            'label' => 'Mảng số nguyên',
             'example' => '[1, -2, 3]',
             'regex' => '/^\[\s*((0|-?[1-9]\d*)(\s*,\s*(0|-?[1-9]\d*))*)?\s*\]$/',
         ],
@@ -80,7 +80,7 @@ class Programming extends Component {
             'java' => 'double[]',
             'js' => 'number[]',
             'cpp' => 'vector<double>',
-            'label' => 'Float Array',
+            'label' => 'Mảng số thực',
             'example' => '[1.1, 2, .5, -3.3]',
             'regex' => '/^\[\s*(-?(?:\d+([.,]\d+)?|\d*[.,]\d+)(\s*,\s*-?(?:\d+([.,]\d+)?|\d*[.,]\d+))*)?\s*\]$/',
         ],
@@ -90,8 +90,8 @@ class Programming extends Component {
             'java' => 'String[]',
             'js' => 'string[]',
             'cpp' => 'vector<string>',
-            'label' => 'String Array',
-            'example' => '["apple", "banana", "cherry"]',
+            'label' => 'Mảng chuỗi',
+            'example' => '["apple", "banana"]',
             'regex' => '/^\[\s*("(?:[^"\\\\]|\\\\.)*"(?:\s*,\s*"(?:[^"\\\\]|\\\\.)*")*)?\s*\]$/',
         ],
         'bool[]' => [
@@ -100,7 +100,7 @@ class Programming extends Component {
             'java' => 'boolean[]',
             'js' => 'boolean[]',
             'cpp' => 'vector<bool>',
-            'label' => 'Boolean Array',
+            'label' => 'Mảng logic',
             'example' => '[true, false, true]',
             'regex' => '/^\[\s*(true|false)(\s*,\s*(true|false))*\s*\]$/i',
         ],
@@ -132,9 +132,6 @@ class Programming extends Component {
         $this->messages = ProgrammingPracticeValidator::$MESSAGES;
     }
 
-    /**
-     * @throws Exception
-     */
     public function updated($propertyName): void
     {
         try {
@@ -208,7 +205,7 @@ class Programming extends Component {
                 $param['type'] === $this->newParam['type'] &&
                 strtolower($param['name']) === strtolower($this->newParam['name'])
             ) {
-                $this->addError('newParam.name', 'This parameter name and type already exists.');
+                $this->addError('newParam.name', 'Tham số này (tên và kiểu dữ liệu) đã tồn tại.');
                 return;
             }
         }
@@ -231,8 +228,8 @@ class Programming extends Component {
         ];
 
         $this->swal(
-            title: 'Parameter Added',
-            text: 'The parameter has been added successfully.',
+            title: 'Đã thêm tham số',
+            text: 'Tham số mới đã được thêm thành công.',
             toast: true,
             showConfirmButton: false,
             position: 'top-end',
@@ -249,8 +246,8 @@ class Programming extends Component {
         }
 
         $this->swal(
-            title: 'Parameter Deleted',
-            text: 'The parameter has been deleted successfully.',
+            title: 'Đã xóa tham số',
+            text: 'Tham số đã được gỡ bỏ khỏi danh sách.',
             toast: true,
             showConfirmButton: false,
             position: 'top-end',
@@ -260,15 +257,15 @@ class Programming extends Component {
 
     public function addTestCase(): void
     {
-        $this->validate(ProgrammingPracticeValidator::getRulesNewTestCase(self::$typeMap, $this->newTestCase, $this->problem));;;
+        $this->validate(ProgrammingPracticeValidator::getRulesNewTestCase(self::$typeMap, $this->newTestCase, $this->problem));
 
         $this->problem['test_cases'][] = $this->newTestCase;
 
         $this->resetNewTestCase();
 
         $this->swal(
-            title: 'Test Case Added',
-            text: 'The test case has been added successfully.',
+            title: 'Đã thêm bộ kiểm thử',
+            text: 'Test case mới đã được thêm thành công.',
             toast: true,
             showConfirmButton: false,
             position: 'top-end',
@@ -299,8 +296,8 @@ class Programming extends Component {
     {
         unset($this->problem['test_cases'][$index]);
         $this->swal(
-            title: 'Test Case Deleted',
-            text: 'The test case has been deleted successfully.',
+            title: 'Đã xóa bộ kiểm thử',
+            text: 'Test case đã được gỡ bỏ thành công.',
             toast: true,
             showConfirmButton: false,
             position: 'top-end',
@@ -308,9 +305,6 @@ class Programming extends Component {
         );
     }
 
-    /**
-     * @throws Exception
-     */
     public function saveProgramming(): void
     {
         try {
@@ -322,7 +316,7 @@ class Programming extends Component {
             $this->dispatch('assessment-saved', id: $this->programming['title']);
             $this->dispatch('assessment-updated', isValid: true);
         } catch (Exception $e) {
-            $this->swalError('Error', 'There was an error saving the programming assessment:', $e->getMessage());
+            $this->swalError('Lỗi', 'Có lỗi xảy ra khi lưu bài thực hành lập trình:', $e->getMessage());
             throw $e;
         }
     }

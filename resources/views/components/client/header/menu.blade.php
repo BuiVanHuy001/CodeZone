@@ -1,5 +1,6 @@
+@php use App\Support\ClientMenuMapping; @endphp
 <div>
-    @foreach(\App\Support\ClientMenuMapping::getMenuForRole() as $section => $items)
+    @foreach(ClientMenuMapping::getMenuForRole() as $section => $items)
         <ul class="user-list-wrapper">
             @foreach($items as $label => $item)
                 <li>

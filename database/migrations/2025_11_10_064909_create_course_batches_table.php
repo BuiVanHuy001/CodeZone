@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\BatchEnrollment;
+use App\Models\CourseBatch;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,11 +14,11 @@ return new class extends Migration {
         Schema::create('course_batches', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('course_id')->constrained('courses')->onDelete('cascade');
-            $table->string('name');
+            $table->string('name', 100);
+            $table->string('code', 10)->unique();
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('status', array_keys(BatchEnrollment::$STATUSES))->default('not_started');
-
+            $table->enum('status', array_keys(CourseBatch::$STATUSES))->default('upcoming');
             $table->timestamps();
         });
     }

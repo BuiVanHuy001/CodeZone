@@ -10,8 +10,7 @@
     @include('swal::index')
 
     @stack('styles')
-
-    <title>@yield('title' ?? 'Codezone - Online Learning platform')</title>
+    <title>@yield('title', 'Codezone - Online Learning platform')</title>
 </head>
 <body class="rbt-header-sticky">
 <x-client.header.index/>

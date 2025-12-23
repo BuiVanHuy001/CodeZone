@@ -19,11 +19,6 @@ class DeleteFaculty extends Component {
     #[Rule('required|exists:faculties,id')]
     public ?int $targetFacultyId = null;
 
-    public function mount(): void
-    {
-        $this->targetFaculties = collect();
-    }
-
     #[On('init-delete-faculty')]
     public function initDelete(string|int $id): void
     {
@@ -44,15 +39,14 @@ class DeleteFaculty extends Component {
         }
 
         $this->targetFaculties = AcademicCache::getCachedFacultiesOnly()
-                                              ->where('id', '!=', $id)
-                                              ->values();
+            ->where('id', '!=', $id);
 
         if ($this->targetFaculties->isEmpty()) {
             $this->swalError('Không thể xóa!', 'Đây là khoa duy nhất. Bạn không thể chuyển ngành đi đâu cả.');
             return;
         }
 
-        $this->dispatch('open-delete-faculty-modal');
+        $this->dispatch('open-modal', id: 'deleteFacultyModal');
     }
 
     public function confirmDeleteWithMigration(): void
@@ -61,7 +55,7 @@ class DeleteFaculty extends Component {
 
         try {
             app(FacultyService::class)->transferAndDelete($this->faculty->id, $this->targetFacultyId);
-            $this->dispatch('close-modal', modalId: '#delete-faculty-modal');
+            $this->dispatch('close-modal', id: 'deleteFacultyModal');
             $this->dispatch('faculty-updated');
 
             $this->swal('Thành công!',
@@ -75,7 +69,7 @@ class DeleteFaculty extends Component {
     #[On('delete-empty-faculty-confirmed')]
     public function deleteEmptyFaculty(int $id): void
     {
-        $deleted = $this->facultyService->delete($id);
+        $deleted = app(FacultyService::class)->delete($id);
         if ($deleted) {
             $this->reset(['faculty', 'targetFaculties', 'majorsCount', 'targetFacultyId']);
             $this->dispatch('faculty-updated');

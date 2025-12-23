@@ -119,47 +119,43 @@ class CatalogService {
 
     public function getCoursesByStudent(User $student): Collection
     {
-        $cacheKey = "courses:student:{$student->id}";
+        $enrollmentsMap = $student
+            ->enrollments()
+            ->get()
+            ->keyBy('course_id');
 
-        return \Cache::remember($cacheKey, 3600, function () use ($student) {
-            $enrollmentsMap = $student
-                ->enrollments()
-                ->get()
-                ->keyBy('course_id');
+        if ($enrollmentsMap->isEmpty()) {
+            return collect();
+        }
 
-            if ($enrollmentsMap->isEmpty()) {
-                return collect();
-            }
+        $enrolledCourseIds = $enrollmentsMap->keys();
 
-            $enrolledCourseIds = $enrollmentsMap->keys();
+        $courses = Course::whereIn('id', $enrolledCourseIds)
+                         ->where('status', 'published')
+                         ->with(['author.roles', 'reviews', 'category'])
+                         ->withCount([
+                             'modules as completed_lessons_count' => function ($query) use ($student) {
+                                 $query
+                                     ->selectRaw('count(distinct tracking_progresses.id)')
+                                     ->from('tracking_progresses')
+                                     ->join('lessons', 'lessons.id', '=', 'tracking_progresses.lesson_id')
+                                     ->join('modules', 'modules.id', '=', 'lessons.module_id')
+                                     ->whereColumn('modules.course_id', 'courses.id')
+                                     ->where('tracking_progresses.user_id', $student->id)
+                                     ->where('tracking_progresses.is_completed', true);
+                             }
+                         ])
+                         ->get();
 
-            $courses = Course::whereIn('id', $enrolledCourseIds)
-                             ->where('status', 'published')
-                             ->with(['author', 'reviews', 'category'])
-                             ->withCount([
-                                 'modules as completed_lessons_count' => function ($query) use ($student) {
-                                     $query
-                                         ->selectRaw('count(distinct tracking_progresses.id)')
-                                         ->from('tracking_progresses')
-                                         ->join('lessons', 'lessons.id', '=', 'tracking_progresses.lesson_id')
-                                         ->join('modules', 'modules.id', '=', 'lessons.module_id')
-                                         ->whereColumn('modules.course_id', 'courses.id')
-                                         ->where('tracking_progresses.user_id', $student->id)
-                                         ->where('tracking_progresses.is_completed', true);
-                                 }
-                             ])
-                             ->get();
+        $courses->each(function ($course) use ($enrollmentsMap) {
+            $course->enrollmentStatus = $enrollmentsMap[$course->id]->status;
 
-            $courses->each(function ($course) use ($enrollmentsMap) {
-                $course->enrollmentStatus = $enrollmentsMap[$course->id]->status;
-
-                $totalLessons = max($course->lesson_count, 1);
-                $completedCount = $course->completed_lessons_count;
-                $course->progressPercentage = round(($completedCount / $totalLessons) * 100, 2);
-            });
-
-            return $courses->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, $enrolledCourseIds));
+            $totalLessons = max($course->lesson_count, 1);
+            $completedCount = $course->completed_lessons_count;
+            $course->progressPercentage = round(($completedCount / $totalLessons) * 100, 2);
         });
+
+        return $courses->map(fn(Course $course) => $this->courseDecorator->decorateForCard($course, $enrolledCourseIds));
     }
 
     public function getCoursesByStatus(string $status): Collection

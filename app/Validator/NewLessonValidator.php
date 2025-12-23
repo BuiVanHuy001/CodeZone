@@ -7,51 +7,43 @@ use App\Models\Lesson;
 
 class NewLessonValidator {
     public static array $MESSAGES = [
-        // ---- Title ----
-        'lesson.title.required' => 'Please enter a lesson title.',
-        'lesson.title.min' => 'The lesson title must be at least :min characters.',
-        'lesson.title.max' => 'The lesson title may not exceed :max characters.',
+        'lesson.title.required' => 'Vui lòng nhập tên bài học.',
+        'lesson.title.min' => 'Tên bài học phải có ít nhất :min ký tự.',
+        'lesson.title.max' => 'Tên bài học không được vượt quá :max ký tự.',
 
-        // ---- Type ----
-        'lesson.type.required' => 'Please select a lesson type.',
-        'lesson.type.in' => 'Invalid lesson type selected. Please choose a valid option.',
+        'lesson.type.required' => 'Vui lòng chọn định dạng cho bài học.',
+        'lesson.type.in' => 'Định dạng bài học không hợp lệ. Vui lòng chọn lại.',
 
-        // ---- Document ----
-        'lesson.document.required_if' => 'A document is required when the lesson type is set to Document.',
-        'lesson.document.min' => 'The document content must be at least :min characters long.',
+        'lesson.document.required_if' => 'Nội dung văn bản là bắt buộc đối với định dạng Tài liệu.',
+        'lesson.document.min' => 'Nội dung tài liệu phải có ít nhất :min ký tự.',
 
-        // ---- Assessment (container) ----
-        'lesson.assessment.required_if' => 'Assessment data is required when the lesson type is set to Assessment.',
+        'lesson.assessment.required_if' => 'Thông tin bài kiểm tra là bắt buộc khi chọn loại hình Đánh giá.',
 
-        // ---- Assessment Title ----
-        'lesson.assessment.title.required_if' => 'Please enter a title for the assessment.',
-        'lesson.assessment.title.min' => 'The assessment title must be at least :min characters.',
-        'lesson.assessment.title.max' => 'The assessment title may not exceed :max characters.',
+        'lesson.assessment.title.required_if' => 'Vui lòng nhập tên cho bài kiểm tra.',
+        'lesson.assessment.title.min' => 'Tên bài kiểm tra phải có ít nhất :min ký tự.',
+        'lesson.assessment.title.max' => 'Tên bài kiểm tra không được vượt quá :max ký tự.',
 
-        // ---- Assessment Description ----
-        'lesson.assessment.description.required_if' => 'An assessment description is required when the lesson type is Assessment.',
-        'lesson.assessment.description.min' => 'The assessment description must be at least :min characters.',
-        'lesson.assessment.description.in' => 'The assessment description must be one of the allowed types: assignment or programming.',
+        'lesson.assessment.description.required_if' => 'Vui lòng nhập mô tả yêu cầu cho bài tập hoặc bài thực hành lập trình.',
+        'lesson.assessment.description.min' => 'Nội dung mô tả phải có ít nhất :min ký tự.',
+        'lesson.assessment.description.in' => 'Loại mô tả phải thuộc danh mục: Bài tập (assignment) hoặc Lập trình (programming).',
 
-        // ---- Assessment Type ----
-        'lesson.assessment.type.required_if' => 'Please select an assessment type when the lesson type is Assessment.',
-        'lesson.assessment.type.in' => 'Invalid assessment type selected. Please choose a valid option.',
+        'lesson.assessment.type.required_if' => 'Vui lòng chọn hình thức kiểm tra (Trắc nghiệm/Bài tập/Lập trình).',
+        'lesson.assessment.type.in' => 'Hình thức kiểm tra không hợp lệ.',
 
-        // ---- Quiz Questions ----
-        'lesson.assessment.assessments_questions.required_if' => 'At least one question is required when the assessment type is Quiz.',
-        'lesson.assessment.assessments_questions.array' => 'The questions must be provided as a valid list.',
-        'lesson.assessment.assessments_questions.min' => 'The quiz must contain at least :min question.',
-        // ---- Video File ----
-        'lesson.video_file_name.required_if' => 'A video file is required when the lesson type is set to Video.',
-        'lesson.video_file_name.max' => 'The video file size must not exceed 250 MB.',
-        'lesson.video_file_name.mimes' => 'The video file must be in one of the following formats: MP4, MOV, or WEBM.',
+        'lesson.assessment.assessments_questions.required_if' => 'Vui lòng thêm ít nhất một câu hỏi cho bài trắc nghiệm.',
+        'lesson.assessment.assessments_questions.array' => 'Danh sách câu hỏi không đúng định dạng.',
+        'lesson.assessment.assessments_questions.min' => 'Bài trắc nghiệm phải có tối thiểu :min câu hỏi.',
 
-        'lesson.duration.required_if' => 'A video duration is required when the lesson type is set to Video.',
-        'lesson.duration.numeric' => 'The video duration must be a valid number (in seconds).',
-        'lesson.duration.min' => 'The video duration must be at least :min seconds.',
+        'lesson.video_file_name.required_if' => 'Vui lòng tải lên tệp video cho bài học này.',
+        'lesson.video_file_name.max' => 'Dung lượng video không được vượt quá 250 MB.',
+        'lesson.video_file_name.mimes' => 'Video phải thuộc một trong các định dạng: MP4, MOV, hoặc WEBM.',
 
-        'lesson.preview.required' => 'Please specify whether this lesson should be available as a preview.',
-        'lesson.preview.boolean' => 'The preview value must be true or false.',
+        'lesson.duration.required_if' => 'Vui lòng xác định thời lượng cho video.',
+        'lesson.duration.numeric' => 'Thời lượng video phải là một con số (tính bằng giây).',
+        'lesson.duration.min' => 'Thời lượng video không được nhỏ hơn :min giây.',
+
+        'lesson.preview.required' => 'Vui lòng xác định bài học này có cho phép học thử hay không.',
+        'lesson.preview.boolean' => 'Giá trị cho phép học thử không hợp lệ.',
     ];
 
     public static function rules(array $existingLessonTitles = []): array
@@ -92,7 +84,7 @@ class NewLessonValidator {
                 );
 
                 if (in_array($incomingTitle, $normalizedExisting, true)) {
-                    $fail('Lesson title must be unique within the module.');
+                    $fail('Tên bài học đã tồn tại trong chương này. Vui lòng chọn tên khác.');
                 }
             }
         };

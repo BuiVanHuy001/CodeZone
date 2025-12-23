@@ -26,7 +26,6 @@ readonly class CourseDecorator
             $course->categoryName = $course->category?->name;
             $course->reviewCountText = $this->formatCount($course->review_count, 'review');
             $course->enrollmentCountText = $this->formatCount($course->enrollment_count, 'student');
-            $course->detailsPageUrl = route('page.course_detail', $course->slug);
             if (!$enrolledCourseIds->isEmpty()) {
                 $course->isEnrolled = $enrolledCourseIds->contains($course->id);
             } else {
@@ -110,7 +109,6 @@ readonly class CourseDecorator
     public function decorateForCartItem(Course $course): Course
     {
         $course = $this->decorateBase($course);
-        $course->detailsPageUrl = route('page.course_detail', $course->slug);
         $course->authorInfo = [
             'name' => $course->author->name,
             'slug' => $course->author->slug,
@@ -124,7 +122,6 @@ readonly class CourseDecorator
     public function decorateForInstructorDashboard(Course $course, User $author): Course
     {
         $course = $this->decorateBase($course);
-        $course->detailsPageUrl = route('page.course_detail', $course->slug);
         $course->studentCountText = $this->formatCount($course->enrollment_count, 'student');
         $course->reviewCountText = $this->formatCount($course->review_count, 'review');
         $course->authorInfo = [
@@ -172,7 +169,7 @@ readonly class CourseDecorator
         return $course;
     }
 
-    private function getThumbnailPath(Course $course): string
+    public function getThumbnailPath(Course $course): string
     {
         if ($course->thumbnail) {
             if (filter_var($course->thumbnail, FILTER_VALIDATE_URL)) {

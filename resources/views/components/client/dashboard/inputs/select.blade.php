@@ -4,72 +4,45 @@
     @else
         <h5>{{ $label }}</h5>
     @endif
-    @if($isBoostrapSelect)
-        <div wire:ignore
-             class="rbt-modern-select bg-transparent height-45 w-100 mb--10"
-             x-data
-             x-init="
-         $nextTick(() => {
-         let select = $refs.select;
-         $(select).selectpicker();
-         $(select).on('changed.bs.select', function (e) {
-            @this.set('{{ $name }}', e.target.value);
-             });
-         });"
-        >
+        <div class="rbt-modern-select bg-transparent w-100">
             <select
-                wire:model="{{ $name }}"
-                x-ref="select"
+                wire:model.live="{{ $name }}"
                 id="{{ $name }}"
                 @class([
-                    'w-100',
-                    'border-danger' => $errors->has($name),
+                    'w-100 h-100',
+                    'is-invalid border-danger' => $errors->has($name),
                 ])
+                style="cursor: pointer;"
             >
-                <option value="" disabled>{{ $placeholder }}</option>
+                @if($placeholder)
+                    <option value="" disabled selected>{{ $placeholder }}</option>
+                @endif
 
-                @if($name === 'category')
-                    @foreach ($options as $category)
-                        @foreach ($category->getChildren($category->id) as $children)
-                            <option value="{{ $children->id }}">
-                                {{ $category->name . '->' . $children->name }}
+                @foreach($normalizedOptions as $option)
+                    @if($option['is_group'])
+                        <optgroup label="{{ $option['label'] }}">
+                            @foreach($option['options'] as $child)
+                                <option value="{{ $child['value'] }}">
+                                    {{ $child['label'] }}
                             </option>
                         @endforeach
-                    @endforeach
-                @elseif($name === 'problem.return_type')
-                    @foreach($options as $key => $type)
-                        <option value="{{ $key }}">{{ $type['label'] }}</option>
-                    @endforeach
-                @elseif($name === 'languageSelected')
-                    @foreach($options as $type)
-                        <option @checked(isset($default) && $default === $type)
-                                value="{{ $type }}">{{ \App\Models\ProgrammingProblems::$SUPPORTED_LANGUAGES[$type] }}</option>
-                    @endforeach
+                        </optgroup>
                 @else
-                    @foreach ($options as $key => $label)
-                        <option value="{{ $key }}">{{ ucfirst($label) }}</option>
-                    @endforeach
-                @endif
+                        <option value="{{ $option['value'] }}">
+                            {{ $option['label'] }}
+                        </option>
+                    @endif
+                @endforeach
             </select>
         </div>
-    @else
-        <select wire:model.lazy="{{ $name }}"
-            @class([
-                'w-100',
-                'border-danger' => $errors->has($name),
-            ])
-        >
-            <option value="">Select lesson type</option>
-            @foreach($options  as $key => $type)
-                <option value="{{ $key }}">{{ ucfirst($type) }}</option>
-            @endforeach
-        </select>
-    @endif
 
     @error($name)
-    <small class="text-danger d-block">
+        <small class="text-danger d-block mt-1">
         <i class="feather-alert-triangle"></i> {{ $message }}
     </small>
     @enderror
-    <small><i class="feather-info"></i> {{ $info }}</small>
+
+        @if($info)
+            <small class="text-muted"><i class="feather-info"></i> {{ $info }}</small>
+        @endif
 </div>

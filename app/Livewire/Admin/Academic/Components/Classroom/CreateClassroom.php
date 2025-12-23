@@ -10,18 +10,23 @@ use Livewire\Attributes\Rule;
 use Livewire\Component;
 
 class CreateClassroom extends Component {
+
     #[Rule('required|string|max:255|unique:class_rooms,name')]
     public string $name = '';
 
     #[Rule('required|string|max:10|unique:class_rooms,code')]
     public string $code = '';
 
+    #[Rule('required')]
+    public string $faculty_id = '';
+
     #[Rule('required|exists:majors,id')]
     public string $major_id = '';
 
     public array $selectedStudents = [];
 
-    public Collection $majors;
+    public Collection $allFaculties;
+    public Collection $filteredMajors;
     public Collection $availableStudents;
 
     protected ClassroomService $classroomService;
@@ -33,8 +38,23 @@ class CreateClassroom extends Component {
 
     public function mount(): void
     {
-        $this->majors = AcademicCache::getCachedMajorsOnly();
+        $this->allFaculties = AcademicCache::getCachedFacultiesOnly();
+        $this->filteredMajors = collect();
         $this->availableStudents = collect();
+    }
+
+    public function updatedFacultyId($value): void
+    {
+        $this->reset(['major_id', 'selectedStudents']);
+        $this->availableStudents = collect();
+
+        if ($value) {
+            $selectedFaculty = $this->allFaculties->firstWhere('id', $value);
+
+            $this->filteredMajors = $selectedFaculty ? $selectedFaculty->majors : collect();
+        } else {
+            $this->filteredMajors = collect();
+        }
     }
 
     public function updatedMajorId($value): void
@@ -57,30 +77,17 @@ class CreateClassroom extends Component {
                 'major_id' => $this->major_id,
             ], $this->selectedStudents);
 
-            $this->reset(['name', 'code', 'major_id', 'selectedStudents']);
+            $this->reset(['name', 'code', 'faculty_id', 'major_id', 'selectedStudents']);
+            $this->filteredMajors = collect();
             $this->availableStudents = collect();
 
-            $this->dispatch('faculty-updated');
-            $this->dispatch('close-modal', modalId: '#create-classroom-modal');
+            $this->dispatch('classroom-created');
+            $this->dispatch('close-modal', modalId: 'create-classroom-modal');
 
-            $this->dispatch('swal', [
-                'title' => 'Thành công!',
-                'text' => 'Đã tạo lớp học và thêm sinh viên thành công.',
-                'icon' => 'success'
-            ]);
-
+            $this->swal('Thành công!', 'Đã tạo lớp học và thêm sinh viên thành công.');
         } catch (\Exception $e) {
-            $this->dispatch('swal', ['title' => 'Lỗi', 'text' => $e->getMessage(), 'icon' => 'error']);
+            $this->swalError('Lỗi!', $e->getMessage());
         }
-    }
-
-    protected function messages(): array
-    {
-        return [
-            'name.required' => 'Vui lòng nhập tên lớp.',
-            'code.required' => 'Vui lòng nhập mã lớp.',
-            'major_id.required' => 'Vui lòng chọn chuyên ngành.',
-        ];
     }
 
     public function render(): View

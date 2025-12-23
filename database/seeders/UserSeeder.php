@@ -13,24 +13,28 @@ class UserSeeder extends Seeder {
     public function run(): void
     {
         $users = User::factory(600)->create();
-        $classRooms = ClassRoom::all();
+        $classRooms = ClassRoom::with('major')->get();
+
         foreach ($users as $user) {
             $user->assignRole('student');
             $user->update([
                 'avatar' => 'https://avatar.iran.liara.run/public/' . random_int(1, 70),
             ]);
+
             $user->studentProfile()->create([
                 'gender' => fake()->boolean(),
                 'dob' => fake()->date(),
             ]);
 
             if (fake()->boolean(80)) {
+                $classRoom = $classRooms->random();
+
                 $user->studentProfile()->update([
                     'student_type' => 'internal',
-                    'major_id' => random_int(1, 17),
+                    'major_id' => $classRoom->major_id,
                     'student_code' => 'S' . str_pad((string)random_int(1, 999999), 6, '0', STR_PAD_LEFT),
                     'enrollment_year' => fake()->dateTimeBetween('-4 years', 'now')->format('Y-m-d'),
-                    'class_room_id' => random_int(1, 28),
+                    'class_room_id' => $classRoom->id,
                 ]);
             } else {
                 $user->studentProfile()->update([
@@ -39,7 +43,7 @@ class UserSeeder extends Seeder {
             }
             if (fake()->boolean(30)) {
                 $user->update([
-                    'status' => fake()->randomElement(User::$STATUSES)
+                    'status' => fake()->randomElement(array_keys($user->getAvailableStatuses()))
                 ]);
             }
         }

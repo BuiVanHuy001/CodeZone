@@ -64,7 +64,9 @@ class AuthenticationService {
             'password' => 'required|min:8'
         ]);
 
-        if (auth()->attempt($credentials)) {
+        $remember = request()->boolean('rememberme');
+
+        if (auth()->attempt($credentials, $remember)) {
             $user = auth()->user();
             if ($user->status === 'active') {
                 if ($user->hasRole('admin')) {
@@ -77,7 +79,7 @@ class AuthenticationService {
 
                 return redirect()->intended()->with('swal', [
                     'title' => 'Login Successful',
-                    'text' => 'Welcome back!',
+                    'text' => "Welcome back, {$user->name}!",
                     'icon' => 'success',
                 ]);
             }

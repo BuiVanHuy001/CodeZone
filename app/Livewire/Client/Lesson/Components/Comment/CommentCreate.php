@@ -4,6 +4,7 @@ namespace App\Livewire\Client\Lesson\Components\Comment;
 
 use App\Models\Lesson;
 use App\Services\Client\Comment\CommentService;
+use App\Traits\WithSwal;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Validate;
@@ -11,6 +12,7 @@ use Livewire\Component;
 
 class CommentCreate extends Component
 {
+    use WithSwal;
     public Lesson $lesson;
     private CommentService $commentService;
     public bool $canSubmit = false;

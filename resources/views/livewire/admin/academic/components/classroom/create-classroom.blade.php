@@ -10,12 +10,30 @@
                 <form wire:submit="storeClassroom">
                     <div class="modal-body">
                         <div class="row g-3">
-                            <div class="col-12">
-                                <label class="form-label">Thuộc Chuyên Ngành <span class="text-danger">*</span></label>
+                            <div class="col-md-6">
+                                <label class="form-label">Chọn Khoa <span class="text-danger">*</span></label>
+                                <select class="form-select @error('faculty_id') is-invalid @enderror"
+                                        wire:model.live="faculty_id">
+                                    <option value="">-- Chọn Khoa --</option>
+                                    @foreach($allFaculties as $faculty)
+                                        <option value="{{ $faculty->id }}">{{ $faculty->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('faculty_id')
+                                <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Chuyên Ngành <span class="text-danger">*</span></label>
                                 <select class="form-select @error('major_id') is-invalid @enderror"
-                                        wire:model.live="major_id">
-                                    <option value="">-- Chọn Ngành --</option>
-                                    @foreach($majors as $major)
+                                        wire:model.live="major_id"
+                                    {{ $filteredMajors->isEmpty() ? 'disabled' : '' }}>
+
+                                    <option value="">
+                                        {{ $filteredMajors->isEmpty() ? '-- Vui lòng chọn Khoa trước --' : '-- Chọn Ngành --' }}
+                                    </option>
+
+                                    @foreach($filteredMajors as $major)
                                         <option value="{{ $major->id }}">
                                             {{ $major->name }} ({{ $major->code }})
                                         </option>
@@ -25,7 +43,6 @@
                                 <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            {{-- 2. Tên & Mã --}}
                             <div class="col-md-8">
                                 <label class="form-label">Tên Lớp <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
@@ -42,7 +59,6 @@
                                 <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            {{-- 3. Danh sách Sinh viên chưa có lớp --}}
                             <div class="col-12">
                                 <label class="form-label d-flex justify-content-between">
                                     <span>Thêm Sinh viên vào lớp (Tùy chọn)</span>

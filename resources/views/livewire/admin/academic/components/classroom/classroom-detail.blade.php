@@ -10,14 +10,12 @@
                 </div>
 
                 <div class="modal-body bg-light-subtle">
-                    {{-- Loading --}}
                     <div wire:loading wire:target="loadClassroom" class="text-center w-100 py-5">
                         <div class="spinner-border text-primary" role="status"></div>
                     </div>
 
                     <div wire:loading.remove wire:target="loadClassroom">
                         @if($classroom)
-                            {{-- 1. INFO CARD (THÔNG TIN LỚP HỌC) --}}
                             <div class="card border-0 shadow-sm mb-4">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
@@ -34,7 +32,6 @@
                                             </div>
                                         </div>
 
-                                        {{-- Box Sĩ số --}}
                                         <div class="text-center p-2 bg-white rounded border">
                                             <h4 class="mb-0 text-success fw-bold">
                                                 {{ isset($classroom->students_list) ? count($classroom->students_list) : 0 }}
@@ -45,13 +42,11 @@
                                 </div>
                             </div>
 
-                            {{-- 2. HEADER DANH SÁCH + NÚT THÊM --}}
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="text-uppercase text-muted fs-13 fw-bold mb-0">
                                     <i class="ri-team-line me-1"></i> Danh sách Sinh viên
                                 </h6>
 
-                                {{-- Nút Toggle chế độ thêm --}}
                                 <button class="btn btn-sm {{ $isAddingMode ? 'btn-danger' : 'btn-success' }}"
                                         wire:click="toggleAddMode"
                                         wire:loading.attr="disabled">
@@ -63,7 +58,6 @@
                                 </button>
                             </div>
 
-                            {{-- [MỚI] KHU VỰC CHỌN SINH VIÊN (Hiện khi isAddingMode = true) --}}
                             @if($isAddingMode)
                                 <div class="card border border-success border-opacity-25 shadow-none mb-4 bg-success-subtle bg-opacity-10">
                                     <div class="card-header bg-transparent border-bottom border-success border-opacity-25">
@@ -124,7 +118,6 @@
                                 </div>
                             @endif
 
-                            {{-- 3. DANH SÁCH SINH VIÊN HIỆN TẠI (Chỉ hiện khi KHÔNG ở chế độ thêm) --}}
                             @if(!$isAddingMode)
                                 <div class="card border shadow-none mb-0">
                                     @if(empty($classroom->students_list))

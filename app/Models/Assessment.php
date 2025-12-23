@@ -12,9 +12,10 @@ class Assessment extends Model
 	protected $guarded = [];
 
     public static array $ASSESSMENT_PRACTICE_TYPES = [
-		'quiz' => 'Quiz',
-        'programming' => 'Programming'
-	];
+        'quiz' => 'Trắc nghiệm',
+        'programming' => 'Thực hành lập trình',
+        'assignment' => 'Bài tập nộp tệp',
+    ];
 
     public function questions(): HasMany
     {

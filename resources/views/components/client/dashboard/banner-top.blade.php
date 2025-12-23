@@ -15,7 +15,7 @@
                     <div class="tutor-btn">
                         <a class="rbt-btn btn-md hover-icon-reverse" wire:navigate href="{{ $courseCreateRoute }}">
                             <span class="icon-reverse-wrapper">
-                                <span class="btn-text">Create a New Course</span>
+                                <span class="btn-text">Tạo khóa học mới</span>
                                 <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                 <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                             </span>

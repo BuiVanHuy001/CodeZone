@@ -203,4 +203,40 @@ class LearningService {
 
         return $lessons->first(fn($l) => !in_array($l->id, $completed, true))?->id;
     }
+
+    public function getStudentCoursesProgress(User $student): Collection
+    {
+        $enrollmentsMap = $student->enrollments()->get()->keyBy('course_id');
+
+        if ($enrollmentsMap->isEmpty()) return collect();
+
+        $courseIds = $enrollmentsMap->keys()->toArray();
+
+        $courses = Course::whereIn('id', $courseIds)
+                         ->where('status', 'published')
+                         ->with(['author.roles', 'category'])
+                         ->withCount([
+                             'modules as completed_lessons_count' => function ($query) use ($student) {
+                                 $query
+                                     ->selectRaw('count(distinct tracking_progresses.id)')
+                                     ->from('tracking_progresses')
+                                     ->join('lessons', 'lessons.id', '=', 'tracking_progresses.lesson_id')
+                                     ->join('modules', 'modules.id', '=', 'lessons.module_id')
+                                     ->whereColumn('modules.course_id', 'courses.id')
+                                     ->where('tracking_progresses.user_id', $student->id)
+                                     ->where('tracking_progresses.is_completed', true);
+                             }
+                         ])
+                         ->get();
+
+        return $courses->map(function ($course) use ($enrollmentsMap) {
+            $course->enrollmentStatus = $enrollmentsMap[$course->id]->status ?? 'unknown';
+            $totalLessons = max($course->lesson_count, 1);
+            $completedCount = $course->completed_lessons_count;
+
+            $course->progressPercentage = round(($completedCount / $totalLessons) * 100);
+
+            return $course;
+        });
+    }
 }

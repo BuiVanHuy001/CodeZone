@@ -17,11 +17,14 @@ class Quiz extends Component {
     use WithFileUploads, WithSwal;
 
     public $excelFile;
+
     #[Modelable]
     public array $quiz;
 
-    public bool $showDetails = true;
+    public array $editingQuestion = [];
+    public int $editingIndex = -1;
 
+    public bool $showDetails = true;
     public array $messages;
 
     public function rules(): array
@@ -31,74 +34,133 @@ class Quiz extends Component {
 
     public function mount(): void
     {
-        $this->quiz['assessments_questions'] = [];
+        $this->ensureStructure();
         $this->messages = QuizValidator::$MESSAGES;
     }
 
-    public function updated(): void
+    private function ensureStructure(): void
     {
-        try {
-            $this->validate();
-            $this->dispatch('assessment-updated', isValid: true);
-        } catch (ValidationException $e) {
-            $this->dispatch('assessment-updated', isValid: false);
-            throw $e;
+        if (!isset($this->quiz['assessments_questions']) || !is_array($this->quiz['assessments_questions'])) {
+            $this->quiz['assessments_questions'] = [];
         }
     }
 
-
-    public function addOption(int $index): void
+    public function validateStep1(): true
     {
-        if (!isset($this->quiz['assessments_questions'][$index])) {
-            return;
-        }
-        $optionCount = count($this->quiz['assessments_questions'][$index]['question_options']);
-        if ($optionCount >= 4) {
-            $this->swalWarning('Maximum Options Reached', 'You can only have a maximum of 4 options per question.');
-            return;
-        }
-        $this->quiz['assessments_questions'][$index]['question_options'][] = [
+        $this->validate([
+            'quiz.title' => 'required|min:3|max:255',
+            'quiz.description' => 'nullable|string',
+        ], $this->messages);
+        return true;
+    }
+
+
+    public function createQuestion(): void
+    {
+        $this->ensureStructure();
+
+        $this->editingIndex = -1;
+        $this->editingQuestion = [
             'content' => '',
-            'is_correct' => false,
-            'position' => $optionCount + 1,
-            'explanation' => ''
-        ];
-    }
-
-    public function deleteOption(int $index, int $optionIndex): void
-    {
-        if (count($this->quiz['assessments_questions'][$index]['question_options']) <= 2) {
-            $this->swalWarning('Minimum Options Required', 'You must have at least 2 options for each question.');
-            return;
-        }
-        unset($this->quiz['assessments_questions'][$index]['question_options'][$optionIndex]);
-    }
-
-    public function addQuestion(): void
-    {
-        $this->quiz['assessments_questions'][] = [
-            'content' => '',
-            'type' => '',
+            'type' => 'one_choice',
             'question_options' => [
-                [
-                    'content' => '',
-                    'is_correct' => false,
-                    'explanation' => '',
-                    'position' => 1
-                ],
-                [
-                    'content' => '',
-                    'is_correct' => false,
-                    'explanation' => '',
-                    'position' => 2
-                ]
+                ['content' => '', 'is_correct' => false, 'position' => 1, 'explanation' => ''],
+                ['content' => '', 'is_correct' => false, 'position' => 2, 'explanation' => '']
             ]
         ];
+        $this->dispatch('open-modal', id: 'quizQuestionModal');
     }
+
+    public function editQuestion($index): void
+    {
+        $this->ensureStructure();
+
+        if (isset($this->quiz['assessments_questions'][$index])) {
+            $this->editingIndex = $index;
+            $this->editingQuestion = $this->quiz['assessments_questions'][$index];
+            $this->dispatch('open-modal', id: 'quizQuestionModal');
+        }
+    }
+
+    public function saveQuestionFromModal(): void
+    {
+        $this->ensureStructure();
+
+        if (empty($this->editingQuestion['content'])) {
+            $this->swalError('Lỗi', 'Nội dung câu hỏi không được để trống.');
+            return;
+        }
+
+        if ($this->editingIndex === -1) {
+            $this->quiz['assessments_questions'][] = $this->editingQuestion;
+        } else {
+            if (isset($this->quiz['assessments_questions'][$this->editingIndex])) {
+                $this->quiz['assessments_questions'][$this->editingIndex] = $this->editingQuestion;
+            } else {
+                $this->quiz['assessments_questions'][] = $this->editingQuestion;
+            }
+        }
+
+        $this->dispatch('close-modal', id: 'quizQuestionModal');
+        $this->reset('editingQuestion', 'editingIndex');
+    }
+
+
+    public function addOptionToEditing(): void
+    {
+        if (!isset($this->editingQuestion['question_options'])) {
+            $this->editingQuestion['question_options'] = [];
+        }
+
+        if (count($this->editingQuestion['question_options']) >= 4) {
+            $this->swalWarning('Giới hạn', 'Tối đa 4 lựa chọn.');
+            return;
+        }
+        $this->editingQuestion['question_options'][] = [
+            'content' => '', 'is_correct' => false, 'explanation' => '',
+            'position' => count($this->editingQuestion['question_options']) + 1
+        ];
+    }
+
+    public function deleteOptionFromEditing($index): void
+    {
+        if (!isset($this->editingQuestion['question_options'])) {
+            return;
+        }
+
+        if (count($this->editingQuestion['question_options']) <= 2) {
+            $this->swalWarning('Cảnh báo', 'Cần tối thiểu 2 lựa chọn.');
+            return;
+        }
+        unset($this->editingQuestion['question_options'][$index]);
+        $this->editingQuestion['question_options'] = array_values($this->editingQuestion['question_options']);
+    }
+
 
     public function deleteQuestion(int $index): void
     {
-        unset($this->quiz['assessments_questions'][$index]);
+        $this->ensureStructure();
+
+        if (isset($this->quiz['assessments_questions'][$index])) {
+            unset($this->quiz['assessments_questions'][$index]);
+            $this->quiz['assessments_questions'] = array_values($this->quiz['assessments_questions']);
+        }
+    }
+
+    public function saveQuiz(): void
+    {
+        $this->ensureStructure();
+        $this->showDetails = false;
+        try {
+            $this->validate();
+            $this->dispatch('assessment-saved');
+            $this->showDetails = false;
+            $this->dispatch('assessment-updated', isValid: true);
+        } catch (ValidationException $e) {
+            $this->dispatch('assessment-updated', isValid: false);
+            $this->swalError('Lỗi xác thực', 'Vui lòng kiểm tra lại thông tin.');
+            throw $e;
+        }
     }
 
     public function remove(): void
@@ -109,59 +171,17 @@ class Quiz extends Component {
         }
     }
 
-    public function saveQuiz(): void
+    public function updatedExcelFile(QuizImportService $service): void
     {
-        try {
-            $this->validate();
-            $this->dispatch('assessment-saved');
-            $this->showDetails = false;
-            $this->dispatch('assessment-updated', isValid: true);
-        } catch (ValidationException $e) {
-            $this->dispatch('assessment-updated', isValid: false);
-            $this->swalError('Validation Error', 'There was an error saving the quiz:', $e->getMessage());
-            throw $e;
-        }
-    }
+        $this->ensureStructure();
 
-    public function updatedExcelFile(QuizImportService $quizImportService): void
-    {
-        $result = $quizImportService->importFile($this->excelFile->getRealPath());
-        $importedQuestions = $result['dbQuestions'];
-        $quizImportErrors = $result['errors'];
+        $result = $service->importFile($this->excelFile->getRealPath());
+        if (empty($result['errors'])) {
+            $this->quiz['assessments_questions'] = array_merge($this->quiz['assessments_questions'], $result['dbQuestions']);
+        } else {
+            $this->swalError('Lỗi nhập tệp', 'Vui lòng kiểm tra lại file Excel.');
+        }
         $this->reset('excelFile');
-        if (empty($quizImportErrors)) {
-            $this->importQuestions($importedQuestions);
-        } else {
-            $this->swalError('Import Failed', 'There was an error importing the quiz file:', $quizImportErrors);
-        }
-    }
-
-    private function importQuestions($importedQuestions): void
-    {
-        if ($this->checkExistingQuestions()) {
-            $this->quiz['assessments_questions'] = array_merge($this->quiz['assessments_questions'], $importedQuestions);
-        } else {
-            $this->quiz['assessments_questions'] = $importedQuestions;
-        }
-        $this->validate();
-    }
-
-    private function checkExistingQuestions(): bool
-    {
-        if (isset($this->quiz['assessments_questions']) && is_array($this->quiz['assessments_questions'])) {
-            foreach ($this->quiz['assessments_questions'] as $question) {
-                if (isset($question['content']) && !empty(trim($question['content']))) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public function validateStep1(): bool
-    {
-        $this->validateOnly('quiz.title');
-        return true;
     }
 
     public function render(): View|Application|Factory

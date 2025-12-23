@@ -5,15 +5,10 @@ namespace App\Services\Client\Course\Create\Factories;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Module;
+use App\Services\Client\Course\Create\Builders\LessonTypes\VideoService;
 
 readonly class LessonService
 {
-    public function __construct(
-        private AssessmentService $assessmentService,
-    )
-    {
-    }
-
     public function create(Course $course, Module $module, array $lessons): void
     {
         $moduleDuration = 0;
@@ -30,12 +25,17 @@ readonly class LessonService
                 'module_id' => $module->id
             ]);
 
+            if ($lesson->type === 'video' && isset($lessonData['video_file_name'])) {
+                app(VideoService::class)->storePendingVideo($lessonData['video_file_name']);
+            }
+
             if (isset($lessonData['assessment'])) {
-                $this->assessmentService->create($lessonData['assessment'], $lesson->id);
+                app(AssessmentService::class)->create($lessonData['assessment'], $lesson->id);
             }
         }
 
         $module->update(['duration' => $moduleDuration]);
         $course->increment('duration', $moduleDuration);
     }
+
 }

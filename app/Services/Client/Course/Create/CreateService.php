@@ -8,17 +8,11 @@ use App\Services\Client\Course\Create\Factories\ModuleService;
 
 readonly class CreateService
 {
-    public function __construct(
-        private ModuleService $moduleService,
-    )
-    {
-    }
-
     public function storeCourse(User $author, array $courseData): void
     {
         $course = $this->storeCourseInfo($courseData, $author->id);
 
-        $this->moduleService->create($course, $courseData['modules']);
+        app(ModuleService::class)->create($course, $courseData['modules']);
 
         $author->instructorProfile->increment('course_count');
     }
@@ -30,7 +24,8 @@ readonly class CreateService
             'heading' => $info['heading'],
             'description' => $info['description'],
             'thumbnail' => $info['thumbnail'],
-            'price' => $info['price'] ?? 0,
+            'type' => $info['courseType'],
+            'price' => $info['courseType'] !== 'internal' ? $info['price'] : 0,
             'review_count' => 0,
             'lesson_count' => 0,
             'level' => $info['level'],

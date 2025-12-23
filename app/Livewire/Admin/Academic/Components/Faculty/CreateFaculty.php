@@ -26,7 +26,7 @@ class CreateFaculty extends Component {
 
             'code.required' => 'Vui lòng nhập mã khoa.',
             'code.string' => 'Mã khoa phải là một chuỗi ký tự.',
-            'code.max' => 'Mã khoa không được vượt quá 50 ký tự.',
+            'code.max' => 'Mã khoa không được vượt quá 10 ký tự.',
             'code.unique' => 'Mã khoa này đã tồn tại.',
         ];
     }
@@ -45,9 +45,8 @@ class CreateFaculty extends Component {
             $this->reset(['name', 'code']);
 
             $this->dispatch('faculty-created');
-            $this->dispatch('close-modal');
+            $this->dispatch('close-modal', id: 'createFacultyModal');
             $this->swal('Thành công!', 'Đã thêm khoa mới thành công.');
-
         } catch (\Exception $e) {
             $this->swalError('Lỗi!', 'Có lỗi xảy ra: ' . $e->getMessage());
         }

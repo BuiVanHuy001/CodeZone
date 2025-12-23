@@ -18,10 +18,14 @@ class ModuleUpdate extends Component {
     public array $rules;
     public array $message;
 
-    public function mount(): void
+    protected function rules(): array
     {
-        $this->rules = ModulesBuilderValidator::rules();
-        $this->message = ModulesBuilderValidator::$MESSAGES;
+        return ModulesBuilderValidator::rules();
+    }
+
+    protected function messages(): array
+    {
+        return ModulesBuilderValidator::$MESSAGES;
     }
 
     #[On('edit-module')]
@@ -33,7 +37,7 @@ class ModuleUpdate extends Component {
 
     public function update(): void
     {
-        $this->validate();
+        $this->validate($this->rules(), $this->messages());
         $this->dispatch('module-updated', index: $this->moduleIndex, title: $this->moduleTitle);
         $this->dispatch('close-modal', id: 'updateModule');
     }

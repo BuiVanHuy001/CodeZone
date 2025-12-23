@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="rbt-contact-form contact-form-style-1 max-width-auto mx-auto my-5 w-50">
-        <h3 class="title text-center">Register</h3>
+        <h3 class="title text-center">Đăng ký</h3>
         <form class="max-width-auto" action="{{ route('student.register') }}" method="POST">
             @csrf
             <div  @class(['form-group', 'focused' => old('name')])>
                 <input name="name" type="text" @class(['border-danger' => $errors->has('name')]) value="{{ old('name') }}"/>
-                <label>Full name *</label>
+                <label>Họ và Tên *</label>
                 <span class="focus-border"></span>
                 @error('name')
                 <span class="text-danger pt-2 text-sm-start">{{ $message }}</span>
@@ -16,7 +16,7 @@
 
             <div class="form-group">
                 <input name="email" type="text" @class(['border-danger' => $errors->has('email')]) />
-                <label>Email address *</label>
+                <label>Email *</label>
                 <span class="focus-border"></span>
                 @error('email')
                 <span class="text-danger">{{ $message }}</span>
@@ -25,7 +25,7 @@
 
             <div class="form-group">
                 <input name="password" type="password" @class(['border-danger' => $errors->has('password')]) />
-                <label>Password *</label>
+                <label>Mật khẩu *</label>
                 <span class="focus-border"></span>
                 @error('password')
                 <span class="text-danger">{{ $message }}</span>
@@ -34,7 +34,7 @@
 
             <div class="form-group">
                 <input name="password_confirmation" type="password">
-                <label>Confirm Password *</label>
+                <label>Nhập lại mật khẩu *</label>
                 <span class="focus-border"></span>
                 @error('password_confirmation')
                 <span class="text-danger">{{ $message }}</span>
@@ -43,18 +43,19 @@
 
             <div class="form-submit-group">
                 <div class="d-flex justify-content-center mb-5">
-                    <button class="rbt-btn w-50 mx-auto">Register</button>
+                    <button class="rbt-btn w-50 mx-auto">Đăng ký</button>
                 </div>
             </div>
 
             <div class="text-center mb-3">
-                <p class="description">You have an account?
-                    <a href="{{ route('client.login') }}" class="rbt-btn-link"><strong>Login here</strong></a></p>
+                <p class="description">Bạn đã có tài khoảng?
+                    <a href="{{ route('client.login') }}" class="rbt-btn-link"><strong>Đăng nhập tại đây</strong></a>
+                </p>
             </div>
 
             <div class="row">
                 <div class="col-12 d-flex justify-content-center mb-3">
-                    <span class="rbt-badge">Or login by</span>
+                    <span class="rbt-badge">Hoặc đăng nhập bằng</span>
                 </div>
 
                 <div class="d-flex justify-content-center gap-3 mb-3">
